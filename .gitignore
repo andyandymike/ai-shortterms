@@ -1,0 +1,6 @@
+# Local package-manager cache created during setup
+/.npm-cache/
+
+# macOS metadata
+.DS_Store
+**/.DS_Store
