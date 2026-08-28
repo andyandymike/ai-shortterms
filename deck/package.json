@@ -11,6 +11,10 @@
     "start": "vinext start",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next"
   },
+  "overrides": {
+    "picomatch": "4.0.7",
+    "undici": "7.24.7"
+  },
   "dependencies": {
     "next": "16.2.6",
     "react": "19.2.6",
