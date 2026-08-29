@@ -286,8 +286,8 @@
 .toolbox span { margin-right: 3px; color: var(--paper); font-size: clamp(7px, 0.62vw, 9px); font-weight: 900; letter-spacing: 0.14em; }
 .toolbox b { padding: 4px 7px; border: 1px solid rgba(120, 230, 210, 0.28); color: var(--cyan); font-size: clamp(6px, 0.5vw, 8px); letter-spacing: 0.08em; }
 
-.roleRail { position: absolute; top: 16%; right: 1.5%; bottom: 12%; left: 1.5%; display: grid; grid-template-columns: minmax(0, 1fr) clamp(24px, 3vw, 42px) minmax(0, 1.15fr) clamp(24px, 3vw, 42px) minmax(0, 1fr); align-items: stretch; }
-.roleRail article { position: relative; display: grid; grid-template-rows: auto auto 1fr 1fr; gap: clamp(6px, 1vh, 10px); padding: clamp(12px, 1.55vw, 22px); border: 1px solid rgba(245, 239, 228, 0.15); background: rgba(7, 13, 16, 0.78); }
+.roleRail { position: absolute; top: 8%; right: 1.5%; bottom: 8%; left: 1.5%; display: grid; grid-template-columns: minmax(0, 1fr) clamp(24px, 3vw, 42px) minmax(0, 1.15fr) clamp(24px, 3vw, 42px) minmax(0, 1fr); align-items: stretch; }
+.roleRail article { position: relative; display: flex; flex-direction: column; justify-content: center; gap: clamp(9px, 1.3vh, 14px); padding: clamp(12px, 1.55vw, 22px); border: 1px solid rgba(245, 239, 228, 0.15); background: rgba(7, 13, 16, 0.78); }
 .roleRail article > span { color: var(--cyan); font-size: clamp(6px, 0.54vw, 8px); font-weight: 900; letter-spacing: 0.13em; }
 .roleRail article > strong { font-family: Georgia, "Times New Roman", serif; font-size: clamp(18px, 2vw, 30px); font-weight: 500; line-height: 1; }
 .roleRail article > p { display: grid; align-content: center; gap: 3px; margin: 0; padding-top: 8px; border-top: 1px solid rgba(245, 239, 228, 0.1); }
@@ -352,11 +352,11 @@
 .takeaway span { grid-row: 1 / 3; align-self: center; color: var(--coral); font-size: clamp(7px, 0.62vw, 9px); font-weight: 900; letter-spacing: 0.15em; writing-mode: vertical-rl; transform: rotate(180deg); }
 .takeaway strong { overflow: hidden; color: var(--paper); font-family: Georgia, "Times New Roman", serif; font-size: clamp(21px, 1.95vw, 30px); font-weight: 500; line-height: 1; text-overflow: ellipsis; white-space: nowrap; }
 
-.controls { display: flex; gap: 8px; }
+.controls { grid-column: 2; justify-self: end; display: flex; align-items: flex-start; gap: 8px; }
 .controls button { min-height: clamp(34px, 4.2vh, 42px); padding: 7px 12px; border: 1px solid rgba(245, 239, 228, 0.18); background: rgba(6, 10, 13, 0.42); color: rgba(245, 239, 228, 0.68); cursor: pointer; font-size: clamp(10px, 0.74vw, 12px); font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; }
 .controls button:disabled { opacity: 0.28; cursor: default; }
-.controls button:last-child { min-width: clamp(134px, 15vw, 200px); display: flex; align-items: center; justify-content: space-between; border-color: rgba(255, 135, 95, 0.75); color: var(--paper); }
-.controls button:last-child b { color: var(--coral); font-size: 15px; }
+.controls button[data-primary] { min-width: clamp(134px, 15vw, 200px); display: flex; align-items: center; justify-content: space-between; border-color: rgba(255, 135, 95, 0.75); color: var(--paper); }
+.controls button[data-primary] b { color: var(--coral); font-size: 15px; }
 .controls button:hover:not(:disabled) { border-color: var(--coral); background: var(--coral); color: var(--ink); }
 .controls button:hover:not(:disabled) b { color: var(--ink); }
 
@@ -389,7 +389,7 @@
   .worldSide > strong { font-size: clamp(17px, 2.5vw, 23px); }
   .sidePerson i { height: 41px; }
   .bridge { width: 33%; padding: 8px 9px 7px; }
-  .roleRail { top: 15%; bottom: 13%; grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1.15fr) 24px minmax(0, 1fr); }
+  .roleRail { top: 8%; bottom: 8%; grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1.15fr) 24px minmax(0, 1fr); }
   .roleRail article { gap: 5px; padding: 10px; }
   .roleRail article > strong { font-size: clamp(16px, 2.4vw, 22px); }
   .roleThesis { display: none; }
@@ -400,7 +400,7 @@
   .proofChange strong { font-size: 40px; }
   .footer { right: 20px; bottom: 19px; left: 20px; gap: 15px; }
   .controls button { min-height: 34px; padding: 6px 9px; font-size: 10px; }
-  .controls button:last-child { min-width: 126px; }
+  .controls button[data-primary] { min-width: 126px; }
   .boundary { display: none; }
 }
 
@@ -438,7 +438,7 @@
   .benefits b:nth-of-type(2), .benefits b:nth-of-type(3), .benefits i:nth-of-type(2), .benefits i:nth-of-type(3) { display: none; }
   .learningLoop > p span { display: none; }
   .takeaway strong { font-size: 15px; }
-  .controls button:first-child { display: none; }
+  .controls > button:first-child { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

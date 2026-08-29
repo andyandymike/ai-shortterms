@@ -6,17 +6,6 @@ import { ClosingLab, DistillationLab, EmbodiedLab, FdeLab, OpeningLab, RouterLab
 const slideCount = 7;
 
 const lastStepBySlide = [0, 0, 0, 0, 4, 0, 0];
-const interactiveSlides = new Set([1, 2, 3, 5]);
-
-const chapterLabels = [
-  'OPENING',
-  'EFFICIENCY / ROUTING',
-  'EFFICIENCY / COMPRESSION',
-  'PREDICTION → PHYSICAL AI',
-  'DEPLOYMENT',
-  'THE NEXT LOOP',
-  'CLOSING',
-];
 
 const slideSources: Record<number, { label: string; url: string }[]> = {
   1: [
@@ -135,11 +124,6 @@ export default function Home() {
         setTouchStart(null);
       }}
     >
-      <header className="deck-chrome">
-        <p>AI / FIELD NOTES</p>
-        <p className="chapter-label">{chapterLabels[active]}</p>
-      </header>
-
       <section className={`slide opening-cinema-slide ${active === 0 ? 'is-active' : ''}`} aria-hidden={active !== 0}>
         <OpeningLab />
       </section>
@@ -148,7 +132,6 @@ export default function Home() {
         className={`slide moe-evidence-slide ${active === 1 ? 'is-active' : ''}`}
         aria-hidden={active !== 1}
       >
-        <div className="section-index">01</div>
         <RouterLab key={`router-${demoResetKey}`} />
       </section>
 
@@ -156,7 +139,6 @@ export default function Home() {
         className={`slide distill-evidence-slide ${active === 2 ? 'is-active' : ''}`}
         aria-hidden={active !== 2}
       >
-        <div className="section-index">02</div>
         <DistillationLab key={`distillation-${demoResetKey}`} />
       </section>
 
@@ -164,7 +146,6 @@ export default function Home() {
         className={`slide embodied-slide ${active === 3 ? 'is-active' : ''}`}
         aria-hidden={active !== 3}
       >
-        <div className="section-index">03—04</div>
         <EmbodiedLab key={`embodied-${demoResetKey}`} />
       </section>
 
@@ -173,7 +154,6 @@ export default function Home() {
         aria-hidden={active !== 4}
         data-step={active === 4 ? step : 0}
       >
-        <div className="section-index">05</div>
         <FdeLab step={step} onAdvance={() => move(1)} onReset={resetCurrentDemo} />
       </section>
 
@@ -181,7 +161,6 @@ export default function Home() {
         className={`slide rsi-cinema-slide ${active === 5 ? 'is-active' : ''}`}
         aria-hidden={active !== 5}
       >
-        <div className="section-index">06</div>
         <RsiLab key={`rsi-${demoResetKey}`} />
       </section>
 
@@ -206,12 +185,6 @@ export default function Home() {
           </button>
         ) : <span className="source-spacer" />}
         <div className="arrow-controls">
-          {interactiveSlides.has(active) ? (
-            <span className="step-counter live-counter">LIVE LAB</span>
-          ) : lastStepBySlide[active] > 0 ? (
-            <span className="step-counter">STEP {step + 1} / {lastStepBySlide[active] + 1}</span>
-          ) : null}
-          <button className="replay-control" onClick={resetCurrentDemo} disabled={step === 0 && !interactiveSlides.has(active)} aria-label="Reset current demonstration" title="Reset current demonstration (R)">↺</button>
           <button onClick={() => move(-1)} disabled={active === 0 && step === 0} aria-label="Previous step">←</button>
           <span>{String(active + 1).padStart(2, '0')} / {String(slideCount).padStart(2, '0')}</span>
           <button onClick={() => move(1)} disabled={active === slideCount - 1 && step === lastStepBySlide[active]} aria-label="Next step">→</button>
