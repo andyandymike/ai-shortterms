@@ -1733,11 +1733,34 @@ export function RsiLab() {
   );
 }
 
-const fieldKitQuestions = [
-  { number: '01', label: 'WHY NOW?', question: 'What bottleneck created it?', tone: 'red' },
-  { number: '02', label: 'MECHANISM', question: 'What actually changes?', tone: 'teal' },
-  { number: '03', label: 'PROOF', question: 'Where does it work today?', tone: 'yellow' },
-  { number: '04', label: 'BOUNDARY', question: 'What still does not work?', tone: 'ink' },
+const closingSummaryChapters = [
+  {
+    number: '01',
+    shift: 'SCALE SMARTER',
+    tone: 'teal',
+    terms: [
+      { term: 'MoE', meaning: 'Activate only what is needed.' },
+      { term: 'DISTILLATION', meaning: 'Pass capability to a smaller model.' },
+    ],
+  },
+  {
+    number: '02',
+    shift: 'TOUCH THE WORLD',
+    tone: 'red',
+    terms: [
+      { term: 'WORLD MODEL', meaning: 'Predict what happens next.' },
+      { term: 'VLA', meaning: 'Turn vision and language into action.' },
+    ],
+  },
+  {
+    number: '03',
+    shift: 'CLOSE THE LOOP',
+    tone: 'yellow',
+    terms: [
+      { term: 'FDE', meaning: 'Turn field problems into product learning.' },
+      { term: 'RSI', meaning: 'Aim to improve how AI itself is built.' },
+    ],
+  },
 ];
 
 export function ClosingLab({
@@ -1749,70 +1772,51 @@ export function ClosingLab({
 }) {
   if (visualStyle === 'machine') {
     return (
-      <section className={closingMachineStyles.stage} aria-label="A machine-mode decoder for understanding the next AI acronym">
+      <section className={closingMachineStyles.stage} aria-label="Summary of six AI terms across three shifts">
         <VisualModeSwitch key="visual-mode-switch" visualStyle={visualStyle} onVisualStyleChange={onVisualStyleChange} className={modeStyles.switcher} surface="machine" modes={deckVisualModes} />
         <div className={closingMachineStyles.ambient} aria-hidden="true" />
         <div className={closingMachineStyles.grid} aria-hidden="true" />
 
         <header className={closingMachineStyles.heading}>
-          <span>AI TERM DECODER</span>
-          <h2>How to read the next AI acronym.</h2>
-          <p>Scan the change—not the letters.</p>
+          <h2>Six terms. Three shifts.</h2>
+          <p>What changed beneath the acronyms.</p>
         </header>
 
-        <main className={closingMachineStyles.scanner}>
-          <article className={closingMachineStyles.intake}>
-            <span>INCOMING TERM</span><strong>XYZ</strong><small>LABEL ONLY</small>
-          </article>
-          <section className={closingMachineStyles.scanTunnel} aria-label="Four checks for decoding a new AI term">
-            {fieldKitQuestions.map((item) => (
-              <article key={item.number} data-tone={item.tone}>
-                <span>{item.number}</span><strong>{item.label}</strong><p>{item.question}</p><b>CHECK</b>
-              </article>
-            ))}
-            <i aria-hidden="true" />
-          </section>
-          <aside className={closingMachineStyles.output}>
-            <span>OUTPUT</span><strong>EXPLAINED</strong><p>Why it exists.<br />What changes.<br />Where it works.<br />What remains.</p><em>NO INITIALS NEEDED</em>
-          </aside>
+        <main className={closingMachineStyles.summaryGrid}>
+          {closingSummaryChapters.map((chapter) => (
+            <article className={closingMachineStyles.summaryChapter} data-tone={chapter.tone} key={chapter.number}>
+              <header><span>{chapter.number}</span><strong>{chapter.shift}</strong></header>
+              <div className={closingMachineStyles.termList}>
+                {chapter.terms.map((item) => (
+                  <section key={item.term}><strong>{item.term}</strong><p>{item.meaning}</p></section>
+                ))}
+              </div>
+            </article>
+          ))}
         </main>
       </section>
     );
   }
 
   return (
-    <section className={closingStyles.stage} aria-label="A field kit for understanding the next AI acronym">
+    <section className={closingStyles.stage} aria-label="Summary of six AI terms across three shifts">
       <VisualModeSwitch key="visual-mode-switch" visualStyle={visualStyle} onVisualStyleChange={onVisualStyleChange} className={modeStyles.switcher} surface="exhibit" modes={deckVisualModes} />
       <header className={closingStyles.heading}>
-        <span>TAKE-HOME FIELD KIT</span>
-        <h2>The next acronym will arrive soon.</h2>
-        <p>Do not memorize the letters. Inspect the change.</p>
+        <h2>Six terms. Three shifts.</h2>
+        <p>What changed beneath the acronyms.</p>
       </header>
 
-      <main className={closingStyles.inspectionDesk}>
-        <article className={closingStyles.incomingFolder}>
-          <header><span>INCOMING TERM</span><b>UNSORTED</b></header>
-          <strong>XYZ</strong>
-          <p>A new label is not yet an explanation.</p>
-          <footer>OPEN THE FILE →</footer>
-        </article>
-
-        <section className={closingStyles.fieldChecklist} aria-label="Four questions for inspecting a new AI term">
-          {fieldKitQuestions.map((item) => (
-            <article key={item.number} data-tone={item.tone}>
-              <span>{item.number}</span>
-              <div><strong>{item.label}</strong><p>{item.question}</p></div>
-              <b>CHECK</b>
-            </article>
-          ))}
-        </section>
-
-        <aside className={closingStyles.passCard}>
-          <span>THE UNDERSTANDING TEST</span>
-          <strong>Explain it without the initials.</strong>
-          <p>Then you understand the idea—not just its name.</p>
-          <em>FIELD GUIDE · COMPLETE</em>
-        </aside>
+      <main className={closingStyles.summaryGrid}>
+        {closingSummaryChapters.map((chapter) => (
+          <article className={closingStyles.summaryChapter} data-tone={chapter.tone} key={chapter.number}>
+            <header><span>{chapter.number}</span><strong>{chapter.shift}</strong></header>
+            <div className={closingStyles.termList}>
+              {chapter.terms.map((item) => (
+                <section key={item.term}><strong>{item.term}</strong><p>{item.meaning}</p></section>
+              ))}
+            </div>
+          </article>
+        ))}
       </main>
     </section>
   );
@@ -1861,7 +1865,7 @@ function OpeningSpecimen({ kind }: { kind: OpeningArtifactKind }) {
   if (kind === 'world') return <div className={openingStyles.worldStill}><span>t</span><b>t+1</b><strong>t+2?</strong></div>;
   if (kind === 'robot') return <div className={openingStyles.robotOrder}><span>GOAL</span><strong>BLOCK → TRAY</strong><small>vision · action · check</small></div>;
   if (kind === 'field') return <div className={openingStyles.fieldBadge}><span>ON SITE</span><strong>FDE</strong><small>DISCOVER · DEPLOY</small></div>;
-  return <div className={openingStyles.builderManual}><span>BUILDER v1</span><strong>MODEL N → N+1</strong><b>UNPROVEN LOOP</b></div>;
+  return <div className={openingStyles.builderManual}><span>BUILDER v1 → v2</span><strong>IMPROVE THE BUILDER</strong></div>;
 }
 
 export function OpeningLab({

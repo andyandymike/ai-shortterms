@@ -220,8 +220,7 @@
 .lessonNotes strong,
 .fieldBadge span,
 .fieldBadge small,
-.builderManual span,
-.builderManual b {
+.builderManual span {
   font-size: clamp(7px, 0.58vw, 9px);
   font-weight: 900;
   letter-spacing: 0.08em;
@@ -355,14 +354,6 @@
   font-size: clamp(15px, 1.45vw, 22px);
   font-weight: 500;
   line-height: 1.05;
-}
-
-.builderManual b {
-  justify-self: start;
-  padding: 5px 7px;
-  border: 2px solid var(--red);
-  color: var(--red);
-  transform: rotate(-2deg);
 }
 
 @media (max-width: 900px), (max-height: 650px) {
