@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { ClosingLab, DistillationLab, EmbodiedLab, FdeLab, OpeningLab, RouterLab, RsiLab } from './demos';
+import { ClosingLab, DistillationLab, EmbodiedLab, FdeLab, OpeningLab, RouterLab, RsiLab, type DeckVisualStyle } from './demos';
 
 const slideCount = 7;
 
@@ -32,6 +32,7 @@ const slideSources: Record<number, { label: string; url: string }[]> = {
 
 export default function Home() {
   const [active, setActive] = useState(0);
+  const [visualStyle, setVisualStyle] = useState<DeckVisualStyle>('exhibit');
   const [step, setStep] = useState(0);
   const [demoResetKey, setDemoResetKey] = useState(0);
   const [sourcesOpen, setSourcesOpen] = useState(false);
@@ -125,14 +126,14 @@ export default function Home() {
       }}
     >
       <section className={`slide opening-cinema-slide ${active === 0 ? 'is-active' : ''}`} aria-hidden={active !== 0}>
-        <OpeningLab />
+        <OpeningLab visualStyle={visualStyle} onVisualStyleChange={setVisualStyle} />
       </section>
 
       <section
         className={`slide moe-evidence-slide ${active === 1 ? 'is-active' : ''}`}
         aria-hidden={active !== 1}
       >
-        <RouterLab key={`router-${demoResetKey}`} />
+        <RouterLab key={`router-${demoResetKey}`} visualStyle={visualStyle} onVisualStyleChange={setVisualStyle} />
       </section>
 
       <section
@@ -165,7 +166,7 @@ export default function Home() {
       </section>
 
       <section className={`slide closing-cinema-slide ${active === 6 ? 'is-active' : ''}`} aria-hidden={active !== 6}>
-        <ClosingLab />
+        <ClosingLab visualStyle={visualStyle} onVisualStyleChange={setVisualStyle} />
       </section>
 
       <footer className="deck-controls">

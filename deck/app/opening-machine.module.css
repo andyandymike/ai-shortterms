@@ -1,0 +1,115 @@
+.stage {
+  --paper: #f4f0e7;
+  --ink: #05080c;
+  --cyan: #79e5d0;
+  --coral: #ff8a61;
+  --lime: #c9f27d;
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #060a0e;
+  color: var(--paper);
+}
+
+.ambient,
+.grid { position: absolute; inset: 0; pointer-events: none; }
+
+.ambient {
+  z-index: -2;
+  background:
+    radial-gradient(circle at 7% 20%, rgba(255, 138, 97, 0.15), transparent 30%),
+    radial-gradient(circle at 54% 100%, rgba(121, 229, 208, 0.13), transparent 39%),
+    radial-gradient(circle at 97% 48%, rgba(201, 242, 125, 0.08), transparent 27%);
+}
+
+.grid {
+  z-index: -1;
+  opacity: 0.22;
+  background-image:
+    linear-gradient(rgba(121, 229, 208, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(121, 229, 208, 0.07) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: linear-gradient(to bottom, transparent, black 15%, black 91%, transparent);
+}
+
+.story {
+  position: absolute;
+  inset: clamp(28px, 4.5vh, 38px) clamp(34px, 3vw, 48px) clamp(28px, 4vh, 36px);
+  display: grid;
+  grid-template-rows: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(17px, 2.2vh, 26px);
+}
+
+.hero { display: grid; align-content: center; max-width: 69%; }
+.hero > span { color: var(--coral); font-size: clamp(9px, 0.72vw, 11px); font-weight: 900; letter-spacing: 0.17em; }
+.hero h1 { margin: 8px 0 7px; font-family: Georgia, "Times New Roman", serif; font-size: clamp(54px, 5.6vw, 84px); font-weight: 500; letter-spacing: -0.055em; line-height: 0.84; }
+.hero h1 em { color: var(--cyan); font-style: normal; }
+.hero p { margin: 0; color: rgba(244, 240, 231, 0.68); font-size: clamp(14px, 1.2vw, 18px); }
+
+.route {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid rgba(244, 240, 231, 0.2);
+  border-bottom: 1px solid rgba(244, 240, 231, 0.15);
+  background: rgba(3, 8, 11, 0.56);
+}
+
+.route::before {
+  position: absolute;
+  top: -1px;
+  right: 0;
+  left: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--cyan), var(--coral), var(--lime));
+  opacity: 0.62;
+  content: "";
+}
+
+.chapter {
+  --accent: var(--cyan);
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-width: 0;
+  padding: clamp(16px, 1.7vw, 25px);
+  border-left: 1px solid rgba(244, 240, 231, 0.13);
+}
+.chapter:first-child { border-left: 0; }
+.chapter:nth-child(2) { --accent: var(--coral); }
+.chapter:nth-child(3) { --accent: var(--lime); }
+.chapter::before { position: absolute; top: -5px; left: clamp(16px, 1.7vw, 25px); width: 8px; aspect-ratio: 1; border-radius: 50%; background: var(--accent); box-shadow: 0 0 18px var(--accent); content: ""; animation: machine-pulse 2.4s ease-in-out infinite; }
+.chapter:nth-child(2)::before { animation-delay: 0.8s; }
+.chapter:nth-child(3)::before { animation-delay: 1.6s; }
+.chapter header { display: flex; align-items: center; gap: 10px; color: var(--accent); }
+.chapter header span { display: grid; place-items: center; width: 25px; aspect-ratio: 1; border: 1px solid color-mix(in srgb, var(--accent) 54%, transparent); border-radius: 50%; font-size: 8px; font-weight: 900; }
+.chapter header strong { font-size: clamp(10px, 0.9vw, 14px); letter-spacing: 0.13em; }
+.chapter > p { align-self: center; max-width: 330px; margin: 12px 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(19px, 1.75vw, 27px); line-height: 1.08; }
+.terms { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.terms strong { min-width: 0; padding-top: 8px; border-top: 1px solid color-mix(in srgb, var(--accent) 48%, transparent); color: var(--accent); font-family: Georgia, "Times New Roman", serif; font-size: clamp(17px, 1.55vw, 24px); font-weight: 500; line-height: 0.98; }
+
+@keyframes machine-pulse {
+  0%, 100% { opacity: 0.42; transform: scale(0.74); }
+  45% { opacity: 1; transform: scale(1); }
+}
+
+@media (max-width: 900px), (max-height: 650px) {
+  .story { inset: 18px 15px 19px; grid-template-rows: minmax(0, 0.78fr) minmax(0, 1.22fr); gap: 13px; }
+  .hero { max-width: 66%; }
+  .hero h1 { margin: 4px 0 5px; font-size: 43px; }
+  .hero p { font-size: 12px; }
+  .chapter { padding: 13px 11px 12px; }
+  .chapter::before { left: 11px; }
+  .chapter header { gap: 7px; }
+  .chapter header span { width: 21px; font-size: 7px; }
+  .chapter header strong { font-size: 9px; }
+  .chapter > p { margin: 8px 0; font-size: 16px; }
+  .terms { gap: 5px; }
+  .terms strong { font-size: 15px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chapter::before { animation: none; }
+}

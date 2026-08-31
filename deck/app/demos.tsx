@@ -1,13 +1,51 @@
 'use client';
 
-import { useMemo, useRef, useState, type CSSProperties } from 'react';
+import { useMemo, useRef, useState, type CSSProperties, type RefObject } from 'react';
 import moeStyles from './moe-cinema.module.css';
+import moeExhibitStyles from './moe-exhibit.module.css';
 import fdeStyles from './fde-cinema.module.css';
 import rsiStyles from './rsi-cinema.module.css';
 import distillStyles from './distillation-cinema.module.css';
 import embodiedStyles from './embodied-cinema.module.css';
 import closingStyles from './closing-cinema.module.css';
 import openingStyles from './opening-cinema.module.css';
+import closingMachineStyles from './closing-machine.module.css';
+import openingMachineStyles from './opening-machine.module.css';
+import modeStyles from './visual-mode.module.css';
+import conceptStyles from './concept-exhibits.module.css';
+
+export type DeckVisualStyle = 'machine' | 'exhibit';
+
+const deckVisualModes = ['machine', 'exhibit'] as const;
+const visualModeLabel: Record<DeckVisualStyle, string> = {
+  machine: 'Machine',
+  exhibit: 'Exhibit',
+};
+
+function VisualModeSwitch<T extends DeckVisualStyle>({
+  visualStyle,
+  onVisualStyleChange,
+  className,
+  surface,
+  modes,
+}: {
+  visualStyle: T;
+  onVisualStyleChange: (style: T) => void;
+  className: string;
+  surface?: DeckVisualStyle;
+  modes: readonly T[];
+}) {
+  return (
+    <div className={className} data-surface={surface} role="group" aria-label="Choose presentation visual mode">
+      <span>Visual mode</span>
+      {modes.map((mode) => (
+        <button key={mode} type="button" aria-pressed={visualStyle === mode} onClick={() => onVisualStyleChange(mode)}>
+          {visualModeLabel[mode]}
+        </button>
+      ))}
+    </div>
+  );
+}
 
 function DemoStepRail({ current, total }: { current: number; total: number }) {
   return (
@@ -64,12 +102,161 @@ function illustrativeExpertsForToken(token: string) {
 const xrayTokens = ['Snow', 'looks', 'white', 'because', 'it', 'scatters', 'visible', 'light', '.'];
 
 type RouterAct = 'dense-ready' | 'dense-run' | 'router' | 'experts' | 'mix';
-type MoeVisualStyle = 'machine' | 'editorial';
+type MoeScoreRow = { expert: number; score: number; mixWeight: number };
 const routerActOrder: RouterAct[] = ['dense-ready', 'dense-run', 'router', 'experts', 'mix'];
 
-export function RouterLab() {
+const exhibitPhase: Record<RouterAct, string> = {
+  'dense-ready': 'DENSE',
+  'dense-run': 'COST',
+  router: 'ROUTE',
+  experts: 'RUN 8',
+  mix: 'MIX 8 → 1',
+};
+
+const moeExhibitSummary: Record<RouterAct, string> = {
+  'dense-ready': 'A dense model sends every token through one fully active feed-forward network.',
+  'dense-run': 'Adding dense capacity makes every token use every added weight, increasing work per token.',
+  router: 'A router scores 256 experts for one token and selects 8.',
+  experts: 'Only the selected 8 experts process this token; the other 248 stay idle for it.',
+  mix: 'The 8 expert outputs are weighted and mixed into one token representation.',
+};
+
+function MoeExhibit({
+  act,
+  currentToken,
+  selectedExperts,
+  scoreRows,
+  routeVersion,
+}: {
+  act: RouterAct;
+  currentToken: string;
+  selectedExperts: number[];
+  scoreRows: MoeScoreRow[];
+  routeVersion: number;
+}) {
+  return (
+    <div className={moeExhibitStyles.exhibit} data-act={act} role="img" aria-label={moeExhibitSummary[act]}>
+      <div className={moeExhibitStyles.phaseTag}>
+        <span>{String(routerActOrder.indexOf(act) + 1).padStart(2, '0')}</span>
+        <strong>{exhibitPhase[act]}</strong>
+      </div>
+
+      <div className={moeExhibitStyles.tokenTicket} key={`exhibit-token-${routeVersion}`}>
+        <small>JOB TICKET · ONE TOKEN</small>
+        <strong>{currentToken}</strong>
+        <span>keep this ticket in view</span>
+      </div>
+
+      <section className={moeExhibitStyles.denseWorkshop}>
+        <header>
+          <small>ONE DENSE FFN</small>
+          <strong>THE WHOLE WORKSHOP</strong>
+        </header>
+        <div className={moeExhibitStyles.weightWall}>
+          {Array.from({ length: 72 }, (_, index) => (
+            <i key={index} style={{ '--exhibit-cell': `${index}` } as CSSProperties} />
+          ))}
+        </div>
+        <div className={moeExhibitStyles.denseClaim}>
+          <strong>ALL</strong>
+          <span>WEIGHTS<br />ACTIVE</span>
+        </div>
+        <div className={moeExhibitStyles.costStrip}>
+          <span>MORE CAPACITY</span><b>=</b><span>MORE WORK / TOKEN</span>
+        </div>
+      </section>
+
+      <section className={moeExhibitStyles.dispatchBoard}>
+        <small>ROUTER · SAMPLE SCORES</small>
+        <strong>DISPATCH</strong>
+        <p>score(<b>{currentToken}</b>)</p>
+        <div><span>256</span><b>→</b><span>8</span></div>
+        <em>PREDICT USEFUL FFNs<br />KEEP TOP 8 · FIXED BUDGET</em>
+      </section>
+
+      <section className={moeExhibitStyles.expertWall} key={`exhibit-wall-${routeVersion}`}>
+        <header><strong>256</strong><span>EXPERT FFNs</span><small>candidate wall</small></header>
+        <div>
+          {Array.from({ length: expertCount }, (_, index) => (
+            <i
+              key={index}
+              className={selectedExperts.includes(index) ? moeExhibitStyles.selectedPeg : undefined}
+              style={{ '--exhibit-rank': `${selectedExperts.indexOf(index)}` } as CSSProperties}
+            />
+          ))}
+        </div>
+        <footer><strong>8 WORK ORDERS SENT</strong><span>248 WORKSTATIONS IDLE FOR THIS TOKEN</span></footer>
+      </section>
+
+      <div className={moeExhibitStyles.routeLines}>
+        {Array.from({ length: expertsActivatedPerToken }, (_, index) => (
+          <i key={index} style={{ '--exhibit-route': `${index}` } as CSSProperties} />
+        ))}
+      </div>
+
+      <div className={moeExhibitStyles.expertTickets}>
+        {scoreRows.map(({ expert, score, mixWeight }, index) => (
+          <article
+            key={expert}
+            style={{
+              '--exhibit-rank': `${index}`,
+              '--exhibit-weight': `${mixWeight}`,
+              '--exhibit-router-top': `${10 + Math.floor(index / 2) * 21}%`,
+              '--exhibit-router-left': `${73 + (index % 2) * 11}%`,
+              '--exhibit-expert-top': `${16 + Math.floor(index / 4) * 39}%`,
+              '--exhibit-expert-left': `${24 + (index % 4) * 11}%`,
+              '--exhibit-mix-top': `${14 + index * 8.4}%`,
+              '--exhibit-compact-router-left': `${72 + (index % 2) * 12}%`,
+              '--exhibit-compact-expert-left': `${23 + (index % 4) * 11.5}%`,
+            } as CSSProperties}
+          >
+            <header><span>#{index + 1} · {score.toFixed(2)}</span><strong>{expert.toString().padStart(3, '0')}</strong></header>
+            <div className={moeExhibitStyles.ffnOperator}><b>IN</b><i>RUN OWN W</i><b>OUT</b></div>
+            <footer><span>FFN WORKSTATION</span><em>{Math.round(mixWeight * 100)}%</em></footer>
+          </article>
+        ))}
+      </div>
+
+      <section className={moeExhibitStyles.expertCutaway}>
+        <small>OPEN ONE EXPERT WORK ORDER</small>
+        <strong>ACTIVATE = RUN THIS FFN</strong>
+        <div className={moeExhibitStyles.expertWorkOrder}>
+          <p><span>INPUT</span><b>token context</b></p>
+          <p><span>COMPUTE</span><b>use this expert&apos;s learned weights</b></p>
+          <p><span>OUTPUT</span><b>new features for this token</b></p>
+        </div>
+        <p>THE OTHER 248 FFNs DO NO WORK FOR THIS TOKEN</p>
+      </section>
+
+      <section className={moeExhibitStyles.collator}>
+        <small>ROUTER WEIGHTS</small>
+        <strong>Σ</strong>
+        <span>WEIGHTED MIX</span>
+      </section>
+
+      <section className={moeExhibitStyles.outputTicket}>
+        <small>ONE RESULT TICKET</small>
+        <strong>8 → 1</strong>
+        <span>ONE TOKEN<br />REPRESENTATION</span>
+        <em>continues through the model</em>
+      </section>
+
+      <aside className={moeExhibitStyles.boundaryNote}>
+        <strong>AVAILABLE ≠ ACTIVE</strong>
+        <span>More total capacity; only a slice computes for this token.</span>
+      </aside>
+    </div>
+  );
+}
+
+export function RouterLab({
+  visualStyle,
+  onVisualStyleChange,
+}: {
+  visualStyle: DeckVisualStyle;
+  onVisualStyleChange: (style: DeckVisualStyle) => void;
+}) {
   const [act, setAct] = useState<RouterAct>('dense-ready');
-  const [visualStyle, setVisualStyle] = useState<MoeVisualStyle>('machine');
   const [cursor, setCursor] = useState(3);
   const [routeVersion, setRouteVersion] = useState(0);
   const currentToken = xrayTokens[cursor];
@@ -77,13 +264,18 @@ export function RouterLab() {
     () => illustrativeExpertsForToken(currentToken),
     [currentToken],
   );
-  const scoreRows = useMemo(
-    () => selectedExperts.map((expert, index) => ({
+  const scoreRows = useMemo(() => {
+    const rows = selectedExperts.map((expert, index) => ({
       expert,
       score: Math.max(0.51, 0.96 - index * 0.057 - (expert % 7) * 0.002),
-    })),
-    [selectedExperts],
-  );
+    }));
+    const scoreTotal = rows.reduce((total, row) => total + row.score, 0);
+
+    return rows.map((row) => ({
+      ...row,
+      mixWeight: row.score / scoreTotal,
+    }));
+  }, [selectedExperts]);
 
   const advanceAct = () => {
     if (act === 'dense-ready') setAct('dense-run');
@@ -103,25 +295,30 @@ export function RouterLab() {
     setAct('dense-ready');
   };
 
-  const actCopy: Record<RouterAct, { title: string; action: string }> = {
+  const actCopy: Record<RouterAct, { title: string; detail: string; action: string }> = {
     'dense-ready': {
       title: 'Dense: every token runs the same whole FFN.',
+      detail: 'One token enters one large block; all of its learned weights take part.',
       action: 'Run this token',
     },
     'dense-run': {
       title: 'More dense capacity means more work on every token.',
+      detail: 'Making the block bigger also makes every token more expensive to process.',
       action: 'Swap in MoE',
     },
     router: {
       title: 'A learned router ranks 256 FFNs and selects 8.',
+      detail: 'The router is a small scoring step: 8 experts work while 248 stay idle.',
       action: 'Open the top eight',
     },
     experts: {
       title: 'Only the selected 8 expert FFNs execute.',
+      detail: 'Each expert runs the same FFN operation with its own learned weights.',
       action: 'Combine their work',
     },
     mix: {
       title: 'Router weights mix 8 outputs into one token representation.',
+      detail: 'Eight expert results are weighted, added together, and sent onward as one.',
       action: 'Try another token',
     },
   };
@@ -130,36 +327,21 @@ export function RouterLab() {
 
   return (
     <section
-      className={moeStyles.stage}
+      className={`${moeStyles.stage} ${visualStyle === 'exhibit' ? moeExhibitStyles.host : ''}`}
       data-act={act}
       data-visual={visualStyle}
-      aria-label="Presenter-led visual comparison of a dense feed-forward layer and a mixture-of-experts layer"
+      aria-label={`MoE demonstration for token ${currentToken}. ${copy.title} ${copy.detail}${act === 'mix' ? ' More capacity is available than active for each token.' : ''}`}
     >
       <div className={moeStyles.lightField} aria-hidden="true" />
 
       <header className={moeStyles.titlePlate}>
         <div><strong>MoE</strong><p>Mixture of Experts</p></div>
-        <div className={moeStyles.visualSwitch} role="group" aria-label="Compare MoE visual styles">
-          <span>Visual mode</span>
-          <button
-            type="button"
-            aria-pressed={visualStyle === 'machine'}
-            onClick={() => setVisualStyle('machine')}
-          >
-            Machine
-          </button>
-          <button
-            type="button"
-            aria-pressed={visualStyle === 'editorial'}
-            onClick={() => setVisualStyle('editorial')}
-          >
-            Editorial
-          </button>
-        </div>
+        <VisualModeSwitch visualStyle={visualStyle} onVisualStyleChange={onVisualStyleChange} className={moeStyles.visualSwitch} modes={deckVisualModes} />
       </header>
 
       <div className={moeStyles.sceneCopy} aria-live="polite" key={act}>
         <strong>{copy.title}</strong>
+        <p>{copy.detail}</p>
       </div>
 
       <div className={moeStyles.typeSystem} aria-hidden="true">
@@ -175,89 +357,15 @@ export function RouterLab() {
         </div>
       </div>
 
-      <div className={moeStyles.posterTheatre} aria-hidden="true">
-        <div className={moeStyles.posterFolio}><span>02</span><b>MIXTURE<br />OF EXPERTS</b></div>
-
-        <div className={moeStyles.posterToken}>
-          <small>INPUT TOKEN</small>
-          <strong>{currentToken}</strong>
-        </div>
-
-        <div className={moeStyles.posterDense}>
-          <small>ONE DENSE FFN</small>
-          <div className={moeStyles.posterDenseTicks}>
-            {Array.from({ length: 72 }, (_, index) => (
-              <i key={index} style={{ '--poster-cell': `${index}` } as CSSProperties} />
-            ))}
-          </div>
-          <strong>EVERY<br />WEIGHT</strong>
-          <span>RUNS FOR THIS TOKEN</span>
-        </div>
-
-        <div className={moeStyles.posterRouter}>
-          <strong>O</strong>
-          <div><span>LEARNED ROUTER</span><b>{currentToken}</b><small>SCORE 256 · KEEP 8</small></div>
-        </div>
-
-        <div className={moeStyles.posterThreads}>
-          {Array.from({ length: expertsActivatedPerToken }, (_, index) => (
-            <i key={index} style={{ '--poster-route': `${index}` } as CSSProperties} />
-          ))}
-        </div>
-
-        <div className={moeStyles.posterIndex}>
-          {Array.from({ length: expertCount }, (_, index) => (
-            <i
-              key={index}
-              className={selectedExperts.includes(index) ? moeStyles.posterSelected : undefined}
-              style={{ '--poster-cell': `${index}`, '--poster-rank': `${selectedExperts.indexOf(index)}` } as CSSProperties}
-            />
-          ))}
-        </div>
-
-        <div className={moeStyles.posterIndexLabel}>
-          <strong>256</strong><span>EXPERT FFNs</span><small>candidate pool</small>
-        </div>
-
-        <div className={moeStyles.posterChosen}>
-          {scoreRows.map(({ expert, score }, index) => (
-            <div
-              key={expert}
-              style={{
-                '--poster-rank': `${index}`,
-                '--poster-x': `${30 + index * 5.55}%`,
-                '--poster-y': `${24 + (index % 2) * 8 + (index % 3) * 2}%`,
-                '--poster-mix-y': `${21 + index * 6}%`,
-                '--poster-score': `${score}`,
-              } as CSSProperties}
-            >
-              <small>EXPERT</small>
-              <strong>{expert.toString().padStart(3, '0')}</strong>
-              <span>FFN</span>
-            </div>
-          ))}
-        </div>
-
-        <div className={moeStyles.posterCount}>
-          <p><strong>8</strong><span>RUN</span></p><i /><p><strong>248</strong><span>REST</span></p>
-        </div>
-
-        <div className={moeStyles.posterCutaway}>
-          <small>ONE SELECTED EXPERT · FFN CUTAWAY</small>
-          <div className={moeStyles.posterEquation}>
-            <strong>IN</strong><b>×</b>
-            <div><span>W</span>{Array.from({ length: 16 }, (_, index) => <i key={index} />)}</div>
-            <b>→</b><strong>OUT</strong>
-          </div>
-          <p>ACTIVATE = RUN ITS WEIGHTS</p>
-        </div>
-
-        <div className={moeStyles.posterOutput}>
-          <small>ROUTER-WEIGHTED SUM</small>
-          <strong>8→1</strong>
-          <span>ONE TOKEN<br />REPRESENTATION</span>
-        </div>
-      </div>
+      {visualStyle === 'exhibit' && (
+        <MoeExhibit
+          act={act}
+          currentToken={currentToken}
+          selectedExperts={selectedExperts}
+          scoreRows={scoreRows}
+          routeVersion={routeVersion}
+        />
+      )}
 
       <div className={moeStyles.world}>
         <div className={moeStyles.inputRail}>
@@ -330,7 +438,7 @@ export function RouterLab() {
         {act === 'mix' && (
           <div key={`proof-${act}`} className={moeStyles.meaning}>
             <div className={moeStyles.publishedProof}>
-              <p><span>TOTAL</span><strong>671B</strong><small>parameters</small></p>
+              <p><span>DEEPSEEK-V3 · TOTAL</span><strong>671B</strong><small>parameters</small></p>
               <i><b /></i>
               <p><span>ACTIVE / TOKEN</span><strong>37B</strong><small>parameters</small></p>
               <p><span>ROUTED</span><strong>8 / 256</strong><small>+ shared expert</small></p>
@@ -353,6 +461,108 @@ export function RouterLab() {
 type DistillationAct = 'prompt' | 'compare' | 'loss' | 'update' | 'scale' | 'exam';
 const distillationActOrder: DistillationAct[] = ['prompt', 'compare', 'loss', 'update', 'scale', 'exam'];
 
+const distillationPhase: Record<DistillationAct, string> = {
+  prompt: 'ASK',
+  compare: 'COMPARE',
+  loss: 'MEASURE',
+  update: 'UPDATE',
+  scale: 'REPEAT',
+  exam: 'CLOSED BOOK',
+};
+
+const distillationExhibitSummary: Record<DistillationAct, string> = {
+  prompt: 'A large teacher creates a worked answer while a smaller student predicts independently.',
+  compare: 'The teacher answer is compared with the student output token by token.',
+  loss: 'Their difference becomes an error score called loss.',
+  update: 'The loss nudges only the student learned settings, called weights.',
+  scale: 'The update repeats across 800 thousand curated lessons.',
+  exam: 'The teacher is offline and the trained student answers a new question alone.',
+};
+
+function DistillationExhibit({ act }: { act: DistillationAct }) {
+  const targetTokens = ['120', '÷', '1.5', '=', '80'];
+  const studentTokens = ['120', '÷', '1.5', '=', '90'];
+
+  return (
+    <div className={`${conceptStyles.exhibit} ${conceptStyles.distillExhibit}`} data-act={act} role="img" aria-label={distillationExhibitSummary[act]}>
+      <div className={conceptStyles.phaseTag}>
+        <span>{String(distillationActOrder.indexOf(act) + 1).padStart(2, '0')}</span>
+        <strong>{distillationPhase[act]}</strong>
+      </div>
+
+      <div className={conceptStyles.lessonPrompt}>
+        <small>ONE TRAINING QUESTION</small>
+        <strong>120 km ÷ 1.5 h = ?</strong>
+      </div>
+
+      <section className={conceptStyles.teacherFolder}>
+        <header><span>TEACHER · DATA FACTORY</span><strong>DeepSeek-R1</strong></header>
+        <div className={conceptStyles.teacherTarget}>
+          <small>TEACHER ANSWER (&quot;TARGET&quot;)</small>
+          <p>speed = distance ÷ time</p>
+          <strong>120 ÷ 1.5 = <b>80 km/h</b></strong>
+          <em>worked answer becomes training data</em>
+        </div>
+        <footer>CREATES THE LESSON · DOES NOT ENTER THE STUDENT</footer>
+      </section>
+
+      <section className={conceptStyles.studentFolder}>
+        <header><span>SMALLER STUDENT</span><strong>Qwen2.5-32B</strong></header>
+        <div className={conceptStyles.studentAttempt}>
+          <small>ITS OWN PREDICTION</small>
+          <p>speed = distance ÷ time</p>
+          <strong>120 ÷ 1.5 = <b>90 km/h?</b></strong>
+        </div>
+        <div className={conceptStyles.studentWeights}>
+          <small>LEARNED SETTINGS (&quot;WEIGHTS&quot;) · THE ONLY THING THAT CHANGES</small>
+          <div>{Array.from({ length: 24 }, (_, index) => <i key={index} />)}</div>
+        </div>
+      </section>
+
+      <section className={conceptStyles.compareBench}>
+        <header><span>WHAT THE STUDENT LEARNS FROM</span><strong>TEACHER ANSWER vs STUDENT OUTPUT</strong></header>
+        <div className={conceptStyles.tokenRows}>
+          <p><small>TEACHER TARGET</small>{targetTokens.map((token, index) => <b key={`exhibit-target-${token}-${index}`} data-different={index === 4}>{token}</b>)}</p>
+          <p><small>STUDENT OUTPUT</small>{studentTokens.map((token, index) => <b key={`exhibit-student-${token}-${index}`} data-wrong={index === 4}>{token}</b>)}</p>
+        </div>
+        <div className={conceptStyles.lossStamp}><span>DIFFERENCE</span><b>→</b><strong>ERROR SCORE (&quot;LOSS&quot;)</strong></div>
+        <div className={conceptStyles.learningReceipt}>
+          <header><span>AFTER ONE TINY UPDATE</span><strong>WHICH ANSWER BECOMES MORE LIKELY?</strong></header>
+          <p data-correct><span>80 km/h · teacher answer</span><b>21%</b><i>→</i><strong>48%</strong></p>
+          <p data-wrong><span>90 km/h · student mistake</span><b>62%</b><i>→</i><strong>35%</strong></p>
+          <footer>The student did not copy the teacher; its own next-token probabilities changed.</footer>
+        </div>
+      </section>
+
+      <div className={conceptStyles.updateTrack}>
+        <span>ERROR SCORE GIVES A DIRECTION</span><i /><strong>NUDGE LEARNED SETTINGS</strong><b>↗</b>
+      </div>
+
+      <section className={conceptStyles.curriculumPress}>
+        <div className={conceptStyles.seedLesson}><span>ONE WORKED LESSON</span><strong>question → teacher answer</strong></div>
+        <b>×</b>
+        <div className={conceptStyles.lessonStack}>
+          {Array.from({ length: 36 }, (_, index) => <i key={index} />)}
+          <strong>800K</strong><span>CURATED LESSONS</span>
+        </div>
+        <i>→</i>
+        <div className={conceptStyles.trainedBinder}><span>TRAINED STUDENT</span><strong>R1-Distill-Qwen-32B</strong><small>behavior stored in its own weights</small></div>
+      </section>
+
+      <section className={conceptStyles.examDesk}>
+        <div className={conceptStyles.closedTeacher}><span>TEACHER</span><strong>DeepSeek-R1</strong><b>OFFLINE</b><small>no runtime call</small></div>
+        <div className={conceptStyles.examQuestion}><span>NEW QUESTION</span><strong>210 km ÷ 3 h = ?</strong></div>
+        <div className={conceptStyles.examStudent}><span>STUDENT · ALONE</span><strong>70 km/h</strong><small>answers from its updated weights</small></div>
+      </section>
+
+      <aside className={conceptStyles.distillBoundary}>
+        <strong>NOT MODEL COMPRESSION BY COPYING WEIGHTS</strong>
+        <span>The student learns from teacher-created targets, then runs by itself.</span>
+      </aside>
+    </div>
+  );
+}
+
 export function DistillationLab() {
   const [act, setAct] = useState<DistillationAct>('prompt');
 
@@ -367,19 +577,19 @@ export function DistillationLab() {
 
   const actCopy: Record<DistillationAct, { title: string; action: string }> = {
     prompt: {
-      title: 'Teacher creates a training target; student predicts separately.',
+      title: 'Use a large teacher to create lessons; run a smaller student alone.',
       action: 'Ask both models',
     },
     compare: {
-      title: 'Compare the student prediction with the teacher-created target.',
+      title: 'Compare the student output with the teacher answer.',
       action: 'Measure the difference',
     },
     loss: {
-      title: 'The mismatch becomes loss—the signal for optimization.',
+      title: 'The mismatch becomes an error score—called “loss.”',
       action: 'Update the student',
     },
     update: {
-      title: 'Only student weights move; target tokens become slightly likelier.',
+      title: 'That score nudges the student’s learned settings—its “weights.”',
       action: 'Repeat at scale',
     },
     scale: {
@@ -399,8 +609,7 @@ export function DistillationLab() {
   const studentTokens = ['120', '÷', '1.5', '=', '90'];
 
   return (
-    <section className={distillStyles.stage} data-act={act} aria-label="Presenter-led demonstration of a large teacher model creating data that trains a smaller student model">
-      <div className={distillStyles.lightField} aria-hidden="true" />
+    <section className={`${distillStyles.stage} ${conceptStyles.host} ${conceptStyles.distillHost}`} data-act={act} aria-label={`Knowledge distillation demonstration. ${copy.title}`}>
 
       <header className={distillStyles.titlePlate}>
         <div><strong>DISTILL</strong><p>Knowledge Distillation</p></div>
@@ -410,7 +619,9 @@ export function DistillationLab() {
         <strong>{copy.title}</strong>
       </div>
 
-      <div className={distillStyles.world}>
+      <DistillationExhibit act={act} />
+
+      <div className={`${distillStyles.world} ${conceptStyles.legacyWorld}`}>
         <div className={distillStyles.promptStrip}>
           <span>{act === 'exam' ? 'NEW · CLOSED BOOK' : 'TRAINING PROMPT'}</span>
           <strong>{act === 'exam' ? '210 km ÷ 3 h = ?' : '120 km ÷ 1.5 h = ?'}</strong>
@@ -518,15 +729,15 @@ const embodiedCopy: Record<EmbodiedAct, { title: string; action: string }> = {
     action: 'Predict one step',
   },
   'world-rollout': {
-    title: 'Prediction becomes the next “now”—then it predicts again.',
+    title: 'Each simulated future becomes the next input—uncertainty grows.',
     action: 'Show what gets built',
   },
   'world-forms': {
-    title: 'World Models can predict pixels, latent states, or objects.',
-    action: 'Give it a body',
+    title: 'World Models predict consequences; VLA is a different system for acting.',
+    action: 'Switch to VLA',
   },
   'vla-gap': {
-    title: 'Words are not executable movement.',
+    title: 'A sentence names the goal; a body still needs precise movement.',
     action: 'Ground the instruction',
   },
   'vla-control': {
@@ -539,6 +750,119 @@ const embodiedCopy: Record<EmbodiedAct, { title: string; action: string }> = {
   },
 };
 
+const embodiedPhase: Record<EmbodiedAct, string> = {
+  'world-now': 'OBSERVE + ACT',
+  'world-rollout': 'ROLL FORWARD',
+  'world-forms': 'WHAT GETS BUILT',
+  'vla-gap': 'WORDS ≠ MOTION',
+  'vla-control': 'GROUND + CONTROL',
+  'vla-proof': 'ACT + CHECK',
+};
+
+function EmbodiedExhibit({
+  act,
+  worldVideoRef,
+  vlaVideoRef,
+}: {
+  act: EmbodiedAct;
+  worldVideoRef: RefObject<HTMLVideoElement | null>;
+  vlaVideoRef: RefObject<HTMLVideoElement | null>;
+}) {
+  const isWorld = act.startsWith('world');
+
+  return (
+    <div className={`${conceptStyles.exhibit} ${conceptStyles.embodiedExhibit}`} data-act={act} data-phase={isWorld ? 'world' : 'vla'} role="img" aria-label={embodiedCopy[act].title}>
+      <div className={conceptStyles.phaseTag}>
+        <span>{String(embodiedActOrder.indexOf(act) + 1).padStart(2, '0')}</span>
+        <strong>{embodiedPhase[act]}</strong>
+      </div>
+
+      <section className={conceptStyles.worldForecastDesk}>
+        <div className={conceptStyles.currentPostcard}>
+          <div className={conceptStyles.worldPhoto} />
+          <span>CURRENT OBSERVATION · t</span>
+          <strong>robot on a street</strong>
+        </div>
+        <div className={conceptStyles.worldActionTicket}><span>ACTION</span><strong>↑</strong><small>move forward</small></div>
+        <div className={conceptStyles.futureFilm}>
+          <header><span>WORLD MODEL</span><strong>WHAT COULD HAPPEN NEXT?</strong></header>
+          {[
+            ['A', 'forward · clear', 'LIKELY'],
+            ['B', 'drift · left', 'POSSIBLE'],
+            ['C', 'contact · curb', 'RISK'],
+          ].map(([id, label, confidence], branch) => (
+            <article key={id} data-selected={branch === 0}>
+              <b>{id}</b>
+              <div>{['t+1', 't+2', 't+3'].map((frame, index) => <i key={frame} style={{ '--frame': index, '--branch': branch } as CSSProperties}><small>{act === 'world-now' ? '?' : frame}</small></i>)}</div>
+              <p><strong>{label}</strong><span>{confidence}</span></p>
+            </article>
+          ))}
+          <footer>SIMULATED FUTURES · NOT OBSERVATIONS · UNCERTAINTY GROWS <b>↺</b></footer>
+        </div>
+      </section>
+
+      <section className={conceptStyles.worldFormsDesk}>
+        <div className={conceptStyles.predictionCatalog}>
+          <header><span>A WORLD MODEL BUILDS A PREDICTIVE STATE</span><strong>NOT NECESSARILY A VIDEO</strong></header>
+          <article className={conceptStyles.pixelRepresentation}><b>01</b><span>PIXELS / VIDEO</span><div>{['t', 't+1', 't+2'].map(frame => <i key={frame}>{frame}</i>)}</div><small>future camera-like frames</small></article>
+          <article className={conceptStyles.stateReceipt}><b>02</b><span>INTERNAL STATE</span><dl><div><dt>ROBOT</dt><dd>center lane</dd></div><div><dt>MOTION</dt><dd>forward</dd></div><div><dt>CURB</dt><dd>1.2 m</dd></div></dl><small>numbers a planner can use</small></article>
+          <article className={conceptStyles.sceneMap}><b>03</b><span>OBJECTS / GEOMETRY</span><div><i>ROBOT</i><i>ROAD</i><strong>CURB · 1.2 m</strong></div><small>a labeled map for planning</small></article>
+        </div>
+        <div className={conceptStyles.worldRecording}>
+          <video ref={worldVideoRef} autoPlay loop muted playsInline preload="auto" poster="/media/genie3-proof.png">
+            <source src="/media/genie3-interaction.mp4" type="video/mp4" />
+          </video>
+          <p><span>OFFICIAL RECORDING</span><strong>GENIE 3</strong><small>an interactive generated world</small></p>
+        </div>
+        <aside><strong>PREDICTIVE MAP ≠ PERFECT PHYSICS</strong><span>Useful for planning; still an approximation.</span></aside>
+      </section>
+
+      <section className={conceptStyles.vlaGapDesk}>
+        <div className={conceptStyles.languageCard}><span>LANGUAGE MODEL</span><strong>“Put the orange block in the tray.”</strong><small>a sentence · not motor control</small></div>
+        <b className={conceptStyles.gapMark}>≠</b>
+        <div className={conceptStyles.physicalBench}>
+          <span>THE BODY STILL NEEDS ANSWERS</span>
+          <div className={conceptStyles.groundingPhoto}><b>TARGET</b><i>OBSTACLE</i><strong>TRAY</strong></div>
+          <div className={conceptStyles.burdenTickets}>{['WHERE?', 'CLEAR PATH?', 'HOW HARD?', 'WHEN STOP?'].map((item) => <i key={item}>{item}</i>)}</div>
+        </div>
+      </section>
+
+      <section className={conceptStyles.vlaControlDesk}>
+        <div className={conceptStyles.robotObservation}>
+          <header><span>OBSERVATION · 01</span><strong>LIVE CAMERA</strong></header>
+          <div><b>ORANGE BLOCK</b><i>OBSTACLE</i><strong>TRAY</strong></div>
+          <footer><span>GOAL</span><strong>put block in tray</strong></footer>
+        </div>
+        <div className={conceptStyles.controlWorkOrder}>
+          <header><span>VLA CONTROL WORK ORDER</span><strong>ACTION OUTPUT · NOT A SENTENCE</strong></header>
+          <ol>{['REACH target', 'ALIGN gripper', 'GRIP block', 'LIFT + move'].map((item, index) => <li key={item}><span>0{index + 1}</span><strong>{item}</strong><b>{index < 3 ? 'NEXT' : 'CHECK'}</b></li>)}</ol>
+          <footer>Each action changes the next camera frame.</footer>
+        </div>
+        <div className={conceptStyles.robotOutcome}>
+          <header><span>OBSERVATION · 02</span><strong>AFTER THE ACTION CHUNK</strong></header>
+          <div><b>BLOCK MOVED</b><strong>TRAY</strong></div>
+          <footer><span>CHECK RECEIPT</span><p><b>target reached?</b><strong>YES</strong></p><p><b>collision?</b><strong>NO</strong></p></footer>
+        </div>
+        <div className={conceptStyles.verificationReceipt}><span>NEW CAMERA FRAME + JOINT STATE</span><strong>COMPARE WITH GOAL → CORRECT THE NEXT ACTION</strong><b>↺</b></div>
+      </section>
+
+      <section className={conceptStyles.vlaProofDesk}>
+        <div className={conceptStyles.vlaRecording}>
+          <video ref={vlaVideoRef} autoPlay loop muted playsInline preload="auto" poster="/media/gemini-robotics2-proof.png">
+            <source src="/media/gemini-robotics2-wholebody.webm" type="video/webm" />
+          </video>
+          <p><span>OFFICIAL RECORDING</span><strong>GEMINI ROBOTICS 2</strong></p>
+        </div>
+        <div className={conceptStyles.recoveryStrip}>
+          {['OBSERVE', 'ACT', 'CHECK', 'CORRECT'].map((item, index) => <p key={item}><span>0{index + 1}</span><strong>{item}</strong></p>)}
+          <b>↺</b>
+        </div>
+        <aside><strong>THE HARD PART IS REALITY</strong><span>Objects move, grasps fail, and the model must re-observe instead of finishing a sentence.</span></aside>
+      </section>
+    </div>
+  );
+}
+
 export function EmbodiedLab() {
   const [act, setAct] = useState<EmbodiedAct>('world-now');
   const worldVideoRef = useRef<HTMLVideoElement>(null);
@@ -549,7 +873,9 @@ export function EmbodiedLab() {
   const restartVideo = (video: HTMLVideoElement | null) => {
     if (!video) return;
     video.currentTime = 0;
-    void video.play();
+    void video.play().catch(() => {
+      // The poster remains visible when autoplay or decoding is unavailable.
+    });
   };
 
   const advanceAct = () => {
@@ -576,13 +902,11 @@ export function EmbodiedLab() {
 
   return (
     <section
-      className={embodiedStyles.stage}
+      className={`${embodiedStyles.stage} ${conceptStyles.host}`}
       data-act={act}
       data-phase={isWorld ? 'world' : 'vla'}
       aria-label="Presenter-led causal x-ray of a world model and a vision-language-action model"
     >
-      <div className={embodiedStyles.lightField} aria-hidden="true" />
-
       <header className={embodiedStyles.titlePlate}>
         <div><strong>{isWorld ? 'WORLD' : 'VLA'}</strong><p>{isWorld ? 'World Model' : 'Vision · Language · Action'}</p></div>
       </header>
@@ -591,7 +915,9 @@ export function EmbodiedLab() {
         <strong>{copy.title}</strong>
       </div>
 
-      <div className={embodiedStyles.world}>
+      <EmbodiedExhibit act={act} worldVideoRef={worldVideoRef} vlaVideoRef={vlaVideoRef} />
+
+      <div className={`${embodiedStyles.world} ${conceptStyles.legacyWorld}`}>
         <div className={embodiedStyles.worldChapter} aria-hidden={!isWorld}>
           <div className={embodiedStyles.nowScene}>
             <div className={embodiedStyles.currentObservation}>
@@ -642,7 +968,7 @@ export function EmbodiedLab() {
             </div>
 
             <div className={embodiedStyles.worldProof}>
-              <video ref={worldVideoRef} autoPlay loop muted playsInline preload="auto" poster="/media/genie3-proof.png" aria-label="Official Genie 3 interactive generated-world recording">
+              <video muted playsInline preload="none" poster="/media/genie3-proof.png" aria-label="Official Genie 3 interactive generated-world recording">
                 <source src="/media/genie3-interaction.mp4" type="video/mp4" />
               </video>
               <div><span><i /> OFFICIAL RECORDING</span><strong>GENIE 3</strong><small>an interactive world generated as a person moves</small></div>
@@ -703,7 +1029,7 @@ export function EmbodiedLab() {
 
           <div className={embodiedStyles.vlaProof}>
             <div className={embodiedStyles.vlaRecording}>
-              <video ref={vlaVideoRef} autoPlay loop muted playsInline preload="auto" poster="/media/gemini-robotics2-proof.png" aria-label="Official Gemini Robotics 2 whole-body robot recording">
+              <video muted playsInline preload="none" poster="/media/gemini-robotics2-proof.png" aria-label="Official Gemini Robotics 2 whole-body robot recording">
                 <source src="/media/gemini-robotics2-wholebody.webm" type="video/webm" />
               </video>
               <span><i /> OFFICIAL RECORDING · GEMINI ROBOTICS 2</span>
@@ -923,6 +1249,87 @@ const fdeActs = [
   },
 ];
 
+const fdePhase = ['DEMO FRAME', 'REAL COMPANY', 'BRIDGE', 'OWNERSHIP', 'FIELD → PRODUCT'];
+
+function FdeExhibit({ step }: { step: number }) {
+  return (
+    <div className={`${conceptStyles.exhibit} ${conceptStyles.fdeExhibit}`} data-step={step} role="img" aria-label={fdeActs[step]?.title ?? 'Forward deployed engineering demonstration'}>
+      <div className={conceptStyles.phaseTag}>
+        <span>{String(step + 1).padStart(2, '0')}</span>
+        <strong>{fdePhase[step]}</strong>
+      </div>
+
+      <section className={conceptStyles.demoFrame}>
+        <header><span>THE DEMO FRAME</span><strong>clean input → clean answer</strong></header>
+        <div className={conceptStyles.demoPipeline}>
+          <article><small>INPUT</small><strong>W-2.pdf</strong><span>complete</span></article>
+          <i>→</i><div><strong>AI</strong><small>extract + map</small></div><i>→</i>
+          <article><small>SCHEDULE E</small><strong>ALL FIELDS MAPPED</strong><b>PASS</b></article>
+        </div>
+        <footer>FORWARD DEPLOYED = CLOSE TO THE CUSTOMER&apos;S LIVE WORKFLOW</footer>
+      </section>
+
+      <div className={conceptStyles.hiddenCompany}>
+        <span>MASKED OUT OF THE DEMO</span>
+        {['SYSTEMS', 'PERMISSIONS', 'WORKFLOW', 'DOMAIN JUDGEMENT'].map((item) => <b key={item}>{item}</b>)}
+      </div>
+
+      <section className={conceptStyles.companyBlueprint}>
+        <header><span>MONDAY · CUSTOMER REALITY</span><strong>THE INPUT IS A WORKFLOW</strong></header>
+        <div className={conceptStyles.realityTickets}>
+          <article><span>EMAIL</span><strong>“See my note…”</strong><small>context in prose</small></article>
+          <article><span>SHEET</span><strong>RENTAL.xlsx</strong><small>multiple properties</small></article>
+          <article><span>LEGACY API</span><strong>READ ONLY</strong><small>permission denied</small></article>
+          <article><span>HANDWRITTEN</span><strong>rental days: 46</strong><small>domain judgement</small></article>
+        </div>
+        <div className={conceptStyles.productionReceipt}>
+          <span>TAX AI · PRODUCTION</span>
+          <p><b>Rental income</b><strong>MAPPED</strong></p>
+          <p><b>Other expenses</b><strong>MAPPED</strong></p>
+          <p data-missing><b>Fair-rental-day field</b><strong>MISSING</strong></p>
+          <em>“The source says 46 days.”</em>
+        </div>
+        <footer><span>MODEL</span><b>×</b><span>DATA</span><b>×</b><span>ACCESS</span><b>×</b><span>WORKFLOW</span><b>×</b><span>PEOPLE</span></footer>
+      </section>
+
+      <section className={conceptStyles.fdeBridgeDesk}>
+        <div className={conceptStyles.productCrate}><span>PRODUCT RELEASE KIT</span><strong>TAX AI · 4.2</strong><p><b>MODEL</b><b>API</b><b>PLATFORM</b><b>BASE EVALS</b></p><footer>BUILT ONCE FOR MANY</footer></div>
+        <section className={conceptStyles.fieldCaseFile}>
+          <header><span>FDE FIELD CASE · CRETE</span><strong>MAKE THIS LIVE WORKFLOW SUCCEED</strong></header>
+          <div className={conceptStyles.caseProblem}><span>CUSTOMER ISSUE</span><strong>“Fair-rental-day field is missing.”</strong><small>production trace · source says 46 days</small></div>
+          <ol>
+            <li><span>01</span><strong>OBSERVE</strong><small>sit with the real workflow</small></li>
+            <li><span>02</span><strong>INTEGRATE</strong><small>connect access + data</small></li>
+            <li><span>03</span><strong>DEPLOY</strong><small>train, test, earn adoption</small></li>
+          </ol>
+          <footer><span>RETURN TO PRODUCT</span><strong>NEW EVAL + INTEGRATION PATTERN + PR</strong></footer>
+        </section>
+        <div className={conceptStyles.customerDesk}><span>CUSTOMER WORKFLOW</span><p><b>EMAIL</b><b>SHEET</b><b>LEGACY API</b><b>DOMAIN RULE</b></p><strong>46 DAYS</strong><footer>WORKS IN PRODUCTION</footer></div>
+      </section>
+
+      <section className={conceptStyles.roleBlueprint}>
+        <header><span>SAME TOOLS · DIFFERENT OWNERSHIP</span><strong>WHO IS ACCOUNTABLE FOR WHAT?</strong></header>
+        <article><span>PRODUCT ENGINEER</span><strong>Reusable capability</strong><div><b>PATCH</b><b>TARGETED EVAL</b></div><small>turns the 46-day miss into a reusable product change</small></article>
+        <article data-fde><span>FORWARD DEPLOYED ENGINEER</span><strong>End-to-end outcome</strong><div><b>PRODUCTION TRACE</b><b>INTEGRATION</b><b>DEPLOY CHECK</b></div><small>gets the live customer workflow working</small><b>OWNS THE CROSSING</b></article>
+        <article><span>DOMAIN EXPERT</span><strong>Ground truth</strong><div><b>SOURCE · 46 DAYS</b><b>CORRECT ✓</b></div><small>signs off what the right answer means</small></article>
+      </section>
+
+      <section className={conceptStyles.fieldLoopDesk}>
+        <div className={conceptStyles.fieldEvidence}><span>FIELD EVIDENCE</span><strong>46 days was missed</strong><small>correction + production trace</small></div>
+        <ol>
+          {[
+            ['01', 'TRACE', 'what happened?'],
+            ['02', 'PATTERN', 'does it repeat?'],
+            ['03', 'TARGETED EVAL', 'make it testable'],
+            ['04', 'FIX → PRODUCT', 'review · deploy back'],
+          ].map(([number, label, detail]) => <li key={label}><span>{number}</span><strong>{label}</strong><small>{detail}</small></li>)}
+        </ol>
+        <div className={conceptStyles.fdeProof}><span>OPENAI × CRETE · PUBLISHED CASE</span><p><strong>25%</strong><b>→</b><strong>86%</strong></p><small>returns reaching ≥75% correct fields · six weeks</small></div>
+      </section>
+    </div>
+  );
+}
+
 export function FdeLab({
   step,
   onAdvance,
@@ -936,20 +1343,20 @@ export function FdeLab({
   const act = fdeActs[safeStep];
 
   return (
-    <section className={fdeStyles.stage} data-step={safeStep} aria-label="Presenter-led Tax AI field feedback story">
-      <div className={fdeStyles.fieldWash} aria-hidden="true" />
-      <div className={fdeStyles.vignette} aria-hidden="true" />
+    <section className={`${fdeStyles.stage} ${conceptStyles.host} ${conceptStyles.fdeHost}`} data-step={safeStep} aria-label="Presenter-led Tax AI field feedback story">
 
       <header className={fdeStyles.identity}>
         <span>FDE</span>
-        <p><strong>Forward Deployed Engineer</strong><small>A job, not a model.</small></p>
+        <p><strong>Forward Deployed Engineer</strong><small>Works beside the live customer workflow.</small></p>
       </header>
 
       <div className={fdeStyles.beat} aria-live="polite">
         <strong>{act.title}</strong>
       </div>
 
-      <div className={fdeStyles.world}>
+      <FdeExhibit step={safeStep} />
+
+      <div className={`${fdeStyles.world} ${conceptStyles.legacyWorld}`}>
         <section className={`${fdeStyles.scene} ${fdeStyles.demoScene}`} aria-hidden={safeStep !== 0}>
           <div className={fdeStyles.cleanPipeline} aria-label="A clean tax document produces a clean answer">
             <article className={fdeStyles.paperInput}>
@@ -1077,6 +1484,103 @@ export function FdeLab({
 type RsiAct = 'mirror' | 'builder' | 'selection' | 'impact' | 'recursive';
 const rsiActOrder: RsiAct[] = ['mirror', 'builder', 'selection', 'impact', 'recursive'];
 
+const rsiPhase: Record<RsiAct, string> = {
+  mirror: 'OUTPUT ≠ BUILDER',
+  builder: 'SEARCH INSIDE A BOX',
+  selection: 'TEST + SELECT',
+  impact: 'INSTALL ONE WINNER',
+  recursive: 'WHAT MUST RECURSE?',
+};
+
+const rsiExhibitSummary: Record<RsiAct, string> = {
+  mirror: 'Self-correction changes one answer but leaves the AI-building process unchanged.',
+  builder: 'In a demonstrated bounded system, humans lock the goal and evaluator while AI searches candidate code changes.',
+  selection: 'Candidates must remain correct before a faster candidate can become the next seed.',
+  impact: 'AlphaEvolve improved one training kernel by 23 percent, reducing whole-run time by about 1 percent.',
+  recursive: 'Full recursive self-improvement would require lasting, inherited, compounding gains across successor models and remains unproven.',
+};
+
+function RsiExhibit({ act }: { act: RsiAct }) {
+  return (
+    <div className={`${conceptStyles.exhibit} ${conceptStyles.rsiExhibit}`} data-act={act} role="img" aria-label={rsiExhibitSummary[act]}>
+      <div className={conceptStyles.phaseTag}>
+        <span>{String(rsiActOrder.indexOf(act) + 1).padStart(2, '0')}</span>
+        <strong>{rsiPhase[act]}</strong>
+      </div>
+
+      <div className={conceptStyles.rsiStatusBar}>
+        <span>BOUNDED OPTIMIZATION · DEMONSTRATED</span>
+        <strong>FULL RSI · UNPROVEN</strong>
+      </div>
+
+      <section className={conceptStyles.rsiMirrorDesk}>
+        <div className={conceptStyles.sameModelToken}><span>SAME MODEL</span><strong>AI</strong></div>
+        <div className={conceptStyles.answerCards}>
+          <article><span>ANSWER · V1</span><strong>42 days</strong><small>CHECK</small></article><i>→</i>
+          <article><span>ANSWER · V2</span><strong>46 days</strong><small>FIXED</small></article>
+        </div>
+        <b className={conceptStyles.rsiNotEqual}>≠</b>
+        <div className={conceptStyles.builderBlueprint}><span>AI BUILDER · VERSION 1</span><div>{['training.py', 'data pipeline', 'eval suite', 'model recipe'].map(item => <p key={item}><b>{item}</b><small>UNCHANGED</small></p>)}</div><strong>BUILDER FILES DID NOT CHANGE</strong><small>A corrected answer is useful—but it is not a new way to build the next model.</small></div>
+      </section>
+
+      <section className={conceptStyles.builderLabDesk}>
+        <header><span>HUMAN-DEFINED BOX</span><strong>AI SEARCHES · EVALUATOR DECIDES</strong></header>
+        <div className={conceptStyles.fixedLocks}>
+          <article><b>LOCKED</b><span>GOAL</span><strong>Make training code faster</strong></article>
+          <article><b>LOCKED</b><span>EVALUATOR</span><strong>Same answer + lower time</strong></article>
+        </div>
+        <div className={conceptStyles.patchPress}>
+          <div><span>AI GENERATES</span><strong>many code ideas</strong></div><i>→</i>
+          <p><b>PATCH 01</b><b>PATCH 02</b><b>PATCH 03</b></p><i>→</i>
+          <div><span>AUTO EVALUATOR</span><strong>run · verify · time</strong></div>
+        </div>
+        <footer>OBJECTIVE SIGNAL · NOT THE AI&apos;S OPINION</footer>
+      </section>
+
+      <section className={conceptStyles.selectionBench}>
+        <header><span>ILLUSTRATIVE TEST BENCH</span><strong>CORRECT FIRST · THEN FASTER</strong></header>
+        <div className={conceptStyles.gateLabels}><span>CORRECT?</span><span>FASTER?</span></div>
+        <div className={conceptStyles.patchCards}>
+          <article><span>BASELINE</span><strong>100 ms</strong><small>correct</small><b>SEED</b></article>
+          <article><span>PATCH A</span><strong>94 ms</strong><small>correct</small><b>PASS</b></article>
+          <article data-reject><span>PATCH B</span><strong>69 ms</strong><small>wrong answer</small><b>REJECT</b></article>
+          <article data-winner><span>PATCH C</span><strong>86 ms</strong><small>correct</small><b>NEW BEST</b></article>
+        </div>
+        <footer>WINNER BECOMES THE NEXT SEED <b>↺</b></footer>
+      </section>
+
+      <section className={conceptStyles.impactBench}>
+        <div className={conceptStyles.winningPatch}><span>WINNING PATCH</span><strong>install into one training kernel</strong><b>↓</b></div>
+        <div className={conceptStyles.kernelBlock}><span>TRAINING</span><strong>KERNEL</strong><small>one tool inside the AI factory</small></div>
+        <div className={conceptStyles.jobOutcome}><span>SAME TRAINING JOB</span><strong>LESS TIME + COMPUTE</strong></div>
+        <div className={conceptStyles.rsiProof}><span>GOOGLE DEEPMIND · ALPHAEVOLVE</span><p><b>ONE KERNEL</b><strong>+23%</strong><small>faster</small></p><i>→</i><p><b>WHOLE RUN</b><strong>−1%</strong><small>time</small></p></div>
+      </section>
+
+      <section className={conceptStyles.recursiveRig}>
+        <article className={conceptStyles.modelRelease}>
+          <header><span>MODEL RELEASE</span><b>N</b></header>
+          <strong>AI · N</strong>
+          <p><span>answers tasks</span><b>YES</b></p>
+          <p><span>builder changed</span><b>NO</b></p>
+        </article>
+        <section className={conceptStyles.builderLedger}>
+          <header><span>VERSIONED BUILDER MANUAL</span><strong>BUILDER · v1</strong></header>
+          <div>{['TRAINING CODE', 'DATA PROCESS', 'EVALS', 'MODEL RECIPE'].map((item) => <b key={item}>{item}</b>)}</div>
+          <article><span>WINNING CHANGE INSTALLED</span><strong>builder v1 → v2</strong><small>lasting only if the build process itself changes</small></article>
+          <footer>MODEL N+1 IS BUILT FROM THIS NEW VERSION</footer>
+        </section>
+        <article className={conceptStyles.successorRelease}>
+          <header><span>MODEL RELEASE</span><b>N+1</b></header>
+          <strong>AI · N+1</strong>
+          <p><span>inherits builder v2</span><b>YES</b></p>
+          <aside><span>NEXT CHANGE REQUEST</span><strong>Can N+1 improve builder v2 again?</strong></aside>
+        </article>
+        <footer className={conceptStyles.recursiveCriteria}>{['LASTING', 'INHERITED', 'COMPOUNDING'].map((item) => <p key={item}><strong>{item}</strong><small>{item === 'LASTING' ? 'builder version changes' : item === 'INHERITED' ? 'successor uses it' : 'successor improves it again'}</small></p>)}</footer>
+      </section>
+    </div>
+  );
+}
+
 export function RsiLab() {
   const [act, setAct] = useState<RsiAct>('mirror');
 
@@ -1090,11 +1594,11 @@ export function RsiLab() {
 
   const copy: Record<RsiAct, { title: string; action: string }> = {
     mirror: {
-      title: 'Self-correction changes an output; RSI would change the builder.',
+      title: 'Self-correction changes one answer; full RSI would change the builder.',
       action: 'Open the builder',
     },
     builder: {
-      title: 'Humans fix the goal and evaluator; AI searches inside.',
+      title: 'In demonstrated systems, humans lock the goal and evaluator.',
       action: 'Release candidates',
     },
     selection: {
@@ -1114,9 +1618,7 @@ export function RsiLab() {
   const current = copy[act];
 
   return (
-    <section className={rsiStyles.stage} data-act={act} aria-label="Presenter-led AI workshop showing bounded improvement and full recursive self-improvement">
-      <div className={rsiStyles.workshopGlow} aria-hidden="true" />
-      <div className={rsiStyles.vignette} aria-hidden="true" />
+    <section className={`${rsiStyles.stage} ${conceptStyles.host}`} data-act={act} aria-label={`RSI workshop. ${current.title}`}>
 
       <header className={rsiStyles.identity}>
         <span>RSI</span>
@@ -1127,7 +1629,9 @@ export function RsiLab() {
         <strong>{current.title}</strong>
       </div>
 
-      <div className={rsiStyles.world}>
+      <RsiExhibit act={act} />
+
+      <div className={`${rsiStyles.world} ${conceptStyles.legacyWorld}`}>
         <section className={`${rsiStyles.scene} ${rsiStyles.mirrorScene}`} aria-hidden={act !== 'mirror'}>
           <div className={rsiStyles.aiSubject} aria-label="The same AI revises one answer">
             <div className={rsiStyles.aiHead}><i /><i /><i /><b>AI</b><span /></div>
@@ -1229,64 +1733,106 @@ export function RsiLab() {
   );
 }
 
-const scannerQuestions = [
-  { label: 'PROBLEM', question: 'What bottleneck created it?' },
-  { label: 'PROOF', question: 'What works today?' },
-  { label: 'BOUNDARY', question: 'What is still missing?' },
+const fieldKitQuestions = [
+  { number: '01', label: 'WHY NOW?', question: 'What bottleneck created it?', tone: 'red' },
+  { number: '02', label: 'MECHANISM', question: 'What actually changes?', tone: 'teal' },
+  { number: '03', label: 'PROOF', question: 'Where does it work today?', tone: 'yellow' },
+  { number: '04', label: 'BOUNDARY', question: 'What still does not work?', tone: 'ink' },
 ];
 
-export function ClosingLab() {
-  return (
-    <section className={closingStyles.stage} aria-label="A reusable scanner for understanding new AI acronyms">
-      <div className={closingStyles.ambient} aria-hidden="true" />
-      <div className={closingStyles.grid} aria-hidden="true" />
+export function ClosingLab({
+  visualStyle,
+  onVisualStyleChange,
+}: {
+  visualStyle: DeckVisualStyle;
+  onVisualStyleChange: (style: DeckVisualStyle) => void;
+}) {
+  if (visualStyle === 'machine') {
+    return (
+      <section className={closingMachineStyles.stage} aria-label="A machine-mode decoder for understanding the next AI acronym">
+        <VisualModeSwitch key="visual-mode-switch" visualStyle={visualStyle} onVisualStyleChange={onVisualStyleChange} className={modeStyles.switcher} surface="machine" modes={deckVisualModes} />
+        <div className={closingMachineStyles.ambient} aria-hidden="true" />
+        <div className={closingMachineStyles.grid} aria-hidden="true" />
 
-      <header className={closingStyles.heading}>
-        <div className={closingStyles.titleBlock}>
+        <header className={closingMachineStyles.heading}>
+          <span>AI TERM DECODER</span>
           <h2>How to read the next AI acronym.</h2>
-          <p>Scan the idea—not the letters.</p>
-        </div>
-      </header>
+          <p>Scan the change—not the letters.</p>
+        </header>
 
-      <div className={closingStyles.scanner}>
-        <div className={closingStyles.intake}>
-          <div className={closingStyles.mysteryTerm}>
-            <strong>XYZ</strong>
-          </div>
-        </div>
-
-        <div className={closingStyles.scanTunnel}>
-          <div className={closingStyles.gates}>
-            {scannerQuestions.map((item) => (
-              <article key={item.label}>
-                <strong>{item.label}</strong>
-                <p>{item.question}</p>
-                <i aria-hidden="true" />
+        <main className={closingMachineStyles.scanner}>
+          <article className={closingMachineStyles.intake}>
+            <span>INCOMING TERM</span><strong>XYZ</strong><small>LABEL ONLY</small>
+          </article>
+          <section className={closingMachineStyles.scanTunnel} aria-label="Four checks for decoding a new AI term">
+            {fieldKitQuestions.map((item) => (
+              <article key={item.number} data-tone={item.tone}>
+                <span>{item.number}</span><strong>{item.label}</strong><p>{item.question}</p><b>CHECK</b>
               </article>
             ))}
-          </div>
-          <div className={closingStyles.scanBeam} aria-hidden="true" />
-        </div>
+            <i aria-hidden="true" />
+          </section>
+          <aside className={closingMachineStyles.output}>
+            <span>OUTPUT</span><strong>EXPLAINED</strong><p>Why it exists.<br />What changes.<br />Where it works.<br />What remains.</p><em>NO INITIALS NEEDED</em>
+          </aside>
+        </main>
+      </section>
+    );
+  }
 
-        <div className={closingStyles.output}>
-          <div className={closingStyles.understoodStamp}>
-            <strong>UNDERSTOOD</strong>
-          </div>
-          <p>You can explain it<br />without the acronym.</p>
-        </div>
-      </div>
+  return (
+    <section className={closingStyles.stage} aria-label="A field kit for understanding the next AI acronym">
+      <VisualModeSwitch key="visual-mode-switch" visualStyle={visualStyle} onVisualStyleChange={onVisualStyleChange} className={modeStyles.switcher} surface="exhibit" modes={deckVisualModes} />
+      <header className={closingStyles.heading}>
+        <span>TAKE-HOME FIELD KIT</span>
+        <h2>The next acronym will arrive soon.</h2>
+        <p>Do not memorize the letters. Inspect the change.</p>
+      </header>
+
+      <main className={closingStyles.inspectionDesk}>
+        <article className={closingStyles.incomingFolder}>
+          <header><span>INCOMING TERM</span><b>UNSORTED</b></header>
+          <strong>XYZ</strong>
+          <p>A new label is not yet an explanation.</p>
+          <footer>OPEN THE FILE →</footer>
+        </article>
+
+        <section className={closingStyles.fieldChecklist} aria-label="Four questions for inspecting a new AI term">
+          {fieldKitQuestions.map((item) => (
+            <article key={item.number} data-tone={item.tone}>
+              <span>{item.number}</span>
+              <div><strong>{item.label}</strong><p>{item.question}</p></div>
+              <b>CHECK</b>
+            </article>
+          ))}
+        </section>
+
+        <aside className={closingStyles.passCard}>
+          <span>THE UNDERSTANDING TEST</span>
+          <strong>Explain it without the initials.</strong>
+          <p>Then you understand the idea—not just its name.</p>
+          <em>FIELD GUIDE · COMPLETE</em>
+        </aside>
+      </main>
     </section>
   );
 }
 
-const openingChapters = [
+type OpeningArtifactKind = 'route' | 'lesson' | 'world' | 'robot' | 'field' | 'builder';
+
+const openingChapters: Array<{
+  number: string;
+  shift: string;
+  question: string;
+  terms: Array<{ term: string; label: string; kind: OpeningArtifactKind }>;
+}> = [
   {
     number: '01',
     shift: 'SCALE SMARTER',
     question: 'How can AI use less while doing more?',
     terms: [
-      { term: 'MoE' },
-      { term: 'DISTILLATION' },
+      { term: 'MoE', label: 'DISPATCH TICKET', kind: 'route' },
+      { term: 'DISTILLATION', label: 'CLASS NOTES', kind: 'lesson' },
     ],
   },
   {
@@ -1294,8 +1840,8 @@ const openingChapters = [
     shift: 'TOUCH THE WORLD',
     question: 'How does AI predict and act beyond text?',
     terms: [
-      { term: 'WORLD MODEL' },
-      { term: 'VLA' },
+      { term: 'WORLD MODEL', label: 'FUTURE FILM', kind: 'world' },
+      { term: 'VLA', label: 'ROBOT WORK ORDER', kind: 'robot' },
     ],
   },
   {
@@ -1303,43 +1849,82 @@ const openingChapters = [
     shift: 'CLOSE THE LOOP',
     question: 'How does deployment become learning?',
     terms: [
-      { term: 'FDE' },
-      { term: 'RSI' },
+      { term: 'FDE', label: 'FIELD BADGE', kind: 'field' },
+      { term: 'RSI', label: 'BUILDER MANUAL', kind: 'builder' },
     ],
   },
 ];
 
-export function OpeningLab() {
+function OpeningSpecimen({ kind }: { kind: OpeningArtifactKind }) {
+  if (kind === 'route') return <div className={openingStyles.routeTicket}><span>ONE TOKEN</span><strong>256 → 8</strong><small>dispatch only what runs</small></div>;
+  if (kind === 'lesson') return <div className={openingStyles.lessonNotes}><b>TEACHER</b><i>worked answers</i><strong>STUDENT</strong></div>;
+  if (kind === 'world') return <div className={openingStyles.worldStill}><span>t</span><b>t+1</b><strong>t+2?</strong></div>;
+  if (kind === 'robot') return <div className={openingStyles.robotOrder}><span>GOAL</span><strong>BLOCK → TRAY</strong><small>vision · action · check</small></div>;
+  if (kind === 'field') return <div className={openingStyles.fieldBadge}><span>ON SITE</span><strong>FDE</strong><small>DISCOVER · DEPLOY</small></div>;
+  return <div className={openingStyles.builderManual}><span>BUILDER v1</span><strong>MODEL N → N+1</strong><b>UNPROVEN LOOP</b></div>;
+}
+
+export function OpeningLab({
+  visualStyle,
+  onVisualStyleChange,
+}: {
+  visualStyle: DeckVisualStyle;
+  onVisualStyleChange: (style: DeckVisualStyle) => void;
+}) {
+  if (visualStyle === 'machine') {
+    return (
+      <section className={openingMachineStyles.stage} aria-label="Six AI terms in machine visual mode">
+        <VisualModeSwitch key="visual-mode-switch" visualStyle={visualStyle} onVisualStyleChange={onVisualStyleChange} className={modeStyles.switcher} surface="machine" modes={deckVisualModes} />
+        <div className={openingMachineStyles.ambient} aria-hidden="true" />
+        <div className={openingMachineStyles.grid} aria-hidden="true" />
+
+        <main className={openingMachineStyles.story}>
+          <header className={openingMachineStyles.hero}>
+            <span>AI KEEPS INVENTING NEW TERMS.</span>
+            <h1>Six terms.<br /><em>Three real shifts.</em></h1>
+            <p>A system map of what is actually changing.</p>
+          </header>
+          <section className={openingMachineStyles.route} aria-label="Three system shifts containing six AI terms">
+            {openingChapters.map((chapter) => (
+              <article className={openingMachineStyles.chapter} key={chapter.number}>
+                <header><span>{chapter.number}</span><strong>{chapter.shift}</strong></header>
+                <p>{chapter.question}</p>
+                <div className={openingMachineStyles.terms}>{chapter.terms.map(item => <strong key={item.term}>{item.term}</strong>)}</div>
+              </article>
+            ))}
+          </section>
+        </main>
+      </section>
+    );
+  }
+
   return (
     <section className={openingStyles.stage} aria-label="Six AI terms that explain where AI is going next">
-      <div className={openingStyles.ambient} aria-hidden="true" />
-      <div className={openingStyles.grid} aria-hidden="true" />
+      <VisualModeSwitch key="visual-mode-switch" visualStyle={visualStyle} onVisualStyleChange={onVisualStyleChange} className={modeStyles.switcher} surface="exhibit" modes={deckVisualModes} />
+      <header className={openingStyles.hero}>
+        <span>AI KEEPS INVENTING NEW TERMS.</span>
+        <h1>Six terms.<br /><em>Three real shifts.</em></h1>
+        <p>A field guide to what is actually changing.</p>
+      </header>
 
-      <main className={openingStyles.story}>
-        <div className={openingStyles.hero}>
-          <h1>Six AI terms that explain <br /><em>where AI is going next.</em></h1>
-        </div>
-
-        <div className={openingStyles.route} aria-label="The three-part route through six AI concepts">
+      <main className={openingStyles.exhibitTable} aria-label="Three exhibit tables containing six AI concepts">
           {openingChapters.map((chapter) => (
             <article className={openingStyles.chapter} key={chapter.number}>
               <header>
                 <span>{chapter.number}</span>
-                <strong>{chapter.shift}</strong>
+                <div><strong>{chapter.shift}</strong><p>{chapter.question}</p></div>
               </header>
-              <p>{chapter.question}</p>
-              <div className={openingStyles.terms}>
+              <div className={openingStyles.artifactPair}>
                 {chapter.terms.map((item) => (
-                  <div key={item.term}>
-                    <strong>{item.term}</strong>
-                  </div>
+                  <section className={openingStyles.artifact} data-kind={item.kind} key={item.term}>
+                    <OpeningSpecimen kind={item.kind} />
+                    <footer><span>{item.label}</span><strong>{item.term}</strong></footer>
+                  </section>
                 ))}
               </div>
             </article>
           ))}
-        </div>
       </main>
-
     </section>
   );
 }
