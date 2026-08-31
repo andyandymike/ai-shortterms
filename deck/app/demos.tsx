@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useRef, useState, type CSSProperties, type RefObject } from 'react';
+import { useEffect, useMemo, useRef, useState, type CSSProperties, type RefObject } from 'react';
 import moeStyles from './moe-cinema.module.css';
 import moeExhibitStyles from './moe-exhibit.module.css';
 import fdeStyles from './fde-cinema.module.css';
@@ -809,7 +809,7 @@ function EmbodiedExhibit({
           <article className={conceptStyles.sceneMap}><b>03</b><span>OBJECTS / GEOMETRY</span><div><i>ROBOT</i><i>ROAD</i><strong>CURB · 1.2 m</strong></div><small>a labeled map for planning</small></article>
         </div>
         <div className={conceptStyles.worldRecording}>
-          <video ref={worldVideoRef} autoPlay loop muted playsInline preload="auto" poster="/media/genie3-proof.png">
+          <video ref={worldVideoRef} loop muted playsInline preload="auto" poster="/media/genie3-proof.png">
             <source src="/media/genie3-interaction.mp4" type="video/mp4" />
           </video>
           <p><span>OFFICIAL RECORDING</span><strong>GENIE 3</strong><small>an interactive generated world</small></p>
@@ -848,7 +848,7 @@ function EmbodiedExhibit({
 
       <section className={conceptStyles.vlaProofDesk}>
         <div className={conceptStyles.vlaRecording}>
-          <video ref={vlaVideoRef} autoPlay loop muted playsInline preload="auto" poster="/media/gemini-robotics2-proof.png">
+          <video ref={vlaVideoRef} loop muted playsInline preload="auto" poster="/media/gemini-robotics2-proof.png">
             <source src="/media/gemini-robotics2-wholebody.webm" type="video/webm" />
           </video>
           <p><span>OFFICIAL RECORDING</span><strong>GEMINI ROBOTICS 2</strong></p>
@@ -863,40 +863,51 @@ function EmbodiedExhibit({
   );
 }
 
-export function EmbodiedLab() {
+export function EmbodiedLab({ isActive }: { isActive: boolean }) {
   const [act, setAct] = useState<EmbodiedAct>('world-now');
   const worldVideoRef = useRef<HTMLVideoElement>(null);
   const vlaVideoRef = useRef<HTMLVideoElement>(null);
   const isWorld = act.startsWith('world');
   const copy = embodiedCopy[act];
 
-  const restartVideo = (video: HTMLVideoElement | null) => {
-    if (!video) return;
-    video.currentTime = 0;
-    void video.play().catch(() => {
-      // The poster remains visible when autoplay or decoding is unavailable.
+  useEffect(() => {
+    const worldVideo = worldVideoRef.current;
+    const vlaVideo = vlaVideoRef.current;
+
+    worldVideo?.pause();
+    vlaVideo?.pause();
+
+    const visibleVideo =
+      isActive && act === 'world-forms'
+        ? worldVideo
+        : isActive && act === 'vla-proof'
+          ? vlaVideo
+          : null;
+
+    if (!visibleVideo) return;
+
+    visibleVideo.currentTime = 0;
+    void visibleVideo.play().catch(() => {
+      // Keep the poster visible when playback or decoding is unavailable.
+      visibleVideo.pause();
+      visibleVideo.currentTime = 0;
     });
-  };
+
+    return () => {
+      visibleVideo.pause();
+    };
+  }, [act, isActive]);
 
   const advanceAct = () => {
     if (act === 'world-now') setAct('world-rollout');
-    else if (act === 'world-rollout') {
-      restartVideo(worldVideoRef.current);
-      setAct('world-forms');
-    } else if (act === 'world-forms') setAct('vla-gap');
+    else if (act === 'world-rollout') setAct('world-forms');
+    else if (act === 'world-forms') setAct('vla-gap');
     else if (act === 'vla-gap') setAct('vla-control');
-    else if (act === 'vla-control') {
-      restartVideo(vlaVideoRef.current);
-      setAct('vla-proof');
-    } else {
-      restartVideo(worldVideoRef.current);
-      setAct('world-now');
-    }
+    else if (act === 'vla-control') setAct('vla-proof');
+    else setAct('world-now');
   };
 
   const reset = () => {
-    restartVideo(worldVideoRef.current);
-    restartVideo(vlaVideoRef.current);
     setAct('world-now');
   };
 
@@ -1736,7 +1747,7 @@ export function RsiLab() {
 const closingSummaryChapters = [
   {
     number: '01',
-    shift: 'SCALE SMARTER',
+    shift: 'FROM BIGGER TO SMARTER',
     tone: 'teal',
     terms: [
       { term: 'MoE', meaning: 'Activate only what is needed.' },
@@ -1745,7 +1756,7 @@ const closingSummaryChapters = [
   },
   {
     number: '02',
-    shift: 'TOUCH THE WORLD',
+    shift: 'FROM ANSWERS TO ACTIONS',
     tone: 'red',
     terms: [
       { term: 'WORLD MODEL', meaning: 'Predict what happens next.' },
@@ -1754,7 +1765,7 @@ const closingSummaryChapters = [
   },
   {
     number: '03',
-    shift: 'CLOSE THE LOOP',
+    shift: 'FROM SHIPPING TO LEARNING',
     tone: 'yellow',
     terms: [
       { term: 'FDE', meaning: 'Turn field problems into product learning.' },
@@ -1779,7 +1790,7 @@ export function ClosingLab({
 
         <header className={closingMachineStyles.heading}>
           <h2>Six terms. Three shifts.</h2>
-          <p>What changed beneath the acronyms.</p>
+          <p>More efficient systems. More capable actions. Tighter feedback loops.</p>
         </header>
 
         <main className={closingMachineStyles.summaryGrid}>
@@ -1803,7 +1814,7 @@ export function ClosingLab({
       <VisualModeSwitch key="visual-mode-switch" visualStyle={visualStyle} onVisualStyleChange={onVisualStyleChange} className={modeStyles.switcher} surface="exhibit" modes={deckVisualModes} />
       <header className={closingStyles.heading}>
         <h2>Six terms. Three shifts.</h2>
-        <p>What changed beneath the acronyms.</p>
+        <p>More efficient systems. More capable actions. Tighter feedback loops.</p>
       </header>
 
       <main className={closingStyles.summaryGrid}>
@@ -1832,8 +1843,8 @@ const openingChapters: Array<{
 }> = [
   {
     number: '01',
-    shift: 'SCALE SMARTER',
-    question: 'How can AI use less while doing more?',
+    shift: 'FROM BIGGER TO SMARTER',
+    question: 'How can AI deliver more capability with less compute?',
     terms: [
       { term: 'MoE', label: 'DISPATCH TICKET', kind: 'route' },
       { term: 'DISTILLATION', label: 'CLASS NOTES', kind: 'lesson' },
@@ -1841,8 +1852,8 @@ const openingChapters: Array<{
   },
   {
     number: '02',
-    shift: 'TOUCH THE WORLD',
-    question: 'How does AI predict and act beyond text?',
+    shift: 'FROM ANSWERS TO ACTIONS',
+    question: 'How does AI predict what happens next—and act on it?',
     terms: [
       { term: 'WORLD MODEL', label: 'FUTURE FILM', kind: 'world' },
       { term: 'VLA', label: 'ROBOT WORK ORDER', kind: 'robot' },
@@ -1850,8 +1861,8 @@ const openingChapters: Array<{
   },
   {
     number: '03',
-    shift: 'CLOSE THE LOOP',
-    question: 'How does deployment become learning?',
+    shift: 'FROM SHIPPING TO LEARNING',
+    question: 'Who improves AI after it meets the real world?',
     terms: [
       { term: 'FDE', label: 'FIELD BADGE', kind: 'field' },
       { term: 'RSI', label: 'BUILDER MANUAL', kind: 'builder' },

@@ -147,7 +147,7 @@ export default function Home() {
         className={`slide embodied-slide ${active === 3 ? 'is-active' : ''}`}
         aria-hidden={active !== 3}
       >
-        <EmbodiedLab key={`embodied-${demoResetKey}`} />
+        <EmbodiedLab key={`embodied-${demoResetKey}`} isActive={active === 3} />
       </section>
 
       <section

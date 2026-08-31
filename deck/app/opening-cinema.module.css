@@ -74,7 +74,7 @@
 .exhibitTable {
   position: absolute;
   z-index: 3;
-  top: clamp(175px, 28vh, 210px);
+  top: clamp(185px, 28vh, 250px);
   right: clamp(28px, 2.8vw, 44px);
   bottom: clamp(28px, 4vh, 38px);
   left: clamp(28px, 2.8vw, 44px);
@@ -360,7 +360,7 @@
   .hero { top: 18px; right: 20px; left: 20px; }
   .hero h1 { margin-top: 5px; font-size: 43px; }
   .hero p { font-size: 12px; }
-  .exhibitTable { top: 143px; right: 15px; bottom: 20px; left: 15px; }
+  .exhibitTable { top: 151px; right: 15px; bottom: 20px; left: 15px; }
   .chapter { padding: 10px 8px; }
   .chapter > header { grid-template-columns: 25px 1fr; gap: 6px; min-height: 48px; }
   .chapter > header > span { width: 23px; font-size: 7px; }
