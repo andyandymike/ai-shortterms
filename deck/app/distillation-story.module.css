@@ -1,0 +1,952 @@
+.stage {
+  --ink: #171713;
+  --paper: #f2eee4;
+  --paper-2: #fffdf6;
+  --teacher: #e34e68;
+  --student: #147f9f;
+  --learned: #16745f;
+  --yellow: #f1bf3f;
+  --rule: rgba(23, 23, 19, 0.22);
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.surface {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  background:
+    radial-gradient(circle at 17% 53%, color-mix(in srgb, var(--teacher) 9%, transparent), transparent 29%),
+    radial-gradient(circle at 79% 47%, color-mix(in srgb, var(--student) 9%, transparent), transparent 31%),
+    linear-gradient(rgba(23, 23, 19, 0.038) 1px, transparent 1px) 0 0 / 100% 56px,
+    var(--paper);
+}
+
+.surface::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 7px;
+  background: linear-gradient(90deg, var(--teacher) 0 31%, var(--yellow) 31% 58%, var(--student) 58% 100%);
+}
+
+.phaseTag {
+  position: absolute;
+  z-index: 62;
+  top: clamp(91px, 13.6vh, 111px);
+  left: clamp(27px, 3vw, 46px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.phaseTag span {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  background: var(--yellow);
+  font-size: 13px;
+  font-weight: 950;
+}
+
+.phaseTag strong {
+  font-size: clamp(13px, 1vw, 16px);
+  font-weight: 950;
+  letter-spacing: 0.11em;
+}
+
+.sceneCopy {
+  position: absolute;
+  z-index: 60;
+  top: clamp(18px, 2.8vh, 27px);
+  right: clamp(25px, 3vw, 46px);
+  width: min(49%, 630px);
+  text-align: right;
+  pointer-events: none;
+}
+
+.sceneCopy strong {
+  display: block;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(25px, 2.35vw, 37px);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+  text-wrap: balance;
+  animation: copy-arrive 380ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.storyStage {
+  position: absolute;
+  z-index: 8;
+  top: clamp(139px, 20.8vh, 166px);
+  right: clamp(30px, 3.2vw, 50px);
+  bottom: clamp(105px, 15.5vh, 124px);
+  left: clamp(30px, 3.2vw, 50px);
+  min-width: 0;
+  min-height: 0;
+}
+
+.storyStage > section {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  animation: scene-arrive 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.beforeScene {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: clamp(20px, 2.4vw, 36px);
+}
+
+.querySheet,
+.resultSheet,
+.examQuery,
+.examAnswer {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border: 2px solid var(--ink);
+  background: color-mix(in srgb, var(--paper-2) 94%, var(--student));
+  box-shadow: 8px 8px 0 color-mix(in srgb, var(--student) 72%, transparent);
+}
+
+.querySheet {
+  grid-template-rows: auto auto 1fr auto;
+  transform: rotate(-0.35deg);
+}
+
+.querySheet > header,
+.resultSheet > header,
+.examQuery > header,
+.examAnswer > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 48px;
+  padding: 9px 15px;
+  border-bottom: 1px solid var(--ink);
+}
+
+.querySheet > header span,
+.resultSheet > header span,
+.examQuery > header span,
+.examAnswer > header span {
+  font-size: clamp(13px, 1vw, 16px);
+  font-weight: 950;
+  letter-spacing: 0.08em;
+}
+
+.querySheet > header strong,
+.resultSheet > header strong,
+.examQuery > header strong,
+.examAnswer > header strong {
+  flex: 0 0 auto;
+  color: var(--student);
+  font-size: clamp(16px, 1.35vw, 21px);
+  font-weight: 950;
+}
+
+.querySheet h3,
+.examQuery h3 {
+  margin: 0;
+  padding: clamp(15px, 2vh, 22px) clamp(16px, 1.7vw, 25px) 8px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(22px, 2.15vw, 34px);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+.querySheet pre,
+.examQuery pre {
+  align-self: center;
+  margin: 8px clamp(16px, 1.7vw, 25px);
+  padding: clamp(13px, 1.8vh, 19px);
+  overflow: hidden;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: #fffaf0;
+  white-space: pre-wrap;
+}
+
+.querySheet code,
+.examQuery code {
+  font-family: "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: clamp(18px, 1.8vw, 28px);
+  font-weight: 750;
+  line-height: 1.42;
+}
+
+.querySheet > p {
+  margin: 0;
+  padding: 10px 17px 12px;
+  color: color-mix(in srgb, var(--ink) 67%, transparent);
+  font-size: clamp(14px, 1.16vw, 18px);
+  font-weight: 800;
+}
+
+.resultSheet {
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  box-shadow: 8px 8px 0 color-mix(in srgb, var(--teacher) 70%, transparent);
+  transform: rotate(0.25deg);
+}
+
+.resultSheet > header strong { color: var(--teacher); }
+
+.resultRows {
+  display: grid;
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+  min-height: 0;
+  padding: 12px 16px;
+}
+
+.resultRows p {
+  display: grid;
+  grid-template-columns: 0.75fr 0.8fr 1fr;
+  align-items: center;
+  gap: 10px;
+  min-height: 0;
+  margin: 0;
+  padding: 6px 12px;
+  border: 1px solid var(--rule);
+  background: rgba(255, 255, 255, 0.55);
+  font-size: clamp(14px, 1.22vw, 19px);
+}
+
+.resultRows p strong { font-size: 1.08em; }
+.resultRows p span { font-family: "Cascadia Mono", Consolas, monospace; }
+.resultRows p b { justify-self: end; color: var(--learned); font-size: 0.85em; letter-spacing: 0.06em; }
+
+.resultRows p[data-dropped='true'] {
+  border-color: color-mix(in srgb, var(--teacher) 44%, transparent);
+  background: color-mix(in srgb, var(--teacher) 11%, white);
+  color: color-mix(in srgb, var(--ink) 52%, transparent);
+  text-decoration: line-through;
+  animation: row-drop 820ms 360ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.resultRows p[data-dropped='true'] b { color: var(--teacher); }
+
+.resultSheet > footer {
+  display: grid;
+  min-height: 47px;
+  place-items: center;
+  background: var(--teacher);
+  color: #fffaf0;
+  font-size: clamp(17px, 1.55vw, 24px);
+  font-weight: 950;
+  letter-spacing: 0.06em;
+}
+
+.lessonScene {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: clamp(11px, 1.5vh, 16px);
+}
+
+.lessonHeading,
+.trainScene > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 43px;
+  padding: 7px 13px;
+  border: 1px solid var(--ink);
+  background: var(--yellow);
+}
+
+.lessonHeading span,
+.trainScene > header span {
+  font-size: clamp(13px, 1vw, 16px);
+  font-weight: 950;
+  letter-spacing: 0.08em;
+}
+
+.lessonHeading strong,
+.trainScene > header strong {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(18px, 1.55vw, 24px);
+  font-weight: 600;
+}
+
+.joinPipeline {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 34px minmax(170px, 0.66fr) 34px minmax(0, 0.74fr);
+  align-items: stretch;
+  gap: 8px;
+  min-height: 0;
+}
+
+.joinPipeline > b {
+  align-self: center;
+  color: var(--student);
+  font-size: clamp(27px, 2.5vw, 39px);
+  text-align: center;
+}
+
+.joinPipeline > article {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border: 2px solid var(--ink);
+  background: var(--paper-2);
+  box-shadow: 6px 6px 0 color-mix(in srgb, var(--student) 50%, transparent);
+}
+
+.joinPipeline > article > span {
+  display: block;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--ink);
+  font-size: clamp(15px, 1.2vw, 19px);
+  font-weight: 950;
+  letter-spacing: 0.08em;
+}
+
+.joinPipeline article > div {
+  display: grid;
+  align-content: center;
+  gap: 5px;
+  min-height: 0;
+  padding: 10px 12px;
+}
+
+.joinPipeline article p {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 0;
+  padding: 6px 9px;
+  border-bottom: 1px solid var(--rule);
+  font-size: clamp(14px, 1.08vw, 17px);
+}
+
+.joinPipeline article p b { font-family: "Cascadia Mono", Consolas, monospace; }
+
+.joinPipeline article > footer {
+  display: grid;
+  min-height: 38px;
+  place-items: center;
+  border-top: 1px solid var(--ink);
+  color: var(--student);
+  font-size: clamp(15px, 1.2vw, 19px);
+  font-weight: 950;
+}
+
+.joinPipeline .whereGate {
+  position: relative;
+  grid-template-rows: auto 1fr auto;
+  place-items: stretch;
+  background: color-mix(in srgb, var(--teacher) 10%, var(--paper-2));
+  box-shadow: 6px 6px 0 color-mix(in srgb, var(--teacher) 62%, transparent);
+}
+
+.whereGate > strong {
+  display: grid;
+  place-items: center;
+  padding: 10px;
+  color: var(--teacher);
+  font-family: "Cascadia Mono", Consolas, monospace;
+  font-size: clamp(17px, 1.5vw, 23px);
+  line-height: 1.15;
+  text-align: center;
+}
+
+.whereGate > small {
+  display: grid;
+  min-height: 43px;
+  place-items: center;
+  background: var(--teacher);
+  color: white;
+  font-size: clamp(14px, 1.1vw, 17px);
+  font-weight: 950;
+}
+
+.ruleReveal {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(14px, 1.8vw, 26px);
+  padding: 11px clamp(330px, 31vw, 450px) 11px 15px;
+  border: 2px solid var(--ink);
+  background: var(--paper-2);
+}
+
+.ruleReveal strong {
+  color: var(--teacher);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(21px, 1.9vw, 29px);
+  line-height: 1;
+}
+
+.ruleReveal p {
+  margin: 0;
+  font-size: clamp(15px, 1.2vw, 19px);
+  font-weight: 750;
+  line-height: 1.2;
+}
+
+.fixReveal {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+  padding: 8px 12px;
+  border: 2px solid var(--learned);
+  background: var(--learned);
+  color: white;
+}
+
+.fixReveal span {
+  color: var(--yellow);
+  font-size: 14px;
+  font-weight: 950;
+  letter-spacing: 0.1em;
+}
+
+.fixReveal code {
+  font-family: "Cascadia Mono", Consolas, monospace;
+  font-size: clamp(15px, 1.22vw, 19px);
+  font-weight: 800;
+}
+
+.trainScene {
+  display: grid;
+  grid-template-columns: minmax(175px, 0.7fr) minmax(310px, 1.34fr) minmax(170px, 0.7fr);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: clamp(12px, 1.5vw, 21px);
+}
+
+.trainScene > header {
+  grid-column: 1 / -1;
+}
+
+.lessonDeck {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  padding-right: 12px;
+}
+
+.lessonDeck::before,
+.lessonDeck::after {
+  content: "";
+  position: absolute;
+  width: calc(100% - 36px);
+  height: 66%;
+  border: 2px solid var(--ink);
+  background: color-mix(in srgb, var(--paper-2) 86%, var(--teacher));
+}
+
+.lessonDeck::before { transform: translate(-9px, -10px) rotate(-3deg); }
+.lessonDeck::after { transform: translate(9px, 10px) rotate(2deg); }
+
+.lessonDeck article {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  width: calc(100% - 22px);
+  overflow: hidden;
+  border: 2px solid var(--ink);
+  background: var(--paper-2);
+  box-shadow: 6px 6px 0 var(--teacher);
+  transform: rotate(-0.7deg);
+  animation: lesson-feed 1.8s ease-in-out infinite alternate;
+}
+
+.lessonDeck article header {
+  padding: 9px 11px;
+  background: var(--teacher);
+  color: #fffaf0;
+  font-size: clamp(13px, 1vw, 16px);
+  font-weight: 950;
+  letter-spacing: 0.08em;
+}
+
+.lessonDeck article p {
+  display: grid;
+  grid-template-columns: 0.68fr 1.32fr;
+  align-items: center;
+  gap: 9px;
+  margin: 0;
+  padding: 10px 11px;
+  border-top: 1px solid var(--rule);
+}
+
+.lessonDeck article p span {
+  color: var(--teacher);
+  font-size: clamp(13px, 1vw, 16px);
+  font-weight: 950;
+  letter-spacing: 0.08em;
+}
+
+.lessonDeck article p strong {
+  font-size: clamp(17px, 1.4vw, 22px);
+  line-height: 1.05;
+}
+
+.trainingCore {
+  position: relative;
+  display: grid;
+  align-content: center;
+  gap: clamp(13px, 2vh, 21px);
+  min-height: 0;
+  padding: clamp(16px, 2vw, 28px);
+  border: 3px solid var(--ink);
+  background: var(--ink);
+  color: #fffaf0;
+  text-align: center;
+  box-shadow: 9px 9px 0 var(--yellow);
+}
+
+.trainingCore::before,
+.trainingCore::after {
+  content: "→";
+  position: absolute;
+  top: 50%;
+  color: var(--ink);
+  font-size: clamp(27px, 2.6vw, 41px);
+  transform: translateY(-55%);
+}
+
+.trainingCore::before { left: clamp(-31px, -2.3vw, -23px); }
+.trainingCore::after { right: clamp(-31px, -2.3vw, -23px); }
+
+.trainingCore p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  margin: 0;
+}
+
+.trainingCore p span {
+  font-size: clamp(13px, 1vw, 16px);
+  font-weight: 950;
+  letter-spacing: 0.06em;
+}
+
+.trainingCore p span:first-child { color: #7edbea; }
+.trainingCore p span:last-child { color: #ff8395; }
+.trainingCore p b { color: var(--yellow); font-size: 1.8em; }
+
+.trainingCore > strong {
+  color: var(--yellow);
+  font-size: clamp(24px, 2.45vw, 38px);
+  letter-spacing: -0.035em;
+  line-height: 0.96;
+}
+
+.trainingCore > small {
+  font-size: clamp(15px, 1.16vw, 18px);
+  font-weight: 800;
+}
+
+.studentCore {
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  align-content: center;
+  min-height: 0;
+  padding: 15px;
+  border: 2px solid var(--ink);
+  background: color-mix(in srgb, var(--student) 12%, var(--paper-2));
+  box-shadow: 7px 7px 0 var(--student);
+}
+
+.studentCore > span {
+  font-size: clamp(13px, 1vw, 16px);
+  font-weight: 950;
+  letter-spacing: 0.08em;
+}
+
+.studentCore > strong {
+  color: var(--student);
+  font-size: clamp(32px, 3.4vw, 52px);
+  letter-spacing: -0.07em;
+}
+
+.studentCore > div {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  align-content: center;
+  gap: 5px;
+  min-height: 0;
+}
+
+.studentCore i {
+  aspect-ratio: 1;
+  border: 1px solid color-mix(in srgb, var(--student) 54%, transparent);
+  background: color-mix(in srgb, var(--student) 14%, transparent);
+  animation: weight-write 1.5s calc(var(--weight-cell) * 55ms) ease-in-out infinite alternate;
+}
+
+.trainScene > footer {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 14px;
+  min-height: 52px;
+  padding: 8px 13px;
+  border: 2px solid var(--ink);
+  background: var(--paper-2);
+}
+
+.trainScene > footer strong {
+  color: var(--teacher);
+  font-size: clamp(25px, 2.4vw, 38px);
+  letter-spacing: -0.04em;
+}
+
+.trainScene > footer span {
+  font-size: clamp(15px, 1.2vw, 19px);
+  font-weight: 850;
+}
+
+.examScene {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: clamp(17px, 2vw, 29px);
+  padding-top: 10px;
+}
+
+.teacherOffline {
+  position: absolute;
+  z-index: 12;
+  top: -13px;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 12px;
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  box-shadow: 5px 5px 0 var(--ink);
+  transform: translateX(-50%) rotate(-2deg);
+}
+
+.teacherOffline span {
+  color: var(--teacher);
+  font-size: 14px;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-decoration: line-through;
+}
+
+.teacherOffline strong { font-size: 16px; letter-spacing: 0.08em; }
+
+.examQuery,
+.examAnswer { padding-top: 7px; }
+.examQuery { box-shadow: 8px 8px 0 color-mix(in srgb, var(--yellow) 85%, transparent); }
+.examQuery h3 { font-size: clamp(21px, 1.95vw, 31px); }
+.examQuery pre { margin-top: auto; margin-bottom: auto; }
+
+.examAnswer {
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  background: var(--student);
+  color: #fffaf0;
+  box-shadow: 8px 8px 0 var(--ink);
+}
+
+.examAnswer > header { border-color: rgba(255, 255, 255, 0.72); }
+.examAnswer > header strong { color: var(--yellow); }
+
+.examAnswer blockquote {
+  align-self: center;
+  margin: 0;
+  padding: clamp(18px, 2.2vw, 30px);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(24px, 2.45vw, 38px);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.03;
+  text-wrap: balance;
+}
+
+.examAnswer > code {
+  margin: 0 17px 17px;
+  padding: 11px 13px;
+  background: var(--yellow);
+  color: var(--ink);
+  font-family: "Cascadia Mono", Consolas, monospace;
+  font-size: clamp(16px, 1.35vw, 21px);
+  font-weight: 850;
+  text-align: center;
+}
+
+.realProof {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: baseline;
+  gap: clamp(13px, 1.5vw, 22px);
+  min-height: 58px;
+  padding: 8px 15px;
+  border: 2px solid var(--ink);
+  background: var(--paper-2);
+}
+
+.realProof span {
+  font-size: clamp(13px, 1vw, 16px);
+  font-weight: 950;
+  letter-spacing: 0.07em;
+}
+
+.realProof strong {
+  color: var(--student);
+  font-size: clamp(27px, 2.5vw, 39px);
+  letter-spacing: -0.055em;
+}
+
+.realProof small {
+  justify-self: end;
+  font-size: clamp(14px, 1.12vw, 18px);
+  font-weight: 800;
+}
+
+.footer {
+  position: absolute;
+  z-index: 65;
+  right: clamp(27px, 3vw, 46px);
+  bottom: clamp(16px, 2.4vh, 23px);
+  left: clamp(27px, 3vw, 46px);
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.footer button {
+  min-height: 38px;
+  padding: 8px 14px;
+  border: 1px solid var(--ink);
+  background: color-mix(in srgb, var(--paper-2) 92%, transparent);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 950;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+
+.footer button:disabled { cursor: default; opacity: 0.34; }
+
+.footer button[data-primary] {
+  display: flex;
+  min-width: clamp(192px, 18vw, 260px);
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  background: var(--ink);
+  color: #fffaf0;
+  box-shadow: 5px 5px 0 var(--student);
+}
+
+.footer button[data-primary] b { color: var(--yellow); font-size: 18px; }
+
+.footer :global(.demo-step-rail) { color: color-mix(in srgb, var(--ink) 55%, transparent); }
+.footer :global(.demo-step-segments) i { background: color-mix(in srgb, var(--ink) 16%, transparent); }
+.footer :global(.demo-step-segments) i[data-step-state='complete'] { background: color-mix(in srgb, var(--student) 62%, transparent); }
+.footer :global(.demo-step-segments) i[data-step-state='current'] { background: var(--teacher); box-shadow: none; }
+
+.stage[data-visual='atlas'] {
+  --paper: var(--atlas-paper, #f2ecdc);
+  --paper-2: #faf5e8;
+  --ink: var(--atlas-ink, #121518);
+  --teacher: var(--atlas-red, #e3482d);
+  --student: var(--atlas-blue, #125f9f);
+  --yellow: var(--atlas-yellow, #efc84a);
+  --learned: var(--atlas-green, #348b7d);
+}
+
+.stage[data-visual='atlas'] .surface {
+  background:
+    linear-gradient(90deg, rgba(18, 21, 24, 0.04) 1px, transparent 1px) 0 0 / 72px 100%,
+    linear-gradient(rgba(18, 21, 24, 0.045) 1px, transparent 1px) 0 0 / 100% 72px,
+    var(--paper);
+}
+
+.stage[data-visual='atlas'] .phaseTag { left: clamp(105px, 10.5vw, 158px); }
+.stage[data-visual='atlas'] .storyStage { left: clamp(105px, 10.5vw, 158px); }
+.stage[data-visual='atlas'] .footer { left: clamp(105px, 10.5vw, 158px); }
+.stage[data-visual='atlas'] .sceneCopy strong { font-family: Arial, Helvetica, sans-serif; font-weight: 950; }
+
+.stage[data-visual='atlas'] .querySheet,
+.stage[data-visual='atlas'] .resultSheet,
+.stage[data-visual='atlas'] .examQuery,
+.stage[data-visual='atlas'] .examAnswer,
+.stage[data-visual='atlas'] .joinPipeline > article,
+.stage[data-visual='atlas'] .trainingCore,
+.stage[data-visual='atlas'] .studentCore {
+  border-radius: 0;
+}
+
+.stage[data-visual='atlas'] .querySheet,
+.stage[data-visual='atlas'] .resultSheet { transform: none; }
+.stage[data-visual='atlas'] .querySheet h3,
+.stage[data-visual='atlas'] .examQuery h3,
+.stage[data-visual='atlas'] .ruleReveal strong,
+.stage[data-visual='atlas'] .examAnswer blockquote { font-family: Arial, Helvetica, sans-serif; font-weight: 950; }
+
+@keyframes copy-arrive {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scene-arrive {
+  from { opacity: 0; transform: translateY(13px) scale(0.992); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes row-drop {
+  0% { opacity: 1; transform: translateX(0); }
+  48% { opacity: 1; transform: translateX(0); }
+  100% { opacity: 0.38; transform: translateX(15px); }
+}
+
+@keyframes lesson-feed {
+  from { filter: saturate(0.8); }
+  to { filter: saturate(1.18); }
+}
+
+@keyframes weight-write {
+  0%, 28% { background: color-mix(in srgb, var(--student) 10%, transparent); transform: scale(0.88); }
+  72%, 100% { background: color-mix(in srgb, var(--student) 82%, var(--yellow)); transform: scale(1); }
+}
+
+@media (max-width: 900px), (max-height: 650px) {
+  .phaseTag { top: 75px; left: 20px; gap: 7px; }
+  .phaseTag span { width: 28px; height: 28px; font-size: 11px; }
+  .phaseTag strong { font-size: 12px; }
+  .sceneCopy { top: 14px; right: 20px; width: 50%; }
+  .sceneCopy strong { font-size: 21px; }
+  .storyStage { top: 116px; right: 22px; bottom: 82px; left: 22px; }
+  .stage[data-visual='atlas'] .phaseTag,
+  .stage[data-visual='atlas'] .storyStage,
+  .stage[data-visual='atlas'] .footer { left: 89px; }
+  .beforeScene { gap: 15px; }
+  .querySheet > header,
+  .resultSheet > header,
+  .examQuery > header,
+  .examAnswer > header { min-height: 39px; padding: 6px 10px; }
+  .querySheet > header span,
+  .resultSheet > header span,
+  .examQuery > header span,
+  .examAnswer > header span { font-size: 11px; }
+  .querySheet > header strong,
+  .resultSheet > header strong,
+  .examQuery > header strong,
+  .examAnswer > header strong { font-size: 13px; }
+  .querySheet h3,
+  .examQuery h3 { padding: 10px 12px 4px; font-size: 20px; }
+  .querySheet pre,
+  .examQuery pre { margin: 5px 12px; padding: 9px; }
+  .querySheet code,
+  .examQuery code { font-size: 16px; }
+  .querySheet > p { padding: 6px 12px 8px; font-size: 12px; }
+  .resultRows { gap: 3px; padding: 7px 9px; }
+  .resultRows p { padding: 3px 8px; font-size: 12px; }
+  .resultSheet > footer { min-height: 38px; font-size: 15px; }
+  .lessonScene { gap: 8px; }
+  .lessonHeading,
+  .trainScene > header { min-height: 36px; padding: 5px 9px; }
+  .lessonHeading span,
+  .trainScene > header span { font-size: 11px; }
+  .lessonHeading strong,
+  .trainScene > header strong { font-size: 15px; }
+  .joinPipeline { grid-template-columns: minmax(0, 1fr) 25px minmax(135px, 0.66fr) 25px minmax(0, 0.72fr); gap: 5px; }
+  .joinPipeline > article > span { padding: 6px 8px; font-size: 13px; }
+  .joinPipeline article > div { gap: 2px; padding: 5px 8px; }
+  .joinPipeline article p { padding: 3px 5px; font-size: 11px; }
+  .joinPipeline article > footer { min-height: 29px; font-size: 12px; }
+  .whereGate > strong { padding: 5px; font-size: 14px; }
+  .whereGate > small { min-height: 32px; font-size: 12px; }
+  .ruleReveal { display: block; padding: 7px 270px 7px 10px; }
+  .ruleReveal strong { font-size: 18px; }
+  .ruleReveal p { display: none; }
+  .fixReveal { padding: 6px 8px; }
+  .fixReveal code { font-size: 12px; }
+  .trainScene { grid-template-columns: minmax(125px, 0.7fr) minmax(240px, 1.35fr) minmax(125px, 0.7fr); gap: 10px; }
+  .lessonDeck article { width: calc(100% - 14px); }
+  .lessonDeck article header { padding: 6px 7px; font-size: 10px; }
+  .lessonDeck article p { gap: 5px; padding: 6px 7px; }
+  .lessonDeck article p span { font-size: 10px; }
+  .lessonDeck article p strong { font-size: 13px; }
+  .trainingCore { gap: 9px; padding: 10px; }
+  .trainingCore p span { font-size: 10px; }
+  .trainingCore > strong { font-size: 22px; }
+  .trainingCore > small { font-size: 12px; }
+  .studentCore { padding: 9px; }
+  .studentCore > span { font-size: 10px; }
+  .studentCore > strong { font-size: 29px; }
+  .studentCore > div { gap: 3px; }
+  .trainScene > footer { min-height: 42px; padding: 5px 9px; }
+  .trainScene > footer strong { font-size: 23px; }
+  .trainScene > footer span { font-size: 12px; }
+  .examScene { gap: 15px; }
+  .teacherOffline { top: -9px; padding: 5px 8px; }
+  .teacherOffline span { font-size: 11px; }
+  .teacherOffline strong { font-size: 12px; }
+  .examAnswer blockquote { padding: 15px; font-size: 22px; }
+  .examAnswer > code { margin: 0 11px 11px; padding: 8px; font-size: 13px; }
+  .realProof { min-height: 45px; padding: 5px 10px; }
+  .realProof span { font-size: 11px; }
+  .realProof strong { font-size: 23px; }
+  .realProof small { font-size: 12px; }
+  .footer { right: 20px; bottom: 10px; left: 20px; }
+  .footer button { min-height: 31px; padding: 5px 10px; font-size: 11px; }
+  .footer button[data-primary] { min-width: 175px; }
+}
+
+@media (max-width: 680px) {
+  .phaseTag strong { display: none; }
+  .sceneCopy { width: 55%; }
+  .beforeScene,
+  .examScene { grid-template-columns: 1fr 1fr; gap: 9px; }
+  .querySheet > p { display: none; }
+  .resultRows p { grid-template-columns: 1fr 0.8fr; }
+  .resultRows p b { display: none; }
+  .joinPipeline { grid-template-columns: 1fr 18px 0.85fr 18px 0.72fr; }
+  .ruleReveal p { display: none; }
+  .trainScene { grid-template-columns: 0.63fr 1.2fr 0.63fr; gap: 6px; }
+  .lessonDeck article { width: calc(100% - 8px); }
+  .trainingCore p { display: none; }
+  .realProof small { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sceneCopy strong,
+  .storyStage > section,
+  .resultRows p[data-dropped='true'],
+  .lessonDeck article,
+  .studentCore i {
+    animation: none !important;
+  }
+}

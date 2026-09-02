@@ -6018,6 +6018,50 @@ body {
   left: clamp(22px, 2.5vw, 38px);
   right: clamp(22px, 2.5vw, 38px);
   bottom: clamp(8px, 1.5vh, 12px);
+  min-height: 40px;
+  padding: 4px 7px 4px 10px;
+  border: 1px solid rgba(244, 240, 231, 0.18);
+  background: rgba(6, 10, 14, 0.94);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.26);
+}
+
+.deck-visual-switch {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-right: auto;
+  margin-left: clamp(14px, 2vw, 28px);
+  color: rgba(244, 240, 231, 0.7);
+}
+
+.deck-visual-switch > span {
+  margin-right: 6px;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.deck-visual-switch button {
+  padding: 6px 9px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: rgba(244, 240, 231, 0.72);
+  cursor: pointer;
+  font-size: clamp(8px, 0.68vw, 10px);
+  font-weight: 850;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.deck-visual-switch button:hover {
+  background: rgba(244, 240, 231, 0.08);
+  color: #f4f0e7;
+}
+.deck-visual-switch button[aria-pressed='true'] {
+  border-color: #79e5d0;
+  background: #79e5d0;
+  color: #061014;
 }
 
 .progress { gap: 5px; }
@@ -6025,7 +6069,7 @@ body {
 .progress button {
   width: clamp(17px, 1.8vw, 25px);
   height: 2px;
-  background: rgba(244, 240, 231, 0.2);
+  background: rgba(244, 240, 231, 0.34);
 }
 
 .progress button.current {
@@ -6035,7 +6079,7 @@ body {
 
 .source-toggle {
   border-bottom-color: rgba(244, 240, 231, 0.18);
-  color: rgba(244, 240, 231, 0.42);
+  color: rgba(244, 240, 231, 0.68);
   font-size: 9px;
 }
 
@@ -6044,15 +6088,15 @@ body {
 
 .arrow-controls {
   gap: 11px;
-  color: rgba(244, 240, 231, 0.5);
+  color: rgba(244, 240, 231, 0.72);
   font-size: 10px;
 }
 
 .arrow-controls button {
   width: 30px;
   height: 30px;
-  border-color: rgba(244, 240, 231, 0.22);
-  background: rgba(244, 240, 231, 0.025);
+  border-color: rgba(244, 240, 231, 0.36);
+  background: rgba(244, 240, 231, 0.05);
 }
 
 .arrow-controls button:hover:not(:disabled) { border-color: #79e5d0; color: #79e5d0; }
@@ -6123,6 +6167,17 @@ body {
     right: 18px;
     bottom: 7px;
     left: 18px;
+    min-height: 36px;
+    padding: 3px 5px 3px 8px;
+  }
+
+  .deck-visual-switch { margin-left: 10px; }
+  .deck-visual-switch > span { display: none; }
+  .deck-visual-switch button { padding: 5px 7px; font-size: 8px; }
+  .source-toggle {
+    right: 140px;
+    left: auto;
+    transform: none;
   }
 
   .demo-action-stack { gap: 5px; }

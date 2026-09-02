@@ -26,15 +26,16 @@ Presenter controls / 演示控制：
 ### On screen
 
 - **AI KEEPS INVENTING NEW TERMS.**
-- **Six terms. Three real shifts.**
+- A brief storm of real AI acronyms
+- **Six terms. Three shifts.**
 - **From bigger to smarter:** MoE · Distillation
 - **From answers to actions:** World Model · VLA
 - **From shipping to learning:** FDE · RSI
 
 ### Stage cues / 演示提示
 
-- No clicks / 无需点击：pause on **AI KEEPS INVENTING NEW TERMS**, then move left to right across the three exhibit tables. / 先在 **AI KEEPS INVENTING NEW TERMS** 上停一下，再从左到右扫过三张展台。
-- Do not read every label / 不要逐字念：use the three chapter titles to show that the six terms form one story rather than six dictionary entries. / 用三个章节标题说明：这不是六个孤立的词条，而是一条连续的变化主线。
+- No clicks / 无需点击：let the acronym storm land before speaking past the joke; press **R** if you want to replay it. / 先让“缩写风暴”把笑点落下来；需要重播时按 **R**。
+- Once it settles / 动画归位后：move from top to bottom across the three shift rails; do not read every acronym. / 从上到下讲三条变化轨道，不要逐个念缩写。
 
 ### Say — English
 
@@ -80,73 +81,149 @@ Let us start with a strange idea: a model can become much larger without using a
 
 ## Slide 2 — MoE
 
-### On screen
+### Story rule / 讲述规则
 
-- One persistent token and one fixed **Transformer FFN slot**
-- **Dense:** every weight in the same feed-forward block participates
-- **MoE:** router scores → Top-K = 8 → one expert opens in X-ray → weighted mix
-- Final reveal: **671B total → 37B active per token** and **8 / 256 routed experts + shared expert**
-- Published counts are real; the scores and selected expert IDs are explanatory
+Use one metaphor from beginning to end: **a large company handling one tiny task slip**. The seven steps have a simple shape: introduce the term, tell the five-step company story, then show where it is already shipping. Do not introduce hospitals, roads, libraries, or mathematical notation in the main story. From Step 2 to Step 6, the same yellow task slip stays on screen.
 
-### Stage cues / 演示提示
+从头到尾只用一个比喻：**一家大公司处理一张很小的任务单**。七个步骤的结构很简单：先认识这个词，再讲五步公司故事，最后看它已经用在哪里。主线不要再加入医院、公路、图书馆或数学公式。从第二步到第六步，同一张黄色任务单始终留在画面中。
 
-- Click **Run this token**. Point out that the whole dense FFN participates in this forward pass. / 点击 **Run this token**；指出这次前向计算会用到整块稠密 FFN。
-- Click **Swap in MoE**. The Transformer slot, input, and output stay fixed; only the machinery inside the slot changes. / 点击 **Swap in MoE**；Transformer 槽位、输入和输出都不变，变化的是槽位内部的机器。
-- Click **Open the top eight**. Read the router scores first, then pause on the bright X-ray: “activate” means executing this FFN’s learned weights. / 点击 **Open the top eight**；先看 router 排名，再停在明亮的 X-ray 上：“激活”就是让 token 真正通过这块 FFN 权重进行计算。
-- Click **Combine their work**. Follow the selected expert outputs into the weighted sum; only now point to 671B total versus 37B active. / 点击 **Combine their work**；跟着专家输出进入加权合并，到这里再指出 671B 总参数与 37B 激活参数。
-- If useful, click **Try another token** once to show that another token may wake a different subset. / 如果需要，再点一次 **Try another token**，说明另一个 token 可能唤醒不同组合。
+### Step 1 — Meet MoE.
 
-### Say — English
+**On screen / 画面：** The acronym opens into **Mixture of Experts**, followed by the whole idea in one line: **one large company, a small team for each task**. / 先甩出缩写 **MoE**，再展开成 **Mixture of Experts**；最后落到一句话：**一家大公司，每个任务只叫一支小团队**。
 
-Let us begin with an ordinary **dense model**. Inside a Transformer, every token goes through the same feed-forward block. The numbers inside react differently, but the route and the block are fixed. If we make that block larger, every token must run the larger computation.
+**口述 — 中文：**
 
-Now keep the same Transformer slot and change what is inside it. **MoE means Mixture of Experts.** It replaces one feed-forward block with many alternative feed-forward blocks, called experts, and adds a router.
+“第一个词，直接甩出来：**MoE**。它是 **Mixture of Experts，专家混合**。这个名字听起来很技术，但今天先不要想公式，也不要把它想成几个 chatbot 坐在一起讨论。先记住一个画面就够了：**一家很大的公司，每次只叫一支小团队来处理任务。** 为什么需要这样做？我们先看看没有 MoE 时会发生什么。”
 
-The router is also a learned neural network. For this token it produces a score for every expert and keeps the top few. A different token can receive a different ranking.
+**Say — English:**
 
-Now the important word: **activate**. It does not mean that an expert merely lights up or gives an opinion. It means the token vector actually passes through that expert’s learned weights and produces an output. The experts that were not selected perform no forward pass for this token.
+“Our first term is **MoE: Mixture of Experts**. It sounds technical, but do not picture several chatbots debating. Keep one image in mind: **one large company, with only a small team called in for each task.** Why would we need that?”
 
-Finally, the router scores are also used as weights. The selected expert outputs are blended into one result, and that result continues to the next Transformer layer.
+**Point / 指向：** Point once to **MoE**, follow the three letters as they expand, then land on **one large company / a small team**. / 先指一下 **MoE**，跟着三个字母展开，最后落在“**大公司 / 小团队**”上。
 
-DeepSeek-V3 makes the difference concrete. It has **671 billion parameters in total**, but about **37 billion are active for each token**. In an MoE layer, its published configuration lists 256 routed experts, selects eight for a token, and includes one shared expert.
+**Click / 点击：** Pause after the one-line idea, then click **Why do we need it?** / 让这句核心比喻停一拍，再点 **Why do we need it?**。
 
-Think of a hospital only after seeing the mechanism: the building can contain many departments, while one patient visits only a few. But the experts are learned subnetworks, not tidy human departments named “math” or “coding.” The displayed scores and IDs are illustrative—we do not have the real router trace for this sentence.
+### Step 2 — A tiny task. An all-hands meeting.
 
-So the benefit is not “free computation.” It is **more total capacity without making every token use all of that capacity**. The price is a harder routing and systems problem.
+**On screen / 画面：** The sentence appears first; its highlighted word becomes the yellow task slip, and every office window lights up. / 画面先给出完整句子，其中高亮的一小段成为黄色任务单，随后所有办公室窗口亮起。
 
-### 口述 — 中文
+**口述 — 中文：**
 
-我们先看普通的**稠密模型**。在 Transformer 里面，每个 token 都会经过同一块前馈网络。里面的数值会因输入不同而变化，但路线和模块是固定的。这块网络做得越大，每个 token 都必须跑完更多计算。
+“先想象，模型是一家公司。上面是一整句话，黄色高亮是它现在正在处理的一小段文字。我们把这小段文字变成一张任务单。普通模型的做法有点夸张：任务再小，也让整家公司一起上班。”
 
-现在保留同一个 Transformer 槽位，只改变里面的结构。**MoE 是 Mixture of Experts，专家混合。** 它把原来一块前馈网络换成许多块可选择的前馈网络，也就是“专家”，并增加一个路由器。
+**Say — English:**
 
-路由器本身也是训练出来的小神经网络。它会针对当前 token 给每个专家打分，再保留分数最高的少数几个。换一个 token，排名可能就不同。
+“Imagine the model as a company. The yellow highlight is the small piece of the sentence being processed now, so we turn it into a task slip. In a conventional model, even this tiny task makes the whole company work.”
 
-这里最重要的是“**激活**”到底是什么意思。它不是专家亮了一下，也不是专家说了一句意见，而是 token 向量真的进入这块专家 FFN，与里面的权重做一次前向计算，产生一个输出。没有被选中的专家，这一次不参与计算。
+**Point / 指向：** Point to the highlighted word in the sentence, move down to the matching task slip, then sweep across all the lit windows. / 先指句子中高亮的词，再移到同样内容的任务单，最后扫过所有亮起的窗口。
 
-最后，路由器的分数还会作为权重，把八个专家输出合成一个结果，再送入下一层 Transformer。
+**Click / 点击：** Let the all-hands image land, then click **Make it bigger**. / 让“全员出动”的反差停一拍，再点 **Make it bigger**。
 
-DeepSeek-V3 把这个差异变成了具体数字：它一共有 **6710 亿参数**，但处理每个 token 时，大约只有 **370 亿参数被激活**。在一个 MoE 层里，公开配置中有 256 个路由专家；每个 token 选择八个，同时还有一个共享专家。
+### Step 3 — Bigger company. Bigger bill.
 
-看懂机制后，再把它类比成医院：医院里可以有很多科室，但一个病人只会去少数几个。不过，这些“专家”是训练出来的子网络，不一定能整齐地命名为“数学专家”或“代码专家”。屏幕上的分数和专家编号也是解释用示意，我们没有这句话真正的路由日志。
+**On screen / 画面：** The building expands. The task slip stays the same size, but every new window also lights up and the compute bill rises. / 大楼继续扩建；任务单没有变大，但新增窗口也全部亮起，计算账单同步上涨。
 
-所以 MoE 的好处不是“计算免费”，而是：**模型可以拥有很大的总容量，却不要求每个 token 使用全部容量。** 代价是路由、负载均衡和跨设备通信都更难。
+**口述 — 中文：**
 
-### Optional depth — English
+“我们当然希望模型懂得更多，所以不断把公司做大。问题是，公司每扩一层，每张小任务单都要多叫一层人来上班。能力增加了，但每次处理任务的成本也跟着增加。”
 
-The experts usually sit inside the feed-forward parts of a Transformer. The hard engineering problems include routing quality, balancing work across experts, and moving data efficiently between devices.
+**Say — English:**
+
+“We make the company larger because we want more capability. But every new floor joins every tiny task. Capacity grows, and the cost of each task grows with it.”
+
+**Point / 指向：** Keep one hand on the unchanged task slip; with the other, follow the growing building and bill. / 一边指着没有变大的任务单，一边沿大楼和账单的增长方向移动。
+
+**Click / 点击：** After “the cost grows with it,” click **Introduce MoE**. / 说完“成本也跟着增加”后，点 **Introduce MoE**。
+
+### Step 4 — Same company. Smaller team.
+
+**On screen / 画面：** The building stays large. Only eight office windows turn red; the other windows go quiet. / 大楼保持原来的规模；只有八个办公室窗口亮成红色，其余窗口安静下来。
+
+**口述 — 中文：**
+
+“这就是 **MoE，Mixture of Experts，专家混合**。公司不用裁员，也不用变小；它增加一个调度台，根据眼前这张任务单，只叫少数几个小组参与。这里的 Expert 不是一个完整 chatbot，也不一定真的叫‘数学组’或‘代码组’，你可以先把它理解成公司内部不同的计算小组。”
+
+**Say — English:**
+
+“This is **MoE: Mixture of Experts**. The company stays large, but a dispatcher calls in only a few teams for this task. An expert is not a complete chatbot; for now, think of it as one computational team inside the company.”
+
+**Point / 指向：** Hold on the unchanged outline of the whole building, then point to the eight red windows and the quiet grey windows. / 先强调大楼轮廓完全没变，再指八个红色窗口和其余安静的灰色窗口。
+
+**Click / 点击：** Pause on the contrast—**the company stayed big; the meeting became small**—then click **Open one room**. / 在“公司没有变小，开会的人变少了”这里停一拍，再点 **Open one room**。
+
+### Step 5 — Only the called-in teams work.
+
+**On screen / 画面：** One selected office is opened as a simple three-part sequence: task in, work happens, note out. The unselected offices remain still. / 画面打开一个被选中的办公室，用三个动作展示：任务进去、真正工作、短笺出来；没被选中的办公室保持静止。
+
+**口述 — 中文：**
+
+“所以，‘激活八个专家’没有听起来那么神秘。它只是说：这八个小组真的拿到任务、开始计算；其他小组这一次不用工作。它们不是八个人分别回答完整问题，而是在模型处理这一小步时，各自加工同一张任务单。”
+
+**Say — English:**
+
+“So ‘activating eight experts’ is less mysterious than it sounds. Those eight teams actually receive the task and compute; the others do no work this time. They are not answering the whole question independently—they are helping with this one small step.”
+
+**Point / 指向：** Follow the slip into the enlarged office and the note coming out; then briefly point to the motionless offices. / 跟着任务单进入放大的办公室，再跟着短笺出来；最后快速指一下没有动作的办公室。
+
+**Click / 点击：** Once one complete “in → work → out” cycle has finished, click **Combine the notes**. / 等一次完整的“进去—工作—出来”动作结束后，点 **Combine the notes**。
+
+### Step 6 — Big company. Small meeting.
+
+**On screen / 画面：** Eight notes travel to one editing desk and become one result. The full company remains visible beside **256 available / 8 active**, then the DeepSeek-V3 proof appears: **671B total / 37B active per token**. / 八张短笺汇入同一张编辑桌，合成一份结果；完整公司仍留在画面中，旁边显示 **256 available / 8 active**，随后出现 DeepSeek-V3 的真实数字：**671B total / 37B active per token**。
+
+**口述 — 中文：**
+
+“最后，八个小组的工作会合成一份结果，再交给模型继续处理。DeepSeek-V3 是一个真实例子：它总共有 6710 亿参数；处理每一个小单位的文字时，大约激活 370 亿。它有 256 个可选择的路由专家，每次选择八个。MoE 的关键不是把公司变小，而是——**公司保持很大，会议保持很小。**”
+
+**Say — English:**
+
+“The eight teams’ notes are combined into one result, and the model continues. DeepSeek-V3 makes this real: 671 billion parameters in total, about 37 billion active for each token, with eight routed experts selected from 256. MoE does not make the company small—**the company stays big; the meeting stays small.**”
+
+**Point / 指向：** Follow the eight notes into one result. Then point, in order, to the eight lit offices, **256 → 8**, **671B → 37B**, and finally the closing sentence. / 跟着八张短笺汇成一个结果，再依次指八个亮起的办公室、**256 → 8**、**671B → 37B**，最后落在收束句上。
+
+**Click / 点击：** Do not advance immediately. Leave the closing sentence visible for a beat, then click **See where it ships**. / 不要马上翻页，让收束句停留一拍，再点 **See where it ships**。
+
+### Step 7 — MoE is already shipping.
+
+**On screen / 画面：** Three concrete application rows appear: **DeepSeek-V3 — Chat + API**, **Qwen3 MoE — Open Models**, and **Kimi K2 — Agentic Model**. The closing line explains that MoE is the engine underneath, not a feature button. / 出现三条真实应用：**DeepSeek-V3 — 聊天与 API**、**Qwen3 MoE — 开放模型**、**Kimi K2 — Agentic Model**。最后说明：MoE 不是一个功能按钮，而是藏在产品下面的引擎。
+
+**口述 — 中文：**
+
+“MoE 不是论文里才有的概念，它已经在我们会用到的产品下面工作了。**DeepSeek-V3** 用在聊天和 API；**Qwen3 的 MoE 模型**可以开放下载和部署；**Kimi K2**则把这套思路带到 agentic coding，也就是让模型不只补几行代码，而是连续完成更长的编码任务。我们不会看到一个叫‘开启 MoE’的按钮，因为它不是产品功能——它是藏在下面的引擎。三个名字不必都记住，只要记住：**聊天、开放模型、编码 Agent，MoE 已经在真实运行。**”
+
+**Say — English:**
+
+“MoE is no longer just a research idea. **DeepSeek-V3** powers chat and API use, **Qwen3 MoE** offers open models for deployment, and **Kimi K2** brings the architecture to agentic coding. You never click an ‘MoE’ button—it is the engine underneath the product.”
+
+**Point / 指向：** Move left to right across the three cards—**chat + API**, **open models**, **agentic coding**—then land on **the engine under the product**. Do not read every number aloud. / 从左到右扫过三张卡片：**聊天与 API**、**开放模型**、**Agent 编码**；最后落到“**产品下面的引擎**”。不要逐个念完所有数字。
+
+**Click / 点击：** End the section here. Use **Replay MoE** only if you want to revisit the mechanism; otherwise move directly to Distillation. / MoE 主讲到这里结束。只有需要回看机制时才点 **Replay MoE**；正常情况下直接进入蒸馏。
+
+### Optional backup — English
+
+- In implementation terms, the “teams” are usually alternative feed-forward networks inside Transformer layers.
+- The “dispatcher” is a learned router. It scores the experts and keeps a small Top-K for each token.
+- “Working” means the token representation actually passes through the selected experts’ learned weights.
+- The selected outputs are combined using routing weights. The on-screen paths are illustrative, not a real routing trace for the displayed sentence.
+- DeepSeek-V3 also has a shared expert. Sparse activation saves per-token computation; it does not remove the need to store the full model. Practical challenges include load balancing and communication between devices.
+- The application rows use published model configurations: DeepSeek-V3 has 671B total and 37B active parameters per token; Qwen3-235B-A22B has 235B total and 22B active; Kimi K2 has 1T total and 32B active. These numbers are useful backup, not the main spoken story.
 
 ### 可选补充 — 中文
 
-这些专家通常位于 Transformer 的前馈网络部分。真正困难的工程问题包括：怎样选对专家、怎样避免少数专家过忙，以及怎样在不同设备之间高效传输数据。
+- 技术上，“小组”通常是 Transformer 层内部可选择的前馈网络，也就是 FFN。
+- “调度台”是训练出来的 Router。它会给专家打分，再为每个 token 保留排名最高的少数几个，也就是 Top-K。
+- “小组开始工作”意味着 token 的表示真的通过被选中专家的权重进行计算。
+- 被选中的输出会按照路由权重合并。屏幕上的路径只是解释用示意，并不是这句话真实的路由日志。
+- DeepSeek-V3 还有共享专家。稀疏激活减少的是每个 token 的计算量，不代表完整模型不需要存储。真正的工程难点还包括负载均衡和设备之间的通信。
+- 应用卡片使用公开模型配置：DeepSeek-V3 是 671B 总参数、每 token 激活 37B；Qwen3-235B-A22B 是 235B 总参数、激活 22B；Kimi K2 是 1T 总参数、激活 32B。这些数字只作为被追问时的补充，不是主讲内容。
 
 ### Transition — English
 
-MoE keeps a large model and activates less of it. Distillation takes the opposite route: keep selected behavior, but deploy a genuinely smaller model.
+MoE is already shipping inside real products: keep the large company, but call in only a small team. But what if we cannot afford the large company at all? That leads to Distillation: keep selected behavior, but deploy a genuinely smaller model.
 
 ### 过渡 — 中文
 
-MoE 的思路是保留一个很大的模型，但每次只激活其中一小部分。蒸馏则走了另一条路：保留选中的能力，同时真正部署一个更小的模型。
+所以，MoE 已经藏在真实产品下面：保留一家大公司，但每次只叫一支小团队。可如果我们连这家大公司都部署不起呢？这就到了下一种思路——知识蒸馏：保留想要的能力，但真正部署一个更小的模型。
 
 ---
 
@@ -154,54 +231,50 @@ MoE 的思路是保留一个很大的模型，但每次只激活其中一小部�
 
 ### On screen
 
-- The exact same prompt goes to a separate teacher and student
-- Teacher target and student attempt are compared token by token
-- Mismatch → training loss → one small gradient update to the student’s weights
-- One example expands into **800K samples curated with DeepSeek-R1**
-- Training visibly changes **Qwen2.5-32B → R1-Distill-Qwen-32B**
-- The teacher goes offline; a new question and official AIME scores appear only in the closed-book act
+- A plausible SQL query that silently turns **4 users into 2**
+- A teacher-generated worked lesson: **what failed, why, and how to fix it**
+- The training loop: **student draft ≠ teacher lesson → loss → update student**
+- After many curated lessons, the teacher goes offline and the student solves a **new version of the trap**
 
 ### Stage cues / 演示提示
 
-- Click **Ask both models**. Read the teacher’s 80 and the student’s 90 as two separate outputs from the same prompt. / 点击 **Ask both models**；同一道题分别得到教师的 80 和学生的 90，这是两个独立模型的输出。
-- Click **Measure the difference**. In the bright X-ray, compare the target token 80 with the student token 90 and point to the training loss. / 点击 **Measure the difference**；在明亮的 X-ray 中比较目标 token 80 与学生 token 90，并指出 training loss。
-- Click **Update the student**. Watch the teacher answer move from 22% to 23% while the student mistake moves from 41% to 40%. One update changes probabilities slightly; it does not create instant mastery. / 点击 **Update the student**；看教师答案的概率从 22% 升到 23%，学生错误答案则从 41% 降到 40%。一次更新只是轻微调整概率，不会让学生瞬间学会。
-- Click **Repeat at scale**. Watch the single example multiply into 800K curated samples and many small updates. / 点击 **Repeat at scale**；看单个例子扩展成 80 万条筛选样本和许多次小更新。
-- Click **Close the textbook**. The teacher is marked offline before the new question appears. / 点击 **Close the textbook**；先看到教师离线，再出现一道新题。
-- End on the AIME report card. The benchmark is evidence after the mechanism—not the definition of distillation. / 最后落在 AIME 成绩条；成绩是机制之后的证据，不是蒸馏的定义。
+- Start on **THE MISS**. Point only to the requirement and **4 → 2 rows**; let the disappearance create the puzzle. / 先停在 **THE MISS**；只指出需求和 **4 → 2 rows**，让“人怎么不见了”先形成悬念。
+- Click **Ask the teacher**. Trace the picture from **LEFT JOIN: 4 rows**, through **WHERE: NULL fails**, to **RESULT: 2 rows**; end on the fix. / 点击 **Ask the teacher**；沿画面从 **LEFT JOIN：4 行**，经过 **WHERE：NULL 被过滤**，走到 **RESULT：2 行**，最后落到修复方法。
+- Click **Train on lessons**. One card is only a visible stand-in for many lessons. Point to **COMPARE → LOSS → UPDATE** and then to the changing student weights. / 点击 **Train on lessons**；屏幕上的一张教材只是大量样本的代表；依次指出 **比较 → 损失 → 更新**，再指向发生变化的学生权重。
+- Click **Disconnect teacher**. The table and wording are new, but the SQL structure is the same. Point to **TEACHER OFFLINE** before the student answer. / 点击 **Disconnect teacher**；表名和问题已经换了，但 SQL 结构相同；先指出 **TEACHER OFFLINE**，再看学生独立作答。
 - Do not call it “21× cheaper.” Total parameter count and per-token compute are not the same comparison. / 不要说成“便宜 21 倍”；总参数量和每 token 的计算量不是同一个比较口径。
 
 ### Say — English
 
-**Knowledge Distillation** means using a stronger teacher model to help train a smaller student model. The two models stay separate. What transfers is useful behavior—not a copy of the teacher’s architecture or weights.
+**Knowledge Distillation** means using a stronger teacher to train a smaller student **before deployment**. The student does not call the teacher every time. The two models stay separate; what transfers is selected behavior, not the teacher’s architecture or weights.
 
-Start with one prompt. The teacher generates a worked target: the method and the answer, 80. The smaller student sees the same prompt but currently predicts 90. During training, the system knows what target sequence it wants the student to produce.
+Here the student receives a very normal requirement: show every user, including people with no order. Its query uses a `LEFT JOIN`, so it looks reasonable. But the later `WHERE order.status = 'paid'` rejects the rows where the order side is `NULL`. The join kept four users; the filter quietly removed two.
 
-Language models produce probabilities for the next token. Training compares the student’s probabilities with the target tokens. The mismatch becomes a number called **loss**. A gradient then tells us how to nudge the student’s weights so the target becomes slightly more likely next time.
+The teacher now turns that failure into a worked lesson: the original query, the correct result, an explanation of why the rows vanished, and a repair—move the child-table filter into the `ON` condition. This screen is an illustration of a lesson, not a claim that DeepSeek trained on this exact SQL example.
 
-One example creates one small nudge. The student does not memorize the teacher in one conversation, and it does not improve itself merely by asking a question. Training repeats this process over many examples. DeepSeek says the released Qwen distill models were fine-tuned with **800,000 samples curated with DeepSeek-R1**—answers and reasoning produced by the teacher, then selected as a curriculum.
+During training, the student produces its own draft. We compare that draft with the teacher-provided target. The mismatch becomes **loss**, and a gradient nudges only the student’s weights so the desired output becomes more likely next time. One lesson creates only a tiny change; the loop must repeat across many curated examples.
 
-We start with Qwen2.5-32B and update only the **student’s own weights**, producing R1-Distill-Qwen-32B. The 671B teacher is not copied into it. When training is over, the teacher can go offline; the student does not call it every time it answers.
+DeepSeek says its released Qwen distill models were fine-tuned with **800,000 samples curated with DeepSeek-R1**. Starting from Qwen2.5-32B, this process produced R1-Distill-Qwen-32B. The teacher is not copied into the student.
 
-Then both models take the same exams. On AIME 2024, the teacher scored 79.8 and the 32B student scored 72.6—about 91 percent of the teacher’s score. On MATH-500, the scores were 97.3 and 94.3; on other tests the gap is larger.
+Now we disconnect the teacher and change the problem from users and orders to devices and alerts. The student recognizes the same hidden structure and proposes the same kind of fix. That new example is the important test: did it copy an answer, or learn a reusable pattern?
 
-So distillation is a teaching process, not a ZIP compressor. A smaller student learns selected behavior from examples, but it does not automatically inherit everything the teacher knows or every safety property it has.
+The published number on screen is separate real-world evidence, not the score of this SQL demo: DeepSeek reports **72.6 on AIME 2024** for R1-Distill-Qwen-32B. Distillation is therefore closer to building a curriculum than creating a ZIP file: it can preserve useful behavior in a smaller model, but it does not automatically transfer everything the teacher knows or every safety property it has.
 
 ### 口述 — 中文
 
-**Knowledge Distillation，知识蒸馏**，就是让一个更强的教师模型帮助训练一个更小的学生模型。两个模型始终是分开的。转移的是有用的行为，不是把教师的架构或权重完整复制一份。
+**Knowledge Distillation，知识蒸馏**，就是在部署之前，用一个更强的教师训练一个更小的学生。学生上线后不需要每次再问教师。两个模型始终分开；转移的是选中的行为，不是把教师的架构或权重完整复制一份。
 
-先看一道题。教师生成一个带过程的目标答案，最后得到 80；较小的学生看到同一道题，但它现在预测的是 90。训练时，系统知道希望学生产生的是哪一串目标 token。
+这里学生收到一个很正常的需求：显示所有用户，包括从来没有订单的人。它用了 `LEFT JOIN`，看起来没毛病。但后面的 `WHERE order.status = 'paid'` 会把订单侧为 `NULL` 的行过滤掉。也就是说，JOIN 本来保住了 4 个人，后面的过滤条件又悄悄删掉了 2 个。
 
-语言模型每一步其实是在给下一个 token 分配概率。训练会把学生的概率与目标 token 比较，差异变成一个叫做 **loss，损失**的数字。随后通过梯度，稍微调整学生的权重，让正确目标下一次出现的概率高一点。
+教师接下来把这次失败变成一份“带讲解的教材”：原始问题、正确结果、为什么会少人，以及怎样修——把右表条件移进 `ON`。这里是帮助理解的示意例子，并不是说 DeepSeek 的训练集里真的有这一条 SQL。
 
-一个例子只产生一次很小的推动。学生不会问一次问题就把教师记住，也不是靠聊天自动变聪明。训练需要在大量例子上重复这个过程。DeepSeek 公开说明，这批 Qwen 蒸馏模型使用了 **80 万条由 DeepSeek-R1 生成、再经过筛选整理的样本**进行微调，相当于教师先编教材。
+训练时，学生先产生自己的答案，再和教师提供的目标比较。差异会变成 **loss，损失**；梯度只去轻微调整学生的权重，让目标答案下一次更容易出现。一条教材只能推动一点点，所以必须在大量经过整理的例子上反复训练。
 
-我们从 Qwen2.5-32B 开始，只更新**学生自己的权重**，最后得到 R1-Distill-Qwen-32B。6710 亿参数的教师没有被复制进去。训练完成后，教师可以离线；学生每次回答时不需要再调用它。
+DeepSeek 公开说明，这批 Qwen 蒸馏模型使用了 **80 万条与 DeepSeek-R1 一起筛选整理的训练样本**进行微调。以 Qwen2.5-32B 为起点，最后得到 R1-Distill-Qwen-32B。教师本身并没有被复制进学生。
 
-最后，让教师和学生参加同一场考试。AIME 2024 上，教师是 79.8，320 亿参数学生是 72.6，大约保留了教师成绩的 91%。MATH-500 上是 97.3 对 94.3；其他考试的差距会更大。
+现在我们把教师断开，再把问题从“用户和订单”换成“设备和告警”。表名和文字都变了，但隐藏结构相同。学生仍能指出 `WHERE` 会删掉 `NULL` 行，并给出同类修复。这个新例子才是关键：它背下了一道答案，还是学到了一条能迁移的规律？
 
-所以蒸馏是一种教学过程，不是 ZIP 压缩。小模型通过样本学到教师的一部分行为，但不会自动继承教师的全部知识和所有安全表现。
+屏幕最后的公开数字是独立的真实证据，不是这道 SQL 的得分：DeepSeek 报告 R1-Distill-Qwen-32B 在 **AIME 2024 得到 72.6**。所以蒸馏更像“编一套教材”，而不是做一个 ZIP 压缩包：它能把有用行为带进小模型，但不会自动继承教师的全部知识和所有安全能力。
 
 ### Optional depth — English
 
@@ -229,7 +302,7 @@ The first two ideas ask how we can afford to use AI. The next question is differ
 
 ---
 
-## Slide 4, Acts 1–3 — World Model
+## Slide 4 — World Model
 
 ### On screen
 
@@ -244,7 +317,7 @@ The first two ideas ask how we can afford to use AI. The next question is differ
 - Begin with the current frame. Point out that “robot on a street” describes a noun-filled snapshot, but does not answer what the arrow key will cause. / 先停在当前画面。指出“街上的机器人”只能描述一张充满名词的快照，却没有回答按下方向键会造成什么结果。
 - Click **Predict one step**. Follow the current observation, the action ticket, and the three simulated futures. Point to **↺**: a predicted state can seed another rollout. / 点击 **Predict one step**；顺着当前观察、动作票据和三个模拟未来来看。最后指向 **↺**：预测出的状态可以继续成为下一轮预测的起点。
 - Click **Show what gets built**. Read the three rows as three different canvases for the same job—not three separate definitions. / 点击 **Show what gets built**；把三行理解为完成同一任务的三种“画布”，而不是三个互不相关的定义。
-- Let the Genie 3 recording run briefly. Then click **Switch to VLA**. / 让 Genie 3 录像播放一会儿，再点击 **Switch to VLA**。
+- Let the Genie 3 recording run briefly. Then use the deck arrow to move to the VLA slide. / 让 Genie 3 录像播放一会儿，再用页面导航进入下一张 VLA。
 
 ### Say — English
 
@@ -292,7 +365,7 @@ The world model is the simulator. Now we need a driver.
 
 ---
 
-## Slide 4, Acts 4–6 — VLA
+## Slide 5 — VLA
 
 ### On screen
 
@@ -356,26 +429,25 @@ Robots work in the physical world. Business AI works in another messy world: com
 
 ---
 
-## Slide 5 — FDE
+## Slide 6 — FDE
 
 ### On screen
 
 - **FDE — Forward Deployed Engineer**
-- **Clean demo:** the model works because systems, permissions, workflow, and domain judgement are outside the frame
-- **Monday collision:** real inputs expose a missing “fair-rental-day” field
-- **Fault line:** Product Core ↔ **FDE** ↔ Customer Reality
-- **Role difference:** same engineering toolbox; different position, scope, and success metric
-- **Field loop:** correction → production trace → repeated pattern → targeted eval → reviewed fix
-- Visible case evidence: returns reaching **≥75% correct fields** rose from **25% to 86% in six weeks**
-- Persistent boundaries: **FDE is a job, not a model; this is a team loop, not a lone hero.**
+- One persistent map: **Product Core · Last-mile Boundary · Customer Site**
+- One illustrative case: clean demo → live miss → trace → eval + reviewed fix → replay on a new customer
+- The FDE carries a reproducible evidence packet: **source + production trace + expert sign-off**
+- Role boundary: Product Engineer owns reusable capability; Domain Expert owns correctness; **FDE owns the end-to-end crossing**
+- Aha: **the next customer gets the fix without needing the same rescue**
+- Published case evidence: **7,000 returns; 25% → 86%** reaching ≥75% correct fields in six weeks
 
 ### Stage cues / 演示提示
 
-- **0 — Demo / 演示：** point to the four crossed-out pieces of company reality, then click **Add the company**. / 指一下被排除在 demo 外的四类公司现实，然后点击 **Add the company**。
-- **1 — Collision / 碰撞：** let the messy inputs land; point to the missing field and the practitioner correction, then click **Find the gap**. / 等杂乱输入落下；指向遗漏字段和税务人员的纠正，然后点击 **Find the gap**。
-- **2 — Fault line / 断层：** read left → right: reusable product, last mile, real customer workflow. Point to the FDE bridge, then click **Compare the roles**. / 从左到右讲：通用产品、最后一公里、真实客户流程；指向中间的 FDE 桥梁，然后点击 **Compare the roles**。
-- **3 — Roles / 角色：** compare success measures—not seniority. Product Engineer: broad reliability; FDE: adoption and workflow impact; Domain Expert: trusted correctness. Then click **Close the loop**. / 比较成功标准，而不是比较谁更高级：产品工程师看通用可靠性；FDE 看采用和业务流程效果；领域专家判断结果是否可信正确。然后点击 **Close the loop**。
-- **4 — Payoff / 收益：** follow the correction through trace → pattern → eval → reviewed fix; only then read the published Tax AI numbers and click **Next: RSI**. / 顺着纠正一路讲到记录、模式、评测和审核后的修复；最后再读官方 Tax AI 数据，然后点击 **Next: RSI**。
+- **0 — Demo / 演示：** point to the dark customer zone: the company is literally outside the demo frame. Click **Enter the field**. / 指向右侧被遮住的客户现场：公司现实真的在 demo 画框之外。点击 **Enter the field**。
+- **1 — Field / 现场：** follow the same case into email, sheet, API, and domain note; land on `NULL` and the expert correction. Click **Open the trace**. / 跟着同一个案例进入邮件、表格、API 和领域备注；最后落在 `NULL` 和专家纠正上。点击 **Open the trace**。
+- **2 — Trace / 追踪：** read the red chain from right to left: source + sign-off ← output ← product trace ← case file. Point to the yellow evidence packet. Click **Make it testable**. / 从右向左读红色链路：来源与确认 ← 输出 ← 产品 trace ← 案例文件。指向黄色证据包。点击 **Make it testable**。
+- **3 — Eval + fix / 评测与修复：** watch the evidence packet travel back to Product Memory; point to expected answer, targeted eval, regression check, and human approval. Click **Replay on a new case**. / 看证据包回到 Product Memory；依次指向期望答案、针对性评测、回归检查和人工审核。点击 **Replay on a new case**。
+- **4 — Replay / 重放：** a new 52-day case passes without FDE intervention. Then reveal the published Tax AI numbers and click **Next: RSI**. / 新的 52 天案例无需 FDE 介入就通过。最后再读官方 Tax AI 数据，然后点击 **Next: RSI**。
 
 ### Say — English
 
@@ -383,25 +455,19 @@ FDE stands for **Forward Deployed Engineer**.
 
 This one is different: FDE is a job, not a type of model.
 
-Start with the clean demo on screen. One tidy document goes in, the model maps every field, and the result says PASS. It looks production-ready.
+Start with the clean demo. One tidy file goes in, every field is mapped, and the answer says PASS. It looks production-ready. But the whole company is still hidden on the right: its systems, permissions, workflow, and professional judgement never entered the test.
 
-But notice what the demo removed: company systems, permissions, workflow, and professional judgement. The model may work perfectly while the company around it is still missing.
+Now enter the field. The input is no longer one file. It is an email, a spreadsheet, a read-only API, and a domain note. In our illustrative case, the source says 46 fair-rental days, but the live output is `NULL`. We are no longer debugging only a model; we are debugging a working system.
 
-Now Monday arrives. The clean file becomes emails, spreadsheets, an old API, and a handwritten note. A field such as “fair rental days” is missed, and a tax practitioner corrects it. This is the important change: we are no longer testing only a model. We are testing a whole working system—model, data, access, workflow, and people.
+Open the trace. “It failed” is not enough for a product team to reproduce anything. The FDE packages three things together: the original source, the exact production trace, and a domain expert’s sign-off on the correct answer. That becomes one reproducible case file.
 
-That creates the fault line shown in the next scene. Product engineers usually build reusable capabilities that should work reliably for many customers. Customer experts understand their own rules and know what a correct result looks like. The difficult last mile sits between those two worlds.
+This also shows the role difference without ranking the roles. The Product Engineer owns a capability that must work across customers. The Domain Expert owns what “correct” means. The FDE works across the boundary and owns whether this real workflow succeeds end to end.
 
-An FDE works across that boundary. They learn the real workflow, write and integrate production code, help roll it out, watch how people use it, and carry field evidence back to the product team.
+Next, make the failure testable. The evidence packet moves back into the product as an eval with an expected answer. A candidate fix must pass that targeted eval, avoid new regression failures, and still receive human review. The customer problem is no longer an anecdote; it has become product memory.
 
-This does not mean an FDE is a “better” or more senior version of a product engineer. They often use the same engineering toolbox. The difference is their operating position and success measure. A product engineer is usually optimizing a reusable platform for broad reliability. An FDE owns a specific deployment end to end, so success means adoption and measurable workflow impact. The domain expert still owns the meaning of “correct.”
+Finally, replay the system on a new illustrative case: 52 days, a different customer, correct on the first run, with no FDE rescue. That is the aha moment. A strong FDE does not become a permanent human patch; one field failure becomes a reusable capability.
 
-The benefit is not merely faster installation. A good field loop turns one production failure into reusable learning. The team keeps the production trace, checks whether the problem repeats, creates a targeted evaluation, proposes a fix, and reviews it before rollout. The original customer workflow improves, and the repeated pattern can also improve the product for others.
-
-OpenAI’s Tax AI work with Crete accounting firms is a useful example. The published case mentions production failures involving fields such as “fair rental days.” The team used practitioner feedback, product traces, targeted evaluations, and engineering iteration as one loop.
-
-The published case says Tax AI processed 7,000 returns. In six weeks, the share of returns reaching at least 75% correct field completion rose from 25% to 86%. The point is not that an FDE fixed everything alone. It is that practitioners, field engineers, product traces, evals, and engineering review formed one working loop.
-
-So the short version is: models made the demo easier; FDEs help make the deployment real—and make its failures useful.
+OpenAI’s published Tax AI case with Crete gives us the real scale behind the illustration: 7,000 returns processed, with the share reaching at least 75% correct fields rising from 25% to 86% in six weeks. Practitioners, traces, evals, engineering changes, and human review formed the loop—the FDE did not act as a lone hero.
 
 ### 口述 — 中文
 
@@ -409,25 +475,19 @@ FDE 是 **Forward Deployed Engineer** 的缩写，通常翻译成“前向部署
 
 这个词和前面几个不一样：FDE 是一种职位，不是一种模型。
 
-先看屏幕上的干净 demo：一份整齐的文件进去，模型把字段全部填好，结果显示 PASS，看起来已经可以上线了。
+先看干净的 demo：一份整齐的文件进去，字段全部填好，结果显示 PASS，看起来已经可以上线。但右侧整家公司仍然被遮在画框之外：系统、权限、工作流程和专业判断，根本没有进入这次测试。
 
-但请注意，这个 demo 悄悄拿掉了什么：公司的系统、权限、工作流程，还有专业人员的判断。模型可以表现得非常好，但模型周围的“公司现实”还完全没有进来。
+现在进入现场。输入不再是一份文件，而是邮件、表格、只读 API 和领域备注。在这个示意案例里，原始资料写着 46 个公平出租日，但线上输出却是 `NULL`。这时我们调试的已经不只是模型，而是一整套工作系统。
 
-接着星期一来了。干净文件变成邮件、表格、老旧 API 和手写备注。“公平出租天数”这样的字段被漏掉，税务人员把它纠正过来。这里最重要的变化是：我们测试的不再只是一个模型，而是一整套系统——模型、数据、权限、流程和人。
+接着打开 trace。只说一句“它失败了”，产品团队其实什么也复现不了。FDE 会把三样东西打包在一起：原始资料、当时的生产运行记录，以及领域专家对正确答案的确认。这样，一次抱怨才变成一个可以重现的案例文件。
 
-于是就出现了屏幕上的“断层”。产品工程师通常负责做可复用的能力，希望它能稳定服务许多客户；客户侧的领域专家最懂自己的规则，也知道什么结果才算正确。真正困难的最后一公里，就夹在这两个世界中间。
+这个画面也顺便说明了三种角色的区别，但不是给职位排高低。产品工程师负责让通用能力可以服务很多客户；领域专家负责判断什么才是正确；FDE 横跨中间边界，对这条真实流程能不能端到端跑通负责。
 
-FDE 的工作位置横跨这条边界。他要理解客户的真实流程，写代码和做集成，帮助系统上线，观察大家到底怎么使用，再把现场证据带回产品团队。
+下一步是把失败变成测试。黄色证据包回到产品侧，变成一条有明确期望答案的 eval。候选修复不仅要通过针对性评测，还不能引入新的回归问题，并且要经过人工审核。到这里，客户现场的一次问题才真正变成了“产品记忆”。
 
-这并不是说 FDE 比普通产品工程师“更高级”或“更厉害”。两者经常使用同一套工程能力。不同的是工作位置、负责范围和成功标准。产品工程师更关注通用平台能否大范围稳定工作；FDE 对某个真实部署负责到底，所以成功要看用户是否真的采用，以及业务流程有没有可衡量的改善。至于“什么才算正确”，仍然需要领域专家来判断。
+最后，用一个新的示意案例重放：另一个客户、52 天、第一次就答对，而且不需要 FDE 再来救火。这就是 aha moment：优秀的 FDE 不是长期充当人工补丁，而是把一次现场失败变成下一位客户也能直接使用的产品能力。
 
-它带来的好处也不只是更快安装。一条好的现场闭环，会把一次生产问题变成可复用的学习：团队保留当时的运行记录，确认问题是否反复出现，把它写成有明确答案的评测，再提出修复并经过审核。这样不但当前客户的流程会改善，反复出现的问题还可能变成平台能力，帮助其他客户。
-
-OpenAI 与 Crete 旗下会计师事务所合作的 Tax AI，是一个很好理解的例子。官方文章提到过“fair rental days，也就是公平出租天数”这类生产问题。团队把税务人员反馈、产品运行记录、针对性评测和工程迭代连成了一条闭环。
-
-官方案例称，Tax AI 共处理了 7,000 份税表。六周内，达到“至少 75% 字段正确”的税表比例，从 25% 上升到 86%。这里不是说一个 FDE 单枪匹马修好了一切，而是税务专家、现场工程师、产品记录、评测和工程审核真正形成了一条闭环。
-
-所以最短的总结是：模型让 demo 变容易；FDE 让部署变真实，也让部署中的失败变得有用。
+OpenAI 与 Crete 的 Tax AI 官方案例，给了这段示意背后的真实规模：共处理 7,000 份税表；六周内，达到“至少 75% 字段正确”的税表比例从 25% 上升到 86%。真正形成闭环的是税务专家、运行记录、评测、工程修改和人工审核，而不是某个 FDE 单枪匹马修好一切。
 
 ### Optional depth — English
 
@@ -447,7 +507,7 @@ Today, people such as FDEs deliberately close the feedback loop. The final quest
 
 ---
 
-## Slide 6 — RSI
+## Slide 7 — RSI
 
 ### On screen
 
@@ -539,7 +599,7 @@ These six terms are very different, but they share one story: each appeared when
 
 ---
 
-## Slide 7 — Six Terms, Three Shifts
+## Slide 8 — Six Terms, Three Shifts
 
 ### On screen
 
