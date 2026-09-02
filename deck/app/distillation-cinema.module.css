@@ -559,8 +559,9 @@
   gap: clamp(9px, 1.2vw, 18px);
 }
 .publishedProof p { display: grid; gap: 1px; margin: 0; }
-.publishedProof p span, .publishedProof p small { color: rgba(245, 239, 228, 0.38); font-size: clamp(6px, 0.49vw, 8px); font-weight: 800; letter-spacing: 0.09em; }
-.publishedProof p strong { font-family: Georgia, "Times New Roman", serif; font-size: clamp(17px, 1.85vw, 28px); font-weight: 500; line-height: 1; }
+.publishedProof p span { color: rgba(245, 239, 228, 0.76); font-size: clamp(8px, 0.62vw, 10px); font-weight: 800; letter-spacing: 0.08em; }
+.publishedProof p small { color: rgba(245, 239, 228, 0.58); font-size: clamp(7px, 0.56vw, 9px); font-weight: 800; letter-spacing: 0.07em; }
+.publishedProof p strong { font-family: Georgia, "Times New Roman", serif; font-size: clamp(20px, 2vw, 30px); font-weight: 500; line-height: 1; }
 .publishedProof p:nth-of-type(2) strong { color: var(--cyan); }
 .publishedProof p:nth-of-type(3) strong { color: var(--coral); }
 .publishedProof > i { position: relative; height: 1px; background: rgba(245, 239, 228, 0.15); }

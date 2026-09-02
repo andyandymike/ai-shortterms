@@ -75,6 +75,11 @@ button { color: inherit; font: inherit; }
   pointer-events: auto;
 }
 
+.slide:not(.is-active),
+.slide:not(.is-active) * {
+  animation-play-state: paused !important;
+}
+
 .eyebrow {
   margin: 0;
   color: var(--teal);

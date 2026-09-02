@@ -21,47 +21,52 @@ Presenter controls / 演示控制：
 
 ---
 
-## Slide 1 — The AI Vocabulary Factory
+## Slide 1 — Six Terms, Three Shifts
 
 ### On screen
 
-- **AI moves fast. Its vocabulary moves faster.**
-- A visible factory turns **a new bottleneck** into **a new term**.
-- Running joke: **Days since last new term: 00**
-- Six outputs: **MoE · Distill · World · VLA · FDE · RSI**
+- **AI KEEPS INVENTING NEW TERMS.**
+- **Six terms. Three real shifts.**
+- **From bigger to smarter:** MoE · Distillation
+- **From answers to actions:** World Model · VLA
+- **From shipping to learning:** FDE · RSI
 
 ### Stage cues / 演示提示
 
-- No clicks / 无需点击：wait for one bottleneck to be stamped into a term, then point to the six finished labels below. / 等一个“新瓶颈”被盖章变成新术语，再指向下方已经出厂的六个词。
-- Start with the counter / 从计数器开玩笑：pause briefly on **00 days** before the first sentence. / 先在“00 天”处停一下，再说第一句话。
+- No clicks / 无需点击：pause on **AI KEEPS INVENTING NEW TERMS**, then move left to right across the three exhibit tables. / 先在 **AI KEEPS INVENTING NEW TERMS** 上停一下，再从左到右扫过三张展台。
+- Do not read every label / 不要逐字念：use the three chapter titles to show that the six terms form one story rather than six dictionary entries. / 用三个章节标题说明：这不是六个孤立的词条，而是一条连续的变化主线。
 
 ### Say — English
 
-AI moves fast. Its vocabulary sometimes seems to move even faster.
-
-According to this highly scientific counter, it has been exactly zero days since AI invented another term.
+AI moves fast. Its vocabulary sometimes seems to move even faster—and the AI naming department never appears to take a day off.
 
 If you stop following AI for a month, you do not just miss a new model. You come back to a bowl of alphabet soup: MoE, VLA, FDE, RSI—and everyone talks as if these words have always existed.
 
-But the terms do not appear from nowhere. AI hits a new bottleneck: too much compute, a model that is too large, a robot that cannot act reliably, or a demo that breaks inside a real company. Someone finds a new approach—and then the naming department gets to work.
+But these six terms are not six unrelated trends. They fit into three larger shifts.
 
-Today is not an AI dictionary. We will put six labels back through the machine and ask four simple things: what the name means, what bottleneck created it, how the mechanism works, and what evidence and limitations we have today.
+First, from bigger to smarter: how do we get more useful capability without paying for the whole model every time? That gives us MoE and distillation.
 
-If we can explain the idea without hiding behind the acronym, then we actually understand it.
+Second, from answers to actions: how does AI predict what happens next and then act in the world? That gives us world models and VLA.
+
+Third, from shipping to learning: how does an AI system improve after it meets real users, real workflows, and eventually its own building process? That gives us FDE and RSI.
+
+For each term, we will keep the questions simple: what does it stand for, why did it appear, what problem does it solve, how does it work, and where can we see it today?
 
 ### 口述 — 中文
 
-AI 世界日新月异，但有时候，它的词汇更新得比技术本身还快。
-
-根据右上角这个非常“科学”的计数器，距离 AI 上一次发明新词，已经过去了整整零天。
+AI 世界日新月异，但有时候，它的词汇更新得比技术本身还快——而且 AI 的“命名部门”似乎从来不休息。
 
 一个月没关注 AI，你错过的可能不只是新模型。等你回来，面前已经是一碗“字母汤”：MoE、VLA、FDE、RSI。更神奇的是，大家说起这些词，好像它们一直都存在。
 
-但这些词并不是凭空出现的。通常是 AI 先撞上了一个新瓶颈：算力太贵、模型太大、机器人不会可靠行动，或者一个漂亮的演示进入真实公司就坏掉。有人找到一种新做法，然后“命名部门”就开始工作了。
+不过，今天这六个词并不是六条互不相关的热点。它们可以归到三次更大的变化里。
 
-所以今天不是来念 AI 词典。我们会把六个标签重新放回这台机器，只问四个简单的问题：这个名字代表什么，是什么瓶颈催生了它，它到底怎样工作，以及今天有哪些证据和边界。
+第一，从“更大”走向“更聪明地使用能力”：怎样不必每次都为整个模型买单？这就是 MoE 和知识蒸馏。
 
-如果不用缩写，我们仍然能把它解释清楚，那才算真的理解了它。
+第二，从“回答问题”走向“预测和行动”：AI 怎样判断接下来会发生什么，又怎样真的动起来？这就是 World Model 和 VLA。
+
+第三，从“把产品交付出去”走向“让系统持续学习”：AI 遇到真实用户、真实流程，甚至自己的制造过程之后，怎样继续改进？这就是 FDE 和 RSI。
+
+每个词我们只问几个简单问题：缩写是什么，为什么会出现，解决什么问题，机制怎样工作，以及今天在哪里已经能看到它。
 
 ### Transition — English
 
@@ -160,7 +165,7 @@ MoE 的思路是保留一个很大的模型，但每次只激活其中一小部�
 
 - Click **Ask both models**. Read the teacher’s 80 and the student’s 90 as two separate outputs from the same prompt. / 点击 **Ask both models**；同一道题分别得到教师的 80 和学生的 90，这是两个独立模型的输出。
 - Click **Measure the difference**. In the bright X-ray, compare the target token 80 with the student token 90 and point to the training loss. / 点击 **Measure the difference**；在明亮的 X-ray 中比较目标 token 80 与学生 token 90，并指出 training loss。
-- Click **Update the student**. Watch only the student weights pulse; the illustrative probability moves from 22% to 23%, not from wrong to perfect. / 点击 **Update the student**；只有学生权重发生变化；示意概率从 22% 变成 23%，不是一次就从错误跳到完美。
+- Click **Update the student**. Watch the teacher answer move from 22% to 23% while the student mistake moves from 41% to 40%. One update changes probabilities slightly; it does not create instant mastery. / 点击 **Update the student**；看教师答案的概率从 22% 升到 23%，学生错误答案则从 41% 降到 40%。一次更新只是轻微调整概率，不会让学生瞬间学会。
 - Click **Repeat at scale**. Watch the single example multiply into 800K curated samples and many small updates. / 点击 **Repeat at scale**；看单个例子扩展成 80 万条筛选样本和许多次小更新。
 - Click **Close the textbook**. The teacher is marked offline before the new question appears. / 点击 **Close the textbook**；先看到教师离线，再出现一道新题。
 - End on the AIME report card. The benchmark is evidence after the mechanism—not the definition of distillation. / 最后落在 AIME 成绩条；成绩是机制之后的证据，不是蒸馏的定义。
@@ -229,17 +234,17 @@ The first two ideas ask how we can afford to use AI. The next question is differ
 ### On screen
 
 - A current observation that can be described, but three future frames are still blank
-- A visible rule: **state now + action now → predicted state next**
+- A current observation, one action ticket, and three simulated futures
 - Several plausible futures and a loop that turns one predicted state into the next “now”
-- Three common things a world model may predict: **pixels/video**, a **latent state**, or **objects/geometry**
+- Three common things a world model may predict: **pixels/video**, an **internal state**, or **objects/geometry**
 - An official **Genie 3** recording as evidence after the mechanism is clear
 
 ### Stage cues / 演示提示
 
 - Begin with the current frame. Point out that “robot on a street” describes a noun-filled snapshot, but does not answer what the arrow key will cause. / 先停在当前画面。指出“街上的机器人”只能描述一张充满名词的快照，却没有回答按下方向键会造成什么结果。
-- Click **Predict one step**. Follow the formula, the three possible futures, and then the return loop. / 点击 **Predict one step**；顺着公式、三个可能未来，再看返回循环。
+- Click **Predict one step**. Follow the current observation, the action ticket, and the three simulated futures. Point to **↺**: a predicted state can seed another rollout. / 点击 **Predict one step**；顺着当前观察、动作票据和三个模拟未来来看。最后指向 **↺**：预测出的状态可以继续成为下一轮预测的起点。
 - Click **Show what gets built**. Read the three rows as three different canvases for the same job—not three separate definitions. / 点击 **Show what gets built**；把三行理解为完成同一任务的三种“画布”，而不是三个互不相关的定义。
-- Let the Genie 3 recording run briefly. Then click **Give it a body**. / 让 Genie 3 录像播放一会儿，再点击 **Give it a body**。
+- Let the Genie 3 recording run briefly. Then click **Switch to VLA**. / 让 Genie 3 录像播放一会儿，再点击 **Switch to VLA**。
 
 ### Say — English
 
@@ -292,17 +297,18 @@ The world model is the simulator. Now we need a driver.
 ### On screen
 
 - The same instruction answered by an LLM in words and faced by a robot in a physical workcell
-- Five extra burdens: **3D location, collision, force, timing, and body limits**
-- A visible closed loop: **camera + language goal → VLA → action chunk → body → new camera frame**
+- Four questions a sentence cannot answer: **where, clear path, how hard, when to stop**
+- A visible control loop: **observe → act → check → correct**
+- A failed check: **block slipped → re-grip 4 cm left → try again**
 - An official **Gemini Robotics 2** recording and a final “harder than chat” checklist
 
 ### Stage cues / 演示提示
 
 - Start with the unequal sign. The sentence on the left is sensible, but it has not moved anything. / 从中间的不等号开始。左边这句话没有错，但它还没有让任何东西移动。
-- Point across the five labels under the workcell; do not explain each one at length. / 顺着工作台下方五个标签扫过去即可，不必逐个展开很久。
+- Point across the four questions around the workcell; do not explain each one at length. / 顺着工作台周围四个问题扫过去即可，不必逐个展开很久。
 - Click **Ground the instruction**. Follow only four large objects: live camera, language goal, VLA, and action chunks. / 点击 **Ground the instruction**；只顺着四个大对象看：实时摄像头、语言目标、VLA、动作片段。
-- Point to the bottom feedback line: every movement creates a new observation and may require a correction. / 指一下底部反馈线：每个动作都会制造新的观察结果，也可能要求模型纠正。
-- Click **Watch a real run**. End on the four reasons physical action is harder than chat. / 点击 **Watch a real run**；最后落在“为什么实体动作比聊天更难”的四个原因上。
+- On the failed check, read only three things: **BLOCK SLIPPED**, both answers are **NO**, and **RE-GRIP 4 CM LEFT**. / 失败检查出现后只读三处：**BLOCK SLIPPED**、两个 **NO**，以及 **RE-GRIP 4 CM LEFT**。
+- Click **Watch a real run**. Finish on **OBSERVE → ACT → CHECK → CORRECT** and **THE HARD PART IS REALITY**. / 点击 **Watch a real run**；最后落在 **OBSERVE → ACT → CHECK → CORRECT**，以及 **THE HARD PART IS REALITY**。
 
 ### Say — English
 
@@ -314,7 +320,7 @@ So vision here is more than naming objects. The model must ground the instructio
 
 Language provides the goal. The VLA then produces actions—often a short chunk such as reach, align the wrist, close the gripper, and lift. These are body commands, not another paragraph.
 
-And it cannot simply send the action and stop. Movement changes the camera image and the robot’s joint state. The model sees the result, notices if reality disagrees with the plan, and chooses the next action. That closed loop is one of the biggest differences from ordinary chat.
+And it cannot simply send the action and stop. Here the block slips. The check says the target was not reached and the grasp is not stable. That failed result becomes the next observation, so the system shifts the grip four centimetres left and tries again. This observe, act, check, and correct loop is one of the biggest differences from ordinary chat.
 
 This is an official Gemini Robotics 2 recording. It shows the physical result, after the diagram has already explained the mechanism.
 
@@ -332,7 +338,7 @@ VLA 是 **Vision-Language-Action** 的缩写，也就是“视觉—语言—动
 
 语言给出目标。VLA 再输出动作，通常是一小段连续的身体指令，比如伸手、调整手腕、合上夹爪、抬起。这些是身体控制，不是另一段解释文字。
 
-而且它不能把动作发出去就结束。机器人一动，摄像头画面和关节状态都会变化。模型要重新观察，发现现实是否和计划一致，再决定下一步动作。这种闭环反馈，是它和普通聊天很大的区别。
+而且它不能把动作发出去就结束。这里方块滑掉了；检查结果显示“目标没有到达、抓取也不稳定”。这个失败结果会变成下一次观察，于是系统把抓取位置向左调整 4 厘米，再试一次。观察、行动、检查、纠正，这条闭环是它和普通聊天很大的区别。
 
 现在看到的是 Gemini Robotics 2 的官方录像。我们先用图解释机制，再用真实模型运行结果证明这不只是网页动画。
 
@@ -360,7 +366,7 @@ Robots work in the physical world. Business AI works in another messy world: com
 - **Fault line:** Product Core ↔ **FDE** ↔ Customer Reality
 - **Role difference:** same engineering toolbox; different position, scope, and success metric
 - **Field loop:** correction → production trace → repeated pattern → targeted eval → reviewed fix
-- Case evidence: **7,000 returns; returns reaching ≥75% correct fields rose from 25% to 86% in six weeks**
+- Visible case evidence: returns reaching **≥75% correct fields** rose from **25% to 86% in six weeks**
 - Persistent boundaries: **FDE is a job, not a model; this is a team loop, not a lone hero.**
 
 ### Stage cues / 演示提示
@@ -450,17 +456,16 @@ Today, people such as FDEs deliberately close the feedback loop. The final quest
 - **Bounded method:** humans lock the goal and evaluator; AI generates candidates
 - **Evolutionary loop:** generate → run → verify → score → select → repeat
 - **Real effect:** AlphaEvolve improved one Gemini training kernel by **23%**, reducing overall training time by **1%**
-- **AI R&D ladder:** code and infrastructure → specified experiments → research direction
 - **Full RSI requirement:** Model N improves the builder → builder creates Model N+1 → Model N+1 becomes better at improving the next builder
 - Persistent boundary: **Full RSI remains unproven and is not inevitable.**
 
 ### Stage cues / 演示提示
 
-- **0 — Not yet / 还不是：** point from the same AI to the corrected answer, then to the unchanged builder. Click **Open the builder**. / 从同一个 AI 指到被修正的答案，再指向完全没变的 AI 工厂；然后点击 **Open the builder**。
-- **1 — Bounded builder / 有边界工厂：** point to the two locks first—human goal and evaluator—then follow AI → candidate belt → evaluator → score. Click **Release candidates**. / 先指两个锁：人定义的目标和评测；再按 AI → 候选方案传送带 → 评测器 → 分数来讲。点击 **Release candidates**。
-- **2 — Selection / 筛选：** follow Patch B into the correctness gate and reject it despite 69 ms; then follow Patch C through both gates to **NEW BEST**. Click **Install the winner**. / 看 Patch B 虽然只有 69 ms，却在正确性门口被拒绝；再看 Patch C 通过两道门成为 **NEW BEST**。点击 **Install the winner**。
-- **3 — Real effect / 真实效果：** show where the winning patch lands—the training kernel—then read the official +23% → −1% numbers. Walk down the AI R&D ladder and click **Ask what recurses**. / 先指出获胜代码被装进训练 kernel，再读官方 +23% → −1% 数据；随后从上到下讲 AI 研发阶梯，点击 **Ask what recurses**。
-- **4 — Full RSI? / 完整 RSI？：** read left to right: Model N → AI builder → Model N+1. Trace the return arrow and land on lasting, inherited, and compounding. End at **UNPROVEN**. / 从左到右讲 Model N → AI 工厂 → Model N+1；再沿回程箭头说明“长期改变、下一代继承、继续放大”，最后落在 **UNPROVEN**。
+- **01 — Not yet / 还不是：** point from the same AI to the corrected answer, then to the unchanged builder. Click **Open the builder**. / 从同一个 AI 指到被修正的答案，再指向完全没变的 AI 工厂；然后点击 **Open the builder**。
+- **02 — Bounded builder / 有边界工厂：** point to the two locks first—human goal and evaluator—then follow AI → candidate belt → evaluator → score. Click **Release candidates**. / 先指两个锁：人定义的目标和评测；再按 AI → 候选方案传送带 → 评测器 → 分数来讲。点击 **Release candidates**。
+- **03 — Selection / 筛选：** follow Patch B into the correctness gate and reject it despite 69 ms; then follow Patch C through both gates to **NEW BEST**. Click **Install the winner**. / 看 Patch B 虽然只有 69 ms，却在正确性门口被拒绝；再看 Patch C 通过两道门成为 **NEW BEST**。点击 **Install the winner**。
+- **04 — Real effect / 真实效果：** show where the winning patch lands—the training kernel—then read the official +23% → −1% numbers and click **Ask what recurses**. / 先指出获胜代码被装进训练 kernel，再读官方 +23% → −1% 数据，然后点击 **Ask what recurses**。
+- **05 — What must recurse? / 什么必须递归？：** read AI N → Builder v1→v2 → AI N+1. Then follow the return strip right to left: **AI N+1 proposes the next change → Builder v2**. Land on **LASTING**, **INHERITED**, and **COMPOUNDING**, then finish at **FULL RSI · UNPROVEN**. / 先从 AI N、Builder v1→v2 讲到 AI N+1；再沿回程条从右向左看：**AI N+1 提出下一次改进 → Builder v2**。最后落在 **LASTING**、**INHERITED**、**COMPOUNDING**，并以 **FULL RSI · UNPROVEN** 收尾。
 
 ### Say — English
 
@@ -479,8 +484,6 @@ The evaluator is the crucial part. A candidate that runs in 69 milliseconds look
 AlphaEvolve is a useful real example of this method. It uses language models to propose programs, automatic evaluators to verify and score them, and an evolutionary process to keep improving promising ideas. Google DeepMind reports that it made one kernel used in Gemini training 23% faster, which reduced overall training time by 1%.
 
 That result is real and valuable—but look at exactly what improved. A training tool became faster. The current model did not suddenly rewrite its own mind or become independently smarter. The benefit was less time and compute for the same training job.
-
-The ladder on screen shows the wider direction. AI can already write code and operate infrastructure. It is increasingly good at running an experiment when people specify the question and success measure. The harder step is research judgement: choosing which problem matters, which result to trust, and what should be tried next. Humans still play a major role there.
 
 Now we can define **full RSI** precisely. Model N would improve the AI builder. That improved builder would create Model N+1. Model N+1 would have to inherit the benefit and become better at improving the builder for Model N+2. The improvement must be lasting, inherited, and compounding.
 
@@ -505,8 +508,6 @@ RSI 是 **Recursive Self-Improvement** 的缩写，也就是“递归自我改�
 AlphaEvolve 是这种方法的一个真实例子。它让语言模型提出程序，用自动评测器验证和打分，再通过类似进化的过程继续改进有希望的方案。Google DeepMind 表示，它让 Gemini 训练中使用的一个计算内核加速了 23%，从而让整体训练时间减少 1%。
 
 这个效果是真实而且有价值的，但我们要看清楚，到底是什么变好了：一个训练工具变快了。当前模型并没有突然重写自己的大脑，也没有自动变成更聪明的自己。它带来的直接好处，是同样的训练工作消耗更少时间和算力。
-
-屏幕右下角的阶梯展示了更大的方向。AI 已经能够写代码、操作基础设施；当人给出明确问题和成功标准时，它也越来越擅长执行实验。更难的一步是科研判断：应该研究什么，什么结果值得相信，下一步尝试什么。今天，这部分仍然高度依赖人。
 
 现在就可以准确解释 **完整 RSI** 了：Model N 改进 AI 工厂；改进后的工厂制造出 Model N+1；Model N+1 不但要继承这次改进，还必须更擅长改进制造 Model N+2 的工厂。也就是说，改进必须是长期的、能够被下一代继承，而且能够继续放大。
 
@@ -538,67 +539,48 @@ These six terms are very different, but they share one story: each appeared when
 
 ---
 
-## Slide 7 — The Bottleneck Keeps Moving
+## Slide 7 — Six Terms, Three Shifts
 
 ### On screen
 
-- Three bottleneck shifts: **scale better → touch the world → close the loop**
-- A moving AI term passes through three gates: **Problem → Proof → Boundary**
-- If you can answer all three, you can explain the idea without hiding behind its acronym.
-- **The acronym is the label. The bottleneck is the story.**
+- **Six terms. Three shifts.**
+- **From bigger to smarter:** MoE · Distillation
+- **From answers to actions:** World Model · VLA
+- **From shipping to learning:** FDE · RSI
+- **More efficient systems. More capable actions. Tighter feedback loops.**
 
 ### Stage cues / 演示提示
 
-- No clicks / 无需点击：let one or two terms travel through the scanner, then point from left to right across the three gates. / 让一两个词自动经过扫描器，再从左到右指过三道扫描门。
-- Do not read every label / 不要逐字念：use the top rail only to reconnect the six concepts, then spend the final beat on the reusable three-question method. / 上方三段只用来串回六个概念，最后把重点留给可复用的三个问题。
+- No clicks / 无需点击：move once from left to right across the three columns. / 从左到右扫过三列即可。
+- Do not read every sentence / 不要逐字念：name each pair, summarize the shift, and finish on the line above the cards. / 说出每组两个词，总结它们代表的变化，最后落在卡片上方那句总括。
 
 ### Say — English
 
-Let us put the six terms back into one picture. They are really three shifts in where the bottleneck sits.
+Let us put the six terms back into one picture. They describe three connected shifts.
 
 First, compute efficiency: **MoE** routes the work, and **distillation** compresses useful behavior into something smaller.
 
 Second, contact with the world: **world models** predict consequences, and **VLA** turns perception and language into action.
 
-Third, real-world loops: **FDE** closes the gap between a demo and a working system, while **RSI** asks whether improvement itself could become a compounding loop.
+Third, learning loops: **FDE** brings failures from real deployments back into product work, while **RSI** asks whether AI could eventually improve the process that builds its successors.
 
-The bottleneck moved each time—and a new label appeared around it.
+So the direction is consistent: use capability more efficiently, move from answers to actions, and tighten the feedback loop between AI and the world.
 
-So when the next impressive acronym arrives, do not start with the letters. Put it through this little scanner.
-
-First: **Problem**. What bottleneck created this term?
-
-Second: **Proof**. What actually works today—not just in the promise?
-
-Third: **Boundary**. What is still missing, fragile, expensive, or controlled by humans?
-
-If you can answer all three, you understand the concept well enough to explain it without hiding behind the acronym. There is no need to panic—or immediately add it to your LinkedIn profile.
-
-The acronym is only the label. The interesting story is the bottleneck hiding behind it.
+The terms are different, but together they show that AI is changing in more ways than simply becoming bigger.
 
 ### 口述 — 中文
 
-最后，我们把六个词重新放回一张图里。它们其实对应了三次“瓶颈位置”的迁移。
+最后，我们把六个词重新放回一张图里。它们对应三次彼此相连的变化。
 
 第一，算力效率：**MoE** 负责把任务分流，**知识蒸馏**则把有用的行为压缩到更小的模型里。
 
 第二，接触真实世界：**世界模型**预测行动的后果，**VLA**把感知和语言变成动作。
 
-第三，真实世界的闭环：**FDE**弥合演示和真正可用系统之间的差距；**RSI**则追问，“改进”本身能不能变成一个持续增强的循环。
+第三，学习闭环：**FDE**把真实部署中的失败带回产品改进；**RSI**则追问，AI 将来能不能改进制造下一代 AI 的过程。
 
-每一次，都是瓶颈先移动，然后新的标签才出现。
+所以整体方向是一致的：更高效地使用能力，从回答走向行动，再把 AI 和真实世界之间的反馈闭环收得更紧。
 
-所以下次再冒出一个听起来很厉害的新缩写，不要先研究那几个字母，先把它放进这个小小的扫描器。
-
-第一道：**Problem，问题**。是什么瓶颈催生了这个词？
-
-第二道：**Proof，证据**。今天真正已经能做到什么，而不只是宣传里承诺什么？
-
-第三道：**Boundary，边界**。还有什么做不到、不稳定、太昂贵，或者仍然必须由人控制？
-
-如果这三个问题都能回答，你就已经理解了这个概念，而且不需要躲在缩写后面。当然，也不用一看到新词就立刻把它加进 LinkedIn 简介。
-
-缩写只是标签。真正有意思的，是藏在它后面的那个瓶颈。
+这些词各不相同，但放在一起，它们说明 AI 的变化远远不只是“模型越来越大”。
 
 ---
 

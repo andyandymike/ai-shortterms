@@ -249,7 +249,7 @@
 .learningReceipt header { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding-bottom: 7px; border-bottom: 1px solid rgba(23, 23, 19, 0.24); }
 .learningReceipt header span,
 .learningReceipt header strong,
-.learningReceipt footer { font-size: clamp(8px, 0.72vw, 11px); font-weight: 900; letter-spacing: 0.07em; }
+.learningReceipt footer { font-size: clamp(9px, 0.82vw, 12px); font-weight: 900; letter-spacing: 0.065em; }
 .learningReceipt header strong { color: var(--ex-red); }
 .learningReceipt p { display: grid; grid-template-columns: 1fr 52px 25px 62px; align-items: center; gap: 8px; margin: 0; padding: 9px 10px; border: 1.5px solid var(--ex-ink); background: var(--ex-paper); }
 .learningReceipt p span { font-family: Georgia, "Times New Roman", serif; font-size: clamp(12px, 1.25vw, 18px); }
@@ -279,7 +279,7 @@
   transition: opacity 360ms ease, transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 .updateTrack span,
-.updateTrack strong { font-size: clamp(8px, 0.72vw, 11px); letter-spacing: 0.08em; }
+.updateTrack strong { font-size: clamp(9px, 0.82vw, 12px); letter-spacing: 0.07em; }
 .updateTrack i { height: 1px; background: rgba(255, 253, 244, 0.45); }
 .updateTrack b { color: var(--ex-yellow); font-size: 20px; }
 
@@ -303,6 +303,7 @@
 .distillExhibit[data-act='update'] .tokenRows,
 .distillExhibit[data-act='update'] .lossStamp { display: none; }
 .distillExhibit[data-act='update'] .learningReceipt { display: grid; }
+.distillExhibit[data-act='update'] .compareBench { top: 14%; height: 64%; gap: 8px; padding: 12px 15px; }
 .distillExhibit[data-act='update'] .updateTrack { opacity: 1; transform: none; }
 .distillExhibit[data-act='update'] .studentWeights i:nth-child(4n) { background: var(--ex-teal); transform: translateY(-2px); }
 
@@ -413,7 +414,7 @@
 .predictionCatalog > header { grid-column: 1 / -1; display: flex; justify-content: space-between; gap: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(23, 23, 19, 0.22); }
 .predictionCatalog > header span,
 .predictionCatalog > header strong,
-.predictionCatalog article > span { font-size: clamp(7px, 0.62vw, 10px); font-weight: 900; letter-spacing: 0.08em; }
+.predictionCatalog article > span { font-size: clamp(9px, 0.72vw, 11px); font-weight: 900; letter-spacing: 0.07em; }
 .predictionCatalog > header strong { color: var(--ex-red); }
 .predictionCatalog article { display: grid; grid-template-rows: auto auto 1fr; gap: 8px; padding: 11px; border: 1px solid var(--ex-ink); background: var(--ex-paper); }
 .predictionCatalog article > b { color: var(--ex-red); font-family: Georgia, "Times New Roman", serif; font-size: clamp(25px, 3vw, 44px); font-weight: 500; }
@@ -435,7 +436,7 @@
 .pixelRepresentation i { display: grid; place-items: end start; padding: 5px; border: 1px solid rgba(23, 23, 19, 0.28) !important; background: #24302d url('/media/genie3-proof.png') center / 260% auto no-repeat !important; color: var(--ex-white); font-size: 8px; font-style: normal; font-weight: 900; }
 .pixelRepresentation i:nth-child(2) { background-position: 56% center !important; }
 .pixelRepresentation i:nth-child(3) { background-position: 70% center !important; }
-.predictionCatalog article > small { font-size: clamp(7px, 0.61vw, 9px); font-weight: 900; line-height: 1.15; }
+.predictionCatalog article > small { font-size: clamp(8px, 0.68vw, 10px); font-weight: 900; line-height: 1.15; }
 .stateReceipt dl { align-self: stretch; display: grid; align-content: center; gap: 5px; margin: 0; padding: 8px; border: 1px solid var(--ex-ink); background: var(--ex-white); }
 .stateReceipt dl div { display: flex; justify-content: space-between; gap: 7px; padding-bottom: 5px; border-bottom: 1px solid rgba(23, 23, 19, 0.22); }
 .stateReceipt dl div:last-child { border-bottom: 0; }
@@ -516,12 +517,17 @@
 .robotObservation > div i,
 .robotObservation > div strong,
 .robotOutcome > div b,
-.robotOutcome > div strong { position: absolute; padding: 4px 6px; border: 1px solid var(--ex-ink); background: var(--ex-yellow); font-size: clamp(6px, 0.58vw, 9px); font-style: normal; letter-spacing: 0.05em; }
+.robotOutcome > div strong { position: absolute; padding: 4px 6px; border: 1px solid var(--ex-ink); background: var(--ex-yellow); font-size: clamp(9px, 0.76vw, 11px); font-style: normal; letter-spacing: 0.05em; }
 .robotObservation > div b { top: 23%; left: 10%; }
 .robotObservation > div i { top: 42%; right: 9%; background: var(--ex-red); color: var(--ex-white); }
 .robotObservation > div strong { right: 8%; bottom: 13%; background: var(--ex-teal); color: var(--ex-white); }
 .robotOutcome > div b { top: 22%; left: 18%; background: var(--ex-teal); color: var(--ex-white); }
 .robotOutcome > div strong { right: 12%; bottom: 15%; }
+.robotOutcome > div i.correctionPath { position: absolute; right: 30%; bottom: 34%; width: 42%; border-top: 3px dashed var(--ex-yellow); color: var(--ex-yellow); font-style: normal; opacity: 0; transform: rotate(-8deg) scaleX(0.25); transform-origin: right center; }
+.robotOutcome > div i.correctionPath::before { content: "◀"; position: absolute; top: -11px; left: -8px; font-size: 16px; }
+.robotOutcome > div i.correctionPath span { position: absolute; right: 0; bottom: 8px; padding: 4px 6px; border: 1px solid var(--ex-yellow); background: rgba(23, 23, 19, 0.9); color: var(--ex-yellow); font-size: clamp(9px, 0.74vw, 11px); font-weight: 900; letter-spacing: 0.055em; white-space: nowrap; }
+.embodiedExhibit[data-act='vla-control'] .robotOutcome > div b { animation: failed-grasp 760ms 180ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+.embodiedExhibit[data-act='vla-control'] .robotOutcome > div i.correctionPath { animation: correction-route 900ms 760ms cubic-bezier(0.16, 1, 0.3, 1) both; }
 .robotObservation > footer { display: flex; align-items: baseline; gap: 8px; padding: 8px 9px; background: var(--ex-ink); color: var(--ex-white); }
 .robotObservation > footer span { color: var(--ex-yellow); font-size: 8px; font-weight: 900; }
 .robotObservation > footer strong { font-family: Georgia, "Times New Roman", serif; font-size: clamp(11px, 1.05vw, 15px); font-weight: 500; }
@@ -535,11 +541,12 @@
 .controlWorkOrder > footer { font-size: clamp(8px, 0.68vw, 10px); font-weight: 900; line-height: 1.2; }
 .robotOutcome > footer { display: grid; gap: 5px; padding: 7px 8px; background: var(--ex-paper); }
 .robotOutcome > footer > span { font-size: 7px; font-weight: 900; letter-spacing: 0.08em; }
-.robotOutcome > footer p { display: flex; justify-content: space-between; gap: 8px; margin: 0; font-size: clamp(7px, 0.65vw, 10px); }
+.robotOutcome > footer p { display: flex; justify-content: space-between; gap: 8px; margin: 0; font-size: clamp(9px, 0.74vw, 11px); }
 .robotOutcome > footer p strong { color: var(--ex-teal); }
+.robotOutcome > footer p[data-failed] strong { color: var(--ex-red); }
 .verificationReceipt { grid-column: 1 / -1; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; padding: 8px 12px; background: var(--ex-ink); color: var(--ex-white); }
 .verificationReceipt span,
-.verificationReceipt strong { font-size: clamp(9px, 0.76vw, 11px); letter-spacing: 0.05em; }
+.verificationReceipt strong { font-size: clamp(10px, 0.9vw, 13px); letter-spacing: 0.05em; }
 .verificationReceipt strong { color: var(--ex-yellow); text-align: center; }
 .verificationReceipt b { color: var(--ex-red); font-size: 21px; }
 .vlaInputs { display: grid; gap: 10px; }
@@ -846,7 +853,7 @@
 .rsiProof p strong { color: var(--ex-yellow); font-family: Georgia, "Times New Roman", serif; font-size: clamp(25px, 3vw, 43px); font-weight: 500; }
 .rsiProof > i { color: var(--ex-red); font-size: 25px; font-style: normal; }
 
-.recursiveRig { display: grid; grid-template-columns: 23% minmax(0, 1fr) 26%; grid-template-rows: minmax(0, 1fr) auto; align-items: stretch; gap: 14px; }
+.recursiveRig { display: grid; grid-template-columns: 23% minmax(0, 1fr) 26%; grid-template-rows: minmax(0, 1fr) auto auto; align-items: stretch; gap: 10px 14px; }
 .recursiveRig .modelRelease,
 .recursiveRig .successorRelease { display: grid; grid-template-rows: auto 1fr auto auto; place-items: stretch; gap: 8px; aspect-ratio: auto; padding: 14px; border: 1.5px solid var(--ex-ink); background: var(--ex-white); }
 .recursiveRig .modelRelease { box-shadow: 8px 8px 0 var(--ex-teal); }
@@ -883,10 +890,17 @@
 .builderLedger > article small { font-size: clamp(8px, 0.68vw, 10px); font-weight: 900; letter-spacing: 0.05em; }
 .builderLedger > article strong { padding: 8px; background: var(--ex-teal); color: var(--ex-white); font-family: Georgia, "Times New Roman", serif; font-size: clamp(17px, 1.8vw, 27px); font-weight: 500; }
 .builderLedger > footer { padding: 8px; background: var(--ex-ink); color: var(--ex-yellow); text-align: center; }
-.recursiveRig .recursiveCriteria { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 0; background: transparent; color: var(--ex-ink); }
+.recursiveReturn { grid-column: 2 / 4; grid-row: 2; display: grid; grid-template-columns: auto minmax(90px, 1fr) auto; align-items: center; gap: 11px; padding: 8px 11px; background: var(--ex-ink); color: var(--ex-white); }
+.recursiveReturn strong,
+.recursiveReturn span { font-size: clamp(10px, 0.9vw, 13px); font-weight: 900; letter-spacing: 0.055em; }
+.recursiveReturn strong { color: var(--ex-yellow); }
+.recursiveReturn i { position: relative; display: flex; align-items: center; gap: 5px; overflow: hidden; color: var(--ex-red); font-size: 26px; font-style: normal; font-weight: 900; line-height: 1; }
+.recursiveReturn i::after { content: ""; flex: 1; height: 3px; background: currentColor; }
+.rsiExhibit[data-act='recursive'] .recursiveReturn i { animation: recurse-return 1200ms 650ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+.recursiveRig .recursiveCriteria { grid-column: 1 / -1; grid-row: 3; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 0; background: transparent; color: var(--ex-ink); }
 .recursiveCriteria p { display: grid; gap: 2px; margin: 0; padding: 7px 9px; border: 1px solid var(--ex-ink); background: var(--ex-white); }
-.recursiveCriteria strong { font-size: clamp(8px, 0.72vw, 11px); letter-spacing: 0.07em; }
-.recursiveCriteria small { font-size: clamp(7px, 0.63vw, 9px); }
+.recursiveCriteria strong { font-size: clamp(11px, 1vw, 15px); letter-spacing: 0.065em; }
+.recursiveCriteria small { font-size: clamp(9px, 0.8vw, 12px); }
 .recursiveRig > em { position: absolute; z-index: 6; top: 61%; left: 2%; display: flex; align-items: center; gap: 9px; padding: 7px 10px; border: 3px solid var(--ex-red); background: rgba(255, 253, 244, 0.92); color: var(--ex-red); font-style: normal; transform: rotate(-2deg); }
 .recursiveRig > em span { font-size: 8px; font-weight: 900; letter-spacing: 0.08em; }
 .recursiveRig > em strong { font-size: clamp(17px, 1.8vw, 27px); }
@@ -894,6 +908,22 @@
 @keyframes arm-reach {
   from { filter: saturate(0.8); }
   to { filter: saturate(1.2); }
+}
+
+@keyframes failed-grasp {
+  0% { background: var(--ex-teal); transform: translate(0, 0); }
+  48% { background: var(--ex-red); transform: translate(14px, 13px) rotate(3deg); }
+  100% { background: var(--ex-red); transform: translate(14px, 13px) rotate(3deg); }
+}
+
+@keyframes correction-route {
+  from { opacity: 0; transform: rotate(-8deg) scaleX(0.25); }
+  to { opacity: 1; transform: rotate(-8deg) scaleX(1); }
+}
+
+@keyframes recurse-return {
+  from { opacity: 0; transform: translateX(26px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
 @media (max-width: 980px), (max-height: 660px) {

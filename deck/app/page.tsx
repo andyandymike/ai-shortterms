@@ -77,6 +77,14 @@ export default function Home() {
     setDemoResetKey((current) => current + 1);
   }, []);
 
+  const changeVisualStyle = useCallback((nextStyle: DeckVisualStyle) => {
+    if (nextStyle === visualStyle) return;
+
+    setVisualStyle(nextStyle);
+    setStep(0);
+    setDemoResetKey((current) => current + 1);
+  }, [visualStyle]);
+
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       const target = event.target;
@@ -126,28 +134,33 @@ export default function Home() {
       }}
     >
       <section className={`slide opening-cinema-slide ${active === 0 ? 'is-active' : ''}`} aria-hidden={active !== 0}>
-        <OpeningLab visualStyle={visualStyle} onVisualStyleChange={setVisualStyle} />
+        <OpeningLab visualStyle={visualStyle} onVisualStyleChange={changeVisualStyle} />
       </section>
 
       <section
         className={`slide moe-evidence-slide ${active === 1 ? 'is-active' : ''}`}
         aria-hidden={active !== 1}
       >
-        <RouterLab key={`router-${demoResetKey}`} visualStyle={visualStyle} onVisualStyleChange={setVisualStyle} />
+        <RouterLab key={`router-${demoResetKey}`} visualStyle={visualStyle} onVisualStyleChange={changeVisualStyle} />
       </section>
 
       <section
         className={`slide distill-evidence-slide ${active === 2 ? 'is-active' : ''}`}
         aria-hidden={active !== 2}
       >
-        <DistillationLab key={`distillation-${demoResetKey}`} />
+        <DistillationLab key={`distillation-${demoResetKey}`} visualStyle={visualStyle} />
       </section>
 
       <section
         className={`slide embodied-slide ${active === 3 ? 'is-active' : ''}`}
         aria-hidden={active !== 3}
       >
-        <EmbodiedLab key={`embodied-${demoResetKey}`} isActive={active === 3} />
+        <EmbodiedLab
+          key={`embodied-${demoResetKey}`}
+          isActive={active === 3}
+          visualStyle={visualStyle}
+          onVisualStyleChange={changeVisualStyle}
+        />
       </section>
 
       <section
@@ -155,18 +168,18 @@ export default function Home() {
         aria-hidden={active !== 4}
         data-step={active === 4 ? step : 0}
       >
-        <FdeLab step={step} onAdvance={() => move(1)} onReset={resetCurrentDemo} />
+        <FdeLab step={step} onAdvance={() => move(1)} onReset={resetCurrentDemo} visualStyle={visualStyle} />
       </section>
 
       <section
         className={`slide rsi-cinema-slide ${active === 5 ? 'is-active' : ''}`}
         aria-hidden={active !== 5}
       >
-        <RsiLab key={`rsi-${demoResetKey}`} />
+        <RsiLab key={`rsi-${demoResetKey}`} visualStyle={visualStyle} />
       </section>
 
       <section className={`slide closing-cinema-slide ${active === 6 ? 'is-active' : ''}`} aria-hidden={active !== 6}>
-        <ClosingLab visualStyle={visualStyle} onVisualStyleChange={setVisualStyle} />
+        <ClosingLab visualStyle={visualStyle} onVisualStyleChange={changeVisualStyle} />
       </section>
 
       <footer className="deck-controls">
