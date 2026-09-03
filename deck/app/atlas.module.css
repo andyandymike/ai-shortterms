@@ -2177,7 +2177,7 @@
   bottom: clamp(48px, 7vh, 68px);
   left: clamp(144px, 15.3vw, 228px);
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   border-top: 5px solid var(--atlas-blue);
   border-bottom: 1px solid var(--atlas-ink);
 }
@@ -2185,7 +2185,7 @@
 .closingQuestions article {
   --question-color: var(--atlas-blue);
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-rows: auto auto minmax(0, 1fr);
   gap: clamp(13px, 1.8vh, 22px);
   min-width: 0;
   padding: clamp(17px, 2vw, 30px);
@@ -2195,6 +2195,7 @@
 .closingQuestions article[data-tone='red'] { --question-color: var(--atlas-red); }
 .closingQuestions article[data-tone='yellow'] { --question-color: #a57c00; }
 .closingQuestions article span { color: var(--question-color); font-size: clamp(15px, 1.35vw, 21px); font-weight: 950; letter-spacing: -0.04em; }
+.closingQuestions article small { color: rgba(18, 21, 24, 0.62); font-size: clamp(11px, 0.92vw, 14px); font-weight: 950; letter-spacing: 0.1em; }
 .closingQuestions article strong { align-self: center; max-width: 15ch; font-size: clamp(29px, 3vw, 46px); font-weight: 950; letter-spacing: -0.055em; line-height: 0.94; }
 
 .closingLoop {

@@ -204,7 +204,7 @@
   bottom: clamp(70px, 9vh, 90px);
   left: clamp(34px, 3vw, 48px);
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   border-top: 1px solid rgba(244, 240, 231, 0.24);
   border-bottom: 1px solid rgba(244, 240, 231, 0.16);
   background: rgba(3, 7, 10, 0.62);
@@ -213,7 +213,7 @@
 .question {
   --tone: var(--cyan);
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-rows: auto auto minmax(0, 1fr);
   gap: clamp(14px, 2vh, 24px);
   min-width: 0;
   padding: clamp(20px, 2.2vw, 34px);
@@ -224,6 +224,7 @@
 .question[data-tone='red'] { --tone: var(--coral); }
 .question[data-tone='yellow'] { --tone: var(--lime); }
 .question span { color: var(--tone); font-size: clamp(14px, 1.25vw, 19px); font-weight: 900; }
+.question small { color: rgba(244, 240, 231, 0.64); font-size: clamp(11px, 0.92vw, 14px); font-weight: 900; letter-spacing: 0.1em; }
 .question strong { align-self: center; max-width: 15ch; color: var(--paper); font-family: Georgia, "Times New Roman", serif; font-size: clamp(30px, 3.2vw, 49px); font-weight: 500; letter-spacing: -0.045em; line-height: 0.98; }
 
 .questionFooter { position: absolute; right: clamp(34px, 3vw, 48px); bottom: clamp(24px, 3.6vh, 34px); left: clamp(34px, 3vw, 48px); display: flex; justify-content: space-between; padding-top: 8px; border-top: 1px solid rgba(244, 240, 231, 0.24); color: rgba(244, 240, 231, 0.62); font-size: clamp(8px, 0.72vw, 11px); font-weight: 900; letter-spacing: 0.11em; }

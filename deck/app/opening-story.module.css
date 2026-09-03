@@ -237,6 +237,8 @@
   grid-template-rows: repeat(3, minmax(0, 1fr));
 }
 
+.shiftMap[data-track-count='2'] { grid-template-rows: repeat(2, minmax(0, 1fr)); }
+
 .track {
   --row-accent: var(--accent-1);
   position: relative;
@@ -420,6 +422,7 @@
   .shiftWords { gap: 8px; font-size: 22px; }
   .signalTerms { gap: 8px; }
   .signalTerm { min-height: 44px; gap: 6px; padding: 7px 9px; font-size: 15px; }
+  .signalTerm[data-two-word='true'] { gap: 4px; padding-inline: 6px; font-size: 13px; letter-spacing: -0.035em; }
   .noiseField { top: 82px; right: 18px; bottom: 52px; left: 18px; }
   .noiseField span { min-width: 64px; min-height: 38px; font-size: 13px; }
 }

@@ -3,7 +3,12 @@
 import { useCallback, useEffect, useState } from 'react';
 import { ClosingLab, DistillationLab, EmbodiedLab, FdeLab, OpeningLab, RouterLab, RsiLab, VisualModeSwitch, deckVisualModes, type DeckVisualStyle } from './demos';
 
-const slideCount = 8;
+// FDE (5) and RSI (6) remain fully implemented as a hidden third part.
+// Add them back here to restore the longer six-concept route.
+type SlideId = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
+const visibleSlideOrder: readonly SlideId[] = [0, 1, 2, 3, 4, 7];
+const slideCount = visibleSlideOrder.length;
+const vlaNextSlideLabel = visibleSlideOrder.includes(5) ? 'FDE' : 'Closing';
 const contentVisualModes = ['exhibit', 'atlas'] as const;
 
 const slideSources: Record<number, { label: string; url: string }[]> = {
@@ -50,7 +55,8 @@ export default function Home() {
   const [demoResetKey, setDemoResetKey] = useState(0);
   const [sourcesOpen, setSourcesOpen] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
-  const supportsMachineStyle = active === 0 || active === 1 || active === 7;
+  const activeSlide = visibleSlideOrder[active];
+  const supportsMachineStyle = activeSlide === 0 || activeSlide === 1 || activeSlide === 7;
   const contentVisualStyle: DeckVisualStyle = visualStyle === 'machine' ? 'exhibit' : visualStyle;
   const activeVisualStyle = supportsMachineStyle ? visualStyle : contentVisualStyle;
 
@@ -115,7 +121,7 @@ export default function Home() {
       if (event.key === 'Home') jumpTo(0);
       if (event.key === 'End') jumpTo(slideCount - 1);
       if (event.key.toLowerCase() === 'r') resetCurrentDemo();
-      if (event.key.toLowerCase() === 's' && slideSources[active]?.length) {
+      if (event.key.toLowerCase() === 's' && slideSources[activeSlide]?.length) {
         setSourcesOpen((current) => !current);
       }
       if (event.key === 'Escape') setSourcesOpen(false);
@@ -123,7 +129,7 @@ export default function Home() {
 
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [active, jumpTo, moveSlide, resetCurrentDemo]);
+  }, [activeSlide, jumpTo, moveSlide, resetCurrentDemo]);
 
   return (
     <main
@@ -137,66 +143,67 @@ export default function Home() {
         setTouchStart(null);
       }}
     >
-      <section className={`slide opening-cinema-slide ${active === 0 ? 'is-active' : ''}`} aria-hidden={active !== 0}>
+      <section className={`slide opening-cinema-slide ${activeSlide === 0 ? 'is-active' : ''}`} aria-hidden={activeSlide !== 0}>
         <OpeningLab key={`opening-${visualStyle}-${demoResetKey}`} visualStyle={visualStyle} />
       </section>
 
       <section
-        className={`slide moe-evidence-slide ${active === 1 ? 'is-active' : ''}`}
-        aria-hidden={active !== 1}
+        className={`slide moe-evidence-slide ${activeSlide === 1 ? 'is-active' : ''}`}
+        aria-hidden={activeSlide !== 1}
       >
         <RouterLab key={`router-${demoResetKey}`} visualStyle={visualStyle} />
       </section>
 
       <section
-        className={`slide distill-evidence-slide ${active === 2 ? 'is-active' : ''}`}
-        aria-hidden={active !== 2}
+        className={`slide distill-evidence-slide ${activeSlide === 2 ? 'is-active' : ''}`}
+        aria-hidden={activeSlide !== 2}
       >
         <DistillationLab key={`distillation-${demoResetKey}`} visualStyle={contentVisualStyle} />
       </section>
 
       <section
-        className={`slide embodied-slide world-model-cinema-slide ${active === 3 ? 'is-active' : ''}`}
-        aria-hidden={active !== 3}
+        className={`slide embodied-slide world-model-cinema-slide ${activeSlide === 3 ? 'is-active' : ''}`}
+        aria-hidden={activeSlide !== 3}
       >
         <EmbodiedLab
           key={`world-model-${demoResetKey}`}
           concept="world"
-          isActive={active === 3}
+          isActive={activeSlide === 3}
           visualStyle={contentVisualStyle}
           onComplete={() => moveSlide(1)}
         />
       </section>
 
       <section
-        className={`slide embodied-slide vla-cinema-slide ${active === 4 ? 'is-active' : ''}`}
-        aria-hidden={active !== 4}
+        className={`slide embodied-slide vla-cinema-slide ${activeSlide === 4 ? 'is-active' : ''}`}
+        aria-hidden={activeSlide !== 4}
       >
         <EmbodiedLab
           key={`vla-${demoResetKey}`}
           concept="vla"
-          isActive={active === 4}
+          isActive={activeSlide === 4}
           visualStyle={contentVisualStyle}
           onComplete={() => moveSlide(1)}
+          nextLabel={vlaNextSlideLabel}
         />
       </section>
 
       <section
-        className={`slide fde-slide ${active === 5 ? 'is-active' : ''}`}
-        aria-hidden={active !== 5}
-        data-step={active === 5 ? step : 0}
+        className={`slide fde-slide ${activeSlide === 5 ? 'is-active' : ''}`}
+        aria-hidden={activeSlide !== 5}
+        data-step={activeSlide === 5 ? step : 0}
       >
         <FdeLab key={`fde-${demoResetKey}`} step={step} onAdvance={advanceFde} onReset={resetCurrentDemo} visualStyle={contentVisualStyle} />
       </section>
 
       <section
-        className={`slide rsi-cinema-slide ${active === 6 ? 'is-active' : ''}`}
-        aria-hidden={active !== 6}
+        className={`slide rsi-cinema-slide ${activeSlide === 6 ? 'is-active' : ''}`}
+        aria-hidden={activeSlide !== 6}
       >
         <RsiLab key={`rsi-${demoResetKey}`} visualStyle={contentVisualStyle} onComplete={() => moveSlide(1)} />
       </section>
 
-      <section className={`slide closing-cinema-slide ${active === 7 ? 'is-active' : ''}`} aria-hidden={active !== 7}>
+      <section className={`slide closing-cinema-slide ${activeSlide === 7 ? 'is-active' : ''}`} aria-hidden={activeSlide !== 7}>
         <ClosingLab visualStyle={visualStyle} />
       </section>
 
@@ -218,7 +225,7 @@ export default function Home() {
           surface={activeVisualStyle}
           modes={supportsMachineStyle ? deckVisualModes : contentVisualModes}
         />
-        {slideSources[active]?.length ? (
+        {slideSources[activeSlide]?.length ? (
           <button className="source-toggle" onClick={() => setSourcesOpen((current) => !current)} aria-expanded={sourcesOpen}>
             Sources <kbd>S</kbd>
           </button>
@@ -235,7 +242,7 @@ export default function Home() {
         <p className="source-eyebrow">Sources / slide {String(active + 1).padStart(2, '0')}</p>
         <h3>Primary references</h3>
         <ol>
-          {(slideSources[active] ?? []).map((source) => (
+          {(slideSources[activeSlide] ?? []).map((source) => (
             <li key={source.url}>
               <a href={source.url} target="_blank" rel="noreferrer">{source.label}</a>
             </li>

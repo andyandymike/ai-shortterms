@@ -4,11 +4,11 @@
 
 ## Opening
 
-**LOOK |** The acronym storm settles into **SIX TERMS · THREE SHIFTS**.
+**LOOK |** The acronym storm settles into **FOUR TERMS · TWO SHIFTS**.
 
-**SAY |** AI moves fast, but its vocabulary sometimes seems to move even faster—and the AI naming department never takes a day off. These six terms are not six unrelated trends; they fit into three shifts: bigger to smarter, answers to actions, and shipping to learning. For each one, we will ask what it means, why it appeared, how it works, and where we see it today.
+**SAY |** AI moves fast, but its vocabulary sometimes seems to move even faster—and the AI naming department never takes a day off. Today we will not chase every new term. We will use four concepts to understand two shifts: using model capability more intelligently, then moving AI from answers toward prediction and action.
 
-**DO |** Let the acronym storm land, then move down the three shift rails.
+**DO |** Let the acronym storm land, then move down the two shift rails.
 
 **CLICK |** Global next-slide arrow → **MoE**.
 
@@ -332,11 +332,16 @@
 
 **NOTE |** One clip does not prove success in every environment.
 
-**TRANSITION |** Robots enter the physical world; enterprise AI enters a world of data, permissions, workflows, and people.
+**TRANSITION |** The four concepts now form one path: use capability more efficiently, then move from understanding toward prediction and action.
 
-**CLICK |** Do not click **Replay VLA** unless you want to restart; use the global next-slide arrow → **FDE**.
+**CLICK |** Do not click **Replay VLA** unless you want to restart; use the global next-slide arrow → **Closing**.
 
 ---
+
+<details>
+<summary><strong>Hidden backup third part: FDE · RSI</strong></summary>
+
+> This part is outside the current 30-minute route, but its script and demos remain intact.
 
 ## FDE
 
@@ -492,12 +497,14 @@
 
 ---
 
+</details>
+
 ## Closing
 
-**LOOK |** **SIX TERMS · THREE SHIFTS**: bigger to smarter, answers to actions, shipping to learning.
+**LOOK |** **FOUR TERMS · TWO SHIFTS**: bigger to smarter, answers to actions.
 
-**SAY |** MoE and distillation use capability more efficiently. World models and VLA move AI from answers toward prediction and action, while FDE and RSI explore tighter learning loops. Together, the six terms show that AI is changing in more ways than simply becoming bigger.
+**SAY |** MoE and distillation show how to use capability more efficiently. World models and VLA move AI from understanding toward prediction and action. Together, the four concepts show that AI is changing in more ways than simply becoming bigger.
 
-**DO |** Move once from left to right across the three columns, then finish on the summary line.
+**DO |** Move once from left to right across the two columns, then finish on **BIGGER → SMARTER** and **ANSWERS → ACTIONS**.
 
 **CLICK |** None.

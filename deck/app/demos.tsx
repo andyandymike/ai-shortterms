@@ -2064,11 +2064,13 @@ function SharedEmbodiedLab({
   visualStyle,
   concept,
   onComplete,
+  nextLabel = 'FDE',
 }: {
   isActive: boolean;
   visualStyle: DeckVisualStyle;
   concept: 'world' | 'vla';
   onComplete?: () => void;
+  nextLabel?: string;
 }) {
   const initialAct: EmbodiedAct = concept === 'world' ? 'world-now' : 'vla-gap';
   const [act, setAct] = useState<EmbodiedAct>(initialAct);
@@ -2138,7 +2140,7 @@ function SharedEmbodiedLab({
     act === 'world-forms'
       ? 'Next: VLA'
       : act === 'vla-proof'
-        ? 'Next: FDE'
+        ? `Next: ${nextLabel}`
         : copy.action;
 
   return (
@@ -2315,6 +2317,7 @@ export function EmbodiedLab(props: {
   visualStyle: DeckVisualStyle;
   concept: 'world' | 'vla';
   onComplete?: () => void;
+  nextLabel?: string;
 }) {
   if (props.visualStyle === 'atlas' && props.concept === 'world') {
     return <AtlasWorldLab isActive={props.isActive} />;
@@ -3473,10 +3476,9 @@ export function RsiLab({ visualStyle }: { visualStyle: DeckVisualStyle; onComple
   );
 }
 
-const closingPrompts = [
-  { number: '01', tone: 'teal', text: 'WHAT IS IT?' },
-  { number: '02', tone: 'red', text: 'WHY NOW?' },
-  { number: '03', tone: 'yellow', text: 'SO WHAT?' },
+const closingShifts = [
+  { number: '01', tone: 'teal', terms: 'MOE · DISTILLATION', text: 'BIGGER → SMARTER' },
+  { number: '02', tone: 'red', terms: 'WORLD MODEL · VLA', text: 'ANSWERS → ACTIONS' },
 ];
 
 export function ClosingLab({
@@ -3486,19 +3488,19 @@ export function ClosingLab({
 }) {
   if (visualStyle === 'machine') {
     return (
-      <section className={closingMachineStyles.stage} aria-label="Closing thought: AI terms will change, but three useful questions remain">
+      <section className={closingMachineStyles.stage} aria-label="Closing summary: four AI terms form two shifts">
         <div className={closingMachineStyles.ambient} aria-hidden="true" />
         <div className={closingMachineStyles.grid} aria-hidden="true" />
 
         <header className={closingMachineStyles.heading}>
-          <h2>The terms will change. The questions won’t.</h2>
-          <p>Use the same three questions for the next acronym.</p>
+          <h2>Four terms. Two shifts.</h2>
+          <p>Use capability more efficiently—then move from answers toward action.</p>
         </header>
 
         <main className={closingMachineStyles.questionGrid}>
-          {closingPrompts.map((prompt) => (
-            <article className={closingMachineStyles.question} data-tone={prompt.tone} key={prompt.number}>
-              <span>{prompt.number}</span><strong>{prompt.text}</strong>
+          {closingShifts.map((shift) => (
+            <article className={closingMachineStyles.question} data-tone={shift.tone} key={shift.number}>
+              <span>{shift.number}</span><small>{shift.terms}</small><strong>{shift.text}</strong>
             </article>
           ))}
         </main>
@@ -3509,16 +3511,16 @@ export function ClosingLab({
 
   if (visualStyle === 'atlas') {
     return (
-      <section className={`${atlasStyles.stage} ${atlasStyles.closingStage}`} aria-label="Closing thought: AI terms will change, but three useful questions remain">
+      <section className={`${atlasStyles.stage} ${atlasStyles.closingStage}`} aria-label="Closing summary: four AI terms form two shifts">
         <aside className={atlasStyles.coverFolio}><span>FIELD GUIDE</span><strong>END</strong></aside>
         <header className={atlasStyles.closingHeading}>
           <span>END OF FIELD GUIDE</span>
-          <h2>The terms will change.<br /><em>The questions won’t.</em></h2>
-          <p>Use the same three questions for the next acronym.</p>
+          <h2>Four terms.<br /><em>Two shifts.</em></h2>
+          <p>Use capability more efficiently—then move from answers toward action.</p>
         </header>
         <main className={atlasStyles.closingQuestions}>
-          {closingPrompts.map((prompt) => (
-            <article data-tone={prompt.tone} key={prompt.number}><span>{prompt.number}</span><strong>{prompt.text}</strong></article>
+          {closingShifts.map((shift) => (
+            <article data-tone={shift.tone} key={shift.number}><span>{shift.number}</span><small>{shift.terms}</small><strong>{shift.text}</strong></article>
           ))}
         </main>
         <footer className={atlasStyles.closingFooter}><span>THANK YOU</span></footer>
@@ -3527,16 +3529,16 @@ export function ClosingLab({
   }
 
   return (
-    <section className={closingStyles.stage} aria-label="Closing thought: AI terms will change, but three useful questions remain">
+    <section className={closingStyles.stage} aria-label="Closing summary: four AI terms form two shifts">
       <header className={closingStyles.heading}>
-        <h2>The terms will change. The questions won’t.</h2>
-        <p>Use the same three questions for the next acronym.</p>
+        <h2>Four terms. Two shifts.</h2>
+        <p>Use capability more efficiently—then move from answers toward action.</p>
       </header>
 
       <main className={closingStyles.questionGrid}>
-        {closingPrompts.map((prompt) => (
-          <article className={closingStyles.question} data-tone={prompt.tone} key={prompt.number}>
-            <span>{prompt.number}</span><strong>{prompt.text}</strong>
+        {closingShifts.map((shift) => (
+          <article className={closingStyles.question} data-tone={shift.tone} key={shift.number}>
+            <span>{shift.number}</span><small>{shift.terms}</small><strong>{shift.text}</strong>
           </article>
         ))}
       </main>
@@ -3575,6 +3577,9 @@ const openingChapters: Array<{
   },
 ];
 
+// Keep the third chapter available as backup without showing it in the 30-minute route.
+const visibleOpeningChapters = openingChapters.filter((chapter) => chapter.number !== '03');
+
 const openingNoiseTerms = ['RAG', 'RLHF', 'DPO', 'GRPO', 'JEPA', 'PRM', 'C2PA', 'SLM', 'TTC', 'VLM', 'MCP', 'A2A'];
 
 const openingSignalStarts = [
@@ -3592,15 +3597,15 @@ export function OpeningLab({
   visualStyle: DeckVisualStyle;
 }) {
   return (
-    <section className={openingStoryStyles.stage} data-visual={visualStyle} aria-label="Six AI terms resolving into three shifts">
+    <section className={openingStoryStyles.stage} data-visual={visualStyle} aria-label="Four AI terms resolving into two shifts">
       <div className={openingStoryStyles.surface} aria-hidden="true" />
       <aside className={openingStoryStyles.folio} aria-hidden="true">
-        <span>FIELD GUIDE</span><strong>AI</strong><small>06 TERMS<br />03 SHIFTS</small>
+        <span>FIELD GUIDE</span><strong>AI</strong><small>04 TERMS<br />02 SHIFTS</small>
       </aside>
 
       <header className={openingStoryStyles.hero}>
         <span className={openingStoryStyles.kicker}>AI KEEPS INVENTING NEW TERMS.</span>
-        <h1><span>Six terms.</span> <em>Three shifts.</em></h1>
+        <h1><span>Four terms.</span> <em>Two shifts.</em></h1>
         <p>Don’t memorize the acronyms. Follow the shift.</p>
       </header>
 
@@ -3610,8 +3615,8 @@ export function OpeningLab({
         ))}
       </div>
 
-      <main className={openingStoryStyles.shiftMap} aria-label="Three AI shifts containing six selected terms">
-        {openingChapters.map((chapter, chapterIndex) => (
+      <main className={openingStoryStyles.shiftMap} data-track-count={visibleOpeningChapters.length} aria-label="Two AI shifts containing four selected terms">
+        {visibleOpeningChapters.map((chapter, chapterIndex) => (
           <article className={openingStoryStyles.track} key={chapter.number} style={{ '--track-index': chapterIndex } as CSSProperties}>
             <header><b>{chapter.number}</b><span>{chapter.axis}</span></header>
             <div className={openingStoryStyles.shiftWords}>
@@ -3625,6 +3630,7 @@ export function OpeningLab({
                   <strong
                     className={openingStoryStyles.signalTerm}
                     key={term}
+                    data-two-word={term.includes(' ') || undefined}
                     style={{
                       '--signal-index': signalIndex,
                       '--from-x': start.x,
