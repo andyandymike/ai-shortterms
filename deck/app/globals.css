@@ -6146,6 +6146,52 @@ body {
   transform: scaleY(1.35);
 }
 
+.demo-step-rail[data-interactive] { pointer-events: auto; }
+
+.demo-step-rail[data-interactive] .demo-step-segments button {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-width: 0 !important;
+  height: 14px !important;
+  min-height: 14px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: inherit !important;
+  appearance: none;
+  cursor: pointer;
+}
+
+.demo-step-rail[data-interactive] .demo-step-segments button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(244, 240, 231, 0.16);
+  transform: translateY(-50%);
+  transition: height 150ms ease, background 150ms ease;
+}
+
+.demo-step-rail[data-interactive] .demo-step-segments button[data-step-state='complete']::before {
+  background: color-mix(in srgb, var(--cyan, #79e5d0) 58%, transparent);
+}
+
+.demo-step-rail[data-interactive] .demo-step-segments button[data-step-state='current']::before {
+  height: 4px;
+  background: var(--coral, #ff8a61);
+}
+
+.demo-step-rail[data-interactive] .demo-step-segments button:hover::before { height: 6px; }
+.demo-step-rail[data-interactive] .demo-step-segments button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 1px;
+}
+
 @media (max-width: 900px), (max-height: 650px) {
   .deck-chrome {
     left: 18px;

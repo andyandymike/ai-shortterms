@@ -783,7 +783,8 @@
   --teacher: var(--atlas-red, #e3482d);
   --student: var(--atlas-blue, #125f9f);
   --yellow: var(--atlas-yellow, #efc84a);
-  --learned: var(--atlas-green, #348b7d);
+  /* Keep the Atlas story inside the same three-ink system as MoE. */
+  --learned: var(--atlas-blue-dark, #0a426f);
 }
 
 .stage[data-visual='atlas'] .surface {
@@ -949,4 +950,717 @@
   .studentCore i {
     animation: none !important;
   }
+}
+
+/* Atlas story v2 ---------------------------------------------------------
+   Seven projected acts: definition -> constraint -> miss -> lesson ->
+   repetition -> closed-book exam -> real deployments.  These selectors live
+   last so the Atlas story can evolve without touching the frozen Exhibit. */
+
+.phaseTag {
+  top: clamp(87px, 12.8vh, 102px);
+  left: clamp(104px, 10.7vw, 164px);
+}
+
+.phaseTag span {
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 12px;
+}
+
+.phaseTag strong {
+  font-size: clamp(12px, 0.94vw, 15px);
+  letter-spacing: 0.13em;
+}
+
+.sceneCopy {
+  top: clamp(75px, 11vh, 88px);
+  right: clamp(25px, 3vw, 46px);
+  width: min(53%, 680px);
+  text-align: right;
+}
+
+.sceneCopy strong {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(23px, 2.15vw, 34px);
+  font-weight: 900;
+  letter-spacing: -0.045em;
+  line-height: 0.96;
+}
+
+.storyStage {
+  top: clamp(127px, 19.1vh, 153px);
+  right: clamp(26px, 3vw, 46px);
+  bottom: clamp(86px, 12.8vh, 104px);
+  left: clamp(104px, 10.7vw, 164px);
+}
+
+.storyStage > section {
+  border: 2px solid var(--ink);
+  background: rgba(255, 253, 246, 0.88);
+  box-shadow: 7px 7px 0 rgba(23, 23, 19, 0.13);
+}
+
+.footer {
+  right: clamp(26px, 3vw, 46px);
+  bottom: clamp(16px, 2.5vh, 22px);
+  left: clamp(104px, 10.7vw, 164px);
+}
+
+.footer button {
+  min-height: 39px;
+  border: 2px solid var(--ink);
+  border-radius: 0;
+  background: var(--paper-2);
+  box-shadow: 3px 3px 0 var(--ink);
+  color: var(--ink);
+  font-size: clamp(11px, 0.86vw, 14px);
+  font-weight: 950;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.footer button[data-primary] {
+  min-width: min(25vw, 310px);
+  background: var(--teacher);
+  color: #fffdf6;
+}
+
+.footer button:hover:not(:disabled) { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--ink); }
+
+/* 01 — the definition in one glance */
+.introScene {
+  display: grid;
+  grid-template-columns: minmax(190px, 0.9fr) minmax(150px, 0.7fr) minmax(180px, 0.82fr);
+  grid-template-rows: auto 1fr auto;
+  gap: 0;
+  overflow: hidden;
+}
+
+.introScene > header,
+.lessonScene > header,
+.trainScene > header,
+.applicationsScene > header {
+  grid-column: 1 / -1;
+  display: flex;
+  min-height: 43px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 8px 14px;
+  border-bottom: 2px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper-2);
+}
+
+.introScene > header span,
+.lessonScene > header span,
+.trainScene > header span,
+.applicationsScene > header span {
+  font-size: clamp(10px, 0.77vw, 12px);
+  font-weight: 950;
+  letter-spacing: 0.12em;
+}
+
+.introScene > header strong,
+.lessonScene > header strong,
+.trainScene > header strong,
+.applicationsScene > header strong {
+  font-size: clamp(13px, 1.08vw, 17px);
+  font-weight: 950;
+  letter-spacing: 0.05em;
+}
+
+.introTeacher,
+.introStudent {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 7px;
+  padding: clamp(14px, 2vw, 27px);
+}
+
+.introTeacher { background: color-mix(in srgb, var(--teacher) 15%, var(--paper-2)); }
+.introStudent { background: color-mix(in srgb, var(--student) 14%, var(--paper-2)); }
+
+.introTeacher > span,
+.introStudent > span {
+  font-size: clamp(11px, 0.88vw, 14px);
+  font-weight: 950;
+  letter-spacing: 0.11em;
+}
+
+.introTeacher > strong,
+.introStudent > strong {
+  display: grid;
+  width: clamp(74px, 8vw, 112px);
+  aspect-ratio: 1;
+  place-items: center;
+  border: 3px solid var(--ink);
+  border-radius: 50%;
+  font-size: clamp(31px, 3.5vw, 52px);
+  line-height: 1;
+}
+
+.introTeacher > strong { background: var(--teacher); color: #fff; }
+.introStudent > strong { background: var(--student); color: #fff; }
+
+.introTeacher > small,
+.introStudent > small { font-size: clamp(11px, 0.82vw, 13px); font-weight: 800; text-align: center; }
+
+.introTeacher > div,
+.introStudent > div { display: grid; grid-template-columns: repeat(6, 8px); gap: 3px; }
+.introStudent > div { grid-template-columns: repeat(4, 8px); }
+.introTeacher i,
+.introStudent i { width: 8px; height: 8px; background: currentColor; }
+
+.introLessons {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 9px;
+  border-inline: 2px solid var(--ink);
+  background: var(--yellow);
+}
+
+.introLessons > span { font-size: 11px; font-weight: 950; letter-spacing: 0.15em; }
+.introLessons > div { display: flex; gap: 5px; transform: rotate(-4deg); }
+.introLessons i { width: 28px; height: 38px; border: 2px solid var(--ink); background: var(--paper-2); box-shadow: 3px 3px 0 var(--ink); }
+.introLessons > strong { font-size: clamp(18px, 1.65vw, 26px); font-weight: 950; }
+.introLessons > b { font-size: clamp(30px, 3vw, 46px); line-height: 0.7; }
+
+.introScene > footer {
+  grid-column: 1 / -1;
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(12px, 2.1vw, 30px);
+  padding: 8px 14px;
+  border-top: 2px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper-2);
+  font-size: clamp(12px, 1vw, 16px);
+  letter-spacing: 0.05em;
+}
+
+.introScene > footer strong { color: var(--yellow); font-size: 1.12em; }
+
+/* 02 — why distill */
+.whyScene {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(190px, 0.78fr) 74px minmax(300px, 1.35fr);
+  grid-template-rows: 1fr auto;
+  gap: 0;
+  overflow: hidden;
+}
+
+.whyTeacher {
+  display: grid;
+  align-content: center;
+  gap: 14px;
+  padding: clamp(16px, 2vw, 28px);
+  background: var(--teacher);
+  color: #fff;
+}
+
+.whyTeacher > span { font-size: 12px; font-weight: 950; letter-spacing: 0.13em; }
+.whyTeacher > strong { font-size: clamp(35px, 4vw, 62px); font-weight: 950; letter-spacing: -0.07em; line-height: 0.85; }
+.whyTeacher p { display: grid; gap: 6px; margin: 0; }
+.whyTeacher p b { padding-block: 5px; border-top: 1px solid rgba(255,255,255,.55); font-size: clamp(12px, 1vw, 15px); }
+.whyTeacher footer { font-size: 11px; font-weight: 900; letter-spacing: .08em; }
+
+.deployGate {
+  display: grid;
+  grid-template-rows: auto 1fr auto 1fr;
+  place-items: center;
+  border-inline: 2px solid var(--ink);
+  background: var(--paper);
+}
+
+.stage[data-visual='atlas'] { background: var(--paper); }
+
+.deployGate span { padding: 8px; writing-mode: vertical-rl; font-size: 10px; font-weight: 950; letter-spacing: .12em; }
+.deployGate i { width: 2px; height: 100%; background: var(--ink); }
+.deployGate strong { display: grid; width: 42px; height: 42px; place-items: center; border: 2px solid var(--ink); border-radius: 50%; background: var(--yellow); font-size: 23px; }
+
+.endpointField { display: grid; grid-template-rows: auto 1fr auto; min-width: 0; }
+.endpointField > header { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 11px 14px; border-bottom: 2px solid var(--ink); }
+.endpointField > header span { font-size: 11px; font-weight: 950; letter-spacing: .1em; }
+.endpointField > header strong { color: var(--student); font-size: clamp(20px, 2vw, 31px); font-weight: 950; }
+.endpointField > div { display: grid; grid-template-columns: 1fr 1fr; }
+.endpointField article { display: grid; align-content: center; gap: 5px; padding: clamp(10px, 1.5vw, 20px); border-right: 1px solid var(--ink); border-bottom: 1px solid var(--ink); }
+.endpointField article:nth-child(even) { border-right: 0; }
+.endpointField article:nth-child(n+3) { border-bottom: 0; }
+.endpointField article span { font-size: clamp(16px, 1.6vw, 25px); font-weight: 950; }
+.endpointField article strong { color: var(--student); font-size: 11px; letter-spacing: .11em; }
+.endpointField > footer { padding: 9px 14px; border-top: 2px solid var(--ink); background: var(--student); color: #fff; font-size: clamp(12px, 1vw, 15px); font-weight: 950; text-align: center; letter-spacing: .05em; }
+
+.whyScene > aside {
+  grid-column: 1 / -1;
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 8px 14px;
+  border-top: 2px solid var(--ink);
+  background: var(--yellow);
+  font-size: clamp(11px, .9vw, 14px);
+  font-weight: 900;
+}
+.whyScene > aside strong { font-size: 1.08em; }
+
+/* 03 — literal miss */
+.missScene {
+  display: grid;
+  grid-template-columns: minmax(300px, 1.18fr) minmax(120px, .48fr) minmax(235px, .88fr);
+  overflow: hidden;
+}
+
+.ticketSheet,
+.wrongReply { min-width: 0; }
+
+.ticketSheet { display: grid; grid-template-rows: auto 1fr auto; background: var(--paper-2); }
+.ticketSheet > header,
+.wrongReply > header,
+.examTicket > header,
+.examAnswer > header { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 9px 12px; border-bottom: 2px solid var(--ink); }
+.ticketSheet > header span,
+.wrongReply > header span,
+.examTicket > header span,
+.examAnswer > header span { font-size: 11px; font-weight: 950; letter-spacing: .1em; }
+.ticketSheet > header strong { padding: 3px 7px; background: var(--teacher); color: #fff; font-size: 11px; }
+.ticketSheet blockquote { align-self: center; margin: 0; padding: clamp(16px, 2vw, 30px); font-family: Georgia, serif; font-size: clamp(20px, 2.15vw, 34px); font-weight: 700; line-height: 1.1; }
+.ticketSheet mark { padding-inline: .1em; background: var(--yellow); color: var(--ink); }
+.ticketSheet em { color: var(--teacher); font-style: normal; text-decoration: underline; text-decoration-thickness: 3px; }
+.ticketSheet > footer { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; padding: 9px 12px; border-top: 2px solid var(--ink); font-size: 11px; }
+.ticketSheet > footer span,
+.ticketSheet > footer strong { font-weight: 950; letter-spacing: .08em; }
+.ticketSheet > footer b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.literalScanner { display: grid; grid-template-rows: auto 1fr auto auto; place-items: center; gap: 8px; padding: 12px; border-inline: 2px solid var(--ink); background: var(--yellow); text-align: center; }
+.literalScanner > span { font-size: 10px; font-weight: 950; letter-spacing: .1em; }
+.literalScanner > div { align-self: stretch; display: flex; width: 100%; flex-direction: column; align-items: center; justify-content: center; gap: 14px; }
+.literalScanner > div b { min-width: 82%; padding: 7px 8px; border: 2px solid var(--ink); background: var(--paper-2); box-shadow: 3px 3px 0 var(--ink); font-family: Georgia, serif; font-size: clamp(14px, 1.18vw, 19px); animation: keyword-capture 720ms cubic-bezier(.16,1,.3,1) both; }
+.literalScanner > div b:nth-child(2) { animation-delay: 140ms; }
+.literalScanner p { margin: 0; }
+.literalScanner p small { display: block; font-size: 9px; font-weight: 950; letter-spacing: .1em; }
+.literalScanner p strong { display: block; margin-top: 4px; font-size: clamp(13px, 1.05vw, 17px); }
+.literalScanner > b { font-size: 32px; }
+
+.wrongReply { position: relative; display: grid; grid-template-rows: auto auto 1fr auto; background: color-mix(in srgb, var(--teacher) 11%, var(--paper-2)); }
+.wrongReply > header strong { color: var(--teacher); font-size: 11px; }
+.wrongReply > p { display: grid; gap: 3px; margin: 0; padding: 12px; border-bottom: 1px solid var(--ink); }
+.wrongReply > p small { font-size: 10px; font-weight: 900; letter-spacing: .1em; }
+.wrongReply > p strong { color: var(--teacher); font-size: clamp(21px, 2vw, 31px); }
+.wrongReply blockquote { align-self: center; margin: 0; padding: 18px; font-family: Georgia, serif; font-size: clamp(18px, 1.8vw, 28px); font-weight: 700; text-align: center; }
+.wrongReply > b { position: absolute; right: 12px; bottom: 40px; transform: rotate(-7deg); padding: 5px 8px; border: 3px solid var(--teacher); color: var(--teacher); font-size: clamp(16px, 1.4vw, 22px); }
+.wrongReply > footer { padding: 9px 12px; border-top: 2px solid var(--ink); background: var(--ink); color: #fff; font-size: 12px; font-weight: 950; text-align: center; letter-spacing: .12em; }
+
+/* 04 — the worked lesson */
+.lessonScene {
+  display: grid;
+  grid-template-columns: minmax(285px, .9fr) minmax(350px, 1.3fr);
+  grid-template-rows: auto 1fr auto;
+  gap: 0;
+  overflow: hidden;
+}
+
+.annotatedTicket { position: relative; display: grid; align-content: center; gap: 12px; padding: clamp(16px, 2vw, 28px); border-right: 2px solid var(--ink); background: color-mix(in srgb, var(--yellow) 17%, var(--paper-2)); }
+.annotatedTicket > span { font-size: 11px; font-weight: 950; letter-spacing: .12em; }
+.annotatedTicket blockquote { margin: 0; font-family: Georgia, serif; font-size: clamp(19px, 1.9vw, 29px); font-weight: 700; line-height: 1.12; }
+.annotatedTicket mark { background: var(--yellow); color: var(--ink); }
+.annotatedTicket em { color: var(--teacher); font-style: normal; text-decoration: underline 3px; }
+.annotatedTicket > div { display: flex; align-items: center; gap: 8px; font-size: clamp(11px, .9vw, 14px); }
+.annotatedTicket > div i { width: 22px; height: 3px; background: var(--ink); }
+.annotatedTicket > footer { justify-self: start; padding: 5px 8px; background: var(--teacher); color: #fff; font-size: 11px; font-weight: 950; letter-spacing: .08em; }
+
+.workedLesson { display: grid; grid-template-rows: auto repeat(3, 1fr) auto; min-width: 0; background: var(--paper-2); }
+.workedLesson > header { display: flex; align-items: center; justify-content: space-between; padding: 9px 13px; border-bottom: 2px solid var(--ink); }
+.workedLesson > header span { font-size: 11px; font-weight: 950; letter-spacing: .1em; }
+.workedLesson > header strong { padding: 3px 7px; background: var(--student); color: #fff; font-size: 11px; }
+.workedLesson > p { display: grid; grid-template-columns: 78px 1fr; align-items: center; gap: 12px; margin: 0; padding: 8px 13px; border-bottom: 1px solid var(--ink); }
+.workedLesson > p span { color: var(--student); font-size: 11px; font-weight: 950; letter-spacing: .1em; }
+.workedLesson > p strong { font-size: clamp(14px, 1.18vw, 19px); line-height: 1.08; }
+.workedLesson > footer { padding: 8px 13px; background: var(--student); color: #fff; font-size: 11px; font-weight: 950; text-align: center; letter-spacing: .04em; }
+.lessonScene > aside { grid-column: 1 / -1; padding: 5px 10px; border-top: 2px solid var(--ink); font-size: 9px; font-weight: 900; letter-spacing: .09em; text-align: right; }
+
+/* 05 — many lessons alter one student */
+.trainScene {
+  display: grid;
+  grid-template-columns: minmax(240px, .95fr) minmax(130px, .48fr) minmax(270px, 1fr);
+  grid-template-rows: auto 1fr auto;
+  gap: 0;
+  overflow: hidden;
+}
+
+.lessonConveyor { display: grid; align-content: center; gap: 9px; padding: clamp(12px, 1.6vw, 22px); background: color-mix(in srgb, var(--teacher) 10%, var(--paper-2)); }
+.lessonConveyor article { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 9px; padding: 9px 10px; border: 2px solid var(--ink); background: var(--paper-2); box-shadow: 3px 3px 0 var(--teacher); transform: translateX(calc(var(--lesson-index) * 4px)); }
+.lessonConveyor article span { font-size: 9px; font-weight: 950; letter-spacing: .08em; }
+.lessonConveyor article strong { font-family: Georgia, serif; font-size: clamp(12px, 1.03vw, 16px); line-height: 1.05; }
+.lessonConveyor article b { padding: 3px 5px; background: var(--teacher); color: #fff; font-size: 9px; }
+
+.trainingPress { display: grid; align-content: center; place-items: center; gap: 6px; padding: 10px; border-inline: 2px solid var(--ink); background: var(--yellow); text-align: center; }
+.trainingPress > span { font-size: 10px; font-weight: 950; letter-spacing: .12em; }
+.trainingPress > p { display: grid; width: 100%; gap: 2px; margin: 0; padding: 7px 6px; border: 2px solid var(--ink); background: var(--paper-2); }
+.trainingPress > p small { font-size: 8px; font-weight: 950; letter-spacing: .08em; }
+.trainingPress > p strong { font-size: clamp(13px, 1.05vw, 17px); line-height: 1; }
+.trainingPress > p[data-student] strong { color: var(--teacher); }
+.trainingPress > p[data-teacher] { background: var(--student); color: #fff; }
+.trainingPress > b { font-size: 22px; line-height: .7; }
+.trainingPress > i { width: 3px; height: 18px; background: var(--ink); }
+.trainingPress > strong { font-size: clamp(13px, 1.12vw, 18px); line-height: .95; }
+.trainingPress > small { font-size: 10px; font-weight: 800; }
+
+.behaviorLedger { display: grid; grid-template-rows: auto 1fr auto 1fr auto; background: color-mix(in srgb, var(--student) 11%, var(--paper-2)); }
+.behaviorLedger > header { padding: 9px 11px; border-bottom: 2px solid var(--ink); }
+.behaviorLedger > header span { display: block; font-size: 10px; font-weight: 950; letter-spacing: .1em; }
+.behaviorLedger > header strong { display: block; color: var(--student); font-size: clamp(16px, 1.45vw, 23px); }
+.behaviorLedger > p { display: grid; align-content: center; gap: 3px; margin: 0; padding: 8px 11px; }
+.behaviorLedger > p span { font-size: 9px; font-weight: 950; letter-spacing: .1em; }
+.behaviorLedger > p strong { font-size: clamp(13px, 1.12vw, 18px); line-height: 1.08; }
+.behaviorLedger > p[data-after] { background: var(--student); color: #fff; }
+.behaviorLedger > b { justify-self: center; font-size: 22px; }
+.behaviorLedger > div { display: grid; grid-template-columns: repeat(10, 1fr); gap: 2px; padding: 7px 10px; border-top: 1px solid var(--ink); }
+.behaviorLedger > div i { height: 7px; background: color-mix(in srgb, var(--student) calc(30% + var(--weight-cell) * 3%), var(--paper)); }
+.trainScene > footer { grid-column: 1 / -1; display: flex; min-height: 48px; align-items: center; justify-content: center; gap: 14px; padding: 7px 12px; border-top: 2px solid var(--ink); background: var(--ink); color: #fff; }
+.trainScene > footer strong { color: var(--yellow); font-size: clamp(14px, 1.25vw, 20px); }
+.trainScene > footer span { font-size: clamp(11px, .9vw, 14px); font-weight: 800; }
+
+/* 06 — closed-book exam */
+.examScene {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(280px, .9fr) minmax(370px, 1.25fr);
+  gap: 0;
+  overflow: hidden;
+  padding: 45px 0 43px;
+}
+
+.teacherOffline { position: absolute; inset: 0 0 auto; display: flex; height: 45px; align-items: center; justify-content: center; gap: 14px; padding: 7px 12px; border: 0; border-bottom: 2px solid var(--ink); background: var(--ink); box-shadow: none; color: #fff; transform: none; }
+.teacherOffline span,
+.teacherOffline small { font-size: 10px; font-weight: 950; letter-spacing: .12em; }
+.teacherOffline span { color: #fff; text-decoration: none; }
+.teacherOffline strong { padding: 3px 8px; background: var(--teacher); font-size: 12px; text-decoration: line-through; }
+
+.examTicket { display: grid; grid-template-rows: auto 1fr auto; min-width: 0; border-right: 2px solid var(--ink); background: color-mix(in srgb, var(--yellow) 17%, var(--paper-2)); }
+.examTicket > header strong { font-size: 11px; }
+.examTicket blockquote { align-self: center; margin: 0; padding: clamp(18px, 2.2vw, 32px); font-family: Georgia, serif; font-size: clamp(21px, 2.25vw, 35px); font-weight: 700; line-height: 1.08; }
+.examTicket > footer { padding: 8px 11px; border-top: 2px solid var(--ink); font-size: 10px; font-weight: 950; text-align: center; letter-spacing: .1em; }
+
+.examAnswer { display: grid; grid-template-rows: auto auto auto 1fr auto; min-width: 0; padding-top: 0; background: color-mix(in srgb, var(--student) 11%, var(--paper-2)); box-shadow: none; color: var(--ink); }
+.examAnswer > header { border-color: var(--ink); }
+.examAnswer > header strong { color: var(--student); font-size: 11px; }
+.examAnswer > p { display: grid; grid-template-columns: 64px 1fr; align-items: center; gap: 10px; margin: 0; padding: 7px 12px; border-bottom: 1px solid var(--ink); }
+.examAnswer > p span { color: var(--student); font-size: 10px; font-weight: 950; letter-spacing: .1em; }
+.examAnswer > p strong { font-size: clamp(13px, 1.08vw, 17px); }
+.examAnswer blockquote { align-self: center; margin: 0; padding: 13px 18px; font-family: Georgia, serif; font-size: clamp(17px, 1.55vw, 24px); font-weight: 700; line-height: 1.08; }
+.examAnswer > b { justify-self: end; margin: 0 12px 9px; padding: 5px 8px; background: var(--student); color: #fff; font-size: 11px; }
+.examScene > footer { position: absolute; inset: auto 0 0; display: flex; min-height: 43px; align-items: center; justify-content: center; gap: 12px; padding: 7px 12px; border-top: 2px solid var(--ink); background: var(--ink); color: #fff; transform: translateY(100%); animation: exam-verdict 500ms 550ms cubic-bezier(.16,1,.3,1) forwards; }
+.examScene > footer span { font-size: 12px; font-weight: 900; }
+.examScene > footer strong { color: var(--yellow); font-size: clamp(16px, 1.45vw, 23px); }
+
+/* 07 — real deployment receipts */
+.applicationsScene { display: grid; grid-template-rows: auto 1fr auto; overflow: hidden; }
+.applicationsScene > div {
+  display: grid;
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  align-content: stretch;
+  gap: 7px;
+  padding: clamp(10px, 1.3vw, 18px);
+}
+.applicationsScene article { display: grid; grid-template-columns: 105px minmax(185px, .9fr) minmax(235px, 1.15fr) minmax(155px, .7fr); align-items: center; gap: 12px; padding: 9px 12px; border: 2px solid var(--ink); background: var(--paper-2); box-shadow: 4px 4px 0 var(--ink); }
+.applicationsScene article[data-tone='red'] { border-left: 12px solid var(--teacher); }
+.applicationsScene article[data-tone='yellow'] { border-left: 12px solid var(--yellow); }
+.applicationsScene article[data-tone='blue'] { border-left: 12px solid var(--student); }
+.applicationsScene article > span { font-size: 10px; font-weight: 950; letter-spacing: .1em; }
+.applicationsScene article > strong { font-size: clamp(16px, 1.5vw, 23px); line-height: .95; }
+.applicationsScene article p { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 0; }
+.applicationsScene article p b { font-size: clamp(12px, 1vw, 16px); }
+.applicationsScene article p i { font-style: normal; font-size: 22px; }
+.applicationsScene article p em { color: var(--student); font-size: clamp(20px, 2vw, 31px); font-style: normal; font-weight: 950; }
+.applicationsScene article small { font-size: clamp(10px, .85vw, 13px); font-weight: 800; }
+.applicationsScene > footer { display: flex; min-height: 46px; align-items: center; justify-content: center; gap: 12px; padding: 7px 12px; border-top: 2px solid var(--ink); background: var(--ink); color: #fff; }
+.applicationsScene > footer span { font-size: 12px; font-weight: 900; }
+.applicationsScene > footer strong { color: var(--yellow); font-size: clamp(16px, 1.4vw, 22px); }
+
+@keyframes scan-line {
+  from { transform: translateX(-6px); }
+  to { transform: translateX(6px); }
+}
+
+@keyframes keyword-capture {
+  from { opacity: 0; transform: translateX(-24px) rotate(-3deg); }
+  to { opacity: 1; transform: translateX(0) rotate(0); }
+}
+
+@keyframes exam-verdict {
+  to { transform: translateY(0); }
+}
+
+@media (max-width: 900px), (max-height: 650px) {
+  .phaseTag { top: 77px; left: 84px; gap: 7px; }
+  .phaseTag span { width: 27px; height: 27px; font-size: 10px; }
+  .phaseTag strong { font-size: 10px; }
+  .sceneCopy { top: 71px; right: 20px; width: 52%; }
+  .sceneCopy strong { font-size: clamp(18px, 2.5vw, 24px); }
+  .storyStage { top: 111px; right: 20px; bottom: 72px; left: 84px; }
+  .footer { right: 20px; bottom: 11px; left: 84px; }
+  .footer button { min-height: 31px; padding: 5px 9px; font-size: 9px; }
+  .footer button[data-primary] { min-width: 180px; }
+  .introScene { grid-template-columns: 1fr .64fr .9fr; }
+  .introScene > header,
+  .lessonScene > header,
+  .trainScene > header,
+  .applicationsScene > header { min-height: 34px; padding: 5px 9px; }
+  .introScene > header span,
+  .lessonScene > header span,
+  .trainScene > header span,
+  .applicationsScene > header span { font-size: 8px; }
+  .introScene > header strong,
+  .lessonScene > header strong,
+  .trainScene > header strong,
+  .applicationsScene > header strong { font-size: 11px; }
+  .introTeacher,
+  .introStudent { gap: 4px; padding: 7px; }
+  .introTeacher > strong,
+  .introStudent > strong { width: 66px; }
+  .introTeacher > small,
+  .introStudent > small { font-size: 9px; }
+  .introScene > footer { min-height: 36px; gap: 8px; font-size: 10px; }
+  .whyScene { grid-template-columns: .7fr 54px 1.3fr; }
+  .whyTeacher { gap: 8px; padding: 11px; }
+  .whyTeacher > strong { font-size: 35px; }
+  .whyScene > aside { min-height: 35px; padding: 5px 8px; font-size: 9px; }
+  .endpointField > header { padding: 6px 9px; }
+  .endpointField article { padding: 7px 9px; }
+  .endpointField article span { font-size: 14px; }
+  .endpointField > footer { padding: 5px 8px; font-size: 10px; }
+  .missScene { grid-template-columns: 1.1fr .42fr .83fr; }
+  .ticketSheet blockquote { padding: 11px; font-size: 20px; }
+  .ticketSheet > footer { grid-template-columns: auto 1fr; padding: 5px 8px; }
+  .ticketSheet > footer strong { display: none; }
+  .literalScanner { gap: 4px; padding: 7px; }
+  .literalScanner > div { gap: 7px; }
+  .literalScanner > div b { padding: 4px; font-size: 12px; }
+  .wrongReply blockquote { padding: 9px; font-size: 16px; }
+  .wrongReply > b { bottom: 32px; font-size: 13px; }
+  .lessonScene { grid-template-columns: .85fr 1.15fr; }
+  .annotatedTicket { gap: 7px; padding: 10px; }
+  .annotatedTicket blockquote { font-size: 16px; }
+  .workedLesson > p { grid-template-columns: 55px 1fr; gap: 6px; padding: 5px 8px; }
+  .workedLesson > p strong { font-size: 11px; }
+  .workedLesson > footer { padding: 5px 8px; font-size: 9px; }
+  .trainScene { grid-template-columns: .92fr .44fr 1fr; }
+  .lessonConveyor { gap: 5px; padding: 8px; }
+  .lessonConveyor article { grid-template-columns: 1fr auto; gap: 4px; padding: 6px; }
+  .lessonConveyor article span { display: none; }
+  .lessonConveyor article strong { font-size: 11px; }
+  .trainingPress { gap: 3px; padding: 5px; }
+  .trainingPress > p { padding: 4px 3px; }
+  .trainingPress > p small { font-size: 7px; }
+  .trainingPress > p strong { font-size: 10px; }
+  .trainingPress > i { height: 10px; }
+  .trainingPress > strong { font-size: 11px; }
+  .trainingPress > small { font-size: 8px; }
+  .behaviorLedger > p { padding: 5px 7px; }
+  .behaviorLedger > p strong { font-size: 11px; }
+  .trainScene > footer { min-height: 35px; padding: 5px 8px; }
+  .trainScene > footer strong { font-size: 11px; }
+  .trainScene > footer span { font-size: 9px; }
+  .examScene { grid-template-columns: .86fr 1.14fr; padding: 34px 0 43px; }
+  .teacherOffline { height: 34px; padding: 4px 8px; }
+  .examTicket blockquote { padding: 12px; font-size: 19px; }
+  .examAnswer > p { grid-template-columns: 50px 1fr; padding: 4px 8px; }
+  .examAnswer > p strong { font-size: 10px; }
+  .examAnswer blockquote { padding: 8px 10px; font-size: 13px; }
+  .applicationsScene > div { gap: 5px; padding: 7px; }
+  .applicationsScene article { grid-template-columns: 75px 1fr 1fr .75fr; gap: 7px; padding: 7px 8px; }
+  .applicationsScene article > strong { font-size: 15px; }
+  .applicationsScene article p b { font-size: 11px; }
+  .applicationsScene article p em { font-size: 20px; }
+  .applicationsScene article small { font-size: 10px; }
+  .applicationsScene > footer { min-height: 35px; padding: 5px 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage *,
+  .stage *::before,
+  .stage *::after { animation: none !important; transition: none !important; }
+}
+
+/* Atlas alignment --------------------------------------------------------
+   Match MoE's open editorial stage: one claim above, one visual relationship
+   below, and no dark dashboard containers competing with the explanation. */
+
+.stage {
+  --ink: #121518;
+  --paper: #f2ecdc;
+  --paper-2: #e4dece;
+  --teacher: #e3482d;
+  --student: #125f9f;
+  --learned: #348b7d;
+  --yellow: #efc84a;
+  --rule: rgba(18, 21, 24, 0.25);
+  background: var(--paper);
+}
+
+.surface { background: transparent; }
+.surface::before,
+.surface::after,
+.phaseTag { display: none; }
+
+.storyStage {
+  top: clamp(103px, 16.3vh, 131px);
+  right: clamp(36px, 4vw, 60px);
+  bottom: clamp(96px, 13.8vh, 112px);
+  left: clamp(224px, 23.5vw, 352px);
+}
+
+.storyStage > section {
+  border: 0;
+  border-top: 3px solid var(--ink);
+  background: transparent;
+  box-shadow: none;
+}
+
+/* 01 — teacher makes lessons; a separate student learns before deployment */
+.introScene {
+  grid-template-columns: minmax(190px, 1fr) minmax(130px, 0.58fr) minmax(180px, 0.82fr);
+  grid-template-rows: minmax(0, 1fr);
+}
+
+.introTeacher,
+.introStudent {
+  padding: clamp(18px, 2.4vw, 34px);
+  background: transparent;
+}
+
+.introTeacher { border-right: 1px solid var(--ink); }
+.introStudent { border-left: 1px solid var(--ink); }
+.introTeacher > strong,
+.introStudent > strong { border: 2px solid var(--ink); }
+.introLessons { border: 0; background: color-mix(in srgb, var(--yellow) 74%, var(--paper)); }
+.introLessons i { border: 1px solid var(--ink); box-shadow: 3px 3px 0 var(--teacher); }
+
+/* 02 — deployment pressure */
+.whyScene { grid-template-rows: minmax(0, 1fr); }
+.whyTeacher { border-right: 1px solid var(--ink); background: transparent; color: var(--ink); }
+.whyTeacher > span { color: var(--ink); }
+.whyTeacher > strong { color: var(--teacher); }
+.whyTeacher > p b { border: 1px solid var(--ink); background: transparent; box-shadow: none; }
+.deployGate { border: 0; background: transparent; }
+.endpointField { background: transparent; }
+.endpointField > header { border-bottom: 1px solid var(--ink); background: transparent; color: var(--ink); }
+.endpointField article { border: 0; border-bottom: 1px solid var(--ink); background: transparent; box-shadow: none; }
+
+/* 03 — the visible mistake */
+.missScene { grid-template-columns: minmax(300px, 1.18fr) minmax(108px, 0.4fr) minmax(220px, 0.78fr); }
+.ticketSheet,
+.wrongReply { background: transparent; }
+.ticketSheet > header,
+.wrongReply > header,
+.examTicket > header,
+.examAnswer > header { border-bottom: 1px solid var(--ink); }
+.ticketSheet > footer { border-top: 1px solid var(--ink); }
+.literalScanner { border-inline: 1px solid var(--ink); background: color-mix(in srgb, var(--yellow) 78%, var(--paper)); }
+.literalScanner > div b { border: 1px solid var(--ink); box-shadow: none; }
+.wrongReply { background: color-mix(in srgb, var(--teacher) 9%, var(--paper)); }
+
+/* 04 — one worked lesson */
+.lessonScene {
+  grid-template-columns: minmax(285px, 0.9fr) minmax(350px, 1.3fr);
+  grid-template-rows: minmax(0, 1fr);
+}
+.annotatedTicket { border-right: 1px solid var(--ink); background: color-mix(in srgb, var(--yellow) 16%, var(--paper)); }
+.workedLesson { grid-template-rows: auto repeat(3, 1fr); background: transparent; }
+.workedLesson > header { border-bottom: 1px solid var(--ink); }
+.workedLesson > p { border-bottom: 1px solid var(--rule); }
+
+/* 05 — many lessons alter the student's behavior */
+.trainScene {
+  grid-template-columns: minmax(220px, 0.9fr) minmax(125px, 0.44fr) minmax(250px, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+}
+.lessonConveyor { background: transparent; }
+.lessonConveyor article { border: 1px solid var(--ink); background: transparent; box-shadow: 3px 3px 0 var(--teacher); }
+.lessonConveyor article span { font-size: 10px; }
+.lessonConveyor article strong { font-size: clamp(15px, 1.22vw, 19px); }
+.trainingPress > p small { font-size: 9px; }
+.trainingPress > p strong { font-size: clamp(15px, 1.18vw, 18px); }
+.trainingPress > strong { font-size: clamp(15px, 1.22vw, 19px); }
+.trainingPress > small { font-size: 11px; }
+.trainingPress { border-inline: 1px solid var(--ink); background: color-mix(in srgb, var(--yellow) 72%, var(--paper)); }
+.trainingPress > p { border: 1px solid var(--ink); }
+.behaviorLedger { background: color-mix(in srgb, var(--student) 8%, var(--paper)); }
+.behaviorLedger > header { border-bottom: 1px solid var(--ink); }
+.behaviorLedger > p[data-after] { background: var(--student); }
+
+/* 06 — teacher removed; student handles a new case */
+.examScene {
+  grid-template-columns: minmax(280px, 0.9fr) minmax(370px, 1.25fr);
+  padding: 42px 0 0;
+}
+.teacherOffline {
+  height: 42px;
+  border-bottom: 1px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+}
+.teacherOffline span { color: var(--ink); }
+.examTicket { border-right: 1px solid var(--ink); background: color-mix(in srgb, var(--yellow) 14%, var(--paper)); }
+.examAnswer {
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  border: 0;
+  background: color-mix(in srgb, var(--student) 8%, var(--paper));
+}
+.examAnswer > p { border-bottom: 1px solid var(--rule); }
+.examAnswer > b { align-self: end; }
+
+/* 07 — real examples, presented like MoE's evidence rows */
+.applicationsScene { grid-template-rows: minmax(0, 1fr); }
+.applicationsScene > div { gap: 0; padding: 0; }
+.applicationsScene article {
+  --tone: var(--student);
+  grid-template-columns: minmax(220px, 0.95fr) minmax(270px, 1.15fr) minmax(90px, 0.42fr);
+  gap: clamp(12px, 1.6vw, 24px);
+  padding: 10px clamp(14px, 1.8vw, 27px);
+  border: 0;
+  border-bottom: 1px solid var(--ink);
+  background: transparent;
+  box-shadow: inset 8px 0 0 var(--tone);
+}
+.applicationsScene article[data-tone='red'] { --tone: var(--teacher); border-left: 0; }
+.applicationsScene article[data-tone='yellow'] { --tone: var(--yellow); border-left: 0; }
+.applicationsScene article[data-tone='blue'] { --tone: var(--student); border-left: 0; }
+.applicationsScene article > strong { font-size: clamp(22px, 2.2vw, 34px); letter-spacing: -0.045em; }
+.applicationsScene article p { justify-content: flex-start; }
+.applicationsScene article p em { color: var(--tone); font-size: clamp(24px, 2.6vw, 40px); }
+.applicationsScene article small { color: color-mix(in srgb, var(--ink) 62%, transparent); letter-spacing: 0.08em; }
+
+@media (max-width: 900px), (max-height: 650px) {
+  .storyStage { top: 76px; right: 26px; bottom: 76px; left: 89px; }
+  .introScene { grid-template-columns: 1fr 0.54fr 0.82fr; }
+  .introTeacher,
+  .introStudent { padding: 8px; }
+  .introTeacher > small,
+  .introStudent > small { font-size: 9px; }
+  .whyScene { grid-template-columns: minmax(160px, 0.7fr) 54px minmax(270px, 1.3fr); }
+  .missScene { grid-template-columns: minmax(250px, 1.1fr) 96px minmax(190px, 0.82fr); }
+  .lessonScene { grid-template-columns: minmax(245px, 0.86fr) minmax(320px, 1.14fr); }
+  .workedLesson > p strong { font-size: 14px; line-height: 1.18; }
+  .trainScene { grid-template-columns: minmax(205px, 0.9fr) 110px minmax(235px, 1fr); }
+  .behaviorLedger > p strong { font-size: 14px; line-height: 1.12; }
+  .examScene { grid-template-columns: minmax(240px, 0.86fr) minmax(320px, 1.14fr); padding-top: 34px; }
+  .teacherOffline { height: 34px; }
+  .examAnswer > p strong { font-size: 13px; }
+  .examAnswer blockquote { font-size: 16px; line-height: 1.2; }
+  .applicationsScene article { grid-template-columns: minmax(190px, 0.9fr) minmax(230px, 1fr) 80px; padding: 7px 12px; }
+  .applicationsScene article > strong { font-size: 20px; }
 }

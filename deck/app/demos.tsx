@@ -8,6 +8,10 @@ import rsiStyles from './rsi-cinema.module.css';
 import distillStyles from './distillation-story.module.css';
 import distillExhibitStyles from './distillation-cinema.module.css';
 import embodiedStyles from './embodied-cinema.module.css';
+import worldStyles from './world-model-story.module.css';
+import vlaStyles from './vla-story.module.css';
+import fdeStoryStyles from './fde-story.module.css';
+import rsiStoryStyles from './rsi-story.module.css';
 import closingStyles from './closing-cinema.module.css';
 import closingMachineStyles from './closing-machine.module.css';
 import openingStoryStyles from './opening-story.module.css';
@@ -95,27 +99,51 @@ export function VisualModeSwitch<T extends DeckVisualStyle>({
   );
 }
 
-function DemoStepRail({ current, total }: { current: number; total: number }) {
+function DemoStepRail({
+  current,
+  total,
+  onStepChange,
+  labels,
+}: {
+  current: number;
+  total: number;
+  onStepChange?: (index: number) => void;
+  labels?: readonly string[];
+}) {
+  const interactive = Boolean(onStepChange);
+
   return (
     <div
       className="demo-step-rail"
-      role="progressbar"
-      aria-label={`Demonstration step ${current + 1} of ${total}`}
-      aria-valuemin={1}
-      aria-valuemax={total}
-      aria-valuenow={current + 1}
+      data-interactive={interactive || undefined}
+      role={interactive ? 'navigation' : 'progressbar'}
+      aria-label={interactive ? 'Demonstration chapters' : `Demonstration step ${current + 1} of ${total}`}
+      {...(!interactive ? {
+        'aria-valuemin': 1,
+        'aria-valuemax': total,
+        'aria-valuenow': current + 1,
+      } : {})}
     >
       <div
         className="demo-step-segments"
         style={{ '--demo-step-count': total } as CSSProperties}
-        aria-hidden="true"
       >
-        {Array.from({ length: total }, (_, index) => (
-          <i
-            key={index}
-            data-step-state={index < current ? 'complete' : index === current ? 'current' : 'upcoming'}
-          />
-        ))}
+        {Array.from({ length: total }, (_, index) => {
+          const stepState = index < current ? 'complete' : index === current ? 'current' : 'upcoming';
+          if (!onStepChange) return <i key={index} data-step-state={stepState} aria-hidden="true" />;
+
+          return (
+            <button
+              key={index}
+              type="button"
+              data-step-state={stepState}
+              aria-current={index === current ? 'step' : undefined}
+              aria-label={`Go to ${labels?.[index] ?? `step ${index + 1}`}`}
+              title={labels?.[index] ?? `Step ${index + 1}`}
+              onClick={() => onStepChange(index)}
+            />
+          );
+        })}
       </div>
       <span aria-hidden="true">{String(current + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}</span>
     </div>
@@ -172,13 +200,13 @@ const moeExhibitSummary: Record<RouterAct, string> = {
 };
 
 const moeAtlasSummary: Record<AtlasRouterAct, string> = {
-  intro: 'MoE means Mixture of Experts: one large model keeps many compute teams available and calls in only a few for each text fragment.',
-  'dense-ready': 'A small text fragment arrives and the entire dense block works, like an all-hands meeting for one tiny task.',
-  'dense-run': 'The company grows, but every new desk still joins every task, so capacity and cost rise together.',
-  router: 'MoE keeps 256 expert teams available while a dispatcher calls in only 8 for this text fragment.',
-  experts: 'The 8 selected teams perform the work while the other 248 stay quiet.',
-  mix: 'Eight working notes combine into one result: the company stays big while the meeting gets small.',
-  applications: 'MoE already powers public chat, open-model, and agentic systems including DeepSeek-V3, Qwen3, and Kimi K2.',
+  intro: 'MoE means Mixture of Experts.',
+  'dense-ready': 'In a dense model, every token uses the full compute block.',
+  'dense-run': 'Adding dense capacity also adds work to every token.',
+  router: 'In MoE, a router selects 8 of 256 available experts for this token.',
+  experts: 'Only the 8 selected expert blocks run for this token.',
+  mix: 'The 8 selected outputs combine into one result.',
+  applications: 'DeepSeek-V3, Qwen3 MoE, and Kimi K2 are examples of MoE models.',
 };
 
 function MoeExhibit({
@@ -323,43 +351,41 @@ function MoeAtlas({
   return (
     <div className={atlasStyles.moeAtlas} data-act={act} role="img" aria-label={moeAtlasSummary[act]}>
       <section className={atlasStyles.moeIntroAtlas}>
-        <header><span>NEW TERM / COMPUTE ARCHITECTURE</span><strong>THE IDEA IN ONE FRAME</strong></header>
-        <div className={atlasStyles.moeIntroMark}><strong>MoE</strong><small>NOT THREE CHATBOTS</small></div>
+        <div className={atlasStyles.moeIntroMark}><strong>MoE</strong><small>MODEL ARCHITECTURE</small></div>
         <div className={atlasStyles.moeIntroExpansion}>
           <p><b>M</b><span>MIXTURE</span></p>
           <p><b>o</b><span>OF</span></p>
           <p><b>E</b><span>EXPERTS</span></p>
         </div>
-        <footer><span>ONE LARGE COMPANY.</span><strong>A SMALL TEAM FOR EACH TASK.</strong></footer>
       </section>
 
       <div className={atlasStyles.sentenceStrip} aria-label={`Sentence context. Current text fragment: ${currentToken}.`}>
-        <small>ONE SENTENCE</small>
+        <small>NEXT-TOKEN PREDICTION</small>
         <p>{xrayTokens.map((token, index) => (
           <span key={`${token}-${index}`} data-current={token === currentToken || undefined}>{token}</span>
         ))}</p>
       </div>
 
       <div className={atlasStyles.moeToken} key={`atlas-token-${routeVersion}`}>
-        <span>ONE TEXT PIECE</span>
+        <span>CURRENT TOKEN</span>
         <strong>{currentToken}</strong>
-        <small>FROM THE SENTENCE ABOVE</small>
+        <small>FROM THE CONTEXT ABOVE</small>
       </div>
 
-      <div className={atlasStyles.taskRail} aria-hidden="true"><span>DISPATCH</span><i /></div>
+      <div className={atlasStyles.taskRail} aria-hidden="true"><span>COMPUTE</span><i /></div>
 
       <section className={atlasStyles.companyAtlas}>
         <header>
-          <span>MODEL AS A COMPANY</span>
-          <strong>ONE BUILDING · MANY POSSIBLE TEAMS</strong>
+          <span>COMPANY ANALOGY</span>
+          <strong>MANY TEAMS · ONE TASK</strong>
         </header>
 
         <div className={atlasStyles.companyBuilding} key={`atlas-company-${routeVersion}`}>
           <div className={atlasStyles.companyNameplate}>
             <span>DENSE</span>
-            <strong>ALL-HANDS CO.</strong>
+            <strong>FULL TEAM</strong>
             <em>MoE</em>
-            <b>EXPERT COMPANY</b>
+            <b>SELECTED TEAM</b>
           </div>
           <div className={atlasStyles.officeGrid}>
             {Array.from({ length: expertCount }, (_, index) => (
@@ -382,72 +408,61 @@ function MoeAtlas({
 
         <div className={atlasStyles.companyPanels}>
           <section className={atlasStyles.allHandsPanel}>
-            <span>THE DENSE RULE</span>
-            <strong>ALL<br />HANDS</strong>
-            <p>ONE SMALL TASK.<br />THE WHOLE BLOCK WORKS.</p>
+            <span>DENSE MODEL</span>
+            <strong>FULL<br />BLOCK</strong>
+            <p>ONE TOKEN · WHOLE BLOCK</p>
           </section>
 
           <section className={atlasStyles.growthPanel}>
-            <span>THE BILL</span>
-            <div><p><small>CAPACITY</small><strong>↑</strong></p><b>+</b><p><small>WORK / TASK</small><strong>↑</strong></p></div>
-            <footer>EVERY NEW DESK JOINS EVERY TASK</footer>
+            <span>SCALING DENSE</span>
+            <div><p><small>CAPACITY</small><strong>↑</strong></p><b>+</b><p><small>WORK / TOKEN</small><strong>↑</strong></p></div>
+            <footer>MORE CAPACITY ADDS WORK TO EVERY TOKEN</footer>
           </section>
 
           <section className={atlasStyles.dispatchPanel}>
-            <span>MoE / DISPATCH DESK</span>
+            <span>ROUTER</span>
             <strong><b>256</b><i>→</i><b>8</b></strong>
-            <div><small>AVAILABLE</small><small>CALLED IN</small></div>
-            <footer>ONLY EIGHT GET THE CALL.</footer>
+            <div><small>AVAILABLE</small><small>SELECTED</small></div>
           </section>
 
           <section className={atlasStyles.workRoomPanel}>
-            <span>OPEN ONE CALLED-IN ROOM</span>
+            <span>ONE SELECTED EXPERT</span>
             <div>
               <p data-ticket><small>TASK IN</small><b>{currentToken}</b></p><i>→</i>
-              <p data-work><small>TEAM 04</small><b>DOES THE WORK</b></p><i>→</i>
-              <p data-note><small>NOTE OUT</small><b>NEW<br />SIGNAL</b></p>
+              <p data-work><small>EXPERT BLOCK</small><b>COMPUTE</b></p><i>→</i>
+              <p data-note><small>OUTPUT</small><b>RESULT</b></p>
             </div>
-            <footer><b>8 WORKING</b><strong>248 QUIET</strong></footer>
           </section>
 
           <section className={atlasStyles.editorPanel}>
-            <span>EDITOR&apos;S DESK</span>
+            <span>COMBINE OUTPUTS</span>
             <div className={atlasStyles.noteStack}>
               {Array.from({ length: expertsActivatedPerToken }, (_, index) => (
                 <i key={index} style={{ '--atlas-rank': `${index}` } as CSSProperties}>0{index + 1}</i>
               ))}
             </div>
             <b className={atlasStyles.notesArrow}>→</b>
-            <p><small>ONE RESULT</small><strong>8 → 1</strong><em>CONTINUE</em></p>
+            <p><small>ONE RESULT</small><strong>8 → 1</strong><em>NEXT LAYER</em></p>
           </section>
         </div>
-
-        <footer className={atlasStyles.companyLedger}>
-          <span>AVAILABLE CAPACITY</span><strong>256</strong><i>·</i><span>WORKING NOW</span><b>8</b>
-        </footer>
       </section>
 
-      <aside className={atlasStyles.companyAha}>
-        <span>THE COMPANY STAYS BIG.</span><strong>THE MEETING GETS SMALL.</strong>
-      </aside>
-
       <section className={atlasStyles.moeApplicationsAtlas}>
-        <header><span>WHERE MoE ALREADY WORKS</span><strong>PUBLIC MODELS · REAL PRODUCTS</strong></header>
+        <header><span>MODELS USING MoE</span><strong>TOTAL PARAMETERS → ACTIVE / TOKEN</strong></header>
         <div>
           <article data-tone="blue">
-            <span>CHAT + API</span><strong>DEEPSEEK-V3</strong>
+            <strong>DEEPSEEK-V3</strong>
             <p><b>671B</b><small>TOTAL</small><i>→</i><b>37B</b><small>ACTIVE</small></p>
           </article>
           <article data-tone="yellow">
-            <span>OPEN MODELS</span><strong>QWEN3 MoE</strong>
+            <strong>QWEN3 MoE</strong>
             <p><b>235B</b><small>TOTAL</small><i>→</i><b>22B</b><small>ACTIVE</small></p>
           </article>
           <article data-tone="red">
-            <span>AGENTIC MODEL</span><strong>KIMI K2</strong>
+            <strong>KIMI K2</strong>
             <p><b>1T</b><small>TOTAL</small><i>→</i><b>32B</b><small>ACTIVE</small></p>
           </article>
         </div>
-        <footer><span>YOU DO NOT CLICK “MoE”.</span><strong>IT IS THE ENGINE UNDER THE PRODUCT.</strong></footer>
       </section>
     </div>
   );
@@ -540,38 +555,38 @@ export function RouterLab({
 
   const atlasActCopy: Record<AtlasRouterAct, { title: string; detail: string; action: string }> = {
     intro: {
-      title: 'Meet MoE.',
-      detail: 'Mixture of Experts: many compute teams, only a few called in for each text fragment.',
-      action: 'Why do we need it?',
+      title: 'One model, many expert blocks.',
+      detail: 'A model keeps many expert compute blocks available and selects only a few for each token.',
+      action: 'Show the dense model',
     },
     'dense-ready': {
-      title: 'A tiny task. An all-hands meeting.',
-      detail: 'In a dense block, the whole company works on every text fragment.',
-      action: 'Make it bigger',
+      title: 'Dense: every token uses the full compute block.',
+      detail: 'In the company analogy, every small task calls the whole team.',
+      action: 'Add more capacity',
     },
     'dense-run': {
-      title: 'Bigger company. Bigger bill.',
-      detail: 'Adding capacity also adds work to every task.',
-      action: 'Introduce MoE',
+      title: 'A bigger dense model does more work for every token.',
+      detail: 'Every new part of the block joins every task.',
+      action: 'Switch to MoE',
     },
     router: {
-      title: 'Same company. Smaller team.',
-      detail: 'MoE keeps 256 expert teams available and calls in only 8.',
-      action: 'Open one room',
+      title: 'Router: 8 of 256 experts.',
+      detail: 'This example keeps 256 available and routes the token to 8.',
+      action: 'Open the selected experts',
     },
     experts: {
-      title: 'Only the called-in teams work.',
-      detail: '“Active” simply means those selected teams actually do the computation.',
-      action: 'Combine the notes',
+      title: 'Only those 8 experts run for this token.',
+      detail: 'The other experts remain available but do not run for this token.',
+      action: 'Combine their outputs',
     },
     mix: {
-      title: 'Big company. Small meeting.',
-      detail: 'Their work is combined while most of the company stays quiet.',
-      action: 'See where it ships',
+      title: 'Their outputs combine into one result.',
+      detail: 'The model keeps a large capacity pool without using all of it every time.',
+      action: 'Show real models',
     },
     applications: {
-      title: 'MoE is already shipping.',
-      detail: 'You meet it in chat, open deployment, and agentic work—not as a feature button, but as the engine underneath.',
+      title: 'Examples of MoE models.',
+      detail: 'DeepSeek-V3, Qwen3 MoE, and Kimi K2 are examples of deployed MoE models.',
       action: 'Replay MoE',
     },
   };
@@ -695,9 +710,9 @@ export function RouterLab({
       </div>
 
       <footer className={`${moeStyles.footer} ${visualStyle === 'atlas' ? atlasStyles.demoFooter : ''}`}>
-        {act === 'mix' && (
+        {act === 'mix' && visualStyle !== 'atlas' && (
           <div key={`proof-${act}`} className={moeStyles.meaning}>
-            <div className={`${moeStyles.publishedProof} ${visualStyle === 'atlas' ? atlasStyles.atlasProof : ''}`}>
+            <div className={moeStyles.publishedProof}>
               <p><span>DEEPSEEK-V3 · TOTAL</span><strong>671B</strong><small>parameters</small></p>
               <i><b /></i>
               <p><span>ACTIVE / TOKEN</span><strong>37B</strong><small>parameters</small></p>
@@ -713,6 +728,11 @@ export function RouterLab({
             <DemoStepRail
               current={visualStyle === 'atlas' ? atlasRouterActOrder.indexOf(act) : routerActOrder.indexOf(mechanismAct)}
               total={visualStyle === 'atlas' ? atlasRouterActOrder.length : routerActOrder.length}
+              labels={visualStyle === 'atlas' ? ['Name', 'Dense', 'Cost', 'Route', 'Run', 'Combine', 'Examples'] : undefined}
+              onStepChange={visualStyle === 'atlas' ? (index) => {
+                setAct(atlasRouterActOrder[index]);
+                setRouteVersion((current) => current + 1);
+              } : undefined}
             />
           </div>
         </div>
@@ -721,46 +741,64 @@ export function RouterLab({
   );
 }
 
-type AtlasDistillationAct = 'before' | 'lesson' | 'train' | 'exam';
-const atlasDistillationActOrder: AtlasDistillationAct[] = ['before', 'lesson', 'train', 'exam'];
+type AtlasDistillationAct = 'intro' | 'why' | 'miss' | 'lesson' | 'train' | 'exam' | 'applications';
+const atlasDistillationActOrder: AtlasDistillationAct[] = ['intro', 'why', 'miss', 'lesson', 'train', 'exam', 'applications'];
 
 const atlasDistillationCopy: Record<AtlasDistillationAct, { title: string; action: string; phase: string }> = {
-  before: {
-    title: 'The query looks right. Two users still disappear.',
+  intro: {
+    title: 'A large model teaches a smaller model.',
+    action: 'Why distill?',
+    phase: 'NAME',
+  },
+  why: {
+    title: 'A smaller model is easier to deploy.',
+    action: 'Try the student',
+    phase: 'WHY',
+  },
+  miss: {
+    title: 'The student mistakes sarcasm for praise.',
     action: 'Ask the teacher',
-    phase: 'THE MISS',
+    phase: 'MISS',
   },
   lesson: {
-    title: 'The teacher supplies the missing rule—not just the fix.',
-    action: 'Train on lessons',
-    phase: 'WORKED LESSON',
+    title: 'The teacher explains intent, why, and action.',
+    action: 'Train on many',
+    phase: 'LESSON',
   },
   train: {
-    title: 'Compare, update, repeat—until the rule lives in the student.',
-    action: 'Disconnect teacher',
-    phase: 'TRAIN × MANY',
+    title: 'Many examples update the student.',
+    action: 'Remove the teacher',
+    phase: 'TRAIN',
   },
   exam: {
-    title: 'New query. Same hidden trap. The student solves it alone.',
-    action: 'Replay',
-    phase: 'RUN ALONE',
+    title: 'The student handles a new case alone.',
+    action: 'Show real models',
+    phase: 'ALONE',
+  },
+  applications: {
+    title: 'Examples of distilled models.',
+    action: 'Replay Distill',
+    phase: 'EXAMPLES',
   },
 };
 
 function AtlasDistillationLab() {
   const visualStyle: DeckVisualStyle = 'atlas';
-  const [act, setAct] = useState<AtlasDistillationAct>('before');
+  const [act, setAct] = useState<AtlasDistillationAct>('intro');
   const actIndex = atlasDistillationActOrder.indexOf(act);
   const copy = atlasDistillationCopy[act];
-  const userRows = [
-    ['ADA', 'PAID'],
-    ['BO', 'NULL'],
-    ['CY', 'PAID'],
-    ['DEE', 'NULL'],
+  const lessonSamples = [
+    ['“Perfect. Another forced restart.”', 'COMPLAINT'],
+    ['“Great—my build vanished again.”', 'COMPLAINT'],
+    ['“Love spending lunch watching a spinner.”', 'COMPLAINT'],
   ];
 
   const advanceAct = () => {
-    setAct(atlasDistillationActOrder[(actIndex + 1) % atlasDistillationActOrder.length]);
+    if (actIndex === atlasDistillationActOrder.length - 1) {
+      setAct('intro');
+      return;
+    }
+    setAct(atlasDistillationActOrder[actIndex + 1]);
   };
 
   return (
@@ -775,114 +813,164 @@ function AtlasDistillationLab() {
       <ConceptHeader code="DISTILL" name="Knowledge Distillation" visualStyle={visualStyle} accent="blue" />
       <ConceptFolio visualStyle={visualStyle} number="01" side="B" label={'KNOWLEDGE\nTRANSFER'} />
 
-      <div className={distillStyles.phaseTag}>
-        <span>{String(actIndex + 1).padStart(2, '0')}</span>
-        <strong>{copy.phase}</strong>
-      </div>
-
       <div className={`${distillStyles.sceneCopy} ${visualStyle === 'atlas' ? atlasStyles.demoSceneCopy : ''}`} aria-live="polite" key={act}>
         <strong>{copy.title}</strong>
       </div>
 
       <main className={distillStyles.storyStage}>
-        {act === 'before' && (
-          <section className={distillStyles.beforeScene} aria-label="A student SQL query unexpectedly drops users who have no paid order">
-            <article className={distillStyles.querySheet}>
-              <header><span>STUDENT · FIRST DRAFT</span><strong>32B</strong></header>
-              <h3>“Show every user—even if they have no order.”</h3>
-              <pre><code>LEFT JOIN orders o ON …{`\n`}WHERE o.status = &apos;paid&apos;</code></pre>
-              <p>“LEFT JOIN should keep everyone.”</p>
-            </article>
+        {act === 'intro' && (
+          <section className={distillStyles.introScene} aria-label="Knowledge distillation trains a separate smaller student from lessons produced by a larger teacher before deployment">
+            <div className={distillStyles.introTeacher}>
+              <span>LARGE TEACHER</span><strong>AI</strong><small>strong · expensive to call</small>
+              <div>{Array.from({ length: 18 }, (_, index) => <i key={index} />)}</div>
+            </div>
+            <div className={distillStyles.introLessons}>
+              <span>MAKES</span><div><i /><i /><i /></div><strong>LESSONS</strong><b>→</b>
+            </div>
+            <div className={distillStyles.introStudent}>
+              <span>SMALL STUDENT</span><strong>AI</strong><small>trained separately · runs alone</small>
+              <div>{Array.from({ length: 8 }, (_, index) => <i key={index} />)}</div>
+            </div>
+          </section>
+        )}
 
-            <article className={distillStyles.resultSheet}>
-              <header><span>ACTUAL RESULT</span><strong>4 → 2 ROWS</strong></header>
-              <div className={distillStyles.resultRows}>
-                {userRows.map(([name, status]) => (
-                  <p key={name} data-dropped={status === 'NULL' || undefined}>
-                    <strong>{name}</strong><span>{status}</span><b>{status === 'NULL' ? 'DROPPED' : 'KEPT'}</b>
-                  </p>
-                ))}
+        {act === 'why' && (
+          <section className={distillStyles.whyScene} aria-label="A capable large teacher is useful for creating lessons but is not practical for every device, private environment, or high-volume request">
+            <div className={distillStyles.whyTeacher}>
+              <span>ONE GREAT MODEL</span><strong>TEACHER</strong>
+              <p><b>HIGH CAPABILITY</b><b>HIGH COST / CALL</b></p>
+            </div>
+            <div className={distillStyles.deployGate}><span>DEPLOYMENT LIMIT</span><i /><strong>×</strong><i /></div>
+            <div className={distillStyles.endpointField}>
+              <header><span>SMALL STUDENT</span><strong>DEPLOYMENT TARGETS</strong></header>
+              <div>
+                <article><span>PHONE</span><strong>PRIVATE</strong></article>
+                <article><span>LAPTOP</span><strong>OFFLINE</strong></article>
+                <article><span>ON-PREM</span><strong>CONTROLLED</strong></article>
+                <article><span>1M REQUESTS</span><strong>HIGH VOLUME</strong></article>
               </div>
-              <footer>BO + DEE VANISHED</footer>
+            </div>
+          </section>
+        )}
+
+        {act === 'miss' && (
+          <section className={distillStyles.missScene} aria-label="A smaller student mistakes a sarcastic VPN complaint for praise because it follows positive keywords literally">
+            <article className={distillStyles.ticketSheet}>
+              <header><span>VPN SUPPORT TICKET</span><strong>NEW</strong></header>
+              <blockquote>
+                <mark>Fantastic.</mark><br />
+                The VPN disconnected <em>again</em><br />
+                during the <em>client demo.</em><br />
+                <mark>Love this update.</mark>
+              </blockquote>
+              <footer><span>SURFACE WORDS</span><b>Fantastic · Love</b><strong>HIDDEN INTENT?</strong></footer>
+            </article>
+            <div className={distillStyles.literalScanner}>
+              <span>SMALL STUDENT</span>
+              <div><b>Fantastic</b><b>Love</b></div>
+              <b>→</b>
+            </div>
+            <article className={distillStyles.wrongReply}>
+              <header><span>FIRST TRY</span><strong>WRONG</strong></header>
+              <p><small>INTENT</small><strong>PRAISE</strong></p>
+              <blockquote>“Glad to hear it!”</blockquote>
             </article>
           </section>
         )}
 
         {act === 'lesson' && (
-          <section className={distillStyles.lessonScene} aria-label="The teacher explains why a WHERE filter removes NULL rows after a LEFT JOIN">
-            <header className={distillStyles.lessonHeading}><span>TEACHER-GENERATED WORKED LESSON</span><strong>WHY → FIX</strong></header>
-            <div className={distillStyles.joinPipeline}>
-              <article>
-                <span>LEFT JOIN</span>
-                <div>{userRows.map(([name, status]) => <p key={name}><strong>{name}</strong><b>{status}</b></p>)}</div>
-                <footer>4 ROWS</footer>
-              </article>
-              <b>→</b>
-              <article className={distillStyles.whereGate}>
-                <span>WHERE</span><strong>o.status = &apos;paid&apos;</strong><small>NULL fails here</small>
-              </article>
-              <b>→</b>
-              <article>
-                <span>RESULT</span>
-                <div>{userRows.filter(([, status]) => status === 'PAID').map(([name, status]) => <p key={name}><strong>{name}</strong><b>{status}</b></p>)}</div>
-                <footer>2 ROWS</footer>
-              </article>
-            </div>
-            <div className={distillStyles.ruleReveal}>
-              <strong>WHERE rejects NULL.</strong>
-              <p>The join kept the users; the later filter removed them.</p>
-            </div>
-            <div className={distillStyles.fixReveal}><span>FIX</span><code>Move o.status = &apos;paid&apos; into ON</code></div>
+          <section className={distillStyles.lessonScene} aria-label="The large teacher turns the sarcastic support message into a worked lesson containing intent, explanation, and next action">
+            <article className={distillStyles.annotatedTicket}>
+              <span>ORIGINAL MESSAGE</span>
+              <blockquote><mark>Fantastic</mark> · VPN disconnected <em>again</em> · <mark>Love</mark> this update</blockquote>
+              <div><i /><b>positive words</b></div><div><i /><b>repeated failure</b></div>
+              <footer>CONTRADICTION = SARCASM</footer>
+            </article>
+            <article className={distillStyles.workedLesson}>
+              <header><span>TEACHER LESSON</span></header>
+              <p><span>INTENT</span><strong>FRUSTRATED COMPLAINT</strong></p>
+              <p><span>WHY</span><strong>Positive words contradict a repeated failure.</strong></p>
+              <p><span>ACTION</span><strong>Apologize · route VPN incident · ask for session ID.</strong></p>
+            </article>
           </section>
         )}
 
         {act === 'train' && (
-          <section className={distillStyles.trainScene} aria-label="Teacher-generated worked lessons are compared with student drafts and repeatedly update only the student">
-            <header><span>ONE VISIBLE LESSON REPRESENTS MANY</span><strong>The student learns the rule—not this query.</strong></header>
-            <div className={distillStyles.lessonDeck} aria-hidden="true">
-              <article>
-                <header>WORKED LESSON</header>
-                <p><span>QUERY</span><strong>LEFT JOIN</strong></p>
-                <p><span>WHY</span><strong>NULL FILTER</strong></p>
-                <p><span>FIX</span><strong>MOVE TO ON</strong></p>
-              </article>
+          <section className={distillStyles.trainScene} aria-label="Many varied teacher-generated lessons are compared with student attempts and collectively change the smaller student's behavior">
+            <div className={distillStyles.lessonConveyor}>
+              {lessonSamples.map(([message, intent], index) => (
+                <article key={message} style={{ '--lesson-index': index } as CSSProperties}>
+                  <span>LESSON 0{index + 1}</span><strong>{message}</strong><b>{intent}</b>
+                </article>
+              ))}
             </div>
-            <div className={distillStyles.trainingCore}>
-              <p><span>STUDENT DRAFT</span><b>≠</b><span>TEACHER LESSON</span></p>
-              <strong>COMPARE → LOSS → UPDATE</strong>
-              <small>Only the student changes.</small>
+            <div className={distillStyles.trainingPress}>
+              <span>COMPARE ONE TRY</span>
+              <p data-student><small>STUDENT GUESSES</small><strong>PRAISE</strong></p>
+              <b>≠</b>
+              <p data-teacher><small>TEACHER LESSON</small><strong>COMPLAINT</strong></p>
+              <i />
+              <strong>SMALL<br />UPDATE ↓</strong>
+              <small>repeat with many lessons</small>
             </div>
-            <div className={distillStyles.studentCore}>
-              <span>STUDENT WEIGHTS</span><strong>32B</strong>
-              <div>{Array.from({ length: 18 }, (_, index) => <i key={index} style={{ '--weight-cell': index } as CSSProperties} />)}</div>
+            <div className={distillStyles.behaviorLedger}>
+              <header><span>SMALL STUDENT</span><strong>BEHAVIOR CHANGES</strong></header>
+              <p data-before><span>BEFORE</span><strong>POSITIVE WORD → PRAISE</strong></p>
+              <b>↓</b>
+              <p data-after><span>AFTER MANY LESSONS</span><strong>CONTEXT → CONTRADICTION → INTENT</strong></p>
+              <div>{Array.from({ length: 20 }, (_, index) => <i key={index} style={{ '--weight-cell': index } as CSSProperties} />)}</div>
             </div>
-            <footer><strong>× 800K</strong><span>curated samples with DeepSeek-R1</span></footer>
           </section>
         )}
 
         {act === 'exam' && (
-          <section className={distillStyles.examScene} aria-label="The teacher is offline and the trained student identifies the same SQL trap in a new query">
-            <div className={distillStyles.teacherOffline}><span>TEACHER</span><strong>OFFLINE</strong></div>
-            <article className={distillStyles.examQuery}>
-              <header><span>NEW QUERY</span><strong>NO TEACHER CALL</strong></header>
-              <h3>“Show every device—even if it has no alert.”</h3>
-              <pre><code>LEFT JOIN alerts a ON …{`\n`}WHERE a.level = &apos;critical&apos;</code></pre>
+          <section className={distillStyles.examScene} aria-label="The teacher is offline while the trained student correctly understands a new sarcastic support complaint">
+            <div className={distillStyles.teacherOffline}><span>LARGE TEACHER</span><strong>OFFLINE</strong><small>NO RUNTIME CALL</small></div>
+            <article className={distillStyles.examTicket}>
+              <header><span>NEW MESSAGE · NEVER SEEN</span><strong>TICKET 7294</strong></header>
+              <blockquote>“Wonderful—my reset link arrived after it had already expired.”</blockquote>
             </article>
             <article className={distillStyles.examAnswer}>
-              <header><span>32B STUDENT</span><strong>RUNS ALONE</strong></header>
-              <blockquote>“WHERE will remove the NULL alert rows.”</blockquote>
-              <code>Move the filter into ON.</code>
+              <header><span>SMALL STUDENT</span><strong>RUNS ALONE</strong></header>
+              <p><span>INTENT</span><strong>FRUSTRATED COMPLAINT</strong></p>
+              <blockquote>“Sorry—the link expired. I&apos;ll issue a new one and investigate the delay.”</blockquote>
+              <b>CORRECT READ ✓</b>
             </article>
-            <aside className={distillStyles.realProof}><span>REAL CASE · DEEPSEEK-R1</span><strong>32B · 72.6</strong><small>AIME 2024 · 800K curated samples</small></aside>
+          </section>
+        )}
+
+        {act === 'applications' && (
+          <section className={distillStyles.applicationsScene} aria-label="Real model families use distillation for on-device intelligence, efficient open models, and smaller reasoning models">
+            <div>
+              <article data-tone="red">
+                <strong>APPLE FOUNDATION MODEL</strong>
+                <p><b>DISTILLED</b><i>→</i><em>~3B</em></p><small>ON-DEVICE</small>
+              </article>
+              <article data-tone="yellow">
+                <strong>GEMMA 2</strong>
+                <p><b>27B TEACHER</b><i>→</i><em>2B / 9B</em></p><small>OPEN + EDGE</small>
+              </article>
+              <article data-tone="blue">
+                <strong>DEEPSEEK-R1 DISTILL</strong>
+                <p><b>R1 LESSONS</b><i>→</i><em>1.5B–70B</em></p><small>REASONING</small>
+              </article>
+            </div>
           </section>
         )}
       </main>
 
-      <footer className={distillStyles.footer}>
-        <button onClick={() => setAct('before')} disabled={act === 'before'} aria-label="Reset the distillation demonstration">Reset</button>
-        <div className="demo-action-stack">
-          <button data-primary onClick={advanceAct}><span>{copy.action}</span><b>→</b></button>
-          <DemoStepRail current={actIndex} total={atlasDistillationActOrder.length} />
+      <footer className={`${moeStyles.footer} ${atlasStyles.demoFooter}`}>
+        <div className={`${moeStyles.controls} ${atlasStyles.demoControls}`}>
+          <button onClick={() => setAct('intro')} aria-label="Reset the distillation demonstration">Reset</button>
+          <div className="demo-action-stack">
+            <button data-primary onClick={advanceAct}>{copy.action}<b>→</b></button>
+            <DemoStepRail
+              current={actIndex}
+              total={atlasDistillationActOrder.length}
+              labels={['Name', 'Why', 'Miss', 'Lesson', 'Train', 'Alone', 'Examples']}
+              onStepChange={(index) => setAct(atlasDistillationActOrder[index])}
+            />
+          </div>
         </div>
       </footer>
     </section>
@@ -1344,14 +1432,643 @@ function EmbodiedAtlas({
   );
 }
 
-export function EmbodiedLab({
+type AtlasWorldAct = 'intro' | 'why' | 'learn' | 'actions' | 'plan' | 'forms' | 'proof';
+type AtlasStreetVariant = 'now' | 'left' | 'straight' | 'right' | 'guess' | 'actual';
+
+const atlasWorldActOrder: AtlasWorldAct[] = ['intro', 'why', 'learn', 'actions', 'plan', 'forms', 'proof'];
+
+const atlasWorldCopy: Record<AtlasWorldAct, { title: string; action: string }> = {
+  intro: {
+    title: 'A World Model predicts what happens next.',
+    action: 'Why predict?',
+  },
+  why: {
+    title: 'Seeing the present is not predicting the future.',
+    action: 'Watch it learn',
+  },
+  learn: {
+    title: 'Watch. Guess. Check. Adjust.',
+    action: 'Try three actions',
+  },
+  actions: {
+    title: 'One scene. Three actions. Three futures.',
+    action: 'Plan before moving',
+  },
+  plan: {
+    title: 'Imagine ahead. Move once. Replan.',
+    action: 'What does it build?',
+  },
+  forms: {
+    title: 'A useful future can be visible or hidden.',
+    action: 'Show real systems',
+  },
+  proof: {
+    title: 'Visible future. Hidden future.',
+    action: 'Replay World Model',
+  },
+};
+
+const atlasStreetPath: Record<AtlasStreetVariant, string> = {
+  now: 'M 50 91 C 50 75 50 68 50 60',
+  left: 'M 50 91 C 49 72 42 53 24 23',
+  straight: 'M 50 91 C 50 68 50 43 50 17',
+  right: 'M 50 91 C 54 68 66 49 79 27',
+  guess: 'M 50 91 C 52 68 59 48 65 25',
+  actual: 'M 50 91 C 51 69 53 47 54 22',
+};
+
+function AtlasStreetScene({
+  variant,
+  label,
+  animate = false,
+  live = false,
+}: {
+  variant: AtlasStreetVariant;
+  label: string;
+  animate?: boolean;
+  live?: boolean;
+}) {
+  return (
+    <div
+      className={worldStyles.streetScene}
+      data-variant={variant}
+      data-animate={animate ? true : undefined}
+      data-live={live ? true : undefined}
+      aria-label={label}
+    >
+      <span className={worldStyles.goalZone}>GOAL</span>
+      <i className={worldStyles.curb}>CURB</i>
+      <svg className={worldStyles.streetPath} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <path d={atlasStreetPath[variant]} pathLength="1" />
+      </svg>
+      <b className={worldStyles.streetRobot}><span>BOT</span></b>
+      <small className={worldStyles.streetLabel}>{label}</small>
+    </div>
+  );
+}
+
+function AtlasWorldLab({ isActive }: { isActive: boolean }) {
+  const [act, setAct] = useState<AtlasWorldAct>('intro');
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const actIndex = atlasWorldActOrder.indexOf(act);
+  const copy = atlasWorldCopy[act];
+
+  useEffect(() => {
+    const video = videoRef.current;
+    video?.pause();
+    if (!video || !isActive || act !== 'proof') return;
+
+    let cancelled = false;
+    if (video.readyState >= HTMLMediaElement.HAVE_METADATA) video.currentTime = 0;
+    void video.play().catch((error: unknown) => {
+      if (cancelled || (error instanceof DOMException && error.name === 'AbortError')) return;
+      video.pause();
+      if (video.readyState >= HTMLMediaElement.HAVE_METADATA) video.currentTime = 0;
+    });
+
+    return () => {
+      cancelled = true;
+      video.pause();
+    };
+  }, [act, isActive]);
+
+  const advanceAct = () => {
+    if (actIndex === atlasWorldActOrder.length - 1) {
+      setAct('intro');
+      return;
+    }
+    setAct(atlasWorldActOrder[actIndex + 1]);
+  };
+
+  return (
+    <section
+      className={`${embodiedStyles.stage} ${atlasStyles.embodiedHost} ${worldStyles.host}`}
+      data-act={act}
+      data-phase="world"
+      data-visual="atlas"
+      aria-label={`Atlas World Model demonstration. ${copy.title}`}
+    >
+      <ConceptHeader code="WORLD" name="World Model" visualStyle="atlas" />
+      <ConceptFolio visualStyle="atlas" number="02" side="A" label={'PREDICTIVE\nSYSTEMS'} />
+
+      <div className={`${embodiedStyles.sceneCopy} ${atlasStyles.demoSceneCopy} ${worldStyles.sceneCopy}`} aria-live="polite" key={act}>
+        <strong>{copy.title}</strong>
+      </div>
+
+      <main className={worldStyles.storyStage}>
+        {act === 'intro' && (
+          <section className={worldStyles.introScene} aria-label="Language models predict text, vision models recognize the present, and world models predict how a situation changes">
+            <article className={worldStyles.wordPredictor}>
+              <span>LANGUAGE MODEL</span><strong>NEXT WORD</strong>
+              <p>The robot moves <mark>forward</mark></p>
+            </article>
+            <article className={worldStyles.visionPredictor}>
+              <span>VISION MODEL</span><strong>WHAT IS HERE</strong>
+              <AtlasStreetScene variant="now" label="BOT · ROAD · CURB" live />
+            </article>
+            <article className={worldStyles.situationPredictor}>
+              <span>WORLD MODEL</span><strong>WHAT HAPPENS NEXT</strong>
+              <div className={worldStyles.worldTransition}>
+                <AtlasStreetScene variant="now" label="NOW" />
+                <b><small>ACTION</small>↑</b>
+                <AtlasStreetScene variant="actual" label="NEXT" animate />
+              </div>
+            </article>
+          </section>
+        )}
+
+        {act === 'why' && (
+          <section className={worldStyles.whyScene} aria-label="A visual snapshot can describe the present but cannot tell an agent what each action will cause">
+            <article className={worldStyles.snapshotPanel}>
+              <span>SNAPSHOT</span><strong>WHAT IS HERE?</strong>
+              <AtlasStreetScene variant="now" label="ROBOT · ROAD · CURB" />
+              <p><b>ROBOT</b><b>ROAD</b><b>CURB</b></p>
+            </article>
+            <div className={worldStyles.whyGap}><b>?</b><span>AFTER A MOVE</span></div>
+            <article className={worldStyles.consequencePanel}>
+              <span>CONSEQUENCES</span><strong>WHAT IF I…?</strong>
+              <div>
+                <p><b>↖</b><span>TURN LEFT</span><strong>?</strong></p>
+                <p><b>↑</b><span>GO STRAIGHT</span><strong>?</strong></p>
+                <p><b>↗</b><span>TURN RIGHT</span><strong>?</strong></p>
+              </div>
+            </article>
+          </section>
+        )}
+
+        {act === 'learn' && (
+          <section className={worldStyles.learnScene} aria-label="A world model watches real action and result pairs, predicts the next state, compares it with reality, and adjusts">
+            <div className={worldStyles.realTrajectory}>
+              <article><span>01 · WATCH</span><AtlasStreetScene variant="now" label="NOW" /></article>
+              <b><small>ACTION</small>↑</b>
+              <article data-guess><span>02 · GUESS</span><AtlasStreetScene variant="guess" label="PREDICTED" animate /></article>
+              <article data-actual><span>03 · CHECK</span><AtlasStreetScene variant="actual" label="REALITY" animate /></article>
+            </div>
+            <div className={worldStyles.learningCheck}>
+              <span>PREDICTION ≠ REALITY</span>
+              <strong>04 · ADJUST</strong>
+              <p>The next guess moves a little closer.</p>
+            </div>
+            <div className={worldStyles.learningLoop}>
+              <b>↺ REPEAT ACROSS MANY REAL SEQUENCES</b>
+            </div>
+          </section>
+        )}
+
+        {act === 'actions' && (
+          <section className={worldStyles.actionsScene} aria-label="From the same current state, three candidate actions produce three different predicted next states">
+            <article className={worldStyles.currentState}>
+              <span>NOW · t</span>
+              <AtlasStreetScene variant="now" label="SAME START" />
+              <strong>REALITY HAS NOT MOVED</strong>
+            </article>
+            <div className={worldStyles.actionFork}>
+              {[
+                ['↖', 'TURN LEFT', 'left', 'SAFE · OFF GOAL'],
+                ['↑', 'GO STRAIGHT', 'straight', 'SAFE · TOWARD GOAL'],
+                ['↗', 'TURN RIGHT', 'right', 'CONTACT · CURB'],
+              ].map(([symbol, label, variant, result], index) => (
+                <article key={label} data-selected={index === 1}>
+                  <header><b>{symbol}</b><span>{label}</span></header>
+                  <AtlasStreetScene variant={variant as AtlasStreetVariant} label={`FUTURE ${index + 1}`} animate />
+                  <footer>{result}</footer>
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {act === 'plan' && (
+          <section className={worldStyles.planScene} aria-label="A planner rolls candidate actions forward, scores the imagined futures, and executes only the first action from the best route">
+            <div className={worldStyles.planMap}>
+              <span className={worldStyles.planGoal}>GOAL</span>
+              <i className={worldStyles.planCurb}>CURB</i>
+              <b className={worldStyles.planStart}>BOT · NOW</b>
+              <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                <path data-route="a" d="M50 92 C28 73 23 49 39 14" pathLength="1" />
+                <path data-route="b" d="M50 92 C50 68 51 40 50 14" pathLength="1" />
+                <path data-route="c" d="M50 92 C66 71 76 52 82 29" pathLength="1" />
+              </svg>
+              <span className={worldStyles.routeA}>A</span><span className={worldStyles.routeB}>B</span><span className={worldStyles.routeC}>C</span>
+            </div>
+            <div className={worldStyles.routeScores}>
+              <header><span>IMAGINED ROUTES</span><strong>GOAL: BLUE ZONE</strong></header>
+              <p><b>A</b><span>SAFE · DETOUR</span><strong>GOOD</strong></p>
+              <p data-selected><b>B</b><span>SAFE · DIRECT</span><strong>SELECT</strong></p>
+              <p data-risk><b>C</b><span>HITS CURB</span><strong>REJECT</strong></p>
+              <footer><span>EXECUTE IN REALITY</span><strong>↑ ONE ACTION</strong></footer>
+            </div>
+          </section>
+        )}
+
+        {act === 'forms' && (
+          <section className={worldStyles.formsScene} aria-label="A world model may render a visible future or keep a compact hidden predictive state">
+            <article className={worldStyles.visibleFuture}>
+              <span>VISIBLE FUTURE</span><strong>PIXELS / VIDEO</strong>
+              <AtlasStreetScene variant="straight" label="A PERSON CAN WATCH IT" animate />
+            </article>
+            <b className={worldStyles.formsEquals}>=</b>
+            <article className={worldStyles.hiddenFuture}>
+              <span>HIDDEN FUTURE</span><strong>PREDICTIVE STATE</strong>
+              <div className={worldStyles.latentState}>
+                <p><b>BOT POSITION</b><i style={{ '--latent-width': '62%' } as CSSProperties} /></p>
+                <p><b>CURB DISTANCE</b><i style={{ '--latent-width': '78%' } as CSSProperties} /></p>
+                <p><b>GOAL PROGRESS</b><i style={{ '--latent-width': '50%' } as CSSProperties} /></p>
+              </div>
+              <small>enough state to judge: safe and closer?</small>
+            </article>
+            <p className={worldStyles.formsQuestion}><span>SAME JOB</span><strong>WILL THIS ACTION REACH THE GOAL SAFELY?</strong></p>
+          </section>
+        )}
+
+        {act === 'proof' && (
+          <section className={worldStyles.proofScene} aria-label="V-JEPA 2 uses an internal world model for robot planning while Genie 3 makes an interactive predicted world visible">
+            <article className={worldStyles.genieProof}>
+              <header><span>VISIBLE WORLD</span><strong>GENIE 3</strong></header>
+              <div className={worldStyles.genieVideoCrop}>
+                <video ref={videoRef} loop muted playsInline preload="auto" poster="/media/genie3-proof.png">
+                  <source src="/media/genie3-interaction.mp4" type="video/mp4" />
+                </video>
+              </div>
+              <footer><span>INTERACTIVE WORLD</span><strong>SEE THE FUTURE</strong></footer>
+            </article>
+            <article className={worldStyles.vjepaProof}>
+              <header><span>HIDDEN WORLD</span><strong>V-JEPA 2</strong></header>
+              <div className={worldStyles.robotPlanProof}>
+                <p><span>CURRENT</span><b>●</b></p>
+                <p><span>TRY ACTIONS</span><b>↖ ↑ ↗</b></p>
+                <p><span>GOAL</span><b>■</b></p>
+              </div>
+              <footer><span>ROBOT PLANNING</span><strong>NO VIDEO NEEDED</strong></footer>
+            </article>
+            <div className={worldStyles.worldUses}>
+              <p><span>01</span><strong>TRAIN AGENTS SAFELY</strong></p>
+              <p><span>02</span><strong>TEST “WHAT IF?”</strong></p>
+              <p><span>03</span><strong>PLAN ROBOT ACTIONS</strong></p>
+            </div>
+          </section>
+        )}
+      </main>
+
+      <footer className={`${moeStyles.footer} ${atlasStyles.demoFooter}`}>
+        <div className={`${moeStyles.controls} ${atlasStyles.demoControls}`}>
+          <button onClick={() => setAct('intro')} disabled={act === 'intro'} aria-label="Reset the Atlas World Model demonstration">Reset</button>
+          <div className="demo-action-stack">
+            <button data-primary onClick={advanceAct}><span>{copy.action}</span><b>→</b></button>
+            <DemoStepRail
+              current={actIndex}
+              total={atlasWorldActOrder.length}
+              labels={['Name', 'Why', 'Learn', 'Futures', 'Plan', 'Form', 'Examples']}
+              onStepChange={(index) => setAct(atlasWorldActOrder[index])}
+            />
+          </div>
+        </div>
+      </footer>
+    </section>
+  );
+}
+
+type AtlasVlaAct = 'intro' | 'why' | 'steps' | 'learn' | 'loop' | 'hard' | 'proof';
+type VlaWorkcellVariant = 'start' | 'expert' | 'slip' | 'correct' | 'done' | 'collision';
+
+const atlasVlaActOrder: AtlasVlaAct[] = ['intro', 'why', 'steps', 'learn', 'loop', 'hard', 'proof'];
+const atlasVlaCopy: Record<AtlasVlaAct, { title: string; action: string }> = {
+  intro: {
+    title: 'VLA turns a scene and a goal into movement.',
+    action: 'Why is that hard?',
+  },
+  why: {
+    title: 'One sentence hides many physical decisions.',
+    action: 'Unpack the task',
+  },
+  steps: {
+    title: 'One goal becomes a chain of movements.',
+    action: 'How does it learn?',
+  },
+  learn: {
+    title: 'Watch. Hide. Guess. Check. Adjust.',
+    action: 'Let reality answer',
+  },
+  loop: {
+    title: 'Act a little. Look again. Correct.',
+    action: 'Why is this harder than chat?',
+  },
+  hard: {
+    title: 'A bad word is editable. A bad motion is already real.',
+    action: 'See a real system',
+  },
+  proof: {
+    title: 'Vision. Language. Whole-body action.',
+    action: 'Replay VLA',
+  },
+};
+
+const vlaWorkcellGeometry: Record<VlaWorkcellVariant, {
+  elbow: [number, number];
+  end: [number, number];
+  block: [number, number, number];
+  path: string;
+}> = {
+  start: { elbow: [91, 79], end: [128, 93], block: [167, 135, 0], path: 'M128 93 C145 92 154 107 166 126' },
+  expert: { elbow: [102, 78], end: [153, 111], block: [167, 135, 0], path: 'M128 93 C143 96 151 103 158 122' },
+  slip: { elbow: [104, 76], end: [158, 106], block: [178, 148, 18], path: 'M128 93 C149 95 158 103 173 137' },
+  correct: { elbow: [99, 80], end: [151, 116], block: [162, 135, 0], path: 'M128 93 C142 96 146 108 158 128' },
+  done: { elbow: [119, 75], end: [202, 105], block: [222, 132, 0], path: 'M128 93 C162 80 190 91 218 122' },
+  collision: { elbow: [114, 78], end: [188, 108], block: [202, 137, 24], path: 'M128 93 C157 92 179 101 198 127' },
+};
+
+function VlaWorkcellScene({
+  variant,
+  label,
+  animate = false,
+}: {
+  variant: VlaWorkcellVariant;
+  label: string;
+  animate?: boolean;
+}) {
+  const geometry = vlaWorkcellGeometry[variant];
+  const [elbowX, elbowY] = geometry.elbow;
+  const [endX, endY] = geometry.end;
+  const [blockX, blockY, blockRotation] = geometry.block;
+
+  return (
+    <div className={vlaStyles.workcell} data-variant={variant} data-animate={animate || undefined} role="img" aria-label={label}>
+      <svg viewBox="0 0 260 175" aria-hidden="true">
+        <rect className={vlaStyles.workcellWall} x="0" y="0" width="260" height="175" />
+        <path className={vlaStyles.table} d="M0 145 H260 V175 H0 Z" />
+        <rect className={vlaStyles.tray} x="211" y="116" width="39" height="29" rx="2" />
+        <text className={vlaStyles.trayLabel} x="230" y="133">TRAY</text>
+        <rect className={vlaStyles.obstacle} x="186" y="92" width="12" height="53" rx="2" />
+        <text className={vlaStyles.obstacleLabel} x="192" y="87">OBSTACLE</text>
+        <g className={vlaStyles.robotArm}>
+          <rect x="27" y="112" width="39" height="33" rx="3" />
+          <circle cx="57" cy="111" r="10" />
+          <line x1="57" y1="111" x2={elbowX} y2={elbowY} />
+          <circle cx={elbowX} cy={elbowY} r="8" />
+          <line x1={elbowX} y1={elbowY} x2={endX} y2={endY} />
+          <circle cx={endX} cy={endY} r="6" />
+          <g className={vlaStyles.gripper} transform={`translate(${endX} ${endY})`}>
+            <path d="M-2 2 l8 8 M2 -2 l9 3" />
+          </g>
+        </g>
+        <path className={vlaStyles.motionPath} d={geometry.path} pathLength="1" />
+        <circle className={vlaStyles.motionPulse} cx="0" cy="0" r="5">
+          <animateMotion dur="2.4s" repeatCount="indefinite" path={geometry.path} />
+        </circle>
+        <g className={vlaStyles.blockShape} transform={`rotate(${blockRotation} ${blockX} ${blockY})`}>
+          <rect x={blockX - 10} y={blockY - 10} width="20" height="20" rx="2" />
+          <text x={blockX} y={blockY + 3}>BLOCK</text>
+        </g>
+        <circle className={vlaStyles.cameraDot} cx="239" cy="18" r="7" />
+        <path className={vlaStyles.cameraSweep} d="M239 24 L210 78 H257 Z" />
+      </svg>
+      <span className={vlaStyles.workcellLabel}>{label}</span>
+    </div>
+  );
+}
+
+function AtlasVlaLab({ isActive }: { isActive: boolean }) {
+  const [act, setAct] = useState<AtlasVlaAct>('intro');
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const actIndex = atlasVlaActOrder.indexOf(act);
+  const copy = atlasVlaCopy[act];
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.pause();
+    if (!isActive || act !== 'proof') {
+      if (video.readyState >= HTMLMediaElement.HAVE_METADATA) video.currentTime = 0;
+      return;
+    }
+
+    let cancelled = false;
+    if (video.readyState >= HTMLMediaElement.HAVE_METADATA) video.currentTime = 0;
+    void video.play().catch((error: unknown) => {
+      if (cancelled || (error instanceof DOMException && error.name === 'AbortError')) return;
+      video.pause();
+    });
+
+    return () => {
+      cancelled = true;
+      video.pause();
+    };
+  }, [act, isActive]);
+
+  const advanceAct = () => {
+    if (actIndex === atlasVlaActOrder.length - 1) {
+      setAct('intro');
+      return;
+    }
+    setAct(atlasVlaActOrder[actIndex + 1]);
+  };
+
+  return (
+    <section
+      className={`${embodiedStyles.stage} ${atlasStyles.embodiedHost} ${vlaStyles.host}`}
+      data-act={act}
+      data-phase="vla"
+      data-visual="atlas"
+      aria-label={`Atlas VLA demonstration. ${copy.title}`}
+    >
+      <ConceptHeader code="VLA" name="Vision · Language · Action" visualStyle="atlas" />
+      <ConceptFolio visualStyle="atlas" number="02" side="B" label={'EMBODIED\nSYSTEMS'} />
+
+      <div className={`${embodiedStyles.sceneCopy} ${atlasStyles.demoSceneCopy} ${vlaStyles.sceneCopy}`} aria-live="polite" key={act}>
+        <strong>{copy.title}</strong>
+      </div>
+
+      <main className={vlaStyles.storyStage} key={`vla-${act}`}>
+        {act === 'intro' && (
+          <section className={vlaStyles.introScene} aria-label="Vision and language are combined to produce a physical action">
+            <article className={vlaStyles.introVision}>
+              <span>VISION</span>
+              <strong>WHAT IS HERE?</strong>
+              <VlaWorkcellScene variant="start" label="BLOCK · TRAY · OBSTACLE" animate />
+            </article>
+            <article className={vlaStyles.introLanguage}>
+              <span>LANGUAGE</span>
+              <strong>WHAT DO YOU WANT?</strong>
+              <blockquote>“Put the orange block in the tray.”</blockquote>
+            </article>
+            <article className={vlaStyles.introAction}>
+              <span>ACTION</span>
+              <strong>WHAT SHOULD THE BODY DO?</strong>
+              <VlaWorkcellScene variant="expert" label="REACH TOWARD THE BLOCK" animate />
+            </article>
+            <footer className={vlaStyles.introFormula}>
+              <span>V</span><b>+</b><span>L</span><b>→</b><strong>VLA</strong><b>→</b><span>A</span>
+            </footer>
+          </section>
+        )}
+
+        {act === 'why' && (
+          <section className={vlaStyles.whyScene} aria-label="A language goal does not specify the physical decisions needed to complete it">
+            <article className={vlaStyles.wordsPanel}>
+              <span>THE GOAL</span>
+              <blockquote>“Put the orange block in the tray.”</blockquote>
+              <strong>1 SENTENCE</strong>
+            </article>
+            <b className={vlaStyles.notEqual}>≠</b>
+            <article className={vlaStyles.bodyPanel}>
+              <VlaWorkcellScene variant="start" label="THE BODY STILL HAS QUESTIONS" />
+              <div className={vlaStyles.bodyQuestions}>
+                {[
+                  ['01', 'WHICH?', 'find the right object'],
+                  ['02', 'HOW?', 'reach around the obstacle'],
+                  ['03', 'ENOUGH?', 'grip, move, and know when to stop'],
+                ].map(([number, question, detail]) => <p key={number}><span>{number}</span><strong>{question}</strong><small>{detail}</small></p>)}
+              </div>
+            </article>
+            <footer><span>LANGUAGE SAYS</span><strong>WHAT</strong><b>·</b><span>ACTION MUST DECIDE</span><strong>HOW</strong></footer>
+          </section>
+        )}
+
+        {act === 'steps' && (
+          <section className={vlaStyles.stepsScene} aria-label="One language goal unfolds into six coordinated robot movements">
+            <article className={vlaStyles.stepsWorkcell}>
+              <blockquote>“Put the orange block in the tray.”</blockquote>
+              <VlaWorkcellScene variant="done" label="ONE BODY · ONE PHYSICAL TASK" animate />
+            </article>
+            <ol className={vlaStyles.actionChain}>
+              {[
+                ['01', 'FIND', 'orange block'],
+                ['02', 'REACH', 'avoid obstacle'],
+                ['03', 'ALIGN', 'hand + block'],
+                ['04', 'GRIP', 'enough force'],
+                ['05', 'LIFT', 'hold it'],
+                ['06', 'PLACE', 'inside tray'],
+              ].map(([number, verb, detail]) => <li key={number}><span>{number}</span><strong>{verb}</strong><small>{detail}</small></li>)}
+            </ol>
+            <footer><span>1 GOAL</span><b>→</b><strong>6 COORDINATED MOVES</strong></footer>
+          </section>
+        )}
+
+        {act === 'learn' && (
+          <section className={vlaStyles.learnScene} aria-label="A VLA learns from recorded robot demonstrations by hiding and predicting the expert's next move">
+            <div className={vlaStyles.lessonTrack}>
+              <article className={vlaStyles.lessonWatch}>
+                <span>01 · WATCH</span>
+                <VlaWorkcellScene variant="start" label="SCENE + GOAL" />
+              </article>
+              <article className={vlaStyles.lessonHide}>
+                <span>02 · HIDE</span>
+                <strong>?</strong>
+                <small>expert&apos;s next move</small>
+              </article>
+              <article className={vlaStyles.lessonGuess}>
+                <span>03 · GUESS</span>
+                <strong>REACH RIGHT</strong>
+                <i>model</i>
+              </article>
+              <article className={vlaStyles.lessonCheck}>
+                <span>04 · CHECK</span>
+                <strong>REACH UP-RIGHT</strong>
+                <i>expert</i>
+              </article>
+            </div>
+            <aside className={vlaStyles.lessonAdjust}>
+              <span>05</span>
+              <strong>ADJUST</strong>
+            </aside>
+            <footer><span>GUESS ≠ DEMO</span><b>→</b><strong>ADJUST</strong><b>↺</b><span>MANY ROBOT DEMONSTRATIONS</span></footer>
+          </section>
+        )}
+
+        {act === 'loop' && (
+          <section className={vlaStyles.loopScene} aria-label="An illustrative VLA control loop acts briefly, observes a slipped block, and corrects the next action">
+            <article className={vlaStyles.loopFrame} data-fail>
+              <span>01 · ACT A LITTLE</span>
+              <VlaWorkcellScene variant="slip" label="THE BLOCK SLIPPED" animate />
+              <strong>GRASP STABLE? <b>NO</b></strong>
+            </article>
+            <div className={vlaStyles.realityTurn}>
+              <span>NEXT CAMERA FRAME</span>
+              <strong>REALITY ANSWERS</strong>
+              <b>→</b>
+            </div>
+            <article className={vlaStyles.loopFrame} data-correct>
+              <span>02 · LOOK AGAIN + CORRECT</span>
+              <VlaWorkcellScene variant="correct" label="SHIFT LEFT · RE-GRIP" animate />
+              <strong>NEXT ACTION <b>CHANGES</b></strong>
+            </article>
+            <footer><span>ACT</span><b>→</b><span>LOOK</span><b>→</b><span>CORRECT</span><b>↺</b></footer>
+          </section>
+        )}
+
+        {act === 'hard' && (
+          <section className={vlaStyles.hardScene} aria-label="Text errors are easy to edit while robot errors have physical consequences">
+            <article className={vlaStyles.wordMistake}>
+              <span>BAD WORD</span>
+              <p>Pick up <del>teh</del> <mark>the</mark> block.</p>
+              <strong>UNDO · TRY AGAIN</strong>
+            </article>
+            <b className={vlaStyles.hardVs}>VS</b>
+            <article className={vlaStyles.motionMistake}>
+              <span>BAD MOTION</span>
+              <VlaWorkcellScene variant="collision" label="CONTACT · OBSTACLE" animate />
+              <strong>CONTACT ALREADY HAPPENED</strong>
+            </article>
+            <div className={vlaStyles.hardConstraints}>
+              {[
+                ['01', 'SPACE', 'objects in 3D'],
+                ['02', 'TIMING + FORCE', 'gentle + on time'],
+                ['03', 'DATA + SAFETY', 'costly + safety-critical'],
+              ].map(([number, label, detail]) => <p key={number}><span>{number}</span><strong>{label}</strong><small>{detail}</small></p>)}
+            </div>
+          </section>
+        )}
+
+        {act === 'proof' && (
+          <section className={vlaStyles.proofScene} aria-label="Official Gemini Robotics 2 footage showing whole-body VLA control as a research system">
+            <article className={vlaStyles.proofVideo}>
+              <video ref={videoRef} loop muted playsInline preload="auto" poster="/media/gemini-robotics2-proof.png">
+                <source src="/media/gemini-robotics2-wholebody.webm" type="video/webm" />
+              </video>
+              <footer><span>OFFICIAL RECORDING</span><strong>GEMINI ROBOTICS 2</strong></footer>
+            </article>
+            <article className={vlaStyles.proofFacts}>
+              <p><span>VISION</span><strong>SEE THE SCENE</strong></p>
+              <p><span>LANGUAGE</span><strong>FOLLOW THE GOAL</strong></p>
+              <p><span>ACTION</span><strong>CONTROL THE BODY</strong></p>
+              <aside><span>AVAILABILITY</span><strong>PRIVATE PREVIEW</strong><small>VLA: early-access partners.</small></aside>
+            </article>
+            <footer className={vlaStyles.proofUses}>
+              <span>ROBOT ARMS</span><b>·</b><span>BI-ARM ROBOTS</span><b>·</b><span>FULL HUMANOIDS</span>
+            </footer>
+          </section>
+        )}
+      </main>
+
+      <footer className={`${moeStyles.footer} ${atlasStyles.demoFooter}`}>
+        <div className={`${moeStyles.controls} ${atlasStyles.demoControls}`}>
+          <button onClick={() => setAct('intro')} disabled={act === 'intro'} aria-label="Reset the Atlas VLA demonstration">Reset</button>
+          <div className="demo-action-stack">
+            <button data-primary onClick={advanceAct}><span>{copy.action}</span><b>→</b></button>
+            <DemoStepRail
+              current={actIndex}
+              total={atlasVlaActOrder.length}
+              labels={['Name', 'Why', 'Steps', 'Learn', 'Feedback', 'Hard', 'Example']}
+              onStepChange={(index) => setAct(atlasVlaActOrder[index])}
+            />
+          </div>
+        </div>
+      </footer>
+    </section>
+  );
+}
+
+function SharedEmbodiedLab({
   isActive,
   visualStyle,
   concept,
+  onComplete,
 }: {
   isActive: boolean;
   visualStyle: DeckVisualStyle;
   concept: 'world' | 'vla';
+  onComplete?: () => void;
 }) {
   const initialAct: EmbodiedAct = concept === 'world' ? 'world-now' : 'vla-gap';
   const [act, setAct] = useState<EmbodiedAct>(initialAct);
@@ -1402,13 +2119,13 @@ export function EmbodiedLab({
     if (concept === 'world') {
       if (act === 'world-now') setAct('world-rollout');
       else if (act === 'world-rollout') setAct('world-forms');
-      else setAct('world-now');
+      else onComplete?.();
       return;
     }
 
     if (act === 'vla-gap') setAct('vla-control');
     else if (act === 'vla-control') setAct('vla-proof');
-    else setAct('vla-gap');
+    else onComplete?.();
   };
 
   const reset = () => {
@@ -1419,9 +2136,9 @@ export function EmbodiedLab({
   const localActIndex = embodiedActOrder.indexOf(act) - actOffset;
   const actionLabel =
     act === 'world-forms'
-      ? 'Replay World Model'
+      ? 'Next: VLA'
       : act === 'vla-proof'
-        ? 'Replay VLA'
+        ? 'Next: FDE'
         : copy.action;
 
   return (
@@ -1593,6 +2310,23 @@ export function EmbodiedLab({
   );
 }
 
+export function EmbodiedLab(props: {
+  isActive: boolean;
+  visualStyle: DeckVisualStyle;
+  concept: 'world' | 'vla';
+  onComplete?: () => void;
+}) {
+  if (props.visualStyle === 'atlas' && props.concept === 'world') {
+    return <AtlasWorldLab isActive={props.isActive} />;
+  }
+
+  if (props.visualStyle === 'atlas' && props.concept === 'vla') {
+    return <AtlasVlaLab isActive={props.isActive} />;
+  }
+
+  return <SharedEmbodiedLab {...props} />;
+}
+
 type WorldAction = -1 | 0 | 1;
 
 const actionCopy: Record<WorldAction, string> = {
@@ -1761,7 +2495,7 @@ export function VlaLab() {
   );
 }
 
-const fdeActs = [
+const fdeExhibitActs = [
   {
     title: 'The demo passed. The company was not in it.',
     action: 'Enter the field',
@@ -1784,14 +2518,14 @@ const fdeActs = [
   },
 ];
 
-const fdePhase = ['DEMO', 'FIELD', 'TRACE', 'EVAL + FIX', 'REPLAY'];
+const fdeExhibitPhase = ['DEMO', 'FIELD', 'TRACE', 'EVAL + FIX', 'REPLAY'];
 
 function FdeExhibit({ step }: { step: number }) {
   return (
-    <div className={`${conceptStyles.exhibit} ${conceptStyles.fdeExhibit}`} data-step={step} role="img" aria-label={fdeActs[step]?.title ?? 'Forward deployed engineering demonstration'}>
+    <div className={`${conceptStyles.exhibit} ${conceptStyles.fdeExhibit}`} data-step={step} role="img" aria-label={fdeExhibitActs[step]?.title ?? 'Forward deployed engineering demonstration'}>
       <div className={conceptStyles.phaseTag}>
         <span>{String(step + 1).padStart(2, '0')}</span>
-        <strong>{fdePhase[step]}</strong>
+        <strong>{fdeExhibitPhase[step]}</strong>
       </div>
 
       <section className={conceptStyles.demoFrame}>
@@ -1865,87 +2599,244 @@ function FdeExhibit({ step }: { step: number }) {
   );
 }
 
-function FdeAtlas({ step }: { step: number }) {
-  const replay = step === 4;
+type AtlasFdeAct = 'intro' | 'why' | 'field' | 'evidence' | 'roles' | 'memory' | 'proof';
+
+const atlasFdeActOrder: AtlasFdeAct[] = ['intro', 'why', 'field', 'evidence', 'roles', 'memory', 'proof'];
+const atlasFdeCopy: Record<AtlasFdeAct, { title: string; action: string }> = {
+  intro: {
+    title: 'FDE is a job: Forward Deployed Engineer.',
+    action: 'Why does AI need one?',
+  },
+  why: {
+    title: 'The model works. The workflow does not.',
+    action: 'Enter the real workflow',
+  },
+  field: {
+    title: 'The bug can live anywhere along the workflow.',
+    action: 'Follow one failure',
+  },
+  evidence: {
+    title: '“AI failed” is not yet a fixable bug.',
+    action: 'Who owns what?',
+  },
+  roles: {
+    title: 'Same problem. Different ownership.',
+    action: 'Make the lesson reusable',
+  },
+  memory: {
+    title: 'A good FDE leaves a reusable system behind.',
+    action: 'See a real deployment',
+  },
+  proof: {
+    title: 'From pilot to measurable improvement.',
+    action: 'Replay FDE',
+  },
+};
+
+function AtlasFdeLab() {
+  const [act, setAct] = useState<AtlasFdeAct>('intro');
+  const actIndex = atlasFdeActOrder.indexOf(act);
+  const copy = atlasFdeCopy[act];
+
+  const advanceAct = () => {
+    if (actIndex === atlasFdeActOrder.length - 1) {
+      setAct('intro');
+      return;
+    }
+    setAct(atlasFdeActOrder[actIndex + 1]);
+  };
 
   return (
-    <div className={`${atlasStyles.fdeAtlas} ${atlasStyles.fdeContinuumAtlas}`} data-step={step} role="img" aria-label={fdeActs[step]?.title ?? 'Forward deployed engineering demonstration'}>
-      <nav className={atlasStyles.fdeStoryRailAtlas} aria-label="FDE case progression">
-        {fdePhase.map((label, index) => <span key={label} data-current={index === step} data-complete={index < step}>{label}</span>)}
-      </nav>
+    <section
+      className={`${fdeStyles.stage} ${atlasStyles.fdeHost} ${fdeStoryStyles.host}`}
+      data-act={act}
+      data-step={actIndex}
+      data-visual="atlas"
+      aria-label={`Atlas FDE demonstration. ${copy.title}`}
+    >
+      <ConceptHeader key={`fde-header-${act}`} code="FDE" name="Forward Deployed Engineer" visualStyle="atlas" />
+      <ConceptFolio key={`fde-folio-${act}`} visualStyle="atlas" number="03" side="A" label={'FIELD\nENGINEERING'} />
 
-      <section className={atlasStyles.fdeFieldAtlas}>
-        <header className={atlasStyles.fdeCaseHeaderAtlas}>
-          <span>FRD-0042 · ILLUSTRATIVE</span>
-        </header>
+      <div className={`${fdeStyles.beat} ${atlasStyles.demoSceneCopy} ${fdeStoryStyles.sceneCopy}`} aria-live="polite" key={act}>
+        <strong>{copy.title}</strong>
+      </div>
 
-        <div className={atlasStyles.fdePersistentStageAtlas}>
-          <section className={`${atlasStyles.fdeZoneAtlas} ${atlasStyles.fdeProductZoneAtlas}`}>
-            <header><strong>PRODUCT</strong></header>
-            <div className={atlasStyles.fdeProductPipelineAtlas}>
-              <article className={atlasStyles.fdeInputAtlas}>
-                <strong>{replay ? 'PROPERTY-B' : step === 0 ? 'W-2.pdf' : 'FRD-0042'}</strong>
-              </article>
-              <b>→</b>
-              <article className={atlasStyles.fdeCoreAtlas}><strong>AI</strong></article>
-              <b>→</b>
-              <article className={atlasStyles.fdeOutputAtlas} data-state={step === 0 || replay ? 'pass' : step === 3 ? 'fixed' : 'missing'}>
-                <strong>{step === 0 ? 'PASS ✓' : replay ? '52 ✓' : step === 3 ? '46 ✓' : 'NULL'}</strong>
-              </article>
-            </div>
-
-            <div className={atlasStyles.fdeEvalBenchAtlas} data-visible={step >= 3}>
-              <header><strong>PRODUCT MEMORY</strong></header>
-              <div><p><span>EXPECTED</span><strong>46</strong></p><p><span>EVAL</span><strong>✓</strong></p><p><span>REGRESSION</span><strong>✓</strong></p><p><span>REVIEW</span><strong>✓</strong></p></div>
-            </div>
-          </section>
-
-          <section className={atlasStyles.fdeBoundaryZoneAtlas}>
-            <header><span>FIELD ↔ PRODUCT</span></header>
-            <i className={atlasStyles.fdeBoundaryLineAtlas} />
-            <div className={atlasStyles.fdePersonAtlas} data-position={step}>
+      <main className={fdeStoryStyles.storyStage} key={`fde-${act}`}>
+        {act === 'intro' && (
+          <section className={fdeStoryStyles.introScene} aria-label="FDE is a human engineering role embedded in an organization's real workflow">
+            <article className={fdeStoryStyles.productSide}>
+              <span>AI PRODUCT</span>
+              <strong>MODEL + TOOLS</strong>
+              <p>Built to work for many customers.</p>
+            </article>
+            <article className={fdeStoryStyles.fdeBridge}>
+              <span>FORWARD DEPLOYED ENGINEER</span>
               <strong>FDE</strong>
-            </div>
-            <div className={atlasStyles.fdeEvidencePacketAtlas} data-visible={step >= 2} data-returned={step >= 3} data-consumed={replay}>
-              <span>EVIDENCE</span><strong>FRD-0042</strong><small>46 · #913 · ✓</small>
-            </div>
-            <div className={atlasStyles.fdeCapabilityPacketAtlas} data-visible={replay}>
-              <strong>FIX + TEST ✓</strong>
-            </div>
+              <b>↔</b>
+              <p>Works with both sides.</p>
+            </article>
+            <article className={fdeStoryStyles.companySide}>
+              <span>LIVE COMPANY</span>
+              <strong>DATA + PERMISSIONS + PEOPLE</strong>
+              <p>One workflow that must actually run.</p>
+            </article>
+            <footer><span>JOB · NOT A MODEL</span><strong>MOVE CLOSER TO WHERE THE WORK BREAKS</strong></footer>
           </section>
+        )}
 
-          <section className={`${atlasStyles.fdeZoneAtlas} ${atlasStyles.fdeCustomerZoneAtlas}`} data-active={step >= 1}>
-            <header><strong>{replay ? 'NEW CUSTOMER' : 'CUSTOMER'}</strong></header>
-            <div className={atlasStyles.fdeSiteSourcesAtlas}>
-              <article><strong>EMAIL</strong></article>
-              <article><strong>SHEET</strong></article>
-              <article><strong>API</strong></article>
-              <article data-truth><strong>NOTE · {replay ? '52' : '46'}</strong></article>
+        {act === 'why' && (
+          <section className={fdeStoryStyles.whyScene} aria-label="A clean AI demo answer collides with enterprise access, approval, workflow, and ownership barriers">
+            <article className={fdeStoryStyles.demoMachine}>
+              <span>DEMO</span>
+              <div><b>ONE FILE</b><i>→</i><strong>AI</strong><i>→</i><mark>GOOD ANSWER ✓</mark></div>
+              <small>clean input · no real systems</small>
+            </article>
+            <div className={fdeStoryStyles.answerPacket}><span>GOOD ANSWER</span><strong>→</strong></div>
+            <div className={fdeStoryStyles.realityWall}>
+              <span>REALITY WALL</span>
+              {['ACCESS', 'APPROVAL', 'WORKFLOW', 'OWNER'].map((item) => <b key={item}>{item}</b>)}
             </div>
-            <div className={atlasStyles.fdeLiveReceiptAtlas} data-pass={replay}>
-              <span>LIVE OUTPUT</span>
-              <p><strong>{step === 0 ? '—' : replay ? '52 ✓' : 'NULL'}</strong></p>
-            </div>
-            <div className={atlasStyles.fdePractitionerAtlas} data-visible={step >= 1 && !replay}>
-              <span>EXPERT</span><strong>46 ✓</strong>
-            </div>
+            <article className={fdeStoryStyles.liveCompany}>
+              <span>LIVE COMPANY</span>
+              <strong>ANSWER NOT IN THE WORKFLOW</strong>
+              <div><b>EMAIL</b><b>API</b><b>REVIEW</b><b>WRITE-BACK</b></div>
+            </article>
+            <footer><span>THE MODEL ANSWERED</span><strong>THE COMPANY STILL CANNOT USE IT</strong></footer>
           </section>
+        )}
 
-          <div className={atlasStyles.fdeTraceAtlas} data-visible={step === 2}>
-            {[
-              ['CASE', 'FRD-0042'],
-              ['TRACE', '#913'],
-              ['OUTPUT', 'NULL'],
-              ['SOURCE', '46 ✓'],
-            ].map(([label, value], index) => <div className={atlasStyles.fdeTraceStopAtlas} key={label} style={{ '--trace-rank': index } as CSSProperties}><article><span>{label}</span><strong>{value}</strong></article>{index < 3 && <i />}</div>)}
+        {act === 'field' && (
+          <section className={fdeStoryStyles.fieldScene} aria-label="An FDE follows one value through an illustrative end-to-end company workflow and finds where it disappears">
+            <div className={fdeStoryStyles.workflowRoute}>
+              {[
+                ['01', 'EMAIL', 'PAY IN 46 DAYS'],
+                ['02', 'SPREADSHEET', '46'],
+                ['03', 'AI', '46 ✓'],
+                ['04', 'APPROVAL', 'APPROVED'],
+                ['05', 'LIVE SYSTEM', 'BLANK'],
+              ].map(([number, label, value], index) => (
+                <article key={number} data-break={index === 4 || undefined}>
+                  <span>{number}</span><strong>{label}</strong><b>{value}</b>
+                </article>
+              ))}
+            </div>
+            <div className={fdeStoryStyles.fieldTrace}>
+              <strong>FDE</strong><i /><span>FOLLOWS THE WORK END TO END</span>
+            </div>
+            <div className={fdeStoryStyles.fieldResult}>
+              <article><span>SOURCE</span><strong>46</strong></article>
+              <b>≠</b>
+              <article data-miss><span>PRODUCTION</span><strong>BLANK</strong></article>
+            </div>
+            <footer><span>THE AI FOUND 46</span><strong>THE LIVE WORKFLOW DROPPED IT</strong></footer>
+          </section>
+        )}
+
+        {act === 'evidence' && (
+          <section className={fdeStoryStyles.evidenceScene} aria-label="Source value, system output, and expert confirmation combine into a reproducible product case">
+            <article className={fdeStoryStyles.complaintPanel}>
+              <span>FIELD COMPLAINT</span>
+              <blockquote>“The AI got it wrong.”</blockquote>
+              <strong>NOT REPRODUCIBLE</strong>
+            </article>
+            <b className={fdeStoryStyles.evidenceArrow}>→</b>
+            <div className={fdeStoryStyles.evidenceParts}>
+              <article data-kind="source"><span>01 · SOURCE</span><strong>46</strong></article>
+              <article data-kind="system"><span>02 · OUTPUT</span><strong>BLANK</strong></article>
+              <article data-kind="expert"><span>03 · EXPERT</span><strong>46 ✓</strong></article>
+            </div>
+            <article className={fdeStoryStyles.caseFolder}>
+              <span>REPRODUCIBLE CASE</span>
+              <strong>IF SOURCE = 46, OUTPUT MUST INCLUDE 46.</strong>
+            </article>
+            <footer><span>FIELD FAILURE</span><b>→</b><strong>FIXABLE PRODUCT SIGNAL</strong></footer>
+          </section>
+        )}
+
+        {act === 'roles' && (
+          <section className={fdeStoryStyles.rolesScene} aria-label="Product engineers, forward deployed engineers, and domain experts own different outcomes around the same production problem">
+            <div className={fdeStoryStyles.roleStage}>
+              <article data-role="product">
+                <span>PRODUCT ENGINEER</span>
+                <strong>BUILD THE PRODUCT</strong>
+                <p>Reusable for many customers.</p>
+                <b>FINISH LINE · CAPABILITY</b>
+              </article>
+              <article data-role="fde">
+                <span>FORWARD DEPLOYED ENGINEER</span>
+                <strong>MAKE THIS WORKFLOW WORK</strong>
+                <p>Connect, deploy, and drive adoption.</p>
+                <b>FINISH LINE · OUTCOME</b>
+              </article>
+              <article data-role="expert">
+                <span>DOMAIN EXPERT</span>
+                <strong>DEFINE CORRECT</strong>
+                <p>Supply judgement and ground truth.</p>
+                <b>FINISH LINE · QUALITY</b>
+              </article>
+            </div>
+            <div className={fdeStoryStyles.ownershipRoute}><span>DISCOVER</span><b>→</b><span>CONNECT</span><b>→</b><span>DEPLOY</span><b>→</b><span>ADOPT</span></div>
+            <footer><span>PARTNERS · NOT A RANKING</span><strong>FDE OWNS THE CROSSING</strong></footer>
+          </section>
+        )}
+
+        {act === 'memory' && (
+          <section className={fdeStoryStyles.memoryScene} aria-label="A field failure becomes a reusable product test and a new customer succeeds without another rescue">
+            <article className={fdeStoryStyles.oldCustomer}>
+              <span>FIELD CASE</span>
+              <p><b>46</b><i>→</i><strong>BLANK</strong></p>
+              <small>one failure</small>
+            </article>
+            <div className={fdeStoryStyles.memoryFactory}>
+              <span>BACK TO THE PRODUCT</span>
+              <div><p><b>01</b><strong>CASE</strong></p><i>→</i><p><b>02</b><strong>TEST</strong></p><i>→</i><p><b>03</b><strong>FIX</strong></p></div>
+              <footer>REUSABLE LESSON ✓</footer>
+            </div>
+            <article className={fdeStoryStyles.newCustomer}>
+              <span>NEXT SIMILAR CASE</span>
+              <p><b>52</b><i>→</i><strong>52 ✓</strong></p>
+              <small>works without another rescue</small>
+            </article>
+            <footer><span>GOOD FORWARD DEPLOYMENT</span><strong>LEAVES A SYSTEM · NOT A PERMANENT HUMAN PATCH</strong></footer>
+          </section>
+        )}
+
+        {act === 'proof' && (
+          <section className={fdeStoryStyles.proofScene} aria-label="Published OpenAI, Thrive, and Crete Tax AI deployment results">
+            <article className={fdeStoryStyles.proofScale}>
+              <span>TAX RETURNS IN THE PILOT</span>
+              <strong>7,000</strong>
+              <small>ACROSS PARTICIPATING CRETE FIRMS</small>
+            </article>
+            <article className={fdeStoryStyles.proofMetric}>
+              <span>RETURNS WITH ≥75% CORRECT FIELDS</span>
+              <div><strong>25%</strong><b>→</b><strong>86%</strong></div>
+              <small>AT LAUNCH · WITHIN SIX WEEKS</small>
+            </article>
+            <div className={fdeStoryStyles.teamLoop}>
+              {['PRACTITIONERS', 'FIELD DATA', 'EVALS', 'ENGINEERING'].map((item) => <b key={item}>{item}</b>)}
+            </div>
+            <aside><span>PUBLISHED CASE · MAY 27, 2026</span><strong>OPENAI + THRIVE + CRETE PRACTITIONERS</strong></aside>
+            <footer><span>MEASURABLE IMPROVEMENT</span><strong>TEAM LOOP · NOT ONE HERO</strong></footer>
+          </section>
+        )}
+      </main>
+
+      <footer className={`${moeStyles.footer} ${atlasStyles.demoFooter}`}>
+        <div className={`${moeStyles.controls} ${atlasStyles.demoControls}`}>
+          <button type="button" onClick={() => setAct('intro')} disabled={act === 'intro'} aria-label="Reset the Atlas FDE demonstration">Reset</button>
+          <div className="demo-action-stack">
+            <button data-primary type="button" onClick={advanceAct}><span>{copy.action}</span><b>→</b></button>
+            <DemoStepRail
+              current={actIndex}
+              total={atlasFdeActOrder.length}
+              labels={['Name', 'Why', 'Workflow', 'Evidence', 'Roles', 'Reuse', 'Example']}
+              onStepChange={(index) => setAct(atlasFdeActOrder[index])}
+            />
           </div>
         </div>
-
-        <aside className={atlasStyles.fdeProofStripAtlas} data-visible={replay}>
-          <strong>7,000</strong><b>25% → 86%</b>
-        </aside>
-      </section>
-    </div>
+      </footer>
+    </section>
   );
 }
 
@@ -1960,12 +2851,16 @@ export function FdeLab({
   onReset: () => void;
   visualStyle: DeckVisualStyle;
 }) {
-  const safeStep = Math.min(Math.max(step, 0), fdeActs.length - 1);
-  const act = fdeActs[safeStep];
+  if (visualStyle === 'atlas') {
+    return <AtlasFdeLab />;
+  }
+
+  const safeStep = Math.min(Math.max(step, 0), fdeExhibitActs.length - 1);
+  const act = fdeExhibitActs[safeStep];
 
   return (
     <section
-      className={`${fdeStyles.stage} ${visualStyle === 'exhibit' ? `${conceptStyles.host} ${conceptStyles.fdeHost}` : ''} ${visualStyle === 'atlas' ? atlasStyles.fdeHost : ''}`}
+      className={`${fdeStyles.stage} ${conceptStyles.host} ${conceptStyles.fdeHost}`}
       data-step={safeStep}
       data-visual={visualStyle}
       aria-label="Presenter-led Tax AI field feedback story"
@@ -1974,13 +2869,13 @@ export function FdeLab({
       <ConceptHeader code="FDE" name="Forward Deployed Engineer" visualStyle={visualStyle} />
       <ConceptFolio visualStyle={visualStyle} number="03" side="A" label={'FIELD\nENGINEERING'} />
 
-      <div className={`${fdeStyles.beat} ${visualStyle === 'atlas' ? atlasStyles.demoSceneCopy : ''}`} aria-live="polite">
+      <div className={fdeStyles.beat} aria-live="polite">
         <strong>{act.title}</strong>
       </div>
 
-      {visualStyle === 'atlas' ? <FdeAtlas step={safeStep} /> : <FdeExhibit step={safeStep} />}
+      <FdeExhibit step={safeStep} />
 
-      <div className={`${fdeStyles.world} ${conceptStyles.legacyWorld} ${visualStyle === 'atlas' ? atlasStyles.atlasHidden : ''}`}>
+      <div className={`${fdeStyles.world} ${conceptStyles.legacyWorld}`}>
         <section className={`${fdeStyles.scene} ${fdeStyles.demoScene}`} aria-hidden={safeStep !== 0}>
           <div className={fdeStyles.cleanPipeline} aria-label="A clean tax document produces a clean answer">
             <article className={fdeStyles.paperInput}>
@@ -2092,12 +2987,12 @@ export function FdeLab({
         </section>
       </div>
 
-      <footer className={`${fdeStyles.footer} ${visualStyle === 'atlas' ? atlasStyles.demoFooter : ''}`}>
-        <div className={`${fdeStyles.controls} ${visualStyle === 'atlas' ? atlasStyles.demoControls : ''}`}>
+      <footer className={fdeStyles.footer}>
+        <div className={fdeStyles.controls}>
           <button type="button" onClick={onReset} disabled={safeStep === 0}>Reset</button>
           <div className="demo-action-stack">
             <button data-primary type="button" onClick={onAdvance}><span>{act.action}</span><b>→</b></button>
-            <DemoStepRail current={safeStep} total={fdeActs.length} />
+            <DemoStepRail current={safeStep} total={fdeExhibitActs.length} />
           </div>
         </div>
       </footer>
@@ -2208,97 +3103,223 @@ function RsiExhibit({ act }: { act: RsiAct }) {
   );
 }
 
-function RsiAtlas({ act }: { act: RsiAct }) {
+type AtlasRsiAct = 'intro' | 'not-rsi' | 'method' | 'proof' | 'judgment' | 'successor';
+
+const atlasRsiActOrder: AtlasRsiAct[] = ['intro', 'not-rsi', 'method', 'proof', 'judgment', 'successor'];
+const atlasRsiCopy: Record<AtlasRsiAct, { phase: string; title: string; action: string }> = {
+  intro: {
+    phase: 'MEET RSI',
+    title: 'What if AI could help build its next version?',
+    action: 'Show what must change',
+  },
+  'not-rsi': {
+    phase: 'ANSWER ≠ RECIPE',
+    title: 'Fixing one answer does not change how the next AI is built.',
+    action: "Run today's loop",
+  },
+  method: {
+    phase: "TODAY'S LOOP",
+    title: 'AI runs the tryouts; an external test picks the winner.',
+    action: 'See a real result',
+  },
+  proof: {
+    phase: 'REAL RESULT',
+    title: 'A real win—on one part of the process.',
+    action: 'Find the human boundary',
+  },
+  judgment: {
+    phase: 'HUMAN BOUNDARY',
+    title: "Today's AI explores inside a human-made box.",
+    action: 'Test full RSI',
+  },
+  successor: {
+    phase: 'FULL RSI TEST',
+    title: 'Full RSI begins only when the successor continues the loop.',
+    action: 'Replay RSI',
+  },
+};
+
+function AtlasRsiLab() {
+  const [act, setAct] = useState<AtlasRsiAct>('intro');
+  const currentIndex = atlasRsiActOrder.indexOf(act);
+  const current = atlasRsiCopy[act];
+
+  const advance = () => {
+    if (currentIndex === atlasRsiActOrder.length - 1) {
+      setAct('intro');
+      return;
+    }
+    setAct(atlasRsiActOrder[currentIndex + 1]);
+  };
+
   return (
-    <div className={atlasStyles.rsiAtlas} data-act={act} role="img" aria-label={rsiExhibitSummary[act]}>
-      <div className={atlasStyles.rsiBoundaryRail}>
-        <span data-zone="answer"><strong>SELF-CORRECTION</strong><small>one answer changes</small></span>
-        <span data-zone="bounded"><strong>BOUNDED OPTIMIZATION</strong><small>AI searches inside a human-defined test</small></span>
-        <span data-zone="recursive"><strong>FULL RSI</strong><small>builder improves builder across successors · unproven</small></span>
+    <section
+      className={`${rsiStyles.stage} ${atlasStyles.rsiHost} ${rsiStoryStyles.host}`}
+      data-act={act}
+      data-step={currentIndex}
+      data-visual="atlas"
+      aria-label={`Atlas RSI demonstration. ${current.title}`}
+    >
+      <ConceptHeader code="RSI" name="Recursive Self-Improvement" visualStyle="atlas" />
+      <ConceptFolio visualStyle="atlas" number="03" side="B" label={'IMPROVEMENT\nSYSTEMS'} />
+
+      <div className={rsiStoryStyles.phaseTag}>
+        <span>{String(currentIndex + 1).padStart(2, '0')}</span>
+        <strong>{current.phase}</strong>
       </div>
 
-      <section className={atlasStyles.rsiMirrorAtlas} aria-hidden={act !== 'mirror'}>
-        <header><span>OUTPUT / SAME MODEL</span><strong>A BETTER ANSWER IS NOT A BETTER BUILDER</strong></header>
-        <div className={atlasStyles.answerRevisionAtlas}>
-          <article><span>ANSWER · V1</span><strong>42 days</strong><small>CHECK</small></article><b>→</b>
-          <article data-fixed><span>ANSWER · V2</span><strong>46 days</strong><small>FIXED</small></article>
-        </div>
-        <b className={atlasStyles.rsiNotEqualAtlas}>≠</b>
-        <div className={atlasStyles.builderUnchangedAtlas}>
-          <header><span>AI BUILDER</span><strong>VERSION 1</strong></header>
-          {['TRAINING CODE', 'DATA PIPELINE', 'EVAL SUITE', 'MODEL RECIPE'].map(item => <p key={item}><span>{item}</span><b>UNCHANGED</b></p>)}
-          <footer>THE PROCESS THAT BUILDS THE NEXT MODEL DID NOT CHANGE.</footer>
-        </div>
-      </section>
+      <div className={`${rsiStyles.beat} ${atlasStyles.demoSceneCopy} ${rsiStoryStyles.sceneCopy}`} aria-live="polite" key={act}>
+        <strong>{current.title}</strong>
+      </div>
 
-      <section className={atlasStyles.rsiBuilderAtlas} aria-hidden={act !== 'builder'}>
-        <header><span>DEMONSTRATED TODAY / SEARCH INSIDE A BOX</span><strong>HUMANS LOCK THE TEST</strong></header>
-        <div className={atlasStyles.rsiLocksAtlas}>
-          <article><b>LOCKED</b><span>GOAL</span><strong>Make training code faster</strong></article>
-          <article><b>LOCKED</b><span>EVALUATOR</span><strong>Same answer + lower time</strong></article>
-        </div>
-        <div className={atlasStyles.patchFactoryAtlas}>
-          <article><span>AI GENERATES</span><strong>MANY CODE IDEAS</strong></article><b>→</b>
-          <div>{['PATCH 01', 'PATCH 02', 'PATCH 03', 'PATCH 04'].map((item, index) => <i key={item} style={{ '--atlas-rank': `${index}` } as CSSProperties}>{item}</i>)}</div><b>→</b>
-          <article data-evaluator><span>AUTO EVALUATOR</span><strong>RUN · VERIFY · TIME</strong></article>
-        </div>
-        <footer>OBJECTIVE SIGNAL · NOT THE AI&apos;S OPINION</footer>
-      </section>
+      <main className={rsiStoryStyles.body} key={`rsi-${act}`}>
+        {act === 'intro' && (
+          <section className={rsiStoryStyles.introScene} aria-label="RSI means recursive self-improvement: an AI helps improve the recipe used to build a successor AI">
+            <div className={rsiStoryStyles.acronymStack}>
+              <article><b>R</b><p><strong>RECURSIVE</strong><span>the next AI repeats the cycle</span></p></article>
+              <article><b>S</b><p><strong>SELF</strong><span>here: the AI-building loop</span></p></article>
+              <article><b>I</b><p><strong>IMPROVEMENT</strong><span>its recipe gets better</span></p></article>
+            </div>
+            <div className={rsiStoryStyles.recipeLoop}>
+              <article className={rsiStoryStyles.modelCard}><span>CURRENT</span><strong>AI · N</strong></article>
+              <b className={rsiStoryStyles.flowArrow}>→</b>
+              <article className={rsiStoryStyles.recipeBook}>
+                <span>RECIPE</span><strong>HOW TO BUILD<br />THE NEXT AI</strong>
+                <div>{['CODE', 'DATA', 'TRAIN', 'TEST'].map(item => <i key={item}>{item}</i>)}</div>
+              </article>
+              <b className={rsiStoryStyles.flowArrow}>→</b>
+              <article className={`${rsiStoryStyles.modelCard} ${rsiStoryStyles.nextModelCard}`}><span>NEXT</span><strong>AI · N+1</strong></article>
+              <div className={rsiStoryStyles.openLoop}><i /><b>?</b><span>CAN N+1 IMPROVE THE RECIPE AGAIN?</span></div>
+            </div>
+            <footer className={rsiStoryStyles.paperCaption}><span>PLAIN ENGLISH</span><strong>AI helps improve how the next AI is built.</strong></footer>
+          </section>
+        )}
 
-      <section className={atlasStyles.rsiSelectionAtlas} aria-hidden={act !== 'selection'}>
-        <header><span>CANDIDATE TEST BENCH</span><strong>CORRECT FIRST. THEN FASTER.</strong></header>
-        <div className={atlasStyles.selectionGatesAtlas}><span>CORRECT?</span><span>FASTER?</span><span>DECISION</span></div>
-        <div className={atlasStyles.patchLedgerAtlas}>
-          {[
-            ['BASELINE', '100 ms', 'YES', '—', 'SEED'],
-            ['PATCH A', '94 ms', 'YES', 'YES', 'PASS'],
-            ['PATCH B', '69 ms', 'NO', 'YES', 'REJECT'],
-            ['PATCH C', '86 ms', 'YES', 'YES', 'NEW BEST'],
-          ].map(([name, time, correct, faster, decision], index) => (
-            <article key={name} data-reject={decision === 'REJECT' || undefined} data-winner={decision === 'NEW BEST' || undefined} style={{ '--atlas-rank': `${index}` } as CSSProperties}>
-              <span>{name}</span><strong>{time}</strong><b>{correct}</b><b>{faster}</b><em>{decision}</em>
+        {act === 'not-rsi' && (
+          <section className={rsiStoryStyles.notRsiScene} aria-label="Correcting one answer changes an output but leaves the recipe for building the next AI unchanged">
+            <div className={rsiStoryStyles.answerPress}>
+              <article><span>ANSWER · V1</span><strong>WRONG</strong><small>one output</small></article>
+              <b>→</b>
+              <article data-pass><span>ANSWER · V2</span><strong>FIXED</strong><small>one output</small></article>
+              <p>THE ANSWER CHANGED</p>
+            </div>
+            <b className={rsiStoryStyles.notEqual}>≠</b>
+            <article className={rsiStoryStyles.unchangedRecipe}>
+              <span>BUILD RECIPE</span><strong>STILL · v1</strong>
+              <div>{['CODE', 'DATA', 'TRAIN', 'TEST'].map(item => <b key={item}>{item}</b>)}</div>
+              <p>UNCHANGED</p>
             </article>
-          ))}
-        </div>
-        <footer><span>WINNER BECOMES THE NEXT SEED</span><strong>↺</strong></footer>
-      </section>
+            <footer className={rsiStoryStyles.paperCaption}><span>USEFUL SELF-CORRECTION</span><strong>But the way we build the next AI did not improve.</strong></footer>
+          </section>
+        )}
 
-      <section className={atlasStyles.rsiImpactAtlas} aria-hidden={act !== 'impact'}>
-        <header><span>INSTALL ONE WINNER</span><strong>LOCAL IMPROVEMENT · MEASURABLE EFFECT</strong></header>
-        <div className={atlasStyles.winningPatchAtlas}><span>WINNING PATCH</span><strong>PATCH C</strong><small>correct + faster</small></div>
-        <b className={atlasStyles.impactArrowAtlas}>↓</b>
-        <div className={atlasStyles.kernelAtlas}><span>ONE TOOL IN THE AI FACTORY</span><strong>TRAINING KERNEL</strong><small>same job · less time + compute</small></div>
-        <aside className={atlasStyles.alphaProofAtlas}>
-          <span>GOOGLE DEEPMIND / ALPHAEVOLVE</span>
-          <p><small>ONE KERNEL</small><strong>+23%</strong><b>FASTER</b></p>
-          <i>→</i>
-          <p><small>WHOLE TRAINING RUN</small><strong>−1%</strong><b>TIME</b></p>
-          <footer>USEFUL SELF-IMPROVEMENT — BUT THE MODEL-BUILDING PROCESS DID NOT RECUR.</footer>
-        </aside>
-      </section>
+        {act === 'method' && (
+          <section className={rsiStoryStyles.methodScene} aria-label="People set a goal and an external test; AI tries many variants and the verified winner becomes the next starting point">
+            <div className={rsiStoryStyles.humanPins}>
+              <article><span>PEOPLE SET</span><strong>GOAL</strong><p>same correct result</p></article>
+              <article><span>PEOPLE SET</span><strong>TEST</strong><p>less time</p></article>
+            </div>
+            <div className={rsiStoryStyles.trialLoop}>
+              <article className={rsiStoryStyles.tryDeck}>
+                <span>AI</span><strong>TRY MANY</strong>
+                <div>
+                  <b><i>A</i><em>94 ms · ✓</em></b>
+                  <b data-reject><i>B</i><em>69 ms · ×</em></b>
+                  <b data-winner><i>C</i><em>86 ms · ★</em></b>
+                </div>
+              </article>
+              <b className={rsiStoryStyles.flowArrow}>→</b>
+              <article className={rsiStoryStyles.testGate}><span>EXTERNAL TEST</span><strong>CHECK</strong><div><b>1 · CORRECT?</b><b>2 · FASTER?</b></div></article>
+              <b className={rsiStoryStyles.flowArrow}>→</b>
+              <article className={rsiStoryStyles.winnerCard}><span>KEEP</span><strong>WINNER C</strong><small>next starting point</small></article>
+              <div className={rsiStoryStyles.cycleArrow}><i /><b>↺</b><span>REPEAT</span></div>
+            </div>
+            <footer className={rsiStoryStyles.paperCaption}><span>TRY → TEST → KEEP → REPEAT</span><strong>The fastest idea loses if it fails the test.</strong></footer>
+          </section>
+        )}
 
-      <section className={atlasStyles.rsiRecursiveAtlas} aria-hidden={act !== 'recursive'}>
-        <header><span>FULL RSI / SUCCESSOR TEST</span><strong>WHAT WOULD ACTUALLY HAVE TO RECUR?</strong></header>
-        <article className={atlasStyles.releaseNAtlas}><span>MODEL RELEASE</span><strong>AI · N</strong><p>built by <b>BUILDER v1</b></p></article>
-        <div className={atlasStyles.builderVersionAtlas}>
-          <header><span>VERSIONED BUILDER</span><strong>v1 → v2</strong></header>
-          <p>{['TRAINING CODE', 'DATA PROCESS', 'EVALS', 'MODEL RECIPE'].map(item => <b key={item}>{item}</b>)}</p>
-          <footer>ONE WINNING CHANGE BECOMES PART OF THE BUILD PROCESS</footer>
+        {act === 'proof' && (
+          <section className={rsiStoryStyles.proofScene} aria-label="Google DeepMind reports that AlphaEvolve sped up one Gemini matrix multiplication kernel by 23 percent, reducing overall Gemini training time by one percent">
+            <div className={rsiStoryStyles.proofSource}><span>GOOGLE DEEPMIND</span><strong>ALPHA<br />EVOLVE</strong></div>
+            <div className={rsiStoryStyles.kernelStack}>
+              <div className={rsiStoryStyles.stackBars}>{Array.from({ length: 8 }, (_, index) => <i key={index} data-focus={index === 5 || undefined} />)}</div>
+              <article><span>ONE REPEATED MATH ROUTINE</span><strong>+23%</strong><b>FASTER</b></article>
+            </div>
+            <div className={rsiStoryStyles.impactArrow} aria-label="The local speedup reduces the time for the whole training run"><b>→</b></div>
+            <article className={rsiStoryStyles.runImpact}>
+              <span>WHOLE GEMINI TRAINING RUN</span><strong>−1%</strong><b>TIME</b>
+              <div><i /><i /></div>
+            </article>
+            <footer className={rsiStoryStyles.paperCaption}><span>REAL · USEFUL · NARROW</span><strong>One tool improved—not a self-building AI.</strong></footer>
+          </section>
+        )}
+
+        {act === 'judgment' && (
+          <section className={rsiStoryStyles.judgmentScene} aria-label="Current AI can explore inside a human-defined research box, while people still choose the direction, test, and deployment decision">
+            <div className={rsiStoryStyles.boundaryFrame}>
+              <header><span>PEOPLE DEFINE THE BOX</span><strong>HUMAN</strong></header>
+              <div className={rsiStoryStyles.humanDecisions}>
+                <article><b>01</b><span>DIRECTION</span><strong>What should improve?</strong></article>
+                <article><b>02</b><span>TEST</span><strong>What counts as better?</strong></article>
+                <article><b>03</b><span>GO / STOP</span><strong>May it be used?</strong></article>
+              </div>
+              <article className={rsiStoryStyles.aiSearchZone}>
+                <span>AI</span><strong>EXPLORES INSIDE</strong>
+                <div>{Array.from({ length: 12 }, (_, index) => <i key={index} style={{ '--rsi-dot': index } as CSSProperties} />)}</div>
+              </article>
+            </div>
+            <footer className={rsiStoryStyles.paperCaption}><span>TODAY</span><strong>AI searches. People still choose and authorize the loop.</strong></footer>
+          </section>
+        )}
+
+        {act === 'successor' && (
+          <section className={rsiStoryStyles.successorScene} aria-label="Full RSI would require a successor AI to continue improving the process that built it; that loop has not been demonstrated">
+            <span className={rsiStoryStyles.hypothesisLabel}>HYPOTHETICAL FULL-RSI LOOP</span>
+            <div className={rsiStoryStyles.successorLoop}>
+              <article className={rsiStoryStyles.modelN}><span>01 · CURRENT</span><strong>AI · N</strong><small>would change the recipe</small></article>
+              <b className={rsiStoryStyles.forwardArrow}>→</b>
+              <article className={rsiStoryStyles.builderV2}><span>02 · NEW RECIPE</span><strong>v1 → v2</strong><div>{['CODE', 'DATA', 'TRAIN', 'TEST'].map(item => <b key={item}>{item}</b>)}</div><small>would build the successor</small></article>
+              <b className={rsiStoryStyles.forwardArrow}>→</b>
+              <article className={rsiStoryStyles.modelNext}><span>03 · SUCCESSOR</span><strong>AI · N+1</strong><small>would inherit the new recipe</small></article>
+              <div className={rsiStoryStyles.returnCable}>
+                <em>○</em><b>◀</b><i /><span>CAN N+1 IMPROVE THE RECIPE AGAIN?</span><strong>?</strong>
+              </div>
+            </div>
+            <div className={rsiStoryStyles.successorChecks}>
+              <p data-pass><strong>RECIPE MUST CHANGE</strong><small>required</small></p>
+              <p data-pass><strong>N+1 MUST INHERIT IT</strong><small>required</small></p>
+              <p data-open><strong>N+1 MUST REPEAT IT</strong><small>not demonstrated</small></p>
+            </div>
+            <aside className={rsiStoryStyles.boundaryStamp}><span>FULL RSI</span><strong>NOT DEMONSTRATED</strong><small>NOT INEVITABLE</small></aside>
+            <footer className={rsiStoryStyles.paperCaption}><span>IF THE LOOP CLOSES</span><strong>AI R&amp;D could accelerate—but this is a possibility, not a forecast.</strong></footer>
+          </section>
+        )}
+      </main>
+
+      <footer className={`${rsiStyles.footer} ${atlasStyles.demoFooter} ${rsiStoryStyles.footer}`}>
+        <div className={`${rsiStyles.controls} ${atlasStyles.demoControls} ${rsiStoryStyles.controls}`}>
+          <button type="button" onClick={() => setAct('intro')} disabled={currentIndex === 0} aria-label="Reset the Atlas RSI demonstration">Reset</button>
+          <div className="demo-action-stack">
+            <button data-primary type="button" onClick={advance}><span>{current.action}</span><b>{act === 'successor' ? '↺' : '→'}</b></button>
+            <DemoStepRail
+              current={currentIndex}
+              total={atlasRsiActOrder.length}
+              labels={['Name', 'Difference', 'Method', 'Result', 'Boundary', 'Full RSI']}
+              onStepChange={(index) => setAct(atlasRsiActOrder[index])}
+            />
+          </div>
         </div>
-        <article className={atlasStyles.releaseNextAtlas}><span>SUCCESSOR</span><strong>AI · N+1</strong><p>inherits <b>BUILDER v2</b></p></article>
-        <div className={atlasStyles.recursiveReturnAtlas}><span>N+1 PROPOSES THE NEXT BUILDER CHANGE</span><i /><b>↩</b></div>
-        <footer className={atlasStyles.rsiCriteriaAtlas}><span className={atlasStyles.rsiCriteriaNote}>OPEN RESEARCH QUESTION · NOT YET DEMONSTRATED</span>{[
-          ['LASTING', 'the builder itself changes'],
-          ['INHERITED', 'the successor is built with it'],
-          ['COMPOUNDING', 'the successor improves the builder again'],
-        ].map(([label, detail]) => <p key={label}><strong>{label}</strong><small>{detail}</small></p>)}</footer>
-      </section>
-    </div>
+      </footer>
+    </section>
   );
 }
 
-export function RsiLab({ visualStyle }: { visualStyle: DeckVisualStyle }) {
+export function RsiLab({ visualStyle }: { visualStyle: DeckVisualStyle; onComplete?: () => void }) {
   const [act, setAct] = useState<RsiAct>('mirror');
+
+  if (visualStyle === 'atlas') {
+    return <AtlasRsiLab />;
+  }
 
   const advance = () => {
     if (act === 'mirror') setAct('builder');
@@ -2335,7 +3356,7 @@ export function RsiLab({ visualStyle }: { visualStyle: DeckVisualStyle }) {
 
   return (
     <section
-      className={`${rsiStyles.stage} ${visualStyle === 'exhibit' ? conceptStyles.host : ''} ${visualStyle === 'atlas' ? atlasStyles.rsiHost : ''}`}
+      className={`${rsiStyles.stage} ${conceptStyles.host}`}
       data-act={act}
       data-visual={visualStyle}
       aria-label={`RSI workshop. ${current.title}`}
@@ -2344,13 +3365,13 @@ export function RsiLab({ visualStyle }: { visualStyle: DeckVisualStyle }) {
       <ConceptHeader code="RSI" name="Recursive Self-Improvement" visualStyle={visualStyle} />
       <ConceptFolio visualStyle={visualStyle} number="03" side="B" label={'IMPROVEMENT\nSYSTEMS'} />
 
-      <div className={`${rsiStyles.beat} ${visualStyle === 'atlas' ? atlasStyles.demoSceneCopy : ''}`} aria-live="polite">
+      <div className={rsiStyles.beat} aria-live="polite">
         <strong>{current.title}</strong>
       </div>
 
-      {visualStyle === 'atlas' ? <RsiAtlas act={act} /> : <RsiExhibit act={act} />}
+      <RsiExhibit act={act} />
 
-      <div className={`${rsiStyles.world} ${conceptStyles.legacyWorld} ${visualStyle === 'atlas' ? atlasStyles.atlasHidden : ''}`}>
+      <div className={`${rsiStyles.world} ${conceptStyles.legacyWorld}`}>
         <section className={`${rsiStyles.scene} ${rsiStyles.mirrorScene}`} aria-hidden={act !== 'mirror'}>
           <div className={rsiStyles.aiSubject} aria-label="The same AI revises one answer">
             <div className={rsiStyles.aiHead}><i /><i /><i /><b>AI</b><span /></div>
@@ -2439,8 +3460,8 @@ export function RsiLab({ visualStyle }: { visualStyle: DeckVisualStyle }) {
         </section>
       </div>
 
-      <footer className={`${rsiStyles.footer} ${visualStyle === 'atlas' ? atlasStyles.demoFooter : ''}`}>
-        <div className={`${rsiStyles.controls} ${visualStyle === 'atlas' ? atlasStyles.demoControls : ''}`}>
+      <footer className={rsiStyles.footer}>
+        <div className={rsiStyles.controls}>
           <button onClick={() => setAct('mirror')} disabled={act === 'mirror'}>Reset</button>
           <div className="demo-action-stack">
             <button data-primary onClick={advance}><span>{current.action}</span><b>→</b></button>

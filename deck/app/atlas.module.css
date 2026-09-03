@@ -385,6 +385,7 @@
 }
 .demoSceneCopy strong { font-family: Arial, Helvetica, sans-serif !important; font-size: clamp(25px, 2.2vw, 34px) !important; font-weight: 950 !important; letter-spacing: -0.04em !important; line-height: 0.98 !important; }
 .demoSceneCopy p { color: rgba(18, 21, 24, 0.65) !important; font-size: clamp(14px, 1.08vw, 17px) !important; line-height: 1.25 !important; }
+.moeHost .demoSceneCopy p { display: none !important; }
 
 .moeAtlas {
   position: absolute;
@@ -420,7 +421,7 @@
 .moeIntroAtlas {
   display: grid;
   grid-template-columns: minmax(280px, 1.2fr) minmax(220px, 0.8fr);
-  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-rows: minmax(0, 1fr);
   gap: 0 clamp(18px, 2.5vw, 38px);
   border-top: 3px solid var(--atlas-ink);
 }
@@ -478,10 +479,11 @@
 .moeApplicationsAtlas article {
   --application-tone: var(--atlas-blue);
   display: grid;
-  grid-template-columns: minmax(105px, 0.5fr) minmax(190px, 0.9fr) minmax(260px, 1.25fr);
+  grid-template-columns: minmax(190px, 0.9fr) minmax(260px, 1.25fr);
   align-items: center;
   gap: clamp(12px, 1.6vw, 24px);
   min-height: 0;
+  padding-left: clamp(17px, 2vw, 30px);
   border-bottom: 1px solid var(--atlas-ink);
   box-shadow: inset 8px 0 0 var(--application-tone);
 }
@@ -1087,12 +1089,19 @@
 .atlasProof small { color: rgba(18, 21, 24, 0.62) !important; }
 .atlasProof p:nth-of-type(3) { display: grid !important; }
 .demoControls button { border-color: var(--atlas-ink) !important; background: transparent !important; color: var(--atlas-ink) !important; }
-.demoControls button[data-primary] { background: var(--atlas-red) !important; color: #fffaf0 !important; }
+.demoControls button[data-primary] {
+  width: clamp(180px, 15vw, 210px);
+  background: var(--atlas-red) !important;
+  color: #fffaf0 !important;
+}
 .demoControls button b { color: inherit !important; }
 .moeHost :global(.demo-step-rail) { color: rgba(18, 21, 24, 0.58); }
 .moeHost :global(.demo-step-segments) i { background: rgba(18, 21, 24, 0.16); }
 .moeHost :global(.demo-step-segments) i[data-step-state='complete'] { background: rgba(18, 95, 159, 0.56); }
 .moeHost :global(.demo-step-segments) i[data-step-state='current'] { background: var(--atlas-red); box-shadow: none; }
+.moeHost :global(.demo-step-rail[data-interactive] .demo-step-segments button::before) { background: rgba(18, 21, 24, 0.22); }
+.moeHost :global(.demo-step-rail[data-interactive] .demo-step-segments button[data-step-state='complete']::before) { background: rgba(18, 95, 159, 0.56); }
+.moeHost :global(.demo-step-rail[data-interactive] .demo-step-segments button[data-step-state='current']::before) { background: var(--atlas-red); }
 
 /* World Model / VLA atlas ----------------------------------------------- */
 
@@ -1418,6 +1427,9 @@
 .distillHost :global(.demo-step-segments) i[data-step-state='current'],
 .fdeHost :global(.demo-step-segments) i[data-step-state='current'],
 .rsiHost :global(.demo-step-segments) i[data-step-state='current'] { background: var(--atlas-red); box-shadow: none; }
+.distillHost :global(.demo-step-rail[data-interactive] .demo-step-segments button::before) { background: rgba(18, 21, 24, 0.22); }
+.distillHost :global(.demo-step-rail[data-interactive] .demo-step-segments button[data-step-state='complete']::before) { background: rgba(18, 95, 159, 0.56); }
+.distillHost :global(.demo-step-rail[data-interactive] .demo-step-segments button[data-step-state='current']::before) { background: var(--atlas-red); }
 
 /* Distillation atlas */
 

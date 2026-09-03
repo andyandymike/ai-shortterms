@@ -4,7 +4,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { ClosingLab, DistillationLab, EmbodiedLab, FdeLab, OpeningLab, RouterLab, RsiLab, VisualModeSwitch, deckVisualModes, type DeckVisualStyle } from './demos';
 
 const slideCount = 8;
-const fdeLastStep = 4;
 const contentVisualModes = ['exhibit', 'atlas'] as const;
 
 const slideSources: Record<number, { label: string; url: string }[]> = {
@@ -17,17 +16,26 @@ const slideSources: Record<number, { label: string; url: string }[]> = {
   2: [
     { label: 'Google Research — Distilling the Knowledge in a Neural Network', url: 'https://research.google/pubs/distilling-the-knowledge-in-a-neural-network/' },
     { label: 'Google Research — Distilling Step-by-Step', url: 'https://research.google/blog/distilling-step-by-step-outperforming-larger-language-models-with-less-training-data-and-smaller-model-sizes/' },
+    { label: 'Apple Machine Learning Research — Apple Foundation Models 2025 updates', url: 'https://machinelearning.apple.com/research/apple-foundation-models-2025-updates' },
+    { label: 'Google Developers — Gemma 2 model architecture and distillation', url: 'https://developers.googleblog.com/gemma-explained-new-in-gemma-2/' },
     { label: 'DeepSeek — DeepSeek-R1 models and evaluation', url: 'https://github.com/deepseek-ai/DeepSeek-R1' },
   ],
   3: [
+    { label: 'Google DeepMind — Genie 2 world model', url: 'https://deepmind.google/blog/genie-2-a-large-scale-foundation-world-model/' },
     { label: 'Google DeepMind — Genie 3 world model', url: 'https://deepmind.google/blog/genie-3-a-new-frontier-for-world-models/' },
+    { label: 'Meta AI — V-JEPA 2 world model', url: 'https://ai.meta.com/blog/v-jepa-2-world-model-benchmarks/' },
   ],
   4: [
     { label: 'Google DeepMind — Gemini Robotics 2 VLA', url: 'https://deepmind.google/blog/gemini-robotics-2-brings-whole-body-intelligence-to-robots/' },
+    { label: 'Google DeepMind — RT-2: vision-language-action models', url: 'https://deepmind.google/blog/rt-2-new-model-translates-vision-and-language-into-action/' },
+    { label: 'Google DeepMind — Gemini Robotics On-Device 2 model card', url: 'https://deepmind.google/models/model-cards/gemini-robotics-on-device-2/' },
+    { label: 'Physical Intelligence — π0 general-purpose robot foundation model', url: 'https://www.pi.website/blog/pi0' },
   ],
   5: [
     { label: 'OpenAI — Forward Deployed Engineer', url: 'https://openai.com/careers/forward-deployed-engineer-%28fde%29-sf-san-francisco/' },
+    { label: 'OpenAI — OpenAI Deployment Company (May 2026)', url: 'https://openai.com/index/openai-launches-the-deployment-company/' },
     { label: 'OpenAI — Building self-improving tax agents with Codex', url: 'https://openai.com/index/building-self-improving-tax-agents-with-codex/' },
+    { label: 'Palantir Architecture Center — FDE as “human equivalent of backpropagation”', url: 'https://www.palantir.com/docs/foundry/architecture-center/overview' },
   ],
   6: [
     { label: 'Anthropic — When AI builds itself', url: 'https://www.anthropic.com/institute/recursive-self-improvement' },
@@ -37,7 +45,7 @@ const slideSources: Record<number, { label: string; url: string }[]> = {
 
 export default function Home() {
   const [active, setActive] = useState(0);
-  const [visualStyle, setVisualStyle] = useState<DeckVisualStyle>('exhibit');
+  const [visualStyle, setVisualStyle] = useState<DeckVisualStyle>('atlas');
   const [step, setStep] = useState(0);
   const [demoResetKey, setDemoResetKey] = useState(0);
   const [sourcesOpen, setSourcesOpen] = useState(false);
@@ -54,12 +62,13 @@ export default function Home() {
 
   const advanceFde = useCallback(() => {
     setSourcesOpen(false);
+    const fdeLastStep = contentVisualStyle === 'atlas' ? 6 : 4;
     if (step < fdeLastStep) {
       setStep((current) => current + 1);
       return;
     }
     moveSlide(1);
-  }, [moveSlide, step]);
+  }, [contentVisualStyle, moveSlide, step]);
 
   const jumpTo = useCallback((slide: number) => {
     setSourcesOpen(false);
@@ -155,6 +164,7 @@ export default function Home() {
           concept="world"
           isActive={active === 3}
           visualStyle={contentVisualStyle}
+          onComplete={() => moveSlide(1)}
         />
       </section>
 
@@ -167,6 +177,7 @@ export default function Home() {
           concept="vla"
           isActive={active === 4}
           visualStyle={contentVisualStyle}
+          onComplete={() => moveSlide(1)}
         />
       </section>
 
@@ -175,14 +186,14 @@ export default function Home() {
         aria-hidden={active !== 5}
         data-step={active === 5 ? step : 0}
       >
-        <FdeLab step={step} onAdvance={advanceFde} onReset={resetCurrentDemo} visualStyle={contentVisualStyle} />
+        <FdeLab key={`fde-${demoResetKey}`} step={step} onAdvance={advanceFde} onReset={resetCurrentDemo} visualStyle={contentVisualStyle} />
       </section>
 
       <section
         className={`slide rsi-cinema-slide ${active === 6 ? 'is-active' : ''}`}
         aria-hidden={active !== 6}
       >
-        <RsiLab key={`rsi-${demoResetKey}`} visualStyle={contentVisualStyle} />
+        <RsiLab key={`rsi-${demoResetKey}`} visualStyle={contentVisualStyle} onComplete={() => moveSlide(1)} />
       </section>
 
       <section className={`slide closing-cinema-slide ${active === 7 ? 'is-active' : ''}`} aria-hidden={active !== 7}>
