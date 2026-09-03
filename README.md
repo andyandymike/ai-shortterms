@@ -2,7 +2,7 @@
 
 An HTML presentation about four concepts behind two shifts in recent AI progress.
 
-The projected slides and the spoken layer are intentionally separate. Start with [speaker-notes.md](speaker-notes.md), then open the dedicated [Chinese rehearsal script](speaker-notes-zh.md) or [English talk track](speaker-notes-en.md). The original detailed bilingual notes, alternate modes, caveats, and sources are preserved in [speaker-notes-reference.md](speaker-notes-reference.md).
+The projected slides and the spoken layer are intentionally separate. Start with [speaker-notes.md](speaker-notes.md), then use the current [bilingual rehearsal script](speaker-notes-bilingual.md), where Chinese and plain English are paired step by step. Dedicated [Chinese](speaker-notes-zh.md) and [simple English](speaker-notes-en.md) talk tracks remain available for single-language delivery. The original detailed bilingual notes, alternate modes, caveats, and sources are preserved in [speaker-notes-reference.md](speaker-notes-reference.md).
 
 ## View on macOS
 
