@@ -2,7 +2,7 @@
 
 An HTML presentation about the vocabulary behind recent AI progress.
 
-The projected slides and the spoken layer are intentionally separate. See [speaker-notes.md](speaker-notes.md) for the full talk track, examples, caveats, and transitions.
+The projected slides and the spoken layer are intentionally separate. Start with [speaker-notes.md](speaker-notes.md), then open the dedicated [Chinese rehearsal script](speaker-notes-zh.md) or [English talk track](speaker-notes-en.md). The original detailed bilingual notes, alternate modes, caveats, and sources are preserved in [speaker-notes-reference.md](speaker-notes-reference.md).
 
 ## View on macOS
 
@@ -14,7 +14,7 @@ npm ci
 npm run dev
 ```
 
-Open the local URL printed in the terminal. Use the on-screen controls for the staged MoE, distillation, World Model → VLA, FDE, and RSI scenes. The World Model → VLA scene uses locally packaged official Google DeepMind recordings, so the presentation itself works without internet access after installation. `Space` or `→` moves to the next slide; `←` moves back, `R` resets the current scene, and `S` shows sources for the current slide.
+Open the local URL printed in the terminal. Use the on-screen controls for the staged MoE, distillation, World Model, VLA, FDE, and RSI scenes. World Model and VLA use locally packaged official Google DeepMind recordings, so the presentation itself works without internet access after installation. The main button inside each demo advances its internal story; the step rail jumps to a specific internal step. `Space` or `→` moves to the next global slide; `←` moves back, `R` resets the current scene, and `S` shows sources for the current slide.
 
 ## Production check
 

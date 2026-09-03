@@ -1,0 +1,1088 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <link rel="icon" href="data:," />
+  <title>World Model — Branching Futures Study</title>
+  <style>
+    :root {
+      --paper: #f1eadb;
+      --paper-bright: #fffaf0;
+      --ink: #111416;
+      --blue: #18a8d8;
+      --blue-dark: #087ca8;
+      --red: #ef4e32;
+      --yellow: #efc84a;
+      --white: #fffaf0;
+      --display: "Arial Black", "Helvetica Neue", Arial, sans-serif;
+      --sans: "Helvetica Neue", Arial, sans-serif;
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      width: 100%;
+      min-width: 320px;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: #080a0b;
+      color: var(--white);
+      font-family: var(--sans);
+    }
+
+    button { font: inherit; }
+
+    .experience {
+      position: relative;
+      width: 100%;
+      height: 100svh;
+      min-height: 500px;
+      overflow: hidden;
+      isolation: isolate;
+      background: #0a0c0d;
+    }
+
+    .world,
+    .atmosphere,
+    .prediction-wash,
+    .edge-frame {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .world {
+      z-index: 1;
+      display: block;
+    }
+
+    .arena {
+      filter: saturate(0.78) contrast(1.13) brightness(0.78);
+      transition: filter 700ms ease;
+    }
+
+    .experience[data-step="predict"] .arena,
+    .experience[data-step="compare"] .arena {
+      filter: saturate(0.54) contrast(1.17) brightness(0.55);
+    }
+
+    .experience[data-step="act"] .arena {
+      filter: saturate(0.75) contrast(1.12) brightness(0.7);
+    }
+
+    .atmosphere {
+      z-index: 2;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 50% 46%, transparent 0 30%, rgba(3, 5, 6, 0.08) 58%, rgba(3, 5, 6, 0.74) 100%),
+        linear-gradient(180deg, rgba(3, 5, 6, 0.56), transparent 19%, transparent 62%, rgba(3, 5, 6, 0.72) 100%);
+    }
+
+    .atmosphere::after {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      opacity: 0.11;
+      background-image:
+        repeating-radial-gradient(circle at 17% 31%, transparent 0 1px, rgba(255, 255, 255, 0.45) 1.2px 1.7px, transparent 1.9px 4px),
+        repeating-linear-gradient(91deg, transparent 0 12px, rgba(255, 255, 255, 0.06) 13px, transparent 14px 23px);
+      background-size: 19px 17px, 100% 100%;
+      mix-blend-mode: soft-light;
+      animation: grain 900ms steps(2, end) infinite;
+    }
+
+    .prediction-wash {
+      z-index: 4;
+      pointer-events: none;
+      opacity: 0;
+      background:
+        linear-gradient(105deg, transparent 0 42%, rgba(24, 168, 216, 0.2) 49%, rgba(255, 250, 240, 0.14) 50%, transparent 58%),
+        repeating-linear-gradient(0deg, transparent 0 15px, rgba(24, 168, 216, 0.08) 16px, transparent 17px 31px);
+      transform: translateX(-60%);
+    }
+
+    .experience[data-step="predict"] .prediction-wash {
+      opacity: 0.8;
+      animation: expose 1300ms var(--ease-out) both;
+    }
+
+    .edge-frame {
+      z-index: 8;
+      inset: clamp(15px, 2.2vw, 34px);
+      width: auto;
+      height: auto;
+      border: 1px solid rgba(255, 250, 240, 0.48);
+      pointer-events: none;
+    }
+
+    .edge-frame::before,
+    .edge-frame::after {
+      content: "";
+      position: absolute;
+      width: clamp(42px, 5vw, 78px);
+      height: 7px;
+      background: var(--yellow);
+    }
+
+    .edge-frame::before { top: -4px; left: 8%; }
+    .edge-frame::after { right: 8%; bottom: -4px; }
+
+    .masthead {
+      position: absolute;
+      z-index: 12;
+      top: clamp(26px, 4.4vh, 46px);
+      left: clamp(28px, 4.2vw, 70px);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      pointer-events: none;
+    }
+
+    .chapter {
+      display: grid;
+      width: clamp(52px, 4.8vw, 76px);
+      aspect-ratio: 1;
+      place-items: center;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--display);
+      font-size: clamp(22px, 2.15vw, 34px);
+      line-height: 1;
+    }
+
+    .identity {
+      display: grid;
+      gap: 3px;
+      text-shadow: 0 2px 22px rgba(0, 0, 0, 0.68);
+    }
+
+    .identity strong,
+    .identity span,
+    .study-id,
+    .story-kicker,
+    .count-label,
+    .step-index,
+    .step-label,
+    .play,
+    .key-hint {
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .identity strong {
+      font-family: var(--display);
+      font-size: clamp(21px, 2.15vw, 34px);
+      letter-spacing: -0.035em;
+      line-height: 0.92;
+    }
+
+    .identity span {
+      color: rgba(255, 250, 240, 0.66);
+      font-size: clamp(8px, 0.67vw, 11px);
+    }
+
+    .study-id {
+      position: absolute;
+      z-index: 12;
+      top: clamp(28px, 4.7vh, 48px);
+      right: clamp(30px, 4.4vw, 72px);
+      max-width: 220px;
+      padding-left: 14px;
+      border-left: 6px solid var(--red);
+      color: rgba(255, 250, 240, 0.78);
+      font-size: clamp(8px, 0.7vw, 11px);
+      line-height: 1.35;
+      text-align: left;
+      text-shadow: 0 2px 16px rgba(0, 0, 0, 0.7);
+    }
+
+    .story {
+      position: absolute;
+      z-index: 12;
+      left: clamp(30px, 4.4vw, 72px);
+      bottom: clamp(116px, 16vh, 158px);
+      width: min(690px, 56vw);
+      pointer-events: none;
+      text-shadow: 0 3px 24px rgba(0, 0, 0, 0.92);
+    }
+
+    .story-kicker {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 6px 9px;
+      background: var(--red);
+      color: var(--paper-bright);
+      font-size: clamp(9px, 0.78vw, 12px);
+      line-height: 1;
+      text-shadow: none;
+    }
+
+    .story h1 {
+      max-width: 660px;
+      margin: 0;
+      font-family: var(--display);
+      font-size: clamp(35px, 4.45vw, 72px);
+      font-weight: 950;
+      letter-spacing: -0.058em;
+      line-height: 0.9;
+      text-transform: uppercase;
+      text-wrap: balance;
+    }
+
+    .story p {
+      max-width: 610px;
+      margin: 12px 0 0;
+      color: rgba(255, 250, 240, 0.82);
+      font-size: clamp(13px, 1.22vw, 19px);
+      font-weight: 700;
+      line-height: 1.28;
+    }
+
+    .count {
+      position: absolute;
+      z-index: 11;
+      top: 50%;
+      right: clamp(32px, 5vw, 82px);
+      display: grid;
+      grid-template-columns: auto auto;
+      align-items: end;
+      color: var(--paper-bright);
+      transform: translateY(-54%);
+      pointer-events: none;
+      filter: drop-shadow(0 7px 20px rgba(0, 0, 0, 0.72));
+    }
+
+    .count-number {
+      font-family: var(--display);
+      font-size: clamp(96px, 15.5vw, 250px);
+      font-weight: 950;
+      letter-spacing: -0.095em;
+      line-height: 0.67;
+      transition: color 320ms ease;
+    }
+
+    .count-label {
+      max-width: 90px;
+      margin: 0 0 3px 11px;
+      padding-left: 10px;
+      border-left: 5px solid var(--yellow);
+      font-size: clamp(10px, 0.83vw, 13px);
+      line-height: 1.18;
+    }
+
+    .count.is-changing .count-number {
+      animation: count-cut 520ms var(--ease-out);
+    }
+
+    .experience[data-step="predict"] .count-number,
+    .experience[data-step="compare"] .count-number { color: var(--blue); }
+
+    .experience[data-step="act"] .count-number { color: var(--yellow); }
+
+    .controls {
+      position: absolute;
+      z-index: 20;
+      right: clamp(28px, 4.2vw, 70px);
+      bottom: clamp(24px, 3.8vh, 40px);
+      left: clamp(28px, 4.2vw, 70px);
+      display: grid;
+      grid-template-columns: minmax(136px, 0.52fr) minmax(520px, 2.45fr) minmax(120px, 0.48fr);
+      min-height: 70px;
+      color: var(--ink);
+      box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.28);
+    }
+
+    .play {
+      border: 2px solid var(--ink);
+      background: var(--red);
+      color: var(--paper-bright);
+      cursor: pointer;
+      font-size: clamp(10px, 0.85vw, 13px);
+      transition: background 150ms ease, transform 150ms ease;
+    }
+
+    .play:hover { background: #ff5d40; }
+    .play:active { transform: translateY(2px); }
+    .play:focus-visible,
+    .step:focus-visible { outline: 4px solid var(--yellow); outline-offset: -4px; }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 2px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+      background: rgba(241, 234, 219, 0.94);
+      backdrop-filter: blur(12px);
+    }
+
+    .step {
+      position: relative;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-content: center;
+      gap: 9px;
+      min-width: 0;
+      padding: 10px clamp(9px, 1.2vw, 18px);
+      border: 0;
+      border-right: 1px solid rgba(17, 20, 22, 0.28);
+      background: transparent;
+      color: rgba(17, 20, 22, 0.54);
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .step:last-child { border-right: 0; }
+
+    .step::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: -2px;
+      left: 0;
+      height: 7px;
+      background: var(--red);
+      transform: scaleX(0);
+      transform-origin: 0 50%;
+      transition: transform 420ms var(--ease-out);
+    }
+
+    .step[aria-current="step"] {
+      background: var(--paper-bright);
+      color: var(--ink);
+    }
+
+    .step[aria-current="step"]::after { transform: scaleX(1); }
+    .step-index { color: var(--red); font-size: 9px; }
+    .step-label { overflow: hidden; font-size: clamp(10px, 0.92vw, 14px); text-overflow: ellipsis; white-space: nowrap; }
+
+    .key-hint {
+      display: grid;
+      place-items: center end;
+      padding: 0 3px 0 14px;
+      border-top: 2px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+      background: rgba(241, 234, 219, 0.94);
+      color: rgba(17, 20, 22, 0.52);
+      font-size: 9px;
+      line-height: 1.35;
+      text-align: right;
+    }
+
+    .route-halo,
+    .route-line,
+    .replan-line {
+      fill: none;
+      stroke-linecap: round;
+      vector-effect: non-scaling-stroke;
+      opacity: 0;
+      transition: opacity 420ms ease;
+    }
+
+    .route-halo {
+      stroke-width: 13;
+      filter: url(#routeGlow);
+      opacity: 0;
+    }
+
+    .route-line {
+      stroke-width: 3.5;
+      stroke-dasharray: 12 11;
+    }
+
+    .route-left { stroke: var(--blue); }
+    .route-center { stroke: var(--yellow); }
+    .route-right { stroke: var(--red); }
+
+    .experience[data-step="predict"] .route-halo,
+    .experience[data-step="predict"] .route-line {
+      opacity: 0.94;
+      animation: draw-route 1500ms var(--ease-out) both;
+    }
+
+    .experience[data-step="compare"] .route-halo { opacity: 0.42; }
+    .experience[data-step="compare"] .route-line { opacity: 0.94; }
+
+    .experience[data-step="act"] .route-halo,
+    .experience[data-step="act"] .route-line { opacity: 0.08; }
+    .experience[data-step="act"] .route-center.route-halo { opacity: 0.68; }
+    .experience[data-step="act"] .route-center.route-line {
+      opacity: 1;
+      stroke-dasharray: none;
+      stroke-width: 6;
+    }
+
+    .start-ring {
+      fill: none;
+      stroke: rgba(255, 250, 240, 0.9);
+      stroke-width: 3;
+      stroke-dasharray: 8 10;
+      vector-effect: non-scaling-stroke;
+      filter: url(#softGlow);
+      transition: opacity 420ms ease;
+    }
+
+    .experience[data-step="act"] .start-ring { opacity: 0.2; }
+
+    .goal-ring {
+      fill: none;
+      stroke: var(--red);
+      stroke-width: 3;
+      vector-effect: non-scaling-stroke;
+      filter: url(#softGlow);
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: goal-breathe 2200ms ease-in-out infinite;
+    }
+
+    .robot {
+      pointer-events: none;
+      will-change: transform, opacity;
+    }
+
+    .robot-shadow {
+      fill: rgba(0, 0, 0, 0.5);
+      filter: url(#shadowBlur);
+    }
+
+    .real-robot {
+      opacity: 1;
+      filter: drop-shadow(0 18px 15px rgba(0, 0, 0, 0.58));
+    }
+
+    .ghost {
+      opacity: 0;
+      mix-blend-mode: screen;
+    }
+
+    .ghost-left {
+      filter: grayscale(0.72) sepia(0.82) saturate(4.4) hue-rotate(145deg) brightness(1.02) contrast(1.08) drop-shadow(3px 0 3px rgba(24, 168, 216, 0.55));
+    }
+
+    .ghost-center {
+      filter: grayscale(0.65) sepia(0.8) saturate(3.8) hue-rotate(355deg) brightness(1.04) contrast(1.08) drop-shadow(3px 0 3px rgba(239, 200, 74, 0.52));
+    }
+
+    .ghost-right {
+      filter: grayscale(0.68) sepia(0.86) saturate(5.2) hue-rotate(305deg) brightness(1.02) contrast(1.08) drop-shadow(3px 0 3px rgba(239, 78, 50, 0.62));
+    }
+
+    .ghost.is-moving {
+      animation: ghost-phase 520ms ease-in-out infinite alternate;
+    }
+
+    .outcome {
+      opacity: 0;
+      transition: opacity 320ms ease;
+    }
+
+    .outcome.is-visible {
+      opacity: 1;
+    }
+
+    .outcome rect.label-main { fill: var(--paper-bright); }
+    .outcome rect.label-accent--left { fill: var(--blue); }
+    .outcome rect.label-accent--center { fill: var(--yellow); }
+    .outcome rect.label-accent--right { fill: var(--red); }
+    .outcome text {
+      fill: var(--ink);
+      font-family: var(--display);
+      font-size: 25px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .impact {
+      opacity: 0;
+      fill: none;
+      stroke: var(--red);
+      stroke-width: 5;
+      vector-effect: non-scaling-stroke;
+      filter: url(#softGlow);
+    }
+
+    .impact.is-visible { animation: impact 900ms ease-out 1 both; }
+
+    .replan {
+      opacity: 0;
+      transition: opacity 420ms ease;
+    }
+
+    .replan.is-visible { opacity: 1; }
+
+    .replan-line {
+      stroke: var(--blue);
+      stroke-width: 4;
+      stroke-dasharray: 8 9;
+      opacity: 0.88;
+      filter: url(#softGlow);
+      animation: replan-dash 1300ms linear infinite;
+    }
+
+    .replan-dot { fill: var(--blue); filter: url(#softGlow); }
+
+    .replan-copy {
+      fill: var(--paper-bright);
+      font-family: var(--display);
+      font-size: 23px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    @keyframes expose {
+      0% { transform: translateX(-62%); }
+      100% { transform: translateX(62%); }
+    }
+
+    @keyframes grain {
+      0% { transform: translate(0, 0); }
+      50% { transform: translate(-1.2%, 0.8%); }
+      100% { transform: translate(0.8%, -1.1%); }
+    }
+
+    @keyframes count-cut {
+      0% { opacity: 0; transform: translateY(18px) scale(0.86); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes draw-route {
+      0% { stroke-dashoffset: 640; }
+      100% { stroke-dashoffset: 0; }
+    }
+
+    @keyframes ghost-phase {
+      0% { opacity: 0.46; }
+      100% { opacity: 0.72; }
+    }
+
+    @keyframes goal-breathe {
+      0%, 100% { opacity: 0.54; transform: scale(0.88); }
+      50% { opacity: 1; transform: scale(1.14); }
+    }
+
+    @keyframes impact {
+      0% { opacity: 1; transform: scale(0.3); }
+      70% { opacity: 0.88; }
+      100% { opacity: 0; transform: scale(1.5); }
+    }
+
+    @keyframes replan-dash {
+      to { stroke-dashoffset: -34; }
+    }
+
+    @media (max-width: 920px) {
+      .study-id { display: none; }
+      .story {
+        bottom: 108px;
+        width: 62vw;
+      }
+      .story h1 { font-size: clamp(31px, 5.2vw, 50px); }
+      .story p { font-size: clamp(12px, 1.55vw, 16px); }
+      .count { right: 34px; }
+      .count-number { font-size: clamp(82px, 16vw, 142px); }
+      .count-label {
+        display: block;
+        max-width: 66px;
+        margin-left: 7px;
+        padding-left: 7px;
+        border-left-width: 4px;
+        font-size: 9px;
+      }
+      .controls {
+        right: 28px;
+        bottom: 22px;
+        left: 28px;
+        grid-template-columns: 122px minmax(0, 1fr);
+        min-height: 64px;
+      }
+      .key-hint { display: none; }
+    }
+
+    @media (max-width: 660px) {
+      .experience { min-height: 560px; }
+      .masthead { top: 22px; left: 22px; }
+      .chapter { width: 48px; }
+      .identity strong { font-size: 20px; }
+      .story {
+        right: 24px;
+        bottom: 126px;
+        left: 24px;
+        width: auto;
+      }
+      .story h1 { max-width: 88vw; font-size: clamp(31px, 9vw, 45px); }
+      .story p { display: none; }
+      .count {
+        top: 22%;
+        right: 24px;
+      }
+      .count-number { font-size: 88px; }
+      .count-label { display: none; }
+      .controls {
+        right: 22px;
+        bottom: 20px;
+        left: 22px;
+        grid-template-columns: 1fr;
+      }
+      .play { min-height: 42px; }
+      .steps { min-height: 58px; }
+      .step { grid-template-columns: 1fr; gap: 2px; padding: 8px 7px; }
+    }
+
+    @media (max-height: 650px) and (min-width: 661px) {
+      .masthead { top: 22px; }
+      .chapter { width: 48px; }
+      .story { bottom: 96px; }
+      .story h1 { font-size: clamp(30px, 4.2vw, 50px); }
+      .story p { margin-top: 8px; font-size: 13px; }
+      .controls { bottom: 18px; min-height: 58px; }
+      .count { top: 45%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 1ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 1ms !important;
+      }
+
+      .atmosphere::after,
+      .goal-ring,
+      .replan-line { animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="experience" id="experience" data-step="observe">
+    <svg class="world" id="world" viewBox="0 0 1728 971" preserveAspectRatio="xMidYMid slice" role="img" aria-label="A robot imagines three possible paths before making one real move">
+      <defs>
+        <filter id="routeGlow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="5" />
+        </filter>
+        <filter id="softGlow" x="-100%" y="-100%" width="300%" height="300%">
+          <feGaussianBlur stdDeviation="5" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+        <filter id="shadowBlur" x="-100%" y="-100%" width="300%" height="300%">
+          <feGaussianBlur stdDeviation="12" />
+        </filter>
+
+        <path id="motionLeft" d="M 840 794 C 720 770 590 710 526 610 C 472 525 474 412 540 332 C 562 305 586 286 616 272" />
+        <path id="motionCenter" d="M 840 794 C 842 678 842 568 844 468 C 846 352 850 236 860 128" />
+        <path id="motionRight" d="M 840 794 C 940 776 1040 748 1135 689" />
+        <path id="motionAct" d="M 840 794 C 842 694 842 614 844 535 C 844 484 845 438 846 401" />
+      </defs>
+
+      <image class="arena" href="world-model-branch-assets/world-model-diorama-arena.webp" x="0" y="0" width="1728" height="971" preserveAspectRatio="xMidYMid slice" />
+
+      <g aria-hidden="true">
+        <circle class="goal-ring" cx="862" cy="111" r="58" />
+        <circle class="start-ring" cx="840" cy="794" r="72" />
+      </g>
+
+      <g class="route-set" aria-hidden="true">
+        <use href="#motionLeft" class="route-halo route-left" />
+        <use href="#motionCenter" class="route-halo route-center" />
+        <use href="#motionRight" class="route-halo route-right" />
+        <use href="#motionLeft" class="route-line route-left" />
+        <use href="#motionCenter" class="route-line route-center" />
+        <use href="#motionRight" class="route-line route-right" />
+      </g>
+
+      <g id="realRobot" class="robot real-robot" aria-hidden="true">
+        <ellipse class="robot-shadow" cx="0" cy="-8" rx="88" ry="25" />
+        <image href="world-model-branch-assets/world-model-diorama-robot.png" x="-145" y="-286" width="290" height="290" />
+      </g>
+
+      <g id="ghostLeft" class="robot ghost ghost-left" aria-hidden="true">
+        <image href="world-model-branch-assets/world-model-diorama-robot.png" x="-145" y="-286" width="290" height="290" />
+      </g>
+      <g id="ghostCenter" class="robot ghost ghost-center" aria-hidden="true">
+        <image href="world-model-branch-assets/world-model-diorama-robot.png" x="-145" y="-286" width="290" height="290" />
+      </g>
+      <g id="ghostRight" class="robot ghost ghost-right" aria-hidden="true">
+        <image href="world-model-branch-assets/world-model-diorama-robot.png" x="-145" y="-286" width="290" height="290" />
+      </g>
+
+      <g id="outcomeLeft" class="outcome" transform="translate(410 285)" aria-hidden="true">
+        <rect class="label-main" width="278" height="58" />
+        <rect class="label-accent--left" width="11" height="58" />
+        <text x="28" y="38">SAFE · DETOUR</text>
+      </g>
+      <g id="outcomeCenter" class="outcome" transform="translate(716 172)" aria-hidden="true">
+        <rect class="label-main" width="272" height="58" />
+        <rect class="label-accent--center" width="11" height="58" />
+        <text x="28" y="38">GOAL · DIRECT</text>
+      </g>
+      <g id="outcomeRight" class="outcome" transform="translate(1042 600)" aria-hidden="true">
+        <rect class="label-main" width="298" height="58" />
+        <rect class="label-accent--right" width="11" height="58" />
+        <text x="28" y="38">CONTACT · CURB</text>
+      </g>
+
+      <g id="impact" transform="translate(1135 689)" aria-hidden="true">
+        <circle class="impact" r="34" />
+        <circle class="impact" r="56" style="animation-delay: 120ms" />
+      </g>
+
+      <g id="replan" class="replan" transform="translate(846 401)" aria-hidden="true">
+        <path class="replan-line" d="M 0 0 C -76 -42 -112 -82 -126 -136" />
+        <path class="replan-line" d="M 0 0 C 0 -54 2 -105 8 -157" />
+        <path class="replan-line" d="M 0 0 C 74 -41 104 -80 122 -128" />
+        <circle class="replan-dot" cx="-126" cy="-136" r="7" />
+        <circle class="replan-dot" cx="8" cy="-157" r="7" />
+        <circle class="replan-dot" cx="122" cy="-128" r="7" />
+        <text class="replan-copy" x="34" y="28">PREDICT AGAIN</text>
+      </g>
+    </svg>
+
+    <div class="atmosphere" aria-hidden="true"></div>
+    <div class="prediction-wash" aria-hidden="true"></div>
+    <div class="edge-frame" aria-hidden="true"></div>
+
+    <header class="masthead">
+      <span class="chapter">04</span>
+      <span class="identity">
+        <strong>World Model</strong>
+        <span>Branching futures · isolated prototype 02</span>
+      </span>
+    </header>
+
+    <span class="study-id">One physical world.<br>Many imagined futures.</span>
+
+    <section class="story" aria-live="polite">
+      <span class="story-kicker" id="storyKicker">Why predict?</span>
+      <h1 id="storyTitle">Reality gives the robot one try.</h1>
+      <p id="storyLine">The goal is ahead. A wrong move becomes a real collision.</p>
+    </section>
+
+    <div class="count" id="count" aria-live="polite">
+      <strong class="count-number" id="countNumber">1</strong>
+      <span class="count-label" id="countLabel">real<br>try</span>
+    </div>
+
+    <footer class="controls">
+      <button class="play" id="playStory" type="button">▶&nbsp;&nbsp;Play story</button>
+      <nav class="steps" aria-label="World Model story steps">
+        <button class="step" type="button" data-phase="observe" aria-current="step">
+          <span class="step-index">01</span><span class="step-label">Observe</span>
+        </button>
+        <button class="step" type="button" data-phase="predict">
+          <span class="step-index">02</span><span class="step-label">Predict</span>
+        </button>
+        <button class="step" type="button" data-phase="compare">
+          <span class="step-index">03</span><span class="step-label">Compare</span>
+        </button>
+        <button class="step" type="button" data-phase="act">
+          <span class="step-index">04</span><span class="step-label">Choose + act</span>
+        </button>
+      </nav>
+      <div class="key-hint">Click a step<br>or use ← →</div>
+    </footer>
+  </main>
+
+  <script>
+    (() => {
+      const experience = document.querySelector('#experience');
+      const phaseButtons = [...document.querySelectorAll('[data-phase]')];
+      const playStory = document.querySelector('#playStory');
+      const storyKicker = document.querySelector('#storyKicker');
+      const storyTitle = document.querySelector('#storyTitle');
+      const storyLine = document.querySelector('#storyLine');
+      const count = document.querySelector('#count');
+      const countNumber = document.querySelector('#countNumber');
+      const countLabel = document.querySelector('#countLabel');
+      const realRobot = document.querySelector('#realRobot');
+      const replan = document.querySelector('#replan');
+      const impactCircles = [...document.querySelectorAll('.impact')];
+      const outcomes = [
+        document.querySelector('#outcomeLeft'),
+        document.querySelector('#outcomeCenter'),
+        document.querySelector('#outcomeRight'),
+      ];
+      const ghosts = [
+        document.querySelector('#ghostLeft'),
+        document.querySelector('#ghostCenter'),
+        document.querySelector('#ghostRight'),
+      ];
+      const paths = [
+        document.querySelector('#motionLeft'),
+        document.querySelector('#motionCenter'),
+        document.querySelector('#motionRight'),
+      ];
+      const actPath = document.querySelector('#motionAct');
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      const phases = [
+        {
+          id: 'observe',
+          kicker: 'Why predict?',
+          title: 'Reality gives the robot one try.',
+          line: 'The goal is ahead. A wrong move becomes a real collision.',
+          number: '1',
+          label: 'real<br>try',
+        },
+        {
+          id: 'predict',
+          kicker: 'Imagine',
+          title: 'The model rehearses three futures.',
+          line: 'Same robot, same moment — three possible next moves.',
+          number: '3',
+          label: 'imagined<br>futures',
+        },
+        {
+          id: 'compare',
+          kicker: 'Compare',
+          title: 'One detours. One reaches. One crashes.',
+          line: 'The outcomes become visible before the robot commits.',
+          number: '3',
+          label: 'known<br>outcomes',
+        },
+        {
+          id: 'act',
+          kicker: 'Choose → act',
+          title: 'Think three times. Move once.',
+          line: 'The chosen future becomes one real action — then prediction starts again.',
+          number: '1',
+          label: 'real<br>action',
+        },
+      ];
+
+      let activeIndex = 0;
+      let animationFrame = 0;
+      let sequenceTimers = [];
+      let phaseTimers = [];
+
+      const clearPhase = () => {
+        phaseTimers.forEach(window.clearTimeout);
+        phaseTimers = [];
+        window.cancelAnimationFrame(animationFrame);
+        realRobot.classList.remove('is-moving');
+        ghosts.forEach((ghost) => ghost.classList.remove('is-moving'));
+      };
+
+      const clearSequence = () => {
+        sequenceTimers.forEach(window.clearTimeout);
+        sequenceTimers = [];
+      };
+
+      const clearTimers = () => {
+        clearSequence();
+        clearPhase();
+      };
+
+      const pointOn = (path, progress) => {
+        const length = path.getTotalLength();
+        return path.getPointAtLength(Math.max(0, Math.min(1, progress)) * length);
+      };
+
+      const scaleAt = (point) => {
+        const depth = (point.y - 128) / (794 - 128);
+        return 0.56 + Math.max(0, Math.min(1, depth)) * 0.44;
+      };
+
+      const placeRobot = (robot, path, progress, opacity) => {
+        const point = pointOn(path, progress);
+        const scale = scaleAt(point);
+        robot.setAttribute('transform', 'translate(' + point.x.toFixed(2) + ' ' + point.y.toFixed(2) + ') scale(' + scale.toFixed(3) + ')');
+        robot.style.opacity = String(opacity);
+      };
+
+      const animateRobot = (robot, path, from, to, duration, opacity, onDone) => {
+        const start = performance.now();
+        robot.classList.add('is-moving');
+        const tick = (now) => {
+          const elapsed = Math.min(1, (now - start) / duration);
+          const eased = 1 - Math.pow(1 - elapsed, 3);
+          placeRobot(robot, path, from + (to - from) * eased, opacity);
+          if (elapsed < 1) {
+            animationFrame = window.requestAnimationFrame(tick);
+          } else {
+            robot.classList.remove('is-moving');
+            if (onDone) onDone();
+          }
+        };
+        animationFrame = window.requestAnimationFrame(tick);
+      };
+
+      const animateMany = (jobs, duration, onDone) => {
+        const start = performance.now();
+        ghosts.forEach((ghost) => ghost.classList.add('is-moving'));
+        const tick = (now) => {
+          const elapsed = Math.min(1, (now - start) / duration);
+          const eased = 1 - Math.pow(1 - elapsed, 3);
+          jobs.forEach((job) => placeRobot(job.robot, job.path, job.from + (job.to - job.from) * eased, job.opacity));
+          if (elapsed < 1) {
+            animationFrame = window.requestAnimationFrame(tick);
+          } else {
+            ghosts.forEach((ghost) => ghost.classList.remove('is-moving'));
+            if (onDone) onDone();
+          }
+        };
+        animationFrame = window.requestAnimationFrame(tick);
+      };
+
+      const hideOutcomes = () => outcomes.forEach((outcome) => outcome.classList.remove('is-visible'));
+      const showOutcomes = () => outcomes.forEach((outcome, index) => {
+        const timer = window.setTimeout(() => outcome.classList.add('is-visible'), index * 90);
+        phaseTimers.push(timer);
+      });
+
+      const hideImpact = () => impactCircles.forEach((circle) => {
+        circle.classList.remove('is-visible');
+        void circle.getBoundingClientRect();
+      });
+
+      const showImpact = () => impactCircles.forEach((circle) => circle.classList.add('is-visible'));
+
+      const resetRobots = () => {
+        placeRobot(realRobot, paths[1], 0, 1);
+        realRobot.classList.remove('is-moving');
+        ghosts.forEach((ghost, index) => {
+          ghost.classList.remove('is-moving');
+          placeRobot(ghost, paths[index], 0, 0);
+        });
+        replan.classList.remove('is-visible');
+        hideOutcomes();
+        hideImpact();
+      };
+
+      const settlePhase = (phase) => {
+        resetRobots();
+        if (phase === 'predict' || phase === 'compare') {
+          ghosts.forEach((ghost, index) => placeRobot(ghost, paths[index], 1, 0.66));
+        }
+        if (phase === 'compare') {
+          showOutcomes();
+          showImpact();
+        }
+        if (phase === 'act') {
+          placeRobot(realRobot, actPath, 1, 1);
+          placeRobot(ghosts[1], paths[1], 1, 0.18);
+          replan.classList.add('is-visible');
+        }
+      };
+
+      const runPhaseMotion = (phase) => {
+        if (reduceMotion) {
+          settlePhase(phase);
+          return;
+        }
+
+        resetRobots();
+
+        if (phase === 'predict') {
+          animateMany([
+            { robot: ghosts[0], path: paths[0], from: 0, to: 1, opacity: 0.64 },
+            { robot: ghosts[1], path: paths[1], from: 0, to: 1, opacity: 0.68 },
+            { robot: ghosts[2], path: paths[2], from: 0, to: 1, opacity: 0.68 },
+          ], 1800);
+        }
+
+        if (phase === 'compare') {
+          ghosts.forEach((ghost, index) => placeRobot(ghost, paths[index], 1, 0.66));
+          showOutcomes();
+          showImpact();
+        }
+
+        if (phase === 'act') {
+          ghosts.forEach((ghost, index) => placeRobot(ghost, paths[index], 1, index === 1 ? 0.58 : 0.46));
+          const rejectTimer = window.setTimeout(() => {
+            animateMany([
+              { robot: ghosts[0], path: paths[0], from: 1, to: 0.18, opacity: 0 },
+              { robot: ghosts[1], path: paths[1], from: 1, to: 1, opacity: 0.16 },
+              { robot: ghosts[2], path: paths[2], from: 1, to: 0.18, opacity: 0 },
+            ], 620, () => {
+              animateRobot(realRobot, actPath, 0, 1, 1450, 1, () => {
+                replan.classList.add('is-visible');
+              });
+            });
+          }, 280);
+          phaseTimers.push(rejectTimer);
+        }
+      };
+
+      const setPhase = (index, options) => {
+        const settings = options || {};
+        if (settings.keepSequence) clearPhase();
+        else clearTimers();
+        activeIndex = (index + phases.length) % phases.length;
+        const phase = phases[activeIndex];
+
+        experience.dataset.step = 'reset';
+        void experience.offsetWidth;
+        experience.dataset.step = phase.id;
+
+        storyKicker.textContent = phase.kicker;
+        storyTitle.textContent = phase.title;
+        storyLine.textContent = phase.line;
+        countNumber.textContent = phase.number;
+        countLabel.innerHTML = phase.label;
+        count.classList.remove('is-changing');
+        void count.offsetWidth;
+        count.classList.add('is-changing');
+
+        phaseButtons.forEach((button, buttonIndex) => {
+          if (buttonIndex === activeIndex) button.setAttribute('aria-current', 'step');
+          else button.removeAttribute('aria-current');
+        });
+
+        runPhaseMotion(phase.id);
+      };
+
+      const playAll = () => {
+        clearTimers();
+        if (reduceMotion) {
+          setPhase(3);
+          return;
+        }
+
+        setPhase(0, { keepSequence: true });
+        const schedule = [
+          [1700, 1],
+          [4300, 2],
+          [6500, 3],
+        ];
+        sequenceTimers = schedule.map((item) => window.setTimeout(() => {
+          setPhase(item[1], { keepSequence: true });
+        }, item[0]));
+      };
+
+      phaseButtons.forEach((button, index) => {
+        button.addEventListener('click', () => setPhase(index));
+      });
+
+      playStory.addEventListener('click', playAll);
+
+      window.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowRight') {
+          event.preventDefault();
+          setPhase(activeIndex + 1);
+        } else if (event.key === 'ArrowLeft') {
+          event.preventDefault();
+          setPhase(activeIndex - 1);
+        } else if ((event.key === ' ' || event.key === 'Enter') && !(event.target instanceof HTMLButtonElement)) {
+          event.preventDefault();
+          playAll();
+        }
+      });
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) clearTimers();
+      });
+
+      resetRobots();
+    })();
+  </script>
+</body>
+</html>
