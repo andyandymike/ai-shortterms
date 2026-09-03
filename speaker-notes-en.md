@@ -324,13 +324,15 @@
 
 ### V7 — Example
 
-**LOOK |** Official **Gemini Robotics 2** video shows **VISION · LANGUAGE · ACTION** and **PRIVATE PREVIEW**.
+**LOOK |** Official **Unitree WVLA 2.0** video, shown as three short excerpts.
 
-**SAY |** This is official video from Gemini Robotics 2. It shows vision, language, and body control working together in robot arms, two-arm robots, and robots shaped like people. The VLA is still in private preview, so only invited partners can try it. It is not a robot that can do every job at home.
+**SAY |** This is an official Unitree WVLA 2.0 demo. The full video is over three minutes. Unitree says the full demo was filmed in one take. The robot does many tasks, works on its own, and faces strong outside interference. We kept three short parts. It picks up an item, keeps working after a person pushes it, and then handles a different item. The point is not speed. The point is that one system turns the scene into a series of robot moves.
 
-**DO |** Let the video play, move down **VISION → LANGUAGE → ACTION**, and end at **AVAILABILITY — PRIVATE PREVIEW**.
+**DO |** Let the 23-second clip play once. Watch the table task, then the push, and finish at **VISION → LANGUAGE → ACTION** and the official description.
 
-**NOTE |** One short video does not prove it works everywhere.
+**NOTE |** This is an edited official demo, not an independent test. It does not prove the system works everywhere. The public video does not clearly show the language command.
+
+**[Sources] |** Unitree Robotics, [Conference Room Mess Cleanup Test: Unitree WVLA 2.0 Model](https://www.youtube.com/watch?v=zqqIpVsMYkE), 2026-05-25.
 
 **TRANSITION |** These four ideas make one clear story. First, use model power with less waste. Then, move from seeing to planning and action.
 

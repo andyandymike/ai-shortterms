@@ -469,7 +469,7 @@
 .gapMark { color: var(--ex-red); font-family: Georgia, "Times New Roman", serif; font-size: clamp(52px, 7vw, 98px); font-weight: 500; text-align: center; }
 .physicalBench { position: relative; height: 76%; padding: 18px; border: 1.5px solid var(--ex-ink); background: var(--ex-paper); box-shadow: 9px 9px 0 var(--ex-teal); }
 .physicalBench > span { font-size: 9px; font-weight: 900; letter-spacing: 0.1em; }
-.groundingPhoto { position: absolute; inset: 14% 4% 25%; overflow: hidden; border: 1px solid var(--ex-ink); background: #252d2e url('/media/gemini-robotics2-proof.png') center / cover no-repeat; }
+.groundingPhoto { position: absolute; inset: 14% 4% 25%; overflow: hidden; border: 1px solid var(--ex-ink); background: #252d2e url('/media/unitree-wvla2-proof.png') center / cover no-repeat; }
 .groundingPhoto::after { content: "LIVE CAMERA · THE WORDS MUST BE GROUNDED HERE"; position: absolute; right: 0; bottom: 0; left: 0; padding: 6px 8px; background: rgba(23, 23, 19, 0.84); color: var(--ex-white); font-size: clamp(7px, 0.62vw, 9px); font-weight: 900; letter-spacing: 0.07em; }
 .groundingPhoto b,
 .groundingPhoto i,
@@ -511,7 +511,7 @@
 .robotOutcome > header strong,
 .controlWorkOrder > header strong { color: var(--ex-red); }
 .robotObservation > div,
-.robotOutcome > div { position: relative; min-height: 0; background: #252d2e url('/media/gemini-robotics2-proof.png') center / cover no-repeat; }
+.robotOutcome > div { position: relative; min-height: 0; background: #252d2e url('/media/unitree-wvla2-proof.png') center / cover no-repeat; }
 .robotOutcome > div { background-position: 62% center; filter: saturate(0.9) contrast(1.05); }
 .robotObservation > div b,
 .robotObservation > div i,
@@ -551,7 +551,7 @@
 .verificationReceipt b { color: var(--ex-red); font-size: 21px; }
 .vlaInputs { display: grid; gap: 10px; }
 .cameraPostcard { position: relative; display: grid; grid-template-rows: 1fr auto; height: clamp(150px, 29vh, 220px); padding: 9px; border: 1.5px solid var(--ex-ink); background: var(--ex-white); box-shadow: 7px 7px 0 var(--ex-teal); }
-.cameraPostcard > div { background: #252d2e url('/media/gemini-robotics2-proof.png') center / cover no-repeat; }
+.cameraPostcard > div { background: #252d2e url('/media/unitree-wvla2-proof.png') center / cover no-repeat; }
 .cameraPostcard span { padding-top: 7px; font-size: 8px; font-weight: 900; letter-spacing: 0.1em; }
 .cameraPostcard b,
 .cameraPostcard i { position: absolute; padding: 3px 5px; border: 1px solid var(--ex-white); background: var(--ex-red); color: var(--ex-white); font-size: 6px; }

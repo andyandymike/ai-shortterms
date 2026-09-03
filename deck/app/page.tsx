@@ -31,6 +31,7 @@ const slideSources: Record<number, { label: string; url: string }[]> = {
     { label: 'Meta AI — V-JEPA 2 world model', url: 'https://ai.meta.com/blog/v-jepa-2-world-model-benchmarks/' },
   ],
   4: [
+    { label: 'Unitree Robotics — WVLA 2.0 official demo', url: 'https://www.youtube.com/watch?v=zqqIpVsMYkE' },
     { label: 'Google DeepMind — Gemini Robotics 2 VLA', url: 'https://deepmind.google/blog/gemini-robotics-2-brings-whole-body-intelligence-to-robots/' },
     { label: 'Google DeepMind — RT-2: vision-language-action models', url: 'https://deepmind.google/blog/rt-2-new-model-translates-vision-and-language-into-action/' },
     { label: 'Google DeepMind — Gemini Robotics On-Device 2 model card', url: 'https://deepmind.google/models/model-cards/gemini-robotics-on-device-2/' },

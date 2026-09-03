@@ -301,7 +301,7 @@
 
 .coverEvidence > div::after { content: ''; position: absolute; inset: 0; border: 1px solid rgba(18, 21, 24, 0.55); }
 .coverEvidence > div[data-proof='world'] { background-image: url('/media/genie3-proof.png'); }
-.coverEvidence > div[data-proof='vla'] { background-image: url('/media/gemini-robotics2-proof.png'); }
+.coverEvidence > div[data-proof='vla'] { background-image: url('/media/unitree-wvla2-proof.png'); }
 .coverEvidence span { position: absolute; right: 0; bottom: 0; left: 0; padding: 6px 8px; background: var(--atlas-ink); color: #fffaf0; font-size: clamp(7px, 0.58vw, 9px); font-weight: 900; letter-spacing: 0.1em; }
 
 .openingFooter {
@@ -1289,7 +1289,7 @@
 .bodyAtlas > header { display: flex; align-items: baseline; justify-content: space-between; padding: 0 0 8px; border-bottom: 1px solid var(--atlas-ink); }
 .bodyAtlas > header span { color: var(--atlas-blue); font-size: 8px; font-weight: 900; letter-spacing: 0.1em; }
 .bodyAtlas > header strong { font-size: clamp(10px, 0.9vw, 14px); }
-.bodyPhoto { position: relative; min-height: 0; background: url('/media/gemini-robotics2-proof.png') center / cover; filter: saturate(0.78) contrast(1.08); }
+.bodyPhoto { position: relative; min-height: 0; background: url('/media/unitree-wvla2-proof.png') center / cover; filter: saturate(0.78) contrast(1.08); }
 .bodyPhoto b,
 .bodyPhoto i,
 .bodyPhoto strong { position: absolute; padding: 4px 6px; background: var(--atlas-yellow); color: var(--atlas-ink); font-size: clamp(6px, 0.55vw, 8px); font-style: normal; font-weight: 950; letter-spacing: 0.08em; }
@@ -1310,7 +1310,7 @@
 .controlTimeline article > strong { font-size: clamp(14px, 1.4vw, 21px); font-weight: 950; letter-spacing: -0.03em; }
 .controlTimeline article[data-kind='observe'] { grid-template-rows: auto auto minmax(0, 1fr); align-content: stretch; }
 .controlTimeline article[data-kind='observe'] > div { position: relative; min-height: 0; background: var(--atlas-paper-2); }
-.controlTimeline article[data-kind='observe'] > div { background: linear-gradient(rgba(242, 236, 220, 0.24), rgba(242, 236, 220, 0.24)), url('/media/gemini-robotics2-proof.png') center / cover; }
+.controlTimeline article[data-kind='observe'] > div { background: linear-gradient(rgba(242, 236, 220, 0.24), rgba(242, 236, 220, 0.24)), url('/media/unitree-wvla2-proof.png') center / cover; }
 .controlTimeline article[data-kind='observe'] > div b,
 .controlTimeline article[data-kind='observe'] > div i,
 .controlTimeline article[data-kind='observe'] > div em { position: absolute; padding: 3px 4px; font-size: 6px; font-style: normal; }
@@ -1326,7 +1326,7 @@
 .controlTimeline article[data-kind='check'] { grid-template-rows: auto auto minmax(0, 1fr) auto auto; align-content: stretch; }
 .controlTimeline article[data-kind='check'] > span,
 .controlTimeline article[data-kind='check'] > strong { color: var(--atlas-red); }
-.failedObservation { position: relative; min-height: clamp(78px, 13vh, 118px); overflow: hidden; background: linear-gradient(rgba(227, 72, 45, 0.18), rgba(227, 72, 45, 0.18)), url('/media/gemini-robotics2-proof.png') center / cover; }
+.failedObservation { position: relative; min-height: clamp(78px, 13vh, 118px); overflow: hidden; background: linear-gradient(rgba(227, 72, 45, 0.18), rgba(227, 72, 45, 0.18)), url('/media/unitree-wvla2-proof.png') center / cover; }
 .failedObservation::after { content: ''; position: absolute; top: 0; bottom: 0; left: 58%; width: 3px; background: var(--atlas-red); transform: rotate(18deg); }
 .failedObservation b,
 .failedObservation small { position: absolute; z-index: 2; padding: 3px 5px; font-size: clamp(7px, 0.64vw, 9px); font-weight: 950; }

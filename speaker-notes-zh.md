@@ -330,15 +330,17 @@
 
 ### V7 · Example
 
-**看｜** **GEMINI ROBOTICS 2 / PRIVATE PREVIEW**
+**看｜** **UNITREE WVLA 2.0 / THREE SHORT EXCERPTS**
 
-**说｜** 这是 **Gemini Robotics 2** 的官方画面，展示视觉、语言和身体控制怎样结合，也展示 VLA 已经可以控制机械臂、双臂机器人和完整人形机器人。目前它仍是 private preview，只向 early-access partners 开放。它还不是能完成所有家务的通用机器人。
+**说｜** 这是宇树 **WVLA 2.0** 的官方演示。原片超过三分钟，宇树把它描述为一镜到底、多任务、全自主运行，并且有外部强干扰。这里保留三个短片段：机器人拿取桌面物品；有人推碰它之后，它继续执行；最后它整理另一类物品。重点不是速度，而是同一个系统能够把现场变成一连串身体动作。
 
-**做｜** 先让视频播放，再扫过 **VISION → LANGUAGE → ACTION**，最后停在 **PRIVATE PREVIEW** 的可用状态说明。
+**做｜** 让 23 秒视频播放一次，先看桌面动作，再看人为干扰，最后扫过 **VISION → LANGUAGE → ACTION** 和右侧官方描述。
 
 **点｜** **右下角全局下一页** → Closing。需要重播本概念时才点 **Replay VLA**。
 
-**注意｜** 一小段成功视频不能证明它在任何环境都能成功。
+**注意｜** 这是官方成功演示的剪辑节选，不是独立评测，也不能证明它在任何环境都可靠。公开视频没有清楚展示实际使用的语言指令。
+
+**[Sources]｜** Unitree Robotics, [Conference Room Mess Cleanup Test: Unitree WVLA 2.0 Model](https://www.youtube.com/watch?v=zqqIpVsMYkE), 2026-05-25.
 
 **转｜** 到这里，四个概念刚好连成一条路：先更高效地使用能力，再让 AI 从理解走向预测和行动。
 

@@ -1299,10 +1299,10 @@ function EmbodiedExhibit({
 
       <section className={conceptStyles.vlaProofDesk} aria-hidden={act !== 'vla-proof'}>
         <div className={conceptStyles.vlaRecording}>
-          <video ref={vlaVideoRef} loop muted playsInline preload="auto" poster="/media/gemini-robotics2-proof.png">
-            <source src="/media/gemini-robotics2-wholebody.webm" type="video/webm" />
+          <video ref={vlaVideoRef} muted playsInline preload="auto" poster="/media/unitree-wvla2-proof.png">
+            <source src="/media/unitree-wvla2-highlight.mp4" type="video/mp4" />
           </video>
-          <p><span>OFFICIAL RECORDING</span><strong>GEMINI ROBOTICS 2</strong></p>
+          <p><span>OFFICIAL RECORDING · EDITED EXCERPTS</span><strong>UNITREE WVLA 2.0</strong></p>
         </div>
         <div className={conceptStyles.recoveryStrip}>
           {['OBSERVE', 'ACT', 'CHECK', 'CORRECT'].map((item, index) => <p key={item}><span>0{index + 1}</span><strong>{item}</strong></p>)}
@@ -1416,10 +1416,10 @@ function EmbodiedAtlas({
 
       <section className={atlasStyles.vlaProofAtlas} aria-hidden={act !== 'vla-proof'}>
         <div className={atlasStyles.atlasRecording}>
-          <video ref={vlaVideoRef} loop muted playsInline preload="auto" poster="/media/gemini-robotics2-proof.png">
-            <source src="/media/gemini-robotics2-wholebody.webm" type="video/webm" />
+          <video ref={vlaVideoRef} muted playsInline preload="auto" poster="/media/unitree-wvla2-proof.png">
+            <source src="/media/unitree-wvla2-highlight.mp4" type="video/mp4" />
           </video>
-          <p><span>OFFICIAL RECORDING</span><strong>GEMINI ROBOTICS 2</strong><small>whole-body robot control</small></p>
+          <p><span>OFFICIAL RECORDING · EDITED EXCERPTS</span><strong>UNITREE WVLA 2.0</strong><small>multi-task autonomous operation</small></p>
         </div>
         <div className={atlasStyles.recoveryAtlas}>
           <header><span>PHYSICAL AI / RECOVERY LOOP</span><strong>THE HARD PART IS REALITY</strong></header>
@@ -2021,21 +2021,21 @@ function AtlasVlaLab({ isActive }: { isActive: boolean }) {
         )}
 
         {act === 'proof' && (
-          <section className={vlaStyles.proofScene} aria-label="Official Gemini Robotics 2 footage showing whole-body VLA control as a research system">
+          <section className={vlaStyles.proofScene} aria-label="Edited excerpts from the official Unitree WVLA 2.0 multi-task autonomous robot demonstration">
             <article className={vlaStyles.proofVideo}>
-              <video ref={videoRef} loop muted playsInline preload="auto" poster="/media/gemini-robotics2-proof.png">
-                <source src="/media/gemini-robotics2-wholebody.webm" type="video/webm" />
+              <video ref={videoRef} muted playsInline preload="auto" poster="/media/unitree-wvla2-proof.png">
+                <source src="/media/unitree-wvla2-highlight.mp4" type="video/mp4" />
               </video>
-              <footer><span>OFFICIAL RECORDING</span><strong>GEMINI ROBOTICS 2</strong></footer>
+              <footer><span>OFFICIAL RECORDING · EDITED EXCERPTS</span><strong>UNITREE WVLA 2.0</strong></footer>
             </article>
             <article className={vlaStyles.proofFacts}>
               <p><span>VISION</span><strong>SEE THE SCENE</strong></p>
               <p><span>LANGUAGE</span><strong>FOLLOW THE GOAL</strong></p>
               <p><span>ACTION</span><strong>CONTROL THE BODY</strong></p>
-              <aside><span>AVAILABILITY</span><strong>PRIVATE PREVIEW</strong><small>VLA: early-access partners.</small></aside>
+              <aside><span>OFFICIAL DESCRIPTION</span><strong>ONE TAKE</strong><small>Multi-task · fully autonomous · strong interference.</small></aside>
             </article>
             <footer className={vlaStyles.proofUses}>
-              <span>ROBOT ARMS</span><b>·</b><span>BI-ARM ROBOTS</span><b>·</b><span>FULL HUMANOIDS</span>
+              <span>TABLETOP TASKS</span><b>·</b><span>ROOM NAVIGATION</span><b>·</b><span>EXTERNAL INTERFERENCE</span>
             </footer>
           </section>
         )}
@@ -2283,10 +2283,10 @@ function SharedEmbodiedLab({
 
           <div className={embodiedStyles.vlaProof}>
             <div className={embodiedStyles.vlaRecording}>
-              <video muted playsInline preload="none" poster="/media/gemini-robotics2-proof.png" aria-label="Official Gemini Robotics 2 whole-body robot recording">
-                <source src="/media/gemini-robotics2-wholebody.webm" type="video/webm" />
+              <video muted playsInline preload="none" poster="/media/unitree-wvla2-proof.png" aria-label="Edited excerpts from the official Unitree WVLA 2.0 robot recording">
+                <source src="/media/unitree-wvla2-highlight.mp4" type="video/mp4" />
               </video>
-              <span><i /> OFFICIAL RECORDING · GEMINI ROBOTICS 2</span>
+              <span><i /> OFFICIAL RECORDING · UNITREE WVLA 2.0 · EXCERPTS</span>
             </div>
             <div className={embodiedStyles.realityChecklist}>
               <span>WHY THIS IS HARDER THAN CHAT</span>
@@ -2462,7 +2462,7 @@ export function VlaLab() {
     <div className="live-lab vla-live-lab" aria-label="Interactive toy vision language action lab">
       <div className="lab-head">
         <div><span>LIVE LAB</span><strong>Instruction → scene state</strong></div>
-        <small>Toy parser + motion · not Gemini Robotics</small>
+        <small>Toy parser + motion · not Unitree WVLA 2.0</small>
       </div>
 
       <div className="command-switch" role="group" aria-label="Choose a robot instruction">
@@ -2492,7 +2492,7 @@ export function VlaLab() {
       <div className="lab-foot vla-live-foot">
         <button className="lab-action" onClick={() => setExecuted(true)} disabled={executed}>Execute action</button>
         <button className="lab-secondary" onClick={() => setExecuted(false)}>Reset scene</button>
-        <small>Real example · Gemini Robotics turns visual information and instructions into motor commands.</small>
+        <small>Real example · Unitree WVLA 2.0 shows multi-task autonomous robot operation.</small>
       </div>
     </div>
   );
