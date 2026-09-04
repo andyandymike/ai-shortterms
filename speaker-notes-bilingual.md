@@ -1,8 +1,12 @@
 # Beyond Bigger Models — Atlas 中英双语现场稿 / Bilingual Speaker Notes
 
-> 中文：现场只用 Atlas。每一步按“看 → 说 → 做 → 点”走；内部按钮推进演示，右下角全局箭头才翻页。
+> 中文：现场只用 Atlas。每一步按“看 → 说 → 做 → 转 → 点”走；先说转场句，再点击进入下一步。内部按钮推进演示，右下角全局箭头才翻页。
 >
-> English: Use Atlas only. Follow LOOK → SAY → DO → CLICK. The main demo button moves one step. The arrow at the bottom right moves to the next slide.
+> English: Use Atlas only. Follow LOOK → SAY → DO → TRANSITION → CLICK. Say the transition before clicking to the next step. The internal button moves the demo forward; the bottom-right arrow changes the slide.
+
+“说”和“转”是主线口播；“补充（可选）”可在时间允许时接在“说”后面，不读也不影响主线。“看、做、点、注意”和来源是提示，不用念。中英文按信息和顺序对应；英文保留 context、parameters 等术语，解释尽量用短句和常用词。
+
+Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time allows; skipping it does not break the story. LOOK, DO, CLICK, NOTE, and sources are presenter cues, not spoken lines. The Chinese and English versions follow the same points in the same order. Keep terms such as context and parameters; explain them in short, everyday sentences.
 
 ## O · Opening
 
@@ -14,17 +18,17 @@
 
 **做｜** 等缩写动画归位，再从上到下扫过两条变化轨道。
 
-**点｜** 无需点击；准备好后用右下角全局下一页进入 MoE。
+**点｜** 无需操作内部按钮；准备好后用右下角全局下一页进入 MoE。
 
 ### English
 
-**LOOK |** The many short AI names settle into **FOUR TERMS · TWO SHIFTS**.
+**LOOK |** **Four terms. Two shifts.**
 
-**SAY |** AI changes fast. Its list of new terms can feel even faster. It is almost as if the team that names AI never takes a day off. Today, we will not chase every new word. We will use four terms to see two big changes. First, models are getting smarter about how they use their power. Second, AI is moving from giving answers to making plans and taking action.
+**SAY |** AI changes fast, but sometimes its list of new terms changes even faster than the technology itself. It’s almost as if AI’s “naming team” never takes a day off. Today, we won’t chase every hot topic. We’ll use four terms to see two shifts: how to use model capabilities more wisely, and how AI moves from answering questions to prediction and action.
 
-**DO |** Wait for the short names to stop, then move down the two lines.
+**DO |** Wait for the animation of short names to settle, then move down the two tracks.
 
-**CLICK |** Global next-slide arrow → **MoE**.
+**CLICK |** No internal button needed. When ready, use the bottom-right next-slide arrow → **MoE**.
 
 ---
 
@@ -36,7 +40,7 @@
 
 #### English lead-in
 
-**LEAD-IN |** A model can be very large, but it does not need to use every part every time.
+**LEAD-IN |** Let’s start with an idea that may sound surprising: a model can be very large without using all its capabilities every time.
 
 ### M1 · Name
 
@@ -44,23 +48,29 @@
 
 **看｜** **MoE → Mixture of Experts**
 
-**说｜** 第一个词是 **MoE**，全称 **Mixture of Experts，专家混合**。这里的 Expert 不是一个完整 chatbot，而是模型内部的一块计算能力。要理解为什么需要很多 Expert，我们先看看普通的稠密模型怎么工作。
+**说｜** 第一个词是 **MoE**，全称 **Mixture of Experts，专家混合**。这里的 **Expert（专家）**不是一个完整的 chatbot，而是模型内部的一块计算能力。
 
 **做｜** 指向 **MoE**，跟着三个字母展开。
 
-**点｜** **Show the dense model**
-
 **注意｜** Expert 不是各自回答完整问题的独立人格。
+
+**转｜** 为什么需要这么多专家？先看稠密模型怎么工作。
+
+**点｜** **Show the dense model**
 
 #### English
 
-**LOOK |** **MoE** opens into **Mixture of Experts**.
+**LOOK |** **MoE → Mixture of Experts**
 
-**SAY |** MoE means **Mixture of Experts**. Here, an expert is not a whole chatbot. It is one part inside the model that does some of the work. First, let us see how a regular dense model works.
+**SAY |** Our first term is **MoE**, short for **Mixture of Experts**. Here, an **expert** is not a whole chatbot. It’s a block inside the model that does some of the computation.
 
-**DO |** Point to **MoE**, then follow the letters as the full name appears.
+**DO |** Point to **MoE**, then follow the three letters as the full name appears.
 
-**CLICK |** **Show the dense model**.
+**NOTE |** Experts are not separate personalities, each answering the whole question.
+
+**TRANSITION |** Why do we need so many experts? Let’s first look at a dense model.
+
+**CLICK |** **Show the dense model**
 
 ### M2 · Dense
 
@@ -68,21 +78,25 @@
 
 **看｜** 黄色任务单进入大楼，所有窗口一起亮起。
 
-**说｜** 语言模型不断预测下一个 token，可以把这个黄色 token 想成一张任务单，把模型想成一家公司。稠密模型处理每张任务单时，同一整块计算都要参与。就像任务再小，也让全公司一起上班。
+**说｜** 语言模型不断预测下一个 **token**，也就是一小段文本。可以把这个黄色 token 想成一张任务单，把模型想成一家公司。**稠密模型**处理每张任务单时，同一整块计算都要参与。就像任务再小，也让全公司一起上班。
 
 **做｜** 从高亮 token 指到任务单，再扫过全部亮起的窗口。
+
+**转｜** 如果让这家公司继续变大，成本会怎样？
 
 **点｜** **Add more capacity**
 
 #### English
 
-**LOOK |** One yellow token becomes a work ticket, and the whole model lights up.
+**LOOK |** The yellow work ticket enters the building, and all the windows light up.
 
-**SAY |** A language model keeps guessing the next small piece of text, called a token. Think of the yellow token as a work ticket, and the model as a company. In a dense model, every part joins every task. It is like asking the whole company to handle one small ticket.
+**SAY |** A language model keeps predicting the next **token**, a small piece of text. Think of the yellow token as a work ticket, and the model as a company. In a **dense model**, the same full compute block works on every ticket. It’s like calling in the whole company, even for a tiny task.
 
-**DO |** Follow the token to the work ticket, then point across all the lit windows.
+**DO |** Point from the highlighted token to the work ticket, then across all the lit windows.
 
-**CLICK |** **Add more capacity**.
+**TRANSITION |** What happens to the cost as this company gets bigger?
+
+**CLICK |** **Add more capacity**
 
 ### M3 · Cost
 
@@ -94,17 +108,21 @@
 
 **做｜** 一边停在不变的任务单，一边沿大楼和账单的增长方向移动。
 
+**转｜** 能不能保留大公司的能力，却不用每次全员上班？
+
 **点｜** **Switch to MoE**
 
 #### English
 
-**LOOK |** The building grows. The work ticket stays the same, but the bill goes up.
+**LOOK |** The ticket stays the same size, while the building and the bill grow.
 
-**SAY |** We make the company bigger so it can do more. But now every small ticket uses every new floor. The model can do more, but each task also costs more.
+**SAY |** We keep making the company bigger so the model can know more. But each time we add a floor, every small ticket calls in that floor’s staff too. The model gains more capabilities, but each task also costs more.
 
-**DO |** Point to the work ticket, then follow the growing building and bill.
+**DO |** Pause at the unchanged ticket, then follow the growing building and bill.
 
-**CLICK |** **Switch to MoE**.
+**TRANSITION |** Can we keep the big company’s skills without calling everyone in each time?
+
+**CLICK |** **Switch to MoE**
 
 ### M4 · Route
 
@@ -112,21 +130,25 @@
 
 **看｜** **256** 个办公室中，只有 **8** 个变红。
 
-**说｜** MoE 不把公司缩小，而是加了一个调度员，也就是 Router。它看当前 token，从 256 个可用 Expert 里挑出 8 个。公司仍然很大，但这张任务只发给最合适的少数计算小组。
+**说｜** MoE 不把公司缩小，而是加了一个调度员，也就是**路由器（Router）**。在这个例子里，它根据当前 token 的信息，从 256 个可用 Expert 里挑出 8 个。公司仍然很大，但这张任务只发给选中的少数计算小组。
 
 **做｜** 先圈出完整大楼，再对比 8 个红色窗口和其余灰色窗口。
+
+**转｜** 选出了这 8 个专家，接下来看看它们实际做什么。
 
 **点｜** **Open the selected experts**
 
 #### English
 
-**LOOK |** The large building stays, but only **8 of 256** windows light up.
+**LOOK |** Only **8** of the **256** offices turn red.
 
-**SAY |** MoE keeps the big company. It adds a router, like a person who sends work to the right team. For this token, the router chooses 8 out of 256 expert parts. Only those eight teams work on this task.
+**SAY |** MoE doesn’t shrink the company. It adds a **router**, like a person who assigns the work. In this example, the router uses information about the current token to choose 8 of the 256 available experts. The company stays large, but this ticket goes only to those few selected teams.
 
-**DO |** Point to the whole building, then the eight red windows and the grey windows.
+**DO |** Point to the whole building, then compare the eight red windows with the grey ones.
 
-**CLICK |** **Open the selected experts**.
+**TRANSITION |** We’ve picked eight experts. Let’s see what they actually do.
+
+**CLICK |** **Open the selected experts**
 
 ### M5 · Run
 
@@ -134,21 +156,25 @@
 
 **看｜** **TASK IN → WORK → NOTE OUT**
 
-**说｜** “激活八个专家”其实就是这八个小组拿到任务并开始计算，其他小组这次不工作。它们不是分别回答完整问题，而是在模型处理这一小步时，各自加工同一张任务单。画面放大一个办公室，让我们看到任务进去、计算发生、结果出来。
+**说｜** “激活八个专家”其实就是这八个小组拿到任务并开始计算，其他专家这次不工作。它们不是分别回答完整问题，而是在模型处理这一小步时，各自加工同一张任务单。画面放大一个办公室，让我们看到任务进去、计算发生、结果出来。
 
 **做｜** 跟随任务单进入办公室，再跟着输出短笺出来。
+
+**转｜** 每个专家都有了输出，怎么把它们合成一个结果？
 
 **点｜** 等一次完整循环结束后，点 **Combine their outputs**
 
 #### English
 
-**LOOK |** One chosen office shows **task in → compute → note out**. The other offices wait.
+**LOOK |** **TASK IN → WORK → NOTE OUT**
 
-**SAY |** When we say the model “turns on eight experts,” this is what we mean. These eight parts get the task and do the math. The other parts wait. Each expert helps with one small step. It does not answer the whole question by itself.
+**SAY |** “Activating eight experts” means those eight teams get the task and start computing. The other experts don’t work this time. They aren’t each answering the whole question. They each process the same ticket during this small step inside the model. Here, we zoom into one office: the task goes in, computation happens, and a result comes out.
 
-**DO |** Follow the ticket into the office and the note coming out. Point to the waiting offices, then watch one full round.
+**DO |** Follow the ticket into the office, then follow the output note as it comes out.
 
-**CLICK |** **Combine their outputs**.
+**TRANSITION |** Each expert now has an output. How do we combine them into one result?
+
+**CLICK |** After one full cycle, click **Combine their outputs**
 
 ### M6 · Combine
 
@@ -156,21 +182,25 @@
 
 **看｜** **8 → 1；8 CALLED IN / 248 QUIET**
 
-**说｜** 最后，8 个 Expert 的输出合成一个结果，再交给下一层。模型保留 256 个 Expert 的总容量，但这个 token 只支付 8 个 Expert 的计算成本。它的核心好处就是：容量可以很大，每次实际计算仍然有限。
+**说｜** 最后，8 个 Expert 的输出合成一个结果，再交给下一层。在这一层，模型保留 256 个可用 Expert 的总容量，但这个 token 只运行其中 8 个 Expert。核心好处就是：容量可以很大，每次实际用到的专家计算仍然有限。
 
 **做｜** 跟着八份输出汇入 **8 → 1**，再指回 8 个工作和 248 个安静的 Expert。
+
+**转｜** 这个思路已经用在真实模型里，我们看几个例子。
 
 **点｜** **Show real models**
 
 #### English
 
-**LOOK |** Eight small results flow into **8 → 1**, with **8 called in / 248 quiet**.
+**LOOK |** **8 → 1; 8 CALLED IN / 248 QUIET**
 
-**SAY |** The model joins the eight small results into one result. Then it sends that result to the next part of the model. The model still has 256 experts in total, but this token only uses eight of them. That is the main idea: a big model, with less work each time.
+**SAY |** Finally, the eight expert outputs combine into one result, which goes to the next layer. This layer keeps the total capacity of 256 available experts, but this token runs only eight of them. That’s the main benefit: large capacity, with a limited amount of expert computation each time.
 
-**DO |** Follow the small results into **8 → 1**, then point to **8 called in / 248 quiet**.
+**DO |** Follow the eight outputs into **8 → 1**, then point to the eight working experts and the 248 quiet ones.
 
-**CLICK |** **Show real models**.
+**TRANSITION |** Real models already use this idea. Let’s look at a few.
+
+**CLICK |** **Show real models**
 
 ### M7 · Examples
 
@@ -182,21 +212,21 @@
 
 **做｜** 读第一行，再向下扫过三组一致的 **total → active**。
 
-**点｜** **右下角全局下一页** → Distillation。需要重播本概念时才点 **Replay MoE**。
-
 **转｜** MoE 保留一家大公司，每次只叫一支小团队；如果连大公司本身都部署不起，就要让一个真正的小模型学会重要能力。
+
+**点｜** **右下角全局下一页** → Distillation。需要重播本概念时才点 **Replay MoE**。
 
 #### English
 
-**LOOK |** DeepSeek-V3, Qwen3 MoE, and Kimi K2 show **total → used for each token**.
+**LOOK |** **DeepSeek-V3: 671B total → 37B active / token**
 
-**SAY |** These are real MoE models. DeepSeek-V3 has 671 billion parameters—the numbers inside a model—but it uses about 37 billion for each token. Qwen3 MoE and Kimi K2 use the same idea. You do not need to remember the numbers. Just remember this: the model is very large, but it only uses part of itself each time.
+**SAY |** These are real models that use the MoE architecture. DeepSeek-V3 has 671 billion **parameters**, but about 37 billion are active for each token. Qwen3 MoE and Kimi K2 use a similar idea. You don’t need to remember the numbers. Just notice the pattern: a large total capacity, with only part of it running each time.
 
-**DO |** Read the DeepSeek-V3 row once, then point down the repeated **total → active** pattern.
+**DO |** Read the first row, then move down the three matching **total → active** patterns.
 
-**TRANSITION |** MoE keeps the big company and calls only a small team. But what if the big company is still too expensive?
+**TRANSITION |** MoE keeps the big company but calls in only a small team each time. If the big company itself is still too costly to deploy, we need a truly small model to learn the key skills.
 
-**CLICK |** Use **Replay MoE** only to start again. Otherwise, use the bottom-right arrow → **Distillation**.
+**CLICK |** Use the **bottom-right next-slide arrow** → **Distillation**. Click **Replay MoE** only to replay this concept.
 
 ---
 
@@ -208,7 +238,7 @@
 
 #### English lead-in
 
-**LEAD-IN |** Use a big model to teach a much smaller model.
+**LEAD-IN |** That’s knowledge distillation: use the costly capabilities during training, then let a smaller model work on its own.
 
 ### D1 · Name
 
@@ -216,21 +246,27 @@
 
 **看｜** **LARGE TEACHER → LESSONS → SMALL STUDENT**
 
-**说｜** 第二个词是 **Knowledge Distillation，知识蒸馏**。能力强的大模型做教师、准备教材，再训练另一个更小的学生模型。就像资深客服先教新人，真正上线值班的是新人。
+**说｜** 第二个词是 **Knowledge Distillation，知识蒸馏**。能力强的大模型做**教师模型**、准备教材，再训练另一个更小的**学生模型**。就像资深客服先教新人，真正上线值班的是新人。
 
 **做｜** 沿 **教师 → 教材 → 学生** 指过去，停在 **runs alone**。
 
-**点｜** **Why distill?**
-
 **注意｜** 蒸馏不是把同一个大模型压成一个小文件。
+
+**转｜** 为什么要多做这一步训练，而不直接用教师？
+
+**点｜** **Why distill?**
 
 #### English
 
-**LOOK |** A **large teacher** makes lessons for a separate **small student**. Later, the student works alone.
+**LOOK |** **LARGE TEACHER → LESSONS → SMALL STUDENT**
 
-**SAY |** Knowledge Distillation does not turn one big model file into a smaller file. A strong big model becomes the teacher. It makes lessons for a separate small model. Think of a senior support worker teaching a new worker. After training, the small model works by itself.
+**SAY |** Our second term is **Knowledge Distillation**. A strong, large model acts as the **teacher model**. It prepares lessons to train a separate, smaller **student model**. Think of a senior support worker teaching a new colleague. The new colleague is the one who later handles the calls.
 
-**DO |** Follow **LARGE TEACHER → LESSONS → SMALL STUDENT**, then stop at **runs alone**.
+**DO |** Follow **TEACHER → LESSONS → STUDENT**, then stop at **runs alone**.
+
+**NOTE |** Distillation does not just squeeze the same large model into a smaller file.
+
+**TRANSITION |** Why add this training step instead of just using the teacher?
 
 **CLICK |** **Why distill?**
 
@@ -244,17 +280,21 @@
 
 **做｜** 从能力和成本移到中间的部署限制，再扫过四个目标。
 
+**转｜** 我们先看学生还没学会时，会怎么读一张工单。
+
 **点｜** **Try the student**
 
 #### English
 
-**LOOK |** **High capability** also brings **high cost / call**, so the teacher cannot go everywhere.
+**LOOK |** **HIGH CAPABILITY / HIGH COST** stand in front of the deployment targets.
 
-**SAY |** Why not use the teacher every time? A real product must think about cost, small devices, keeping data private, and lots of users. With distillation, we use the costly teacher during training. Then we use the smaller student in the real product.
+**SAY |** Why not let the teacher answer everywhere? A product needs more than good answers. It also has to consider cost, devices, privacy, and request volume. Distillation keeps the costly teacher in the training stage. We then deploy the easier-to-run student on phones, offline devices, local systems, or services with many requests.
 
-**DO |** Move from **HIGH CAPABILITY** to **HIGH COST / CALL**, then point to the four places on the right.
+**DO |** Move from capability and cost to the deployment limits in the middle, then across the four targets.
 
-**CLICK |** **Try the student**.
+**TRANSITION |** Let’s see how the student reads a support ticket before it learns this skill.
+
+**CLICK |** **Try the student**
 
 ### D3 · Miss
 
@@ -262,25 +302,29 @@
 
 **看｜** **Fantastic / Love → PRAISE → WRONG**
 
-**说｜** 先让学生自己试一次。它看到 “Fantastic” 和 “Love” 就以为客户在表扬，但 “again” 和 “client demo” 暗示这其实是一句讽刺投诉。学生认识单词，却漏掉了整句话的意图。
+**说｜** 先让学生自己试一次。它看到 “Fantastic” 和 “Love” 就以为客户在表扬，但 “again” 和 “client demo” 暗示这其实是一句讽刺投诉。学生认识单词，却漏掉了整句话的**意图**。
 
 **做｜** 先指正面词，再指失败线索，最后停在红色 **WRONG**。
 
-**点｜** **Ask the teacher**
-
 **注意｜** 这张工单是演示案例，不是公开的真实训练样本。
+
+**转｜** 这时就需要教师把它漏掉的意思讲清楚。
+
+**点｜** **Ask the teacher**
 
 #### English
 
-**LOOK |** The student reads “Fantastic” and “Love” as **PRAISE**, but the customer means the opposite.
+**LOOK |** **Fantastic / Love → PRAISE → WRONG**
 
-**SAY |** The student sees the happy words “Fantastic” and “Love,” so it thinks this is praise. But “again” and “client demo” tell us the customer means the opposite. The student knows the words, but it misses the real meaning.
+**SAY |** Let’s let the student try on its own first. It sees “Fantastic” and “Love” and thinks the customer is giving praise. But “again” and “client demo” suggest this is actually a sarcastic complaint. The student knows the words but misses the **intent** of the whole sentence.
 
-**DO |** Point to **Fantastic · Love**, then **again · client demo**, and end at **WRONG**.
+**DO |** Point to the positive words, then the clues to the mistake, and end at the red **WRONG**.
 
-**NOTE |** We made up this ticket for the demo.
+**NOTE |** This ticket is a demo example, not a real training sample from a public dataset.
 
-**CLICK |** **Ask the teacher**.
+**TRANSITION |** Now we need the teacher to explain what the student missed.
+
+**CLICK |** **Ask the teacher**
 
 ### D4 · Lesson
 
@@ -288,21 +332,25 @@
 
 **看｜** **INTENT → WHY → ACTION**
 
-**说｜** 教师不只给出“投诉”这个标签，而是把答案变成可学习的教材。它说明客户真正的意图、为什么这样判断，以及客服下一步应该做什么。学生学到的不只是结论，还有线索和处理方式。
+**说｜** 教师不只给出“投诉”这个标签，而是把答案变成可学习的教材。它说明客户真正的**意图**、为什么这样判断，以及客服下一步应该做什么。学生学到的不只是结论，还有线索和处理方式。
 
 **做｜** 从矛盾线索指到 **SARCASM**，再向下走过三段教材。
+
+**转｜** 教材有了，但一份教材还不够，接下来要反复训练。
 
 **点｜** **Train on many**
 
 #### English
 
-**LOOK |** The teacher turns the mixed message into **INTENT · WHY · ACTION**.
+**LOOK |** **INTENT → WHY → ACTION**
 
-**SAY |** The teacher does not only say, “This is a complaint.” It explains the real meaning. It points to the words that give us the clue. It also says what the support team should do next. The student learns how to read the message, not just the final answer.
+**SAY |** The teacher doesn’t just give the label “complaint.” It turns the answer into a lesson the student can learn from. It explains the customer’s real **intent**, why it reads the message that way, and what the support team should do next. The student learns the clues and how to respond, not just the final answer.
 
-**DO |** Follow the mixed clues, then move down **INTENT → WHY → ACTION**.
+**DO |** Point from the conflicting clues to **SARCASM**, then move down the three parts of the lesson.
 
-**CLICK |** **Train on many**.
+**TRANSITION |** We have a lesson, but one isn’t enough. Now we need to train on many.
+
+**CLICK |** **Train on many**
 
 ### D5 · Train
 
@@ -310,21 +358,25 @@
 
 **看｜** **BEFORE：positive word → praise；AFTER：context → contradiction → intent**
 
-**说｜** 一份教材不会让学生立刻学会。每次训练都比较学生的猜测和教师教材，不一致就让学生内部参数做一点小调整。很多不同说法重复以后，它才会丢掉“正面词等于表扬”的坏捷径，改为结合上下文判断意图。
+**说｜** 一份教材不会让学生立刻学会。每次训练都比较学生的猜测和教师教材，不一致就让学生内部的**参数**做一点小调整。很多不同说法重复以后，它才会丢掉“正面词等于表扬”的坏捷径，改为结合**上下文**判断**意图**。
 
 **做｜** 扫过多份教材，再对比 **BEFORE** 与 **AFTER MANY LESSONS**。
+
+**转｜** 学到了什么，得把教师拿走之后才看得出来。
 
 **点｜** **Remove the teacher**
 
 #### English
 
-**LOOK |** Many lessons turn each wrong guess into a **small update** and a better rule.
+**LOOK |** **BEFORE: positive word → praise; AFTER: context → contradiction → intent**
 
-**SAY |** One lesson is not enough. The student makes a guess. It checks that guess against the teacher’s lesson. When they are different, the student changes a little. After many different examples, it learns a better rule: do not look at one happy word; read the whole message.
+**SAY |** One lesson won’t teach the student everything at once. In each training step, we compare its guess with the teacher’s lesson. If they differ, we make a small change to the student’s **parameters**. After many examples with different wording, it can drop the bad shortcut that “positive words mean praise.” Instead, it uses **context** to work out the **intent**.
 
-**DO |** Point across the lessons, follow **PRAISE ≠ COMPLAINT** to **SMALL UPDATE**, then compare **BEFORE** and **AFTER MANY LESSONS**.
+**DO |** Move across the lessons, then compare **BEFORE** with **AFTER MANY LESSONS**.
 
-**CLICK |** **Remove the teacher**.
+**TRANSITION |** To see what the student has learned, let’s take the teacher away.
+
+**CLICK |** **Remove the teacher**
 
 ### D6 · Alone
 
@@ -332,23 +384,29 @@
 
 **看｜** **TEACHER OFFLINE / SMALL STUDENT RUNS ALONE**
 
-**说｜** 现在把教师拿走，再给学生一张措辞和问题都不同的新工单。学生仍能独立识别投诉，并给出合适的处理建议。蒸馏的关键就在这里：学生把学到的行为留在自己的参数里，部署后自己工作。
+**说｜** 现在把教师拿走，再给学生一张措辞和问题都不同的新工单。学生仍能独立识别投诉，并给出合适的处理建议。蒸馏的关键就在这里：学生把学到的行为留在自己的**参数**里，部署后自己工作。
 
 **做｜** 从离线教师移到新消息，最后停在独立运行的学生和正确判断。
 
-**点｜** **Show real models**
-
 **注意｜** 如果每个线上请求仍要调用教师，那只是两个模型串联，不是这里展示的部署方式。
+
+**转｜** 这个“训练时教、部署后独立”的做法，也用在了真实模型里。
+
+**点｜** **Show real models**
 
 #### English
 
-**LOOK |** **TEACHER — OFFLINE**; a new ticket arrives and the **SMALL STUDENT — RUNS ALONE**.
+**LOOK |** **TEACHER OFFLINE / SMALL STUDENT RUNS ALONE**
 
-**SAY |** Now the teacher leaves. The new ticket has new words and a new problem. The student still sees that it is a complaint. It answers by itself. If the product asked the teacher every time, two models would still be working together. The small model would not work alone.
+**SAY |** Now we take the teacher away and give the student a new ticket with different wording and a different problem. The student can still identify the complaint on its own and suggest a suitable response. This is the key to distillation: the learned behavior stays in the student’s own **parameters**. It works on its own after deployment.
 
-**DO |** Point to **TEACHER — OFFLINE**, then the new message, and end at **RUNS ALONE** and **CORRECT READ**.
+**DO |** Move from the offline teacher to the new message, then end at the student running alone and its correct answer.
 
-**CLICK |** **Show real models**.
+**NOTE |** If every live request still calls the teacher, the two models are working in a chain. That is not the deployment setup shown here.
+
+**TRANSITION |** Real models use this approach too: learn from the teacher during training, then run alone after deployment.
+
+**CLICK |** **Show real models**
 
 ### D7 · Examples
 
@@ -356,29 +414,29 @@
 
 **看｜** **Apple Foundation Model → ~3B on-device**
 
-**说｜** 现实中，Apple 在约 30 亿参数的端侧基础模型训练中使用了知识蒸馏；Google 用 27B 教师训练 Gemma 2 的 2B 和 9B；DeepSeek 则用 R1 生成的推理数据训练更小的模型。方法并不完全相同，但共同点是：部署前由教师来教，部署后由学生独立服务。
+**说｜** 现实中，Apple 在约 30 亿参数的端侧基础模型训练中使用了知识蒸馏；Google 用 27B 教师训练 Gemma 2 的 2B 和 9B 模型；DeepSeek 则用 R1 生成的**推理数据**训练更小的模型。方法并不完全相同，但共同点是：部署前由教师来教，部署后由学生独立服务。
 
 **做｜** 读 Apple 一行，再扫过 **on-device、open + edge、reasoning** 三个目标。
-
-**点｜** **右下角全局下一页** → World Model。需要重播本概念时才点 **Replay Distill**。
 
 **注意｜** 三组箭头不代表同一种压缩比例。
 
 **转｜** 前两个词都在解决“怎样让我们用得起 AI”；接下来要看的是，AI 动手前能不能先想象结果。
 
+**点｜** **右下角全局下一页** → World Model。需要重播本概念时才点 **Replay Distill**。
+
 #### English
 
-**LOOK |** Apple, Gemma 2, and DeepSeek-R1 show three real examples.
+**LOOK |** **Apple Foundation Model → ~3B on-device**
 
-**SAY |** Here are three real examples. Apple used distillation to train a small model that runs on a device. Google used a 27B teacher to train Gemma 2 models with 2B and 9B parameters. DeepSeek used thinking examples from R1 to train smaller models. The shared idea is simple: the teacher helps during training, then the student works alone.
+**SAY |** In practice, Apple used knowledge distillation to train its on-device foundation model with about three billion parameters. Google used a 27B teacher to train the 2B and 9B Gemma 2 models. DeepSeek used **reasoning data** generated by R1 to train smaller models. The methods aren’t exactly the same, but they share one idea: the teacher teaches before deployment, and the student serves users on its own afterward.
 
-**DO |** Read the Apple row once, then point across **on-device · open + edge · reasoning**.
+**DO |** Read the Apple row, then move across the three goals: **on-device, open + edge, reasoning**.
 
-**NOTE |** The three teams use different methods. Do not compare them as one simple size rule.
+**NOTE |** The three arrows do not show the same kind of compression ratio.
 
-**TRANSITION |** Now AI wants to act. How can it think about the result before it moves?
+**TRANSITION |** The first two terms ask how we can make AI more affordable. Next, can AI imagine the result before it acts?
 
-**CLICK |** Use **Replay Distill** only to start again. Otherwise, use the bottom-right arrow → **World Model**.
+**CLICK |** Use the **bottom-right next-slide arrow** → **World Model**. Click **Replay Distill** only to replay this concept.
 
 ---
 
@@ -390,7 +448,7 @@
 
 #### English lead-in
 
-**LEAD-IN |** Now we move from seeing what is here to guessing what an action may do.
+**LEAD-IN |** If AI is going to work in the real world, it can’t just recognize what’s in front of it. It also needs to predict what happens after an action.
 
 ### W1 · Name
 
@@ -398,19 +456,23 @@
 
 **看｜** **NEXT WORD → WHAT IS HERE → WHAT HAPPENS NEXT**
 
-**说｜** 第三个词不是缩写，叫 **World Model，世界模型**。LLM 最典型的动作是预测下一段文字，视觉模型可以认出机器人、道路和路缘。世界模型再往前问一步：如果机器人现在行动，局面会怎样变化——可以把它理解成 AI 脑中的简化模拟器。
+**说｜** 第三个词不是缩写，叫 **World Model，世界模型**。**LLM（大语言模型）**最典型的动作是预测下一段文字，视觉模型可以认出机器人、道路和路缘。世界模型再往前问一步：如果机器人现在行动，局面会怎样变化？可以把它理解成 AI 脑中的简化模拟器。
 
 **做｜** 从左到右走过三栏，再跟随 **NOW + ACTION → NEXT**。
+
+**转｜** 为什么只看清眼前还不够？我们让机器人准备走一步。
 
 **点｜** **Why predict?**
 
 #### English
 
-**LOOK |** **NEXT WORD → WHAT IS HERE → WHAT HAPPENS NEXT**.
+**LOOK |** **NEXT WORD → WHAT IS HERE → WHAT HAPPENS NEXT**
 
-**SAY |** World Model is not a short name. A language model guesses the next piece of text. A vision model sees what is in front of it. A world model asks a simple question: “If I do this, what may happen next?” Think of it as a small practice world inside the AI.
+**SAY |** Our third term isn’t a short name like MoE. It’s **World Model**. An **LLM, or large language model**, typically predicts the next piece of text. A vision model can identify the robot, road, and curb. A world model asks one more question: if the robot acts now, how will the scene change? Think of it as a simple simulator inside the AI.
 
-**DO |** Move across the three columns, then trace **NOW + ACTION → NEXT**.
+**DO |** Move across the three columns from left to right, then follow **NOW + ACTION → NEXT**.
+
+**TRANSITION |** Why isn’t seeing the scene enough? Let’s get the robot ready to move.
 
 **CLICK |** **Why predict?**
 
@@ -424,21 +486,25 @@
 
 **做｜** 先指左边识别出的物体，再越过问号指向三个动作。
 
-**点｜** **Watch it learn**
+**注意｜** 这里不是说**多模态模型**完全不会推理。
 
-**注意｜** 这里不是说多模态模型完全不会推理。
+**转｜** 要预测这些后果，模型得先学会变化是怎么发生的。
+
+**点｜** **Watch it learn**
 
 #### English
 
-**LOOK |** The model sees the scene, but the three possible moves still end in question marks.
+**LOOK |** **ROBOT · ROAD · CURB → ? AFTER A MOVE**
 
-**SAY |** Seeing the curb is useful. But a robot that moves must also ask what each move may do. Going left may take a longer way around. Going straight may get closer to the goal. Going right may hit the curb. Seeing the scene and guessing the result of an action are two different jobs.
+**SAY |** Seeing the curb is useful. But when the robot is about to move, it also needs to know, “What will happen if I go this way?” In the same scene, turning left may mean a longer route. Going straight may bring it closer to the goal. Turning right may hit the curb. Recognizing the present and predicting the results of an action are two different tasks.
 
-**DO |** Point to the three objects, then move past the question mark to the three possible moves.
+**DO |** Point to the objects identified on the left, then move past the question mark to the three actions.
 
-**NOTE |** This does not mean models that use text, pictures, and sound cannot think.
+**NOTE |** This does not mean **multimodal models** cannot reason.
 
-**CLICK |** **Watch it learn**.
+**TRANSITION |** To predict these results, the model first needs to learn how things change.
+
+**CLICK |** **Watch it learn**
 
 ### W3 · Learn
 
@@ -446,21 +512,37 @@
 
 **看｜** **WATCH → GUESS → CHECK → ADJUST**
 
-**说｜** 它先看很多真实经历：当时看到了什么、做了什么、后来发生了什么。训练时把结局遮住，让模型先猜，再揭开真实结果比较差异，并做一次小调整。大量重复以后，它会越来越会预测变化。
+**说｜** 这里先用一种训练方式来说明。它先看很多真实经历：当时看到了什么、做了什么、后来发生了什么。训练时把结局遮住，让模型先猜，再揭开真实结果比较差异，并做一次小调整。大量重复以后，它会越来越会预测变化。
+
+**补充（可选）｜** 训练方式并不只有这一种，数据也不只来自机器人。有的世界模型先从大量视频里学习物体和场景怎样变化，有的会结合动作和后续观测来训练。比如 **V-JEPA 2** 先从视频学习，再加入机器人交互数据，让模型能够预测特定动作的后果。
 
 **做｜** 沿四个编号指一次，最后停在 **many real sequences**。
+
+**注意｜** 这里展示的是简化流程。V-JEPA 2 的视频预训练与带动作条件的后续训练是两个阶段，不要讲成普通视频天然包含机器人控制指令。
+
+**[Sources]｜** Meta AI, [V-JEPA 2: video pre-training and action-conditioned training](https://ai.meta.com/blog/v-jepa-2-world-model-benchmarks/), 2025-06-11.
+
+**转｜** 学会以后，我们就能从同一个起点试几种动作。
 
 **点｜** **Try three actions**
 
 #### English
 
-**LOOK |** **01 WATCH → 02 GUESS → 03 CHECK → 04 ADJUST**.
+**LOOK |** **WATCH → GUESS → CHECK → ADJUST**
 
-**SAY |** We show the model many recordings. Each one shows the scene, the action, and what happened next. During training, we hide the ending and ask the model to guess. Then we show what really happened and let it learn from the difference. After many rounds, it gets better at guessing change.
+**SAY |** Here’s one way to train it. The model first sees many real experiences: what it saw, what action was taken, and what happened next. During training, we hide the ending and let the model predict it. Then we reveal the real result, compare the difference, and make a small update. After many rounds, it gets better at predicting how things change.
 
-**DO |** Follow the four numbered steps, then point to **many real sequences**.
+**EXTRA (OPTIONAL) |** There’s more than one way to train a world model, and the data doesn’t have to come from robots. Some models first learn how objects and scenes change by watching lots of videos. Others train on actions paired with later observations. For example, **V-JEPA 2** learns from video first, then adds robot interaction data to predict the results of specific actions.
 
-**CLICK |** **Try three actions**.
+**DO |** Follow the four numbered steps once, then stop at **many real sequences**.
+
+**NOTE |** This is a simplified training flow. V-JEPA 2 uses video pre-training and later action-conditioned training as two stages. Don’t suggest that ordinary video already includes robot control commands.
+
+**[Sources] |** Meta AI, [V-JEPA 2: video pre-training and action-conditioned training](https://ai.meta.com/blog/v-jepa-2-world-model-benchmarks/), 2025-06-11.
+
+**TRANSITION |** Once it learns, we can try different actions from the same starting point.
+
+**CLICK |** **Try three actions**
 
 ### W4 · Futures
 
@@ -472,17 +554,21 @@
 
 **做｜** 先停在 **REALITY HAS NOT MOVED**，再扫过三条未来和不同结果。
 
+**转｜** 如果不只看一步，而是往前看几步，就可以开始规划路线了。
+
 **点｜** **Plan before moving**
 
 #### English
 
-**LOOK |** The real robot stays at **SAME START** while three possible futures move.
+**LOOK |** **SAME START → THREE FUTURES**
 
-**SAY |** Now the model can start from one scene, try three actions in its head, and picture three results. The real robot has not moved. Only the possible futures move. The model can make some mistakes in its practice world before it chooses a move in the real world.
+**SAY |** Once the model can predict, we can start from the same present, try three different actions, and imagine three different futures. The real robot hasn’t moved at all. Only the imagined futures inside the model are moving. It can try things out in **simulation** before choosing its next step in the real world.
 
-**DO |** Stop at **REALITY HAS NOT MOVED**, then point across the three results.
+**DO |** Pause at **REALITY HAS NOT MOVED**, then move across the three futures and their different results.
 
-**CLICK |** **Plan before moving**.
+**TRANSITION |** If we look several steps ahead instead of just one, we can start planning a route.
+
+**CLICK |** **Plan before moving**
 
 ### W5 · Plan
 
@@ -494,15 +580,19 @@
 
 **做｜** 比较 A、B、C，停在 **SELECT B**，最后指向只执行一步。
 
+**转｜** 这里说的“想象”，一定得生成一段视频吗？
+
 **点｜** **What does it build?**
 
 #### English
 
-**LOOK |** The model checks routes **A, B, C** and picks **B**. The real robot makes only one move.
+**LOOK |** **SELECT B → EXECUTE IN REALITY: ONE ACTION**
 
-**SAY |** The model can think a few moves ahead and make several routes. It checks which route is safer and closer to the goal. Then it does only the first move from the best route. After that, it looks again and makes a new plan—like GPS after each turn.
+**SAY |** Predicting one action isn’t enough, so the system looks several steps ahead and builds a few routes. It compares which is safer and which gets closer to the goal. But in the real world, it only takes the first step on the best route. Then it checks reality and plans again, like GPS updating as your actual position changes.
 
-**DO |** Compare **A, B, C**, stop at **SELECT B**, then point to **EXECUTE IN REALITY — ONE ACTION**.
+**DO |** Compare A, B, and C, stop at **SELECT B**, then point to the single action taken in reality.
+
+**TRANSITION |** Does “imagining” the future have to mean making a video?
 
 **CLICK |** **What does it build?**
 
@@ -510,23 +600,27 @@
 
 #### 中文
 
-**看｜** **VISIBLE FUTURE / HIDDEN PREDICTIVE STATE**
+**看｜** **VISIBLE FUTURE / HIDDEN FUTURE · PREDICTIVE STATE**
 
-**说｜** 世界模型不一定都生成视频。有些会产生人能观看的未来画面，另一些只在内部保留位置、距离和目标进度等预测状态。只要这些信息足以判断动作是否安全、是否更接近目标，它就完成了同一种工作。
+**说｜** 世界模型不一定都生成视频。有些会产生人能观看的未来画面，另一些只在内部保留位置、距离和目标进度等**预测状态**。只要这些信息足以判断动作是否安全、是否更接近目标，它就完成了同一种工作。
 
 **做｜** 对比可见未来和隐藏状态，再把两边带到底部的共同问题。
+
+**转｜** 这两种形式，在真实研究里都有例子。
 
 **点｜** **Show real systems**
 
 #### English
 
-**LOOK |** **VISIBLE FUTURE** and **HIDDEN FUTURE** help answer the same question.
+**LOOK |** **VISIBLE FUTURE / HIDDEN FUTURE · PREDICTIVE STATE**
 
-**SAY |** Some world models make a future we can see as pictures or video. Others keep the future hidden and save only the facts they need. If the robot needs to know which move is safe, it does not need a pretty sky. It only needs the right facts to choose.
+**SAY |** A world model doesn’t have to generate video. Some create future scenes that people can watch. Others keep an internal **predictive state**, with information such as position, distance, and progress toward the goal. If that information is enough to judge whether an action is safe and gets closer to the goal, it does the same job.
 
-**DO |** Compare **VISIBLE FUTURE** with **HIDDEN FUTURE**, then point to the question below.
+**DO |** Compare the visible future with the hidden state, then bring both sides down to the shared question at the bottom.
 
-**CLICK |** **Show real systems**.
+**TRANSITION |** We can find both forms in real research.
+
+**CLICK |** **Show real systems**
 
 ### W7 · Examples
 
@@ -536,27 +630,35 @@
 
 **说｜** 真实研究也沿着这两条路发展：**Genie 3** 把预测环境做成可以观看和交互的世界，**V-JEPA 2** 则在隐藏状态里比较机器人动作。形式不同，但用途很接近：先模拟、测试和规划，再让系统进入现实。它们可以用于训练智能体、做“如果……会怎样”的测试，以及规划机器人动作。
 
+**补充（可选）｜** 机器人只是一个典型应用，不是唯一方向。还可以想一想物理学：如果 AI 能足够准确地模拟**物理规律**下的变化，物理学家就可以先在虚拟实验室里试很多方案，减少一部分昂贵的真实实验。但这不等于以后不用做实验了，关键结论仍要通过真实观测或实验来验证。
+
 **做｜** 让 Genie 3 视频播放，再从可见世界移到隐藏世界和下方三种用途。
 
-**点｜** **右下角全局下一页** → VLA。需要重播本概念时才点 **Replay World Model**。
+**注意｜** 这些仍是研究系统，不是完整物理世界的复制品。物理学部分是对更广义的学习式物理建模的展望，不是说 Genie 3 或 V-JEPA 2 已经能够替代物理实验。
 
-**注意｜** 这些仍是研究系统，不是完整物理世界的复制品。
+**[Sources]｜** Physics modeling: Sanchez-Gonzalez et al., [Learning to Simulate Complex Physics with Graph Networks](https://arxiv.org/abs/2002.09405), ICML 2020. Simulation followed by real-world validation: Google DeepMind, [Accelerating fusion science through learned plasma control](https://deepmind.google/blog/accelerating-fusion-science-through-learned-plasma-control/), 2022-02-16.
 
 **转｜** World Model 问“接下来可能怎样”；下一个词 VLA 问“这副身体现在该怎么动”。
 
+**点｜** **右下角全局下一页** → VLA。需要重播本概念时才点 **Replay World Model**。
+
 #### English
 
-**LOOK |** **Genie 3** shows a future world. **V-JEPA 2** keeps its future guess hidden.
+**LOOK |** **GENIE 3 / V-JEPA 2**
 
-**SAY |** Genie 3 shows a future world that people can see and use. V-JEPA 2 does not make a video. It keeps its guess hidden and uses it to compare robot actions. They look different, but both help a system try, check, and plan before it moves for real.
+**SAY |** Real research follows these two paths too. **Genie 3** turns a predicted environment into a world people can see and interact with. **V-JEPA 2** compares robot actions in a hidden state. They take different forms, but serve similar goals: simulate, test, and plan before acting in reality. Uses include training agents, running “what if” tests, and planning robot actions.
 
-**DO |** Let the Genie 3 video play, compare **VISIBLE WORLD** with **HIDDEN WORLD**, then point to the three uses.
+**EXTRA (OPTIONAL) |** Robots are one typical use, not the only one. Think about physics too. If AI could simulate changes under **physical laws** accurately enough, physicists could test many ideas in a virtual lab first. That could save some costly real experiments. But it wouldn’t mean we no longer need experiments. Key findings would still need checks against real observations or experiments.
 
-**NOTE |** These are research systems. They do not copy every rule of the real world.
+**DO |** Let the Genie 3 video play, then move from the visible world to the hidden world and the three uses below.
 
-**TRANSITION |** World Model asks, “What may happen next?” VLA asks, “What should this body do now?”
+**NOTE |** These are still research systems, not complete copies of the physical world. The physics example looks ahead to the broader field of learned physical modeling. It does not mean Genie 3 or V-JEPA 2 can already replace physics experiments.
 
-**CLICK |** Use **Replay World Model** only to start again. Otherwise, use the bottom-right arrow → **VLA**.
+**[Sources] |** Physics modeling: Sanchez-Gonzalez et al., [Learning to Simulate Complex Physics with Graph Networks](https://arxiv.org/abs/2002.09405), ICML 2020. Simulation followed by real-world validation: Google DeepMind, [Accelerating fusion science through learned plasma control](https://deepmind.google/blog/accelerating-fusion-science-through-learned-plasma-control/), 2022-02-16.
+
+**TRANSITION |** World Model asks, “What may happen next?” The next term, VLA, asks, “What should this body do now?”
+
+**CLICK |** Use the **bottom-right next-slide arrow** → **VLA**. Click **Replay World Model** only to replay this concept.
 
 ---
 
@@ -564,11 +666,11 @@
 
 #### 中文导入
 
-**导入｜** 有了对未来的判断，机器人还需要把看到的场景和人说的目标，真正翻译成身体动作。
+**导入｜** 接下来是另一个问题：机器人怎样把看到的场景和用语言表达的目标，变成身体动作？
 
 #### English lead-in
 
-**LEAD-IN |** Now AI turns a guess about the future into a real move.
+**LEAD-IN |** Now for another question: how can a robot turn the scene it sees and a goal given in language into physical actions?
 
 ### V1 · Name
 
@@ -576,19 +678,23 @@
 
 **看｜** **V + L → VLA → A**
 
-**说｜** VLA 是 **Vision-Language-Action，视觉—语言—动作**。视觉回答“眼前有什么”，语言告诉机器人“我要什么”，Action 回答“这副身体现在该怎么动”。它把场景和目标变成真实动作，而不只是描述或回答。
+**说｜** VLA 是 **Vision-Language-Action，视觉—语言—动作**。**Vision** 回答“眼前有什么”，**Language** 告诉机器人“我要什么”，**Action** 回答“这副身体现在该怎么动”。它把场景和目标变成真实动作，而不只是描述或回答。
 
 **做｜** 依次指向 **VISION → LANGUAGE → ACTION**，再走一遍底部公式。
+
+**转｜** 不过，目标说清楚了，身体就知道怎么做了吗？
 
 **点｜** **Why is that hard?**
 
 #### English
 
-**LOOK |** **VISION → LANGUAGE → ACTION**, joined as **V + L → VLA → A**.
+**LOOK |** **V + L → VLA → A**
 
-**SAY |** VLA means **Vision-Language-Action**. Vision tells the robot what is there. Language tells it what we want. Action is the move the body should make now.
+**SAY |** VLA means **Vision-Language-Action**. **Vision** answers, “What’s in front of me?” **Language** tells the robot, “This is what I want.” **Action** answers, “What should this body do now?” It turns the scene and the goal into real actions, not just descriptions or answers.
 
-**DO |** Move across **VISION → LANGUAGE → ACTION**, then trace the formula below.
+**DO |** Point to **VISION → LANGUAGE → ACTION** in order, then follow the formula at the bottom.
+
+**TRANSITION |** But does a clear goal mean the body knows how to do it?
 
 **CLICK |** **Why is that hard?**
 
@@ -602,17 +708,21 @@
 
 **做｜** 从一句指令移到三个问题，最后停在 **WHAT / HOW**。
 
+**转｜** 把这句话拆开，就能看到身体真正要完成的动作。
+
 **点｜** **Unpack the task**
 
 #### English
 
-**LOOK |** One sentence leaves the body asking **which object, what path, how much force, and when to stop**.
+**LOOK |** **1 SENTENCE ≠ WHICH? · HOW? · ENOUGH?**
 
-**SAY |** The goal is clear: “Put the orange block in the tray.” But the sentence does not tell the arm how to do it. The robot must find the right block and move around the object blocking the way. It must hold the block with the right force and know when to let go. Language says what we want. The body still has to work out how.
+**SAY |** “Put the orange block in the tray” makes the goal clear. But it doesn’t tell the robot arm exactly how to do it. The arm must find the right block, avoid obstacles, choose where to grip and how much force to use, and know when to let go. Language says what we want. The body still has to work out how.
 
-**DO |** Start at **1 SENTENCE**, move through **WHICH? → HOW? → ENOUGH?**, and end at **WHAT versus HOW**.
+**DO |** Move from the instruction to the three questions, then stop at **WHAT / HOW**.
 
-**CLICK |** **Unpack the task**.
+**TRANSITION |** Let’s break down that sentence to see the actions the body needs to take.
+
+**CLICK |** **Unpack the task**
 
 ### V3 · Steps
 
@@ -624,15 +734,19 @@
 
 **做｜** 沿六个动作依次指过去，停在 **1 GOAL → 6 COORDINATED MOVES**。
 
+**转｜** 这串动作不是凭空出现的，模型要从示范里学习。
+
 **点｜** **How does it learn?**
 
 #### English
 
-**LOOK |** One goal becomes **FIND → REACH → ALIGN → GRIP → LIFT → PLACE**.
+**LOOK |** **FIND → REACH → ALIGN → GRIP → LIFT → PLACE**
 
-**SAY |** When a body follows that sentence, one goal becomes many small moves. The robot finds the block and reaches around the object. It lines up its hand, grips the block, lifts it, and puts it in the tray.
+**SAY |** Give that sentence to a body, and it becomes a series of actions. Find the block, reach around the obstacle, line up, grip, lift, and place it in the tray. We can state the goal in one sentence, but the robot needs several actions to work together to finish it.
 
-**DO |** Follow the six numbered moves, then end at **1 GOAL → 6 COORDINATED MOVES**.
+**DO |** Follow the six actions in order, then stop at **1 GOAL → 6 COORDINATED MOVES**.
+
+**TRANSITION |** The model doesn’t get these actions out of nowhere. It learns from demonstrations.
 
 **CLICK |** **How does it learn?**
 
@@ -642,21 +756,37 @@
 
 **看｜** **WATCH → HIDE → GUESS → CHECK → ADJUST**
 
-**说｜** 先录下人类操控机器人完成任务的示范。训练时让模型看场景和目标，但藏住专家下一步，让它先猜，再揭开专家动作比较差异并调整。用很多示范重复这个过程，模型会越来越会选择下一步。
+**说｜** 这里展示的是从示范学习的一种方式。先录下人类操控机器人完成任务的示范。训练时让模型看场景和目标，但藏住示范者的下一步动作，让它先猜，再揭开示范动作比较差异并调整。用很多示范重复这个过程，模型会越来越会选择下一步。
 
-**做｜** 沿五个编号指过去，最后停在大量录制示范。
+**补充（可选）｜** VLA 也可以混合多种数据来训练，比如视频、真机示范和模拟数据。视频帮助它学习场景和任务；在实验室里实际操控机器人时，还能用摄像头和**传感器**同步记录画面、关节位置和夹爪状态，同时记录动作指令。再把这些记录和语言目标对齐，才能把“看懂”连接到“怎么动”。
+
+**做｜** 沿五个编号指过去，最后停在大量录制示范。这里的 **expert** 指示范者，不是 MoE 里的专家模块。
+
+**注意｜** 不同 VLA 的数据配方和传感器配置不同；不是传感器越多越好，也不能把普通视频等同于带动作记录的真机数据。这里列的是可选训练来源，不代表所有模型都必须使用全部来源。
+
+**[Sources]｜** NVIDIA, [GR00T N1: human video, real robot data, and simulated data](https://research.nvidia.com/publication/2025-03_nvidia-isaac-gr00t-n1-open-foundation-model-humanoid-robots), 2025-03-17. DROID, [Dataset schema: images, joint and gripper states, language instructions, and actions](https://droid-dataset.github.io/droid/the-droid-dataset.html).
+
+**转｜** 但学过示范，也不代表现场一定会照着剧本走。
 
 **点｜** **Let reality answer**
 
 #### English
 
-**LOOK |** A video of a person moving the robot becomes **WATCH → HIDE → GUESS → CHECK → ADJUST**.
+**LOOK |** **WATCH → HIDE → GUESS → CHECK → ADJUST**
 
-**SAY |** First, people control robots while we record them doing tasks. During training, we show the scene and the goal, but hide the person’s next move. The model guesses. Then we show the real move, check the difference, and let it learn. Many examples help it choose a better next move.
+**SAY |** Here’s one way to learn from demonstrations. First, we record people controlling robots to complete tasks. During training, the model sees the scene and the goal, but we hide the person’s next action. The model predicts it. Then we reveal the recorded action, compare the difference, and make an update. Repeating this with many demonstrations helps the model get better at choosing its next action.
 
-**DO |** Follow the five numbered steps, then point to **many recorded robot demonstrations**.
+**EXTRA (OPTIONAL) |** VLA training can mix several kinds of data, such as videos, real robot demonstrations, and simulated data. Videos help it learn about scenes and tasks. When people control a real robot in a lab, cameras and **sensors** can record images, joint positions, and gripper states together. We also record the action commands. We then match these records with the language goal, so the model can connect understanding the scene with choosing an action.
 
-**CLICK |** **Let reality answer**.
+**DO |** Follow the five numbered steps, then stop at the many recorded demonstrations. Here, **expert** means the person giving the demonstration, not an expert block in MoE.
+
+**NOTE |** Different VLA models use different data mixes and sensor setups. More sensors are not automatically better, and ordinary video is not the same as real robot data with action records. These are possible training sources; not every model needs all of them.
+
+**[Sources] |** NVIDIA, [GR00T N1: human video, real robot data, and simulated data](https://research.nvidia.com/publication/2025-03_nvidia-isaac-gr00t-n1-open-foundation-model-humanoid-robots), 2025-03-17. DROID, [Dataset schema: images, joint and gripper states, language instructions, and actions](https://droid-dataset.github.io/droid/the-droid-dataset.html).
+
+**TRANSITION |** But learning from demonstrations doesn’t mean everything will go as planned.
+
+**CLICK |** **Let reality answer**
 
 ### V5 · Feedback
 
@@ -668,19 +798,23 @@
 
 **做｜** 从滑落的方块跟到 **REALITY ANSWERS**，再落在重新抓取和循环上。
 
-**点｜** **Why is this harder than chat?**
-
 **注意｜** 这是网页示意，不是官方机器人录像。
+
+**转｜** 为什么必须不断纠正？因为动作错误会留下真实后果。
+
+**点｜** **Why is this harder than chat?**
 
 #### English
 
-**LOOK |** The block slips. The next camera picture shows it, and the arm moves left to grip again.
+**LOOK |** **BLOCK SLIPPED → SHIFT LEFT · RE-GRIP**
 
-**SAY |** The robot should not decide on one long move and never look again. Here, the block slips. The next camera picture shows the problem, so the arm changes its next move. The pattern is simple: move a little, look again, and fix.
+**SAY |** Even after learning the actions, the robot can’t just carry on without checking. Here, the arm tries to grip the block, but it slips. The next camera frame shows the failure, so the system changes its next action. It adjusts its position and grips again. The VLA pattern is: act a little, look again, and correct.
 
-**DO |** Follow **THE BLOCK SLIPPED → REALITY ANSWERS → SHIFT LEFT · RE-GRIP**, then point to the loop below.
+**DO |** Follow the slipped block to **REALITY ANSWERS**, then end at the new grip and the loop.
 
-**NOTE |** We made this scene for the web demo. It is not real robot video.
+**NOTE |** This is a web illustration, not official robot footage.
+
+**TRANSITION |** Why keep correcting? Because a wrong action has real consequences.
 
 **CLICK |** **Why is this harder than chat?**
 
@@ -690,21 +824,25 @@
 
 **看｜** **BAD WORD：UNDO / BAD MOTION：CONTACT ALREADY HAPPENED**
 
-**说｜** 这就是 VLA 比聊天更难的地方。错字可以删掉重写，但机械臂撞上东西时，接触已经发生。它还要理解三维空间，控制时机和力度，并依赖采集缓慢、昂贵且有安全要求的真实机器人数据。
+**说｜** 这就是 VLA 比聊天更难的地方。错字可以删掉重写，但机械臂撞上东西时，接触已经发生。它还要理解**三维空间**，控制时机和力度，并依赖采集缓慢、昂贵且有安全要求的真实机器人数据。
 
 **做｜** 先对比错字和错误动作，再扫过下方三个现实限制。
+
+**转｜** 带着这些限制，我们看一个宇树的真实演示。
 
 **点｜** **See a real system**
 
 #### English
 
-**LOOK |** **BAD WORD — UNDO** versus **BAD MOTION — CONTACT ALREADY HAPPENED**.
+**LOOK |** **BAD WORD: UNDO / BAD MOTION: CONTACT ALREADY HAPPENED**
 
-**SAY |** If a chatbot writes a bad word, we can delete it and try again. If a robot makes a bad move, it has already touched the real world. A VLA must understand where things are, when to move, and how much force to use. Real robot training is also slow and expensive. And the robot must stay safe.
+**SAY |** This is why VLA is harder than chat. We can delete a typo and rewrite it. But when a robot arm hits something, the contact has already happened. It also needs to understand **3D space** and control timing and force. And it relies on real robot data that is slow and costly to collect, with safety requirements too.
 
-**DO |** Compare the two failures, then point to the three hard parts below.
+**DO |** Compare the typo with the wrong action, then move across the three real-world limits below.
 
-**CLICK |** **See a real system**.
+**TRANSITION |** With these limits in mind, let’s watch a real demo from Unitree.
+
+**CLICK |** **See a real system**
 
 ### V7 · Example
 
@@ -716,38 +854,38 @@
 
 **做｜** 让 23 秒视频播放一次，先看桌面动作，再看人为干扰，最后扫过 **VISION → LANGUAGE → ACTION** 和右侧官方描述。
 
-**点｜** **右下角全局下一页** → Closing。需要重播本概念时才点 **Replay VLA**。
-
 **注意｜** 这是官方成功演示的剪辑节选，不是独立评测，也不能证明它在任何环境都可靠。公开视频没有清楚展示实际使用的语言指令。
 
 **[Sources]｜** Unitree Robotics, [Conference Room Mess Cleanup Test: Unitree WVLA 2.0 Model](https://www.youtube.com/watch?v=zqqIpVsMYkE), 2026-05-25.
 
 **转｜** 到这里，四个概念刚好连成一条路：先更高效地使用能力，再让 AI 从理解走向预测和行动。
 
+**点｜** **右下角全局下一页** → Closing。需要重播本概念时才点 **Replay VLA**。
+
 #### English
 
-**LOOK |** Official **Unitree WVLA 2.0** video, shown as three short excerpts.
+**LOOK |** **UNITREE WVLA 2.0 / THREE SHORT EXCERPTS**
 
-**SAY |** This is an official Unitree WVLA 2.0 demo. The full video is over three minutes. Unitree says the full demo was filmed in one take. The robot does many tasks, works on its own, and faces strong outside interference. We kept three short parts. It picks up an item, keeps working after a person pushes it, and then handles a different item. The point is not speed. The point is that one system turns the scene into a series of robot moves.
+**SAY |** This is an official demo of Unitree’s **WVLA 2.0**. The full video is over three minutes long. Unitree describes it as a one-take demo with multiple tasks, fully autonomous operation, and strong outside interference. We’ve kept three short clips: the robot picks up an item on the table, keeps working after a person pushes it, and then handles a different type of item. The point isn’t speed. It’s that one system can turn the scene into a series of physical actions.
 
-**DO |** Let the 23-second clip play once. Watch the table task, then the push, and finish at **VISION → LANGUAGE → ACTION** and the official description.
+**DO |** Let the 23-second clip play once. Watch the tabletop action, then the push, and finish at **VISION → LANGUAGE → ACTION** and the official description on the right.
 
-**NOTE |** This is an edited official demo, not an independent test. It does not prove the system works everywhere. The public video does not clearly show the language command.
+**NOTE |** These are edited clips of a successful official demo, not an independent test. They do not prove the system is reliable in every environment. The public video does not clearly show the actual language command used.
 
 **[Sources] |** Unitree Robotics, [Conference Room Mess Cleanup Test: Unitree WVLA 2.0 Model](https://www.youtube.com/watch?v=zqqIpVsMYkE), 2026-05-25.
 
-**TRANSITION |** These four ideas make one clear story. First, use model power with less waste. Then, move from seeing to planning and action.
+**TRANSITION |** These four ideas now form one clear story: use model capabilities more efficiently, then move AI from understanding to prediction and action.
 
-**CLICK |** Use **Replay VLA** only to start again. Otherwise, use the bottom-right arrow → **Closing**.
+**CLICK |** Use the **bottom-right next-slide arrow** → **Closing**. Click **Replay VLA** only to replay this concept.
 
 ---
 
 <details>
 <summary><strong>隐藏备选第三部分 / Hidden backup third part: FDE · RSI</strong></summary>
 
-> 中文：这部分不在当前 30 分钟路线中，但讲稿与演示仍完整保留。
+> 这部分不在当前 30 分钟路线中，但讲稿与演示仍完整保留。
 >
-> English: This part is not in the current 30-minute talk. The script and demos are still here.
+> This part is not in the current 30-minute route, but the notes and demos are kept in full.
 
 ## FDE
 
@@ -757,7 +895,7 @@
 
 #### English lead-in
 
-**LEAD-IN |** The next term is not a model. It is a job that helps AI work inside a real company. We will use a made-up **46 → blank** story.
+**LEAD-IN |** The next term is not a model. It’s a job that helps AI work inside a real company. We’ll explain it with a made-up **46 → blank** workflow.
 
 ### F1 · Name
 
@@ -769,17 +907,23 @@
 
 **做｜** 从 AI 产品经过 FDE 指到真实公司，停在 **JOB · NOT A MODEL**。
 
-**点｜** **Why does AI need one?**
-
 **注意｜** FDE 是职位，不是 AI 模型。
+
+**转｜** 为什么一个好模型，到了企业里还需要这份工作？
+
+**点｜** **Why does AI need one?**
 
 #### English
 
-**LOOK |** **AI PRODUCT → FDE → LIVE COMPANY**, with **JOB · NOT A MODEL**.
+**LOOK |** **AI PRODUCT → FDE → LIVE COMPANY**
 
-**SAY |** FDE means **Forward Deployed Engineer**. It is a job, not an AI model. Think of a smart machine arriving at a factory. Every factory has different plugs, doors, and ways of working. The FDE helps the machine fit in and actually work.
+**SAY |** FDE means **Forward Deployed Engineer**. Think of a standard AI product as a smart machine. But every company has different plugs, access controls, and ways of working. The FDE understands both the product and the work on site, and helps the machine connect and actually run.
 
-**DO |** Move from **AI PRODUCT** through **FDE** to **LIVE COMPANY**, then stop at **JOB · NOT A MODEL**.
+**DO |** Move from the AI product through FDE to the real company, then stop at **JOB · NOT A MODEL**.
+
+**NOTE |** FDE is a job, not an AI model.
+
+**TRANSITION |** Why does a good model still need this role when it enters a company?
 
 **CLICK |** **Why does AI need one?**
 
@@ -793,17 +937,21 @@
 
 **做｜** 跟随答案撞上由权限、审批、流程和负责人组成的墙。
 
+**转｜** 我们跟着一个具体数字，看它在哪里被卡住。
+
 **点｜** **Enter the real workflow**
 
 #### English
 
-**LOOK |** A good AI answer hits a **REALITY WALL** and never enters the real work process.
+**LOOK |** **GOOD ANSWER → REALITY WALL**
 
-**SAY |** In a demo, we give AI one clean file and get a good answer. In a real company, the AI needs access to the right system. The answer may also need a manager’s OK. It must follow the right work steps and reach a person in charge. The model got the answer right, but the company still cannot use it.
+**SAY |** In a demo, we give AI a clean file and quickly get a good answer. But in a real company, it must access the right system, get approval, and write the result back into the workflow. Someone also needs to own the result. The model has answered correctly, but the company still can’t use it. This is the reality wall the FDE helps break through.
 
-**DO |** Follow **ONE FILE → AI → GOOD ANSWER**, let it hit **REALITY WALL**, then end at **ANSWER NOT IN THE WORKFLOW**.
+**DO |** Follow the answer as it hits the wall of access, approval, workflow, and ownership.
 
-**CLICK |** **Enter the real workflow**.
+**TRANSITION |** Let’s follow one number and see where it gets stuck.
+
+**CLICK |** **Enter the real workflow**
 
 ### F3 · Workflow
 
@@ -815,17 +963,21 @@
 
 **做｜** 沿五个节点走一遍，再落到来源和线上结果的对比。
 
+**转｜** 找到断点后，还要把问题整理成能复现的证据。
+
 **点｜** **Follow one failure**
 
 #### English
 
-**LOOK |** **EMAIL 46 → SPREADSHEET 46 → AI 46 ✓ → APPROVAL → LIVE SYSTEM BLANK**.
+**LOOK |** **SOURCE 46 ≠ PRODUCTION BLANK**
 
-**SAY |** The email says 46. The spreadsheet says 46. The AI says 46. A person approves it. But the final system is blank. So an “AI failure” may not be the model’s fault. The value may get lost while moving from one system to another. The FDE follows 46 from step to step to find where it went missing.
+**SAY |** The email says 46 days. The spreadsheet says 46. The AI correctly reads 46, and approval goes through. But the final system is blank. So an “AI project failure” isn’t always a model failure. The value may have been lost during the final write-back. Like tracking a parcel, the FDE checks each stop to find where 46 went missing.
 
-**DO |** Follow all five stops, then move down to **SOURCE 46 ≠ PRODUCTION BLANK**.
+**DO |** Follow the five steps, then compare the source with the live result.
 
-**CLICK |** **Follow one failure**.
+**TRANSITION |** Once we find the break, we need clear evidence so others can reproduce the problem.
+
+**CLICK |** **Follow one failure**
 
 ### F4 · Evidence
 
@@ -837,15 +989,19 @@
 
 **做｜** 从 **NOT REPRODUCIBLE** 开始，把三项事实合成可重现案例。
 
+**转｜** 证据齐了，接下来是谁负责哪一部分？
+
 **点｜** **Who owns what?**
 
 #### English
 
-**LOOK |** “The AI got it wrong” becomes **SOURCE 46 + OUTPUT BLANK + EXPERT 46 ✓**.
+**LOOK |** **SOURCE 46 + OUTPUT BLANK + EXPERT 46 ✓**
 
-**SAY |** “The AI got it wrong” does not tell the product team what to fix. The FDE saves the source and the output we got. A person who knows the job gives the right answer. Now the team has a clear case it can run again and check.
+**SAY |** “The AI got it wrong” is just a complaint. The product team still doesn’t know what to fix. The FDE gathers the source, the actual output, and the correct answer confirmed by a **domain expert**. Now the complaint becomes a case that any engineer can reproduce and check.
 
-**DO |** Start with the complaint, then join the three facts into **REPRODUCIBLE CASE**.
+**DO |** Start at **NOT REPRODUCIBLE**, then combine the three facts into a case others can reproduce.
+
+**TRANSITION |** Now we have the evidence. Who takes care of each part?
 
 **CLICK |** **Who owns what?**
 
@@ -859,17 +1015,21 @@
 
 **做｜** 对比三个 **FINISH LINE**，再沿 **DISCOVER → CONNECT → DEPLOY → ADOPT** 指过去。
 
+**转｜** 分工清楚后，还得让这次经验留下来。
+
 **点｜** **Make the lesson reusable**
 
 #### English
 
-**LOOK |** Product Engineer, FDE, and Domain Expert have three different **FINISH LINE** goals.
+**LOOK |** **PRODUCT ENGINEER / FDE / DOMAIN EXPERT**
 
-**SAY |** An FDE is not just a product engineer with a bigger title. Product engineers build things many customers can use. People who know the business say what a correct result looks like. The FDE connects both sides until the real work process runs well and people use it. They are a team, not a ranking.
+**SAY |** These three roles work on the same problem, but have different finish lines. The **product engineer** builds capabilities that serve many customers. The **domain expert** defines what counts as correct. The **FDE** connects both sides until this company’s real workflow runs properly and people use it. They’re partners, not a ranking.
 
-**DO |** Compare the three goals, then follow **DISCOVER → CONNECT → DEPLOY → ADOPT**.
+**DO |** Compare the three **FINISH LINE** goals, then follow **DISCOVER → CONNECT → DEPLOY → ADOPT**.
 
-**CLICK |** **Make the lesson reusable**.
+**TRANSITION |** Once the roles are clear, we need to make sure the lesson lasts.
+
+**CLICK |** **Make the lesson reusable**
 
 ### F6 · Reuse
 
@@ -881,21 +1041,25 @@
 
 **做｜** 把 46 的故障带入 **CASE → TEST → FIX**，再移到 52 的结果。
 
-**点｜** **See a real deployment**
-
 **注意｜** 画面中的 52 是帮助理解的示意。
+
+**转｜** 这不只是示意，下面看一个真实部署案例。
+
+**点｜** **See a real deployment**
 
 #### English
 
-**LOOK |** **46 → BLANK** becomes **CASE → TEST → FIX**, and a later **52 → 52 ✓** succeeds.
+**LOOK |** **46 → BLANK → CASE → TEST → FIX → 52 ✓**
 
-**SAY |** If the FDE types 46 into the empty box every time, that person becomes a human patch. A better fix is to save the failure as a test and fix the product. Then, when a similar case uses 52, the system can handle it by itself. The lesson stays after the FDE leaves.
+**SAY |** If the FDE fills in 46 by hand every time, they become a permanent human patch. A better result is to turn this failure into a case and a test, then fix it in the product. When a similar case uses 52, the system writes it correctly on its own. The lesson doesn’t disappear when the FDE leaves.
 
-**DO |** Follow **46 → BLANK** into **CASE → TEST → FIX**, then move to **52 → 52 ✓**.
+**DO |** Bring the 46 failure into **CASE → TEST → FIX**, then move to the result for 52.
 
-**NOTE |** The number 52 is only an example.
+**NOTE |** The number 52 on screen is an illustration to help explain the idea.
 
-**CLICK |** **See a real deployment**.
+**TRANSITION |** This isn’t just an illustration. Let’s look at a real deployment.
+
+**CLICK |** **See a real deployment**
 
 ### F7 · Example
 
@@ -907,25 +1071,25 @@
 
 **做｜** 读 **7,000** 和 **25% → 86%**，再扫过底部团队闭环。
 
-**点｜** **右下角全局下一页** → RSI。需要重播本概念时才点 **Replay FDE**。
-
 **注意｜** 这不是某一个“英雄 FDE”独自带来的结果。
 
 **转｜** FDE 说明今天仍由人把现场失败带回产品；最后一个问题是，这条改进闭环未来能有多少由 AI 自己完成。
 
+**点｜** **右下角全局下一页** → RSI。需要重播本概念时才点 **Replay FDE**。
+
 #### English
 
-**LOOK |** A Tax AI test shows **7,000 returns** and **25% → 86%** in six weeks.
+**LOOK |** **7,000 RETURNS; 25% → 86%**
 
-**SAY |** OpenAI FDEs and researchers, Thrive engineers, and Crete tax experts worked together on Tax AI. The test handled 7,000 tax returns. At first, 25% of returns had at least 75% of their fields right. Six weeks later, that number was 86%. The point is that tax experts, real data, tests, and engineering all worked together.
+**SAY |** Finally, here’s a real deployment: Tax AI. OpenAI FDEs and researchers, Thrive engineers, and Crete tax experts worked together to improve the system. The pilot processed 7,000 tax returns. At launch, only 25% had at least 75% of their fields correct. Six weeks later, that share reached 86%. This shows why real data, people doing the work, evaluations, and engineering need to form an ongoing loop. That’s how a pilot leads to progress we can measure.
 
-**DO |** Read **7,000** and **25% → 86%**, then point across **PRACTITIONERS → FIELD DATA → EVALS → ENGINEERING**.
+**DO |** Read **7,000** and **25% → 86%**, then move across the team loop at the bottom.
 
-**NOTE |** This is a team result. One FDE did not do it alone.
+**NOTE |** This was not the work of one “hero FDE” acting alone.
 
-**TRANSITION |** Today, people close this learning loop. In the future, how much of it could AI close by itself?
+**TRANSITION |** FDE shows how people still bring real-world failures back into the product today. The last question is: how much of this improvement loop could AI handle itself in the future?
 
-**CLICK |** Use **Replay FDE** only to start again. Otherwise, use the bottom-right arrow → **RSI**.
+**CLICK |** Use the **bottom-right next-slide arrow** → **RSI**. Click **Replay FDE** only to replay this concept.
 
 ---
 
@@ -937,7 +1101,7 @@
 
 #### English lead-in
 
-**LEAD-IN |** The last term asks a bigger question: can AI help build a better next AI?
+**LEAD-IN |** We’ve just seen people help AI learn from real work. RSI asks whether AI could go further and help build its own next generation.
 
 ### R1 · Name — Meet RSI
 
@@ -949,17 +1113,21 @@
 
 **做｜** 从全称沿 **AI · N → RECIPE → AI · N+1** 走到问号。
 
+**转｜** 先分清楚：改好一个答案，和改进制造 AI 的方法，不是一回事。
+
 **点｜** **Show what must change**
 
 #### English
 
-**LOOK |** **R · S · I** opens beside **AI · N → RECIPE → AI · N+1**. A question mark sits on the way back.
+**LOOK |** **R · S · I → Recursive Self-Improvement**
 
-**SAY |** RSI means **Recursive Self-Improvement**. The full name sounds hard, so think of a recipe for making AI. One AI helps improve that recipe. We use the new recipe to build the next AI. “Recursive” means the next AI can improve the recipe again.
+**SAY |** RSI means **Recursive Self-Improvement**. Think of the process for building AI as a recipe. This generation of AI helps improve the recipe, and we use it to build the next generation. “Recursive” means the next generation must be able to improve that recipe again.
 
-**DO |** Point to the full name, then trace **AI · N → RECIPE → AI · N+1**.
+**DO |** Start at the full name, then follow **AI · N → RECIPE → AI · N+1** to the question mark.
 
-**CLICK |** **Show what must change**.
+**TRANSITION |** First, fixing one answer is not the same as improving how we build AI.
+
+**CLICK |** **Show what must change**
 
 ### R2 · Difference — Answer ≠ Recipe
 
@@ -971,17 +1139,21 @@
 
 **做｜** 先指修好的答案，再越过 **≠** 指向没有变化的菜谱。
 
+**转｜** 完整 RSI 先放一边，我们看看今天已经能跑起来的改进循环。
+
 **点｜** **Run today's loop**
 
 #### English
 
-**LOOK |** One answer changes from **WRONG** to **FIXED**, but **BUILD RECIPE · STILL v1**.
+**LOOK |** **ANSWER FIXED ≠ BUILD RECIPE STILL v1**
 
-**SAY |** AI can fix one wrong answer, but that is not RSI. It is like fixing one meal but leaving the recipe unchanged. Full self-improvement must improve the way we build the next AI.
+**SAY |** Fixing one AI answer is useful, but it isn’t RSI. It’s like fixing one dish while leaving the recipe unchanged. Real self-improvement must leave us with a better method for building the next AI.
 
-**DO |** Point to the fixed answer, the large **≠**, and then the unchanged recipe.
+**DO |** Point to the fixed answer, then move past **≠** to the unchanged recipe.
 
-**CLICK |** **Run today's loop**.
+**TRANSITION |** Let’s set full RSI aside and look at the improvement loop we can run today.
+
+**CLICK |** **Run today's loop**
 
 ### R3 · Method — Today's Loop
 
@@ -993,17 +1165,21 @@
 
 **做｜** 从 **GOAL、TEST** 移到 B 的叉，再停在赢家 C 和 **REPEAT**。
 
+**转｜** 这样的循环，已经带来了哪些具体改进？
+
 **点｜** **See a real result**
 
 #### English
 
-**LOOK |** People set **GOAL** and **TEST**. AI tries A, B, and C, then keeps the winner that passes the test.
+**LOOK |** **GOAL + TEST → A / B / C → KEEP C → REPEAT**
 
-**SAY |** Today, people set the goal and the test. AI tries versions A, B, and C. The test checks each one, and the best correct version starts the next round. A fast answer still loses if it is wrong. Then the process starts again.
+**SAY |** Here’s what we can already do today. People set the task and the scoring rules. AI tries many versions, and external tests check them. The winner becomes the starting point for the next round. Even if B is the fastest, it still gets rejected if its result is wrong.
 
-**DO |** Point to **GOAL**, **TEST**, the X on B, winner C, and **REPEAT**.
+**DO |** Move from **GOAL** and **TEST** to the X on B, then stop at winner C and **REPEAT**.
 
-**CLICK |** **See a real result**.
+**TRANSITION |** What real improvements has this kind of loop already made?
+
+**CLICK |** **See a real result**
 
 ### R4 · Result — Real Result
 
@@ -1011,25 +1187,29 @@
 
 **看｜** **ONE ROUTINE +23% → WHOLE TRAINING −1% TIME**
 
-**说｜** AlphaEvolve 是一个有边界的“AI 改进 AI”案例。Google DeepMind 公布，它让 Gemini 训练中一个反复运行的矩阵乘法程序加速 23%，使整次训练用时减少约 1%。这说明 AI 已经能帮助改进制造 AI 流程中的一个部分。
+**说｜** AlphaEvolve 是一个有边界的“AI 改进 AI”案例。Google DeepMind 公布，它让 Gemini 训练中一个反复运行的**矩阵乘法**程序加速 23%，使整次训练用时减少约 1%。这说明 AI 已经能帮助改进制造 AI 流程中的一个部分。
 
 **做｜** 先指局部的 **+23%**，再跟到整次训练的 **−1%**。
 
-**点｜** **Find the human boundary**
-
 **注意｜** 这是完整 RSI 所需的一种能力，不是完整 RSI 的证明。
+
+**转｜** 不过，局部改进已经发生，不代表整个循环都交给了 AI。
+
+**点｜** **Find the human boundary**
 
 #### English
 
-**LOOK |** **ONE REPEATED MATH ROUTINE · +23%** reaches **WHOLE GEMINI TRAINING RUN · −1% TIME**.
+**LOOK |** **ONE ROUTINE +23% → WHOLE TRAINING −1% TIME**
 
-**SAY |** Google DeepMind says AlphaEvolve made one math step used many times in Gemini training 23 percent faster. This cut the full training time by about 1 percent. So AI can already help improve one small part of how we build AI.
+**SAY |** AlphaEvolve is a limited example of AI helping improve AI. Google DeepMind reported that it sped up a **matrix multiplication** routine used repeatedly in Gemini training by 23%. That cut the time for the whole training run by about 1%. It shows that AI can already help improve one part of the process for building AI.
 
-**DO |** Point to **+23%**, then follow it to **−1% TIME**.
+**DO |** Point to the local **+23%** gain, then follow it to **−1%** for the whole training run.
 
-**NOTE |** This is a small, limited AI-for-AI result. It is not full RSI.
+**NOTE |** This is one capability that full RSI would need, not proof of full RSI.
 
-**CLICK |** **Find the human boundary**.
+**TRANSITION |** But improving one part doesn’t mean AI is in charge of the whole loop.
+
+**CLICK |** **Find the human boundary**
 
 ### R5 · Boundary — Human Boundary
 
@@ -1041,17 +1221,21 @@
 
 **做｜** 先指人的三个决定，再指框内的 AI 搜索区域。
 
+**转｜** 如果要称为完整 RSI，还缺哪一步？
+
 **点｜** **Test full RSI**
 
 #### English
 
-**LOOK |** AI tries ideas inside a box. People still hold **DIRECTION · TEST · GO / STOP**.
+**LOOK |** **DIRECTION / TEST / GO · STOP**
 
-**SAY |** The AI can search inside the box, but people still make three big choices. They choose what to improve, what counts as better, and whether to use the result. So today’s process still has clear human limits.
+**SAY |** Today’s AI still searches inside a box built by people. People decide what to improve, what counts as better, and whether the result can be used. So this is AI-assisted improvement with clear limits, not fully autonomous self-improvement.
 
-**DO |** Point to the three human choices, then the AI search area inside the box.
+**DO |** Point to the three human decisions, then to the AI search area inside the box.
 
-**CLICK |** **Test full RSI**.
+**TRANSITION |** What step is still missing before we can call this full RSI?
+
+**CLICK |** **Test full RSI**
 
 ### R6 · Full RSI — Full RSI Test
 
@@ -1063,29 +1247,29 @@
 
 **做｜** 沿完整路径走一遍，最后停在尚未接上的回程接口。
 
-**点｜** **右下角全局下一页** → Closing。需要重播本概念时才点 **Replay RSI**。
-
 **注意｜** 最后连接尚未被证明，也并非必然发生。
 
 **转｜** 六个词看起来差别很大，但它们都出现于 AI 撞上一种新的难题之后。
 
+**点｜** **右下角全局下一页** → Closing。需要重播本概念时才点 **Replay RSI**。
+
 #### English
 
-**LOOK |** **AI · N → recipe v2 → AI · N+1**, but the line back is not complete.
+**LOOK |** **AI · N → RECIPE v2 → AI · N+1 → ?**
 
-**SAY |** For full RSI, AI · N would improve the recipe. That recipe would build AI · N+1. Then N+1 would have to improve the recipe again. Only then would the loop truly repeat by itself. If that ever happens, AI research could speed up. But we do not know if it will happen.
+**SAY |** Here’s the test for full RSI. AI · N improves the recipe. The new recipe builds AI · N+1, and N+1 can improve the recipe again. Only then is the loop truly recursive. If that loop closes in the future, it could make AI research faster. But that’s a possibility, not a prediction.
 
-**DO |** Follow the possible path, then follow the line back to **N+1 REPEATS IT · not demonstrated**.
+**DO |** Follow the full path, then stop at the return link that is still not connected.
 
-**NOTE |** Full RSI has not been shown. It may never happen.
+**NOTE |** The final link has not been demonstrated, and it is not guaranteed to happen.
 
-**TRANSITION |** These terms look different, but each one tries to solve a new problem for AI.
+**TRANSITION |** These six terms look very different, but each appeared when AI ran into a new problem.
 
-**CLICK |** Use **Replay RSI** only to start again. Otherwise, use the bottom-right arrow → **Closing**.
-
-</details>
+**CLICK |** Use the **bottom-right next-slide arrow** → **Closing**. Click **Replay RSI** only to replay this concept.
 
 ---
+
+</details>
 
 ## C · Closing
 
@@ -1101,10 +1285,10 @@
 
 ### English
 
-**LOOK |** **FOUR TERMS · TWO SHIFTS**: bigger to smarter, answers to actions.
+**LOOK |** **Four terms. Two shifts.**
 
-**SAY |** MoE and distillation show how models can do more with less work. World models and VLA move AI from seeing what is there to making plans and taking action. Together, these four ideas show that AI is not only getting bigger. It is also learning to use its power better and do more in the real world.
+**SAY |** Let’s bring the four terms back into one picture. MoE and distillation ask how to use model capabilities more efficiently. World Model and VLA ask how to move from understanding to prediction and action. Together, they show that AI isn’t just about bigger models. It’s also about using those capabilities more wisely and bringing AI closer to the real world.
 
-**DO |** Move from left to right across the two columns, then end at **BIGGER → SMARTER** and **ANSWERS → ACTIONS**.
+**DO |** Move across the two columns from left to right, then stop at **BIGGER → SMARTER** and **ANSWERS → ACTIONS**.
 
-**CLICK |** None.
+**CLICK |** No click needed.
