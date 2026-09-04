@@ -27,11 +27,14 @@
 - **转 / TRANSITION** 是接到下一页的一句口播，先说再点击；不必额外再总结一次当前页。
 - **补充（可选）/ EXTRA (OPTIONAL)** 可接在本页 **说 / SAY** 后面，时间不够就跳过。W3 补充训练方式与视频数据，W7 补充物理学的应用展望，V4 补充视频、真机传感器采集和模拟数据。
 - **看、做、点、注意 / LOOK, DO, CLICK, NOTE** 和来源是演讲者提示，不用念出来。
+- 先解释画面，再解释概念：首次出现时交代颜色和符号；工单先说具体事件；训练页先指出预测与示范的差异。
+- World Model 的分工：**W2 提出问题 → W3 学习预测 → W4 比较动作后果 → W5 根据目标选择路线**。W4 的三个 future 是同一个下一刻的备选结果；W5 才将预测接成路线，并展示只执行第一步后重新规划。
 
 | 中文术语 | 英文保留用词 |
 | --- | --- |
 | 上下文 | context |
 | 意图 | intent |
+| 矛盾 | contradiction |
 | 参数 | parameters |
 | 稠密模型 | dense model |
 | 路由器 | router |
@@ -39,6 +42,9 @@
 | 教师模型 / 学生模型 | teacher model / student model |
 | 推理数据 | reasoning data |
 | 预测状态 | predictive state |
+| 预测 / 规划 | prediction / planning |
+| 规划器 | planner |
+| 动作 / 未来结果 | action / future |
 | 物理规律 | physical laws |
 | 传感器 | sensors |
 

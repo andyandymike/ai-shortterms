@@ -78,7 +78,7 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 **看｜** 黄色任务单进入大楼，所有窗口一起亮起。
 
-**说｜** 语言模型不断预测下一个 **token**，也就是一小段文本。可以把这个黄色 token 想成一张任务单，把模型想成一家公司。**稠密模型**处理每张任务单时，同一整块计算都要参与。就像任务再小，也让全公司一起上班。
+**说｜** 语言模型不断预测下一个 **token**，也就是一小段文本。上面整句话是**上下文（context）**，黄色的 **because** 是当前处理的 token。这里把它画成一张任务单，把模型画成一家公司。**稠密模型**处理每张任务单时，同一整块计算都要参与，所以所有窗口一起亮起。就像任务再小，也让全公司一起上班。
 
 **做｜** 从高亮 token 指到任务单，再扫过全部亮起的窗口。
 
@@ -90,7 +90,7 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 **LOOK |** The yellow work ticket enters the building, and all the windows light up.
 
-**SAY |** A language model keeps predicting the next **token**, a small piece of text. Think of the yellow token as a work ticket, and the model as a company. In a **dense model**, the same full compute block works on every ticket. It’s like calling in the whole company, even for a tiny task.
+**SAY |** A language model keeps predicting the next **token**, a small piece of text. The full sentence at the top is the **context**. The yellow word **because** is the current token being processed. Here, we show it as a work ticket and the model as a company. In a **dense model**, the same full compute block works on every ticket, so all the windows light up. It’s like calling in the whole company, even for a tiny task.
 
 **DO |** Point from the highlighted token to the work ticket, then across all the lit windows.
 
@@ -102,11 +102,11 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 #### 中文
 
-**看｜** 任务单大小不变，大楼和账单同时变大。
+**看｜** 任务单大小不变，右侧增加办公室；**CAPACITY ↑ / WORK / TOKEN ↑**。
 
-**说｜** 为了让模型懂得更多，我们不断把公司做大。问题是，公司每扩一层，每张小任务单都要多叫一层人来上班。能力增加了，但每次处理任务的成本也一起增加。
+**说｜** 为了增加模型容量，我们给这家公司增加办公室。看右边，两支上箭头分别表示总容量和每个 token 的计算量。任务单没有变大，但在稠密模型里，新增的计算也要参与每次处理，所以两者一起上升。公司更大了，每次做同一张小任务单也更费计算。
 
-**做｜** 一边停在不变的任务单，一边沿大楼和账单的增长方向移动。
+**做｜** 先指不变的任务单，再指右侧新增办公室，最后对比两支上箭头。
 
 **转｜** 能不能保留大公司的能力，却不用每次全员上班？
 
@@ -114,11 +114,11 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 #### English
 
-**LOOK |** The ticket stays the same size, while the building and the bill grow.
+**LOOK |** The ticket stays the same size, while more offices appear on the right: **CAPACITY ↑ / WORK / TOKEN ↑**.
 
-**SAY |** We keep making the company bigger so the model can know more. But each time we add a floor, every small ticket calls in that floor’s staff too. The model gains more capabilities, but each task also costs more.
+**SAY |** To give the model more capacity, we add offices to the company. Look at the two arrows on the right: one shows total capacity, and the other shows computation per token. The ticket hasn’t grown. But in a dense model, the added computation takes part every time, so both go up. The company gets bigger, and each small ticket takes more computation.
 
-**DO |** Pause at the unchanged ticket, then follow the growing building and bill.
+**DO |** Point to the unchanged ticket, then the new offices on the right, and finally the two upward arrows.
 
 **TRANSITION |** Can we keep the big company’s skills without calling everyone in each time?
 
@@ -302,9 +302,9 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 **看｜** **Fantastic / Love → PRAISE → WRONG**
 
-**说｜** 先让学生自己试一次。它看到 “Fantastic” 和 “Love” 就以为客户在表扬，但 “again” 和 “client demo” 暗示这其实是一句讽刺投诉。学生认识单词，却漏掉了整句话的**意图**。
+**说｜** 先看这张演示工单。客户说：“太棒了，给客户演示时 VPN 又断了，真喜欢这次更新。”事情是网络再次断开，表扬的话其实是在说反话。学生却只看到 **Fantastic** 和 **Love**，判断为表扬，还回复“很高兴听到这个消息”。它认识单词，却漏掉了**上下文**和真正的**意图**。
 
-**做｜** 先指正面词，再指失败线索，最后停在红色 **WRONG**。
+**做｜** 先指完整工单和 VPN 再次断开的事实，再指正面词，最后停在学生的错误回复和 **WRONG**。
 
 **注意｜** 这张工单是演示案例，不是公开的真实训练样本。
 
@@ -316,9 +316,9 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 **LOOK |** **Fantastic / Love → PRAISE → WRONG**
 
-**SAY |** Let’s let the student try on its own first. It sees “Fantastic” and “Love” and thinks the customer is giving praise. But “again” and “client demo” suggest this is actually a sarcastic complaint. The student knows the words but misses the **intent** of the whole sentence.
+**SAY |** First, look at this demo ticket. The customer says, “Fantastic. The VPN disconnected again during the client demo. Love this update.” The connection failed again, so the positive words are actually sarcasm. But the student only notices **Fantastic** and **Love**, labels it as praise, and replies, “Glad to hear it!” It knows the words but misses the **context** and the real **intent**.
 
-**DO |** Point to the positive words, then the clues to the mistake, and end at the red **WRONG**.
+**DO |** Point to the full ticket and the repeated VPN failure, then the positive words, and finally the student’s wrong reply and **WRONG**.
 
 **NOTE |** This ticket is a demo example, not a real training sample from a public dataset.
 
@@ -332,7 +332,7 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 **看｜** **INTENT → WHY → ACTION**
 
-**说｜** 教师不只给出“投诉”这个标签，而是把答案变成可学习的教材。它说明客户真正的**意图**、为什么这样判断，以及客服下一步应该做什么。学生学到的不只是结论，还有线索和处理方式。
+**说｜** 教师把这张工单整理成三部分教材。第一是**意图**：客户在投诉，不是在表扬。第二是原因：说的是好话，发生的却是重复故障，这个矛盾说明它是反话。第三是行动：先道歉，把 VPN 故障转给负责团队，再索取会话编号来查问题。学生要学的是怎样判断、怎样回应，不只是“投诉”这个标签。
 
 **做｜** 从矛盾线索指到 **SARCASM**，再向下走过三段教材。
 
@@ -344,7 +344,7 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 **LOOK |** **INTENT → WHY → ACTION**
 
-**SAY |** The teacher doesn’t just give the label “complaint.” It turns the answer into a lesson the student can learn from. It explains the customer’s real **intent**, why it reads the message that way, and what the support team should do next. The student learns the clues and how to respond, not just the final answer.
+**SAY |** The teacher turns this ticket into a lesson with three parts. First, the **intent**: the customer is complaining, not giving praise. Second, the reason: positive words describe a repeated failure. That contradiction points to sarcasm. Third, the action: apologize, send the VPN issue to the right team, and ask for the session ID to help check the problem. The student needs to learn how to judge the message and respond, not just the label “complaint.”
 
 **DO |** Point from the conflicting clues to **SARCASM**, then move down the three parts of the lesson.
 
@@ -358,7 +358,7 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 **看｜** **BEFORE：positive word → praise；AFTER：context → contradiction → intent**
 
-**说｜** 一份教材不会让学生立刻学会。每次训练都比较学生的猜测和教师教材，不一致就让学生内部的**参数**做一点小调整。很多不同说法重复以后，它才会丢掉“正面词等于表扬”的坏捷径，改为结合**上下文**判断**意图**。
+**说｜** 每次训练都比较学生的猜测和教师教材，不一致就让学生内部的**参数**做一点小调整。用很多不同例子重复后，再看右边的变化：以前是“正面词等于表扬”；现在是先看**上下文**，发现“表扬的话”和“失败的事情”之间的**矛盾**，再判断真正的**意图**。画面的三步就是 context、contradiction、intent。
 
 **做｜** 扫过多份教材，再对比 **BEFORE** 与 **AFTER MANY LESSONS**。
 
@@ -370,7 +370,7 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 **LOOK |** **BEFORE: positive word → praise; AFTER: context → contradiction → intent**
 
-**SAY |** One lesson won’t teach the student everything at once. In each training step, we compare its guess with the teacher’s lesson. If they differ, we make a small change to the student’s **parameters**. After many examples with different wording, it can drop the bad shortcut that “positive words mean praise.” Instead, it uses **context** to work out the **intent**.
+**SAY |** In each training step, we compare the student’s guess with the teacher’s lesson. If they differ, we make a small change to the student’s **parameters**. After many different examples, look at the change on the right. Before, positive words meant praise. Now, it checks the **context**, finds the **contradiction** between positive words and a failure, and works out the real **intent**. Those are the three steps on screen: context, contradiction, intent.
 
 **DO |** Move across the lessons, then compare **BEFORE** with **AFTER MANY LESSONS**.
 
@@ -384,7 +384,7 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 **看｜** **TEACHER OFFLINE / SMALL STUDENT RUNS ALONE**
 
-**说｜** 现在把教师拿走，再给学生一张措辞和问题都不同的新工单。学生仍能独立识别投诉，并给出合适的处理建议。蒸馏的关键就在这里：学生把学到的行为留在自己的**参数**里，部署后自己工作。
+**说｜** 现在教师离线了，学生收到一张新工单：“真棒，重置链接发到我这里的时候，已经过期了。”这次不再是 VPN 问题，学生仍能识别投诉，回复说会补发链接并检查延迟原因。它不是背下上一张工单，而是把学到的处理方式留在自己的**参数**里，部署后独立工作。
 
 **做｜** 从离线教师移到新消息，最后停在独立运行的学生和正确判断。
 
@@ -398,7 +398,7 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 **LOOK |** **TEACHER OFFLINE / SMALL STUDENT RUNS ALONE**
 
-**SAY |** Now we take the teacher away and give the student a new ticket with different wording and a different problem. The student can still identify the complaint on its own and suggest a suitable response. This is the key to distillation: the learned behavior stays in the student’s own **parameters**. It works on its own after deployment.
+**SAY |** Now the teacher is offline, and the student gets a new ticket: “Wonderful—my reset link arrived after it had already expired.” This time, the problem isn’t the VPN. The student still recognizes the complaint and replies that it will send a new link and check the delay. It hasn’t just memorized the previous ticket. The learned behavior stays in its own **parameters**, so it can work alone after deployment.
 
 **DO |** Move from the offline teacher to the new message, then end at the student running alone and its correct answer.
 
@@ -456,7 +456,7 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 **看｜** **NEXT WORD → WHAT IS HERE → WHAT HAPPENS NEXT**
 
-**说｜** 第三个词不是缩写，叫 **World Model，世界模型**。**LLM（大语言模型）**最典型的动作是预测下一段文字，视觉模型可以认出机器人、道路和路缘。世界模型再往前问一步：如果机器人现在行动，局面会怎样变化？可以把它理解成 AI 脑中的简化模拟器。
+**说｜** 第三个词是 **World Model，世界模型**。先认一下图：红色菱形是机器人，蓝色区域是目标，红白条纹是路缘。左边的 **LLM（大语言模型）**预测下一段文字；中间的视觉模型认出眼前有什么；右边的世界模型预测采取动作后会怎样变化。可以把它理解成 AI 脑中的简化模拟器。
 
 **做｜** 从左到右走过三栏，再跟随 **NOW + ACTION → NEXT**。
 
@@ -468,7 +468,7 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 **LOOK |** **NEXT WORD → WHAT IS HERE → WHAT HAPPENS NEXT**
 
-**SAY |** Our third term isn’t a short name like MoE. It’s **World Model**. An **LLM, or large language model**, typically predicts the next piece of text. A vision model can identify the robot, road, and curb. A world model asks one more question: if the robot acts now, how will the scene change? Think of it as a simple simulator inside the AI.
+**SAY |** Our third term is **World Model**. First, a quick guide to the picture: the red diamond is the robot, the blue area is the goal, and the red-and-white strip is the curb. On the left, an **LLM, or large language model**, predicts the next piece of text. In the middle, a vision model identifies what is there. On the right, a world model predicts how the scene changes after an action. Think of it as a simple simulator inside the AI.
 
 **DO |** Move across the three columns from left to right, then follow **NOW + ACTION → NEXT**.
 
@@ -482,7 +482,7 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 **看｜** **ROBOT · ROAD · CURB → ? AFTER A MOVE**
 
-**说｜** 看见路缘当然有用，但机器人真正要行动时，还要知道“如果我这样走，会发生什么”。同一张画面里，左转可能绕远，直走可能接近目标，右转可能撞上路缘。也就是说，识别现在和预测动作后果是两个不同任务。
+**说｜** 左边已经认出了机器人、道路和路缘。但看右边：左转、直走、右转之后会怎样，仍然都是问号。只知道眼前有什么，还不能直接知道动作会带来什么后果。这页提出的问题是：行动之前，能不能先预测结果？
 
 **做｜** 先指左边识别出的物体，再越过问号指向三个动作。
 
@@ -496,7 +496,7 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 **LOOK |** **ROBOT · ROAD · CURB → ? AFTER A MOVE**
 
-**SAY |** Seeing the curb is useful. But when the robot is about to move, it also needs to know, “What will happen if I go this way?” In the same scene, turning left may mean a longer route. Going straight may bring it closer to the goal. Turning right may hit the curb. Recognizing the present and predicting the results of an action are two different tasks.
+**SAY |** On the left, we’ve identified the robot, road, and curb. But look at the right: what happens after turning left, going straight, or turning right? Each one is still a question mark. Knowing what is there doesn’t directly tell us what an action will cause. This page asks: can we predict the result before we act?
 
 **DO |** Point to the objects identified on the left, then move past the question mark to the three actions.
 
@@ -548,25 +548,29 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 #### 中文
 
-**看｜** **SAME START → THREE FUTURES**
+**看｜** **SAME START → THREE POSSIBLE FUTURES · t+1；NO ROUTE CHOSEN**。
 
-**说｜** 学会预测后，可以把三个不同动作接到同一个现在，想象三个不同未来。真实机器人一次也没有动，移动的只是模型里的想象。它可以先在模拟中试错，再决定现实里走哪一步。
+**说｜** 左边是同一个起点，真实机器人还没有动。右边三个 **future** 不是连续的三步，而是同一个下一刻的三种可能：向左，安全但偏离目标；直走，安全并接近蓝色目标区；向右，会碰到路缘。这页只做**预测**：告诉我们每个**动作**可能带来什么结果，还没有选择路线。
 
-**做｜** 先停在 **REALITY HAS NOT MOVED**，再扫过三条未来和不同结果。
+**做｜** 先停在 **REALITY HAS NOT MOVED**；再逐一指三个动作、各自的结果，以及相同的 **t+1**；最后停在 **NO ROUTE CHOSEN**。
 
-**转｜** 如果不只看一步，而是往前看几步，就可以开始规划路线了。
+**注意｜** 这里用单步预测展示动作后果，但预测本身也可以跨多步。W4 的任务是预测后果，W5 的任务是利用预测和目标来选择行动。
+
+**转｜** 知道每个动作可能带来什么，还不等于知道该怎么走。接下来，我们把预测连起来，用目标选路线。
 
 **点｜** **Plan before moving**
 
 #### English
 
-**LOOK |** **SAME START → THREE FUTURES**
+**LOOK |** **SAME START → THREE POSSIBLE FUTURES · t+1; NO ROUTE CHOSEN**.
 
-**SAY |** Once the model can predict, we can start from the same present, try three different actions, and imagine three different futures. The real robot hasn’t moved at all. Only the imagined futures inside the model are moving. It can try things out in **simulation** before choosing its next step in the real world.
+**SAY |** On the left, we have the same starting point. The real robot hasn’t moved. The three **futures** on the right are not three steps in a row. They are three possible results at the same next moment: turn left and stay safe, but move away from the goal; go straight and stay safe while getting closer to the blue goal; turn right and hit the curb. This is **prediction**: what might happen after each **action**. We haven’t chosen a route yet.
 
-**DO |** Pause at **REALITY HAS NOT MOVED**, then move across the three futures and their different results.
+**DO |** Pause at **REALITY HAS NOT MOVED**. Point to each action, its result, and the same **t+1** label. End at **NO ROUTE CHOSEN**.
 
-**TRANSITION |** If we look several steps ahead instead of just one, we can start planning a route.
+**NOTE |** This page uses one-step predictions to show action results, but prediction can also cover multiple steps. W4 predicts results; W5 uses predictions and a goal to choose actions.
+
+**TRANSITION |** Knowing what each action might do is not the same as choosing a route. Next, we connect the predictions and use the goal to choose a route.
 
 **CLICK |** **Plan before moving**
 
@@ -574,11 +578,15 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 #### 中文
 
-**看｜** **SELECT B → EXECUTE IN REALITY：ONE ACTION**
+**看｜** **t+1 → t+2 → t+3；SELECT B → ONE ACTION → LOOK AGAIN · REPLAN**。
 
-**说｜** 一个动作的预测还不够，所以系统会继续向前想几步，形成几条路线。它比较哪条更安全、哪条更接近目标，但现实中只执行最佳路线的第一步。走完再看现实、重新规划，就像 GPS 会随真实位置不断更新。
+**说｜** 现在把前一步预测的结果接到下一步，继续向前看，看看一串动作会走到哪里。图上的 t+1、t+2、t+3 就是接下来的几步。A 安全但绕远，B 安全而且更直接，C 会碰到路缘，所以排除。根据安全和接近目标这两个标准，**规划器**选择 B。但注意 **ONE ACTION**：现实里只执行亮起的第一段，然后重新观察、预测和**规划**。后面的虚线路线还可以改。规划就是用预测来决定做什么。
 
-**做｜** 比较 A、B、C，停在 **SELECT B**，最后指向只执行一步。
+**做｜** 先沿 B 的 **t+1 → t+2 → t+3** 指出连续预测，再比较 A、B、C 和 **SELECT**。最后指向第一段、**ONE ACTION** 以及 **LOOK AGAIN · REPLAN**。
+
+**注意｜** 三条路线和三个时间步是简化示意，不是算法只能比较三条路线或固定预测三步。“只执行第一步后重规划”展示的是模型预测控制的一种常见做法，不是所有规划方法都必须如此。
+
+**[Sources]｜** Meta AI, [V-JEPA 2: prediction, goal-based planning, and replanning after each action](https://ai.meta.com/blog/v-jepa-2-world-model-benchmarks/), 2025-06-11.
 
 **转｜** 这里说的“想象”，一定得生成一段视频吗？
 
@@ -586,11 +594,15 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 #### English
 
-**LOOK |** **SELECT B → EXECUTE IN REALITY: ONE ACTION**
+**LOOK |** **t+1 → t+2 → t+3; SELECT B → ONE ACTION → LOOK AGAIN · REPLAN**.
 
-**SAY |** Predicting one action isn’t enough, so the system looks several steps ahead and builds a few routes. It compares which is safer and which gets closer to the goal. But in the real world, it only takes the first step on the best route. Then it checks reality and plans again, like GPS updating as your actual position changes.
+**SAY |** Now we use each predicted result as the starting point for the next step. We look ahead to see where a series of actions might take us. The labels t+1, t+2, and t+3 mark the next few steps. A is safe but takes a longer route. B is safe and more direct. C hits the curb, so we rule it out. Based on safety and progress toward the goal, the **planner** chooses B. But look at **ONE ACTION**: in reality, we take only the highlighted first step, then look again, predict again, and replan. The dashed route ahead can still change. **Planning** means using predictions to choose what to do.
 
-**DO |** Compare A, B, and C, stop at **SELECT B**, then point to the single action taken in reality.
+**DO |** Follow **t+1 → t+2 → t+3** along B to show predictions across steps. Compare A, B, and C and point to **SELECT**. End at the first segment, **ONE ACTION**, and **LOOK AGAIN · REPLAN**.
+
+**NOTE |** Three routes and three time steps are a simple illustration, not fixed limits of the algorithm. Executing only the first action and replanning is a common model-predictive-control approach, not a rule for every planning method.
+
+**[Sources] |** Meta AI, [V-JEPA 2: prediction, goal-based planning, and replanning after each action](https://ai.meta.com/blog/v-jepa-2-world-model-benchmarks/), 2025-06-11.
 
 **TRANSITION |** Does “imagining” the future have to mean making a video?
 
@@ -628,7 +640,7 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 **看｜** **GENIE 3 / V-JEPA 2**
 
-**说｜** 真实研究也沿着这两条路发展：**Genie 3** 把预测环境做成可以观看和交互的世界，**V-JEPA 2** 则在隐藏状态里比较机器人动作。形式不同，但用途很接近：先模拟、测试和规划，再让系统进入现实。它们可以用于训练智能体、做“如果……会怎样”的测试，以及规划机器人动作。
+**说｜** 左边的 **Genie 3** 把预测环境做成可以观看和交互的世界。右边的 **V-JEPA 2** 则在隐藏的**预测状态**里比较机器人动作。这里的 **NO VIDEO NEEDED** 不是说不用视频训练，也不是不用摄像头，而是预测未来时，不必生成一段给人看的视频。形式不同，都可以帮助系统先测试可能的结果，再采取行动；具体用途包括训练智能体、做“如果……会怎样”的测试，以及规划机器人动作。
 
 **补充（可选）｜** 机器人只是一个典型应用，不是唯一方向。还可以想一想物理学：如果 AI 能足够准确地模拟**物理规律**下的变化，物理学家就可以先在虚拟实验室里试很多方案，减少一部分昂贵的真实实验。但这不等于以后不用做实验了，关键结论仍要通过真实观测或实验来验证。
 
@@ -646,7 +658,7 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 **LOOK |** **GENIE 3 / V-JEPA 2**
 
-**SAY |** Real research follows these two paths too. **Genie 3** turns a predicted environment into a world people can see and interact with. **V-JEPA 2** compares robot actions in a hidden state. They take different forms, but serve similar goals: simulate, test, and plan before acting in reality. Uses include training agents, running “what if” tests, and planning robot actions.
+**SAY |** On the left, **Genie 3** turns a predicted environment into a world people can see and interact with. On the right, **V-JEPA 2** compares robot actions in a hidden **predictive state**. Here, **NO VIDEO NEEDED** doesn’t mean no video training or no cameras. It means the model doesn’t need to generate a future video for us to watch. The forms are different, but both can help a system test possible results before acting. Uses include training agents, running “what if” tests, and planning robot actions.
 
 **EXTRA (OPTIONAL) |** Robots are one typical use, not the only one. Think about physics too. If AI could simulate changes under **physical laws** accurately enough, physicists could test many ideas in a virtual lab first. That could save some costly real experiments. But it wouldn’t mean we no longer need experiments. Key findings would still need checks against real observations or experiments.
 
@@ -756,11 +768,11 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 **看｜** **WATCH → HIDE → GUESS → CHECK → ADJUST**
 
-**说｜** 这里展示的是从示范学习的一种方式。先录下人类操控机器人完成任务的示范。训练时让模型看场景和目标，但藏住示范者的下一步动作，让它先猜，再揭开示范动作比较差异并调整。用很多示范重复这个过程，模型会越来越会选择下一步。
+**说｜** 这里展示从示范学习的一种方式。先录下人类操控机器人的过程；训练时让模型看场景和目标，但藏住示范者的下一步动作。看中间两格：模型猜“向右伸手”，示范动作却是“向右上伸手”。这里的 **expert** 是示范者，不是 MoE 的专家模块。训练利用这个差异调整模型的**参数**，再用很多示范重复，让模型越来越会选择下一步。
 
 **补充（可选）｜** VLA 也可以混合多种数据来训练，比如视频、真机示范和模拟数据。视频帮助它学习场景和任务；在实验室里实际操控机器人时，还能用摄像头和**传感器**同步记录画面、关节位置和夹爪状态，同时记录动作指令。再把这些记录和语言目标对齐，才能把“看懂”连接到“怎么动”。
 
-**做｜** 沿五个编号指过去，最后停在大量录制示范。这里的 **expert** 指示范者，不是 MoE 里的专家模块。
+**做｜** 沿五个编号指过去，重点对比 **REACH RIGHT / REACH UP-RIGHT**，再指 **ADJUST** 和大量示范。
 
 **注意｜** 不同 VLA 的数据配方和传感器配置不同；不是传感器越多越好，也不能把普通视频等同于带动作记录的真机数据。这里列的是可选训练来源，不代表所有模型都必须使用全部来源。
 
@@ -774,11 +786,11 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 **LOOK |** **WATCH → HIDE → GUESS → CHECK → ADJUST**
 
-**SAY |** Here’s one way to learn from demonstrations. First, we record people controlling robots to complete tasks. During training, the model sees the scene and the goal, but we hide the person’s next action. The model predicts it. Then we reveal the recorded action, compare the difference, and make an update. Repeating this with many demonstrations helps the model get better at choosing its next action.
+**SAY |** Here’s one way to learn from demonstrations. First, we record a person controlling the robot. During training, the model sees the scene and the goal, but we hide the person’s next action. Look at the two middle panels: the model guesses “reach right,” but the recorded action is “reach up-right.” Here, **expert** means the person giving the demonstration, not an expert block in MoE. Training uses this difference to adjust the model’s **parameters**. Repeating this with many demonstrations helps it get better at choosing the next action.
 
 **EXTRA (OPTIONAL) |** VLA training can mix several kinds of data, such as videos, real robot demonstrations, and simulated data. Videos help it learn about scenes and tasks. When people control a real robot in a lab, cameras and **sensors** can record images, joint positions, and gripper states together. We also record the action commands. We then match these records with the language goal, so the model can connect understanding the scene with choosing an action.
 
-**DO |** Follow the five numbered steps, then stop at the many recorded demonstrations. Here, **expert** means the person giving the demonstration, not an expert block in MoE.
+**DO |** Follow the five numbered steps. Compare **REACH RIGHT / REACH UP-RIGHT**, then point to **ADJUST** and the many demonstrations.
 
 **NOTE |** Different VLA models use different data mixes and sensor setups. More sensors are not automatically better, and ordinary video is not the same as real robot data with action records. These are possible training sources; not every model needs all of them.
 

@@ -1616,7 +1616,7 @@ function AtlasWorldLab({ isActive }: { isActive: boolean }) {
         )}
 
         {act === 'actions' && (
-          <section className={worldStyles.actionsScene} aria-label="From the same current state, three candidate actions produce three different predicted next states">
+          <section className={worldStyles.actionsScene} aria-label="From the same current state at t, three candidate actions predict alternative results at t+1, not three steps in sequence. No route has been chosen.">
             <article className={worldStyles.currentState}>
               <span>NOW · t</span>
               <AtlasStreetScene variant="now" label="SAME START" />
@@ -1628,35 +1628,56 @@ function AtlasWorldLab({ isActive }: { isActive: boolean }) {
                 ['↑', 'GO STRAIGHT', 'straight', 'SAFE · TOWARD GOAL'],
                 ['↗', 'TURN RIGHT', 'right', 'CONTACT · CURB'],
               ].map(([symbol, label, variant, result], index) => (
-                <article key={label} data-selected={index === 1}>
+                <article key={label}>
                   <header><b>{symbol}</b><span>{label}</span></header>
-                  <AtlasStreetScene variant={variant as AtlasStreetVariant} label={`FUTURE ${index + 1}`} animate />
+                  <AtlasStreetScene variant={variant as AtlasStreetVariant} label={`FUTURE ${index + 1} · t+1`} animate />
                   <footer>{result}</footer>
                 </article>
               ))}
             </div>
+            <footer className={worldStyles.predictionCaption}>
+              <span>THREE POSSIBLE FUTURES · SAME NEXT MOMENT</span>
+              <strong>NO ROUTE CHOSEN</strong>
+            </footer>
           </section>
         )}
 
         {act === 'plan' && (
-          <section className={worldStyles.planScene} aria-label="A planner rolls candidate actions forward, scores the imagined futures, and executes only the first action from the best route">
+          <section className={worldStyles.planScene} aria-label="A planner predicts several steps along each route and chooses B based on safety and progress to the goal. Only the first segment to t+1 is selected for execution; later steps stay imagined. Look again and replan after that action.">
             <div className={worldStyles.planMap}>
               <span className={worldStyles.planGoal}>GOAL</span>
               <i className={worldStyles.planCurb}>CURB</i>
               <b className={worldStyles.planStart}>BOT · NOW</b>
               <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-                <path data-route="a" d="M50 92 C28 73 23 49 39 14" pathLength="1" />
-                <path data-route="b" d="M50 92 C50 68 51 40 50 14" pathLength="1" />
-                <path data-route="c" d="M50 92 C66 71 76 52 82 29" pathLength="1" />
+                <path data-route="a" d="M50 92 C28 73 23 49 39 14" />
+                <path data-route="b" d="M50 92 L50 66 L50 40 L50 14" />
+                <path data-route="c" d="M50 92 C66 71 76 52 82 29" />
+                <path data-execution="outline" d="M50 92 L50 66" />
+                <path data-execution="first" d="M50 92 L50 66" />
               </svg>
               <span className={worldStyles.routeA}>A</span><span className={worldStyles.routeB}>B</span><span className={worldStyles.routeC}>C</span>
+              {[66, 40, 14].map((top, index) => (
+                <span
+                  key={top}
+                  className={worldStyles.planStep}
+                  style={{ top: `${top}%` }}
+                  data-next={index === 0 ? true : undefined}
+                  aria-label={`Predicted step ${index + 1}${index === 0 ? ': execute only the first action' : ': still imagined'}`}
+                >
+                  <b>{index + 1}</b><span>t+{index + 1}</span>
+                </span>
+              ))}
             </div>
             <div className={worldStyles.routeScores}>
               <header><span>IMAGINED ROUTES</span><strong>GOAL: BLUE ZONE</strong></header>
               <p><b>A</b><span>SAFE · DETOUR</span><strong>GOOD</strong></p>
               <p data-selected><b>B</b><span>SAFE · DIRECT</span><strong>SELECT</strong></p>
               <p data-risk><b>C</b><span>HITS CURB</span><strong>REJECT</strong></p>
-              <footer><span>EXECUTE IN REALITY</span><strong>↑ ONE ACTION</strong></footer>
+              <footer>
+                <span>EXECUTE IN REALITY</span>
+                <strong>↑ ONE ACTION</strong>
+                <small>↺ LOOK AGAIN · REPLAN</small>
+              </footer>
             </div>
           </section>
         )}

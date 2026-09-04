@@ -1529,8 +1529,22 @@
 .actionsScene {
   display: grid;
   grid-template-columns: minmax(215px, 0.34fr) minmax(0, 1.66fr);
-  grid-template-rows: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto;
 }
+
+.predictionCaption {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 11px 16px;
+  border-top: 1px solid var(--wm-ink);
+  font-size: clamp(11px, 0.95vw, 14px);
+  font-weight: 950;
+}
+
+.predictionCaption strong { color: var(--wm-blue); white-space: nowrap; }
 
 .currentState {
   display: grid;
@@ -1578,6 +1592,57 @@
 
 .planMap { border-right: 1px solid var(--wm-ink); }
 
+/* Dashed paths are predictions. Only the first action is solid and bright. */
+.planMap path[data-route] {
+  stroke-dasharray: 8 7;
+  stroke-dashoffset: 0;
+  animation: none;
+}
+
+.planMap path[data-execution] {
+  stroke: var(--wm-ink);
+  stroke-width: 11;
+  stroke-dasharray: none;
+  stroke-dashoffset: 0;
+  animation: none;
+}
+
+.planMap path[data-execution='first'] { stroke: var(--wm-yellow); stroke-width: 7; }
+.planMap .routeB { top: 49%; left: 41%; }
+
+.planStep {
+  position: absolute;
+  z-index: 6;
+  left: 50%;
+  width: 24px;
+  transform: translate(-50%, -50%);
+}
+
+.planStep > b {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  border: 2px solid var(--wm-blue);
+  background: var(--wm-paper);
+  color: var(--wm-blue);
+  font-size: 14px;
+}
+
+.planStep[data-next] > b { border-color: var(--wm-ink); background: var(--wm-yellow); color: var(--wm-ink); }
+.planStep > span {
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 6px);
+  padding: 2px 5px;
+  background: var(--wm-paper);
+  color: var(--wm-ink);
+  font-size: 14px;
+  font-weight: 950;
+  white-space: nowrap;
+  transform: translateY(-50%);
+}
+
 .routeScores {
   display: grid;
   min-width: 0;
@@ -1591,7 +1656,12 @@
 .routeScores > p { grid-template-columns: 38px 1fr auto; margin: 0; padding: 12px 14px; border-bottom: 1px solid rgba(18, 21, 24, 0.3); background: transparent; }
 .routeScores > p[data-selected] { background: var(--wm-blue); color: #fffaf0; }
 .routeScores > p[data-risk] strong { color: var(--wm-red); }
-.routeScores > footer { background: var(--wm-yellow); }
+.routeScores > footer {
+  display: grid;
+  gap: 5px;
+  background: var(--wm-yellow);
+}
+.routeScores > footer small { font-size: 12px; font-weight: 950; }
 .routeScores > p b { font-size: clamp(17px, 1.45vw, 22px); }
 .routeScores > p span { font-size: clamp(12px, 1vw, 15px); font-weight: 900; }
 .routeScores > p strong { font-size: clamp(11px, 0.9vw, 14px); }

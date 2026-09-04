@@ -38,7 +38,7 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 **LOOK |** The yellow work ticket enters the building, and all the windows light up.
 
-**SAY |** A language model keeps predicting the next **token**, a small piece of text. Think of the yellow token as a work ticket, and the model as a company. In a **dense model**, the same full compute block works on every ticket. It’s like calling in the whole company, even for a tiny task.
+**SAY |** A language model keeps predicting the next **token**, a small piece of text. The full sentence at the top is the **context**. The yellow word **because** is the current token being processed. Here, we show it as a work ticket and the model as a company. In a **dense model**, the same full compute block works on every ticket, so all the windows light up. It’s like calling in the whole company, even for a tiny task.
 
 **DO |** Point from the highlighted token to the work ticket, then across all the lit windows.
 
@@ -48,11 +48,11 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 ### M3 · Cost
 
-**LOOK |** The ticket stays the same size, while the building and the bill grow.
+**LOOK |** The ticket stays the same size, while more offices appear on the right: **CAPACITY ↑ / WORK / TOKEN ↑**.
 
-**SAY |** We keep making the company bigger so the model can know more. But each time we add a floor, every small ticket calls in that floor’s staff too. The model gains more capabilities, but each task also costs more.
+**SAY |** To give the model more capacity, we add offices to the company. Look at the two arrows on the right: one shows total capacity, and the other shows computation per token. The ticket hasn’t grown. But in a dense model, the added computation takes part every time, so both go up. The company gets bigger, and each small ticket takes more computation.
 
-**DO |** Pause at the unchanged ticket, then follow the growing building and bill.
+**DO |** Point to the unchanged ticket, then the new offices on the right, and finally the two upward arrows.
 
 **TRANSITION |** Can we keep the big company’s skills without calling everyone in each time?
 
@@ -142,9 +142,9 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 **LOOK |** **Fantastic / Love → PRAISE → WRONG**
 
-**SAY |** Let’s let the student try on its own first. It sees “Fantastic” and “Love” and thinks the customer is giving praise. But “again” and “client demo” suggest this is actually a sarcastic complaint. The student knows the words but misses the **intent** of the whole sentence.
+**SAY |** First, look at this demo ticket. The customer says, “Fantastic. The VPN disconnected again during the client demo. Love this update.” The connection failed again, so the positive words are actually sarcasm. But the student only notices **Fantastic** and **Love**, labels it as praise, and replies, “Glad to hear it!” It knows the words but misses the **context** and the real **intent**.
 
-**DO |** Point to the positive words, then the clues to the mistake, and end at the red **WRONG**.
+**DO |** Point to the full ticket and the repeated VPN failure, then the positive words, and finally the student’s wrong reply and **WRONG**.
 
 **NOTE |** This ticket is a demo example, not a real training sample from a public dataset.
 
@@ -156,7 +156,7 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 **LOOK |** **INTENT → WHY → ACTION**
 
-**SAY |** The teacher doesn’t just give the label “complaint.” It turns the answer into a lesson the student can learn from. It explains the customer’s real **intent**, why it reads the message that way, and what the support team should do next. The student learns the clues and how to respond, not just the final answer.
+**SAY |** The teacher turns this ticket into a lesson with three parts. First, the **intent**: the customer is complaining, not giving praise. Second, the reason: positive words describe a repeated failure. That contradiction points to sarcasm. Third, the action: apologize, send the VPN issue to the right team, and ask for the session ID to help check the problem. The student needs to learn how to judge the message and respond, not just the label “complaint.”
 
 **DO |** Point from the conflicting clues to **SARCASM**, then move down the three parts of the lesson.
 
@@ -168,7 +168,7 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 **LOOK |** **BEFORE: positive word → praise; AFTER: context → contradiction → intent**
 
-**SAY |** One lesson won’t teach the student everything at once. In each training step, we compare its guess with the teacher’s lesson. If they differ, we make a small change to the student’s **parameters**. After many examples with different wording, it can drop the bad shortcut that “positive words mean praise.” Instead, it uses **context** to work out the **intent**.
+**SAY |** In each training step, we compare the student’s guess with the teacher’s lesson. If they differ, we make a small change to the student’s **parameters**. After many different examples, look at the change on the right. Before, positive words meant praise. Now, it checks the **context**, finds the **contradiction** between positive words and a failure, and works out the real **intent**. Those are the three steps on screen: context, contradiction, intent.
 
 **DO |** Move across the lessons, then compare **BEFORE** with **AFTER MANY LESSONS**.
 
@@ -180,7 +180,7 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 **LOOK |** **TEACHER OFFLINE / SMALL STUDENT RUNS ALONE**
 
-**SAY |** Now we take the teacher away and give the student a new ticket with different wording and a different problem. The student can still identify the complaint on its own and suggest a suitable response. This is the key to distillation: the learned behavior stays in the student’s own **parameters**. It works on its own after deployment.
+**SAY |** Now the teacher is offline, and the student gets a new ticket: “Wonderful—my reset link arrived after it had already expired.” This time, the problem isn’t the VPN. The student still recognizes the complaint and replies that it will send a new link and check the delay. It hasn’t just memorized the previous ticket. The learned behavior stays in its own **parameters**, so it can work alone after deployment.
 
 **DO |** Move from the offline teacher to the new message, then end at the student running alone and its correct answer.
 
@@ -214,7 +214,7 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 **LOOK |** **NEXT WORD → WHAT IS HERE → WHAT HAPPENS NEXT**
 
-**SAY |** Our third term isn’t a short name like MoE. It’s **World Model**. An **LLM, or large language model**, typically predicts the next piece of text. A vision model can identify the robot, road, and curb. A world model asks one more question: if the robot acts now, how will the scene change? Think of it as a simple simulator inside the AI.
+**SAY |** Our third term is **World Model**. First, a quick guide to the picture: the red diamond is the robot, the blue area is the goal, and the red-and-white strip is the curb. On the left, an **LLM, or large language model**, predicts the next piece of text. In the middle, a vision model identifies what is there. On the right, a world model predicts how the scene changes after an action. Think of it as a simple simulator inside the AI.
 
 **DO |** Move across the three columns from left to right, then follow **NOW + ACTION → NEXT**.
 
@@ -226,7 +226,7 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 **LOOK |** **ROBOT · ROAD · CURB → ? AFTER A MOVE**
 
-**SAY |** Seeing the curb is useful. But when the robot is about to move, it also needs to know, “What will happen if I go this way?” In the same scene, turning left may mean a longer route. Going straight may bring it closer to the goal. Turning right may hit the curb. Recognizing the present and predicting the results of an action are two different tasks.
+**SAY |** On the left, we’ve identified the robot, road, and curb. But look at the right: what happens after turning left, going straight, or turning right? Each one is still a question mark. Knowing what is there doesn’t directly tell us what an action will cause. This page asks: can we predict the result before we act?
 
 **DO |** Point to the objects identified on the left, then move past the question mark to the three actions.
 
@@ -256,23 +256,29 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 ### W4 · Futures
 
-**LOOK |** **SAME START → THREE FUTURES**
+**LOOK |** **SAME START → THREE POSSIBLE FUTURES · t+1; NO ROUTE CHOSEN**.
 
-**SAY |** Once the model can predict, we can start from the same present, try three different actions, and imagine three different futures. The real robot hasn’t moved at all. Only the imagined futures inside the model are moving. It can try things out in **simulation** before choosing its next step in the real world.
+**SAY |** On the left, we have the same starting point. The real robot hasn’t moved. The three **futures** on the right are not three steps in a row. They are three possible results at the same next moment: turn left and stay safe, but move away from the goal; go straight and stay safe while getting closer to the blue goal; turn right and hit the curb. This is **prediction**: what might happen after each **action**. We haven’t chosen a route yet.
 
-**DO |** Pause at **REALITY HAS NOT MOVED**, then move across the three futures and their different results.
+**DO |** Pause at **REALITY HAS NOT MOVED**. Point to each action, its result, and the same **t+1** label. End at **NO ROUTE CHOSEN**.
 
-**TRANSITION |** If we look several steps ahead instead of just one, we can start planning a route.
+**NOTE |** This page uses one-step predictions to show action results, but prediction can also cover multiple steps. W4 predicts results; W5 uses predictions and a goal to choose actions.
+
+**TRANSITION |** Knowing what each action might do is not the same as choosing a route. Next, we connect the predictions and use the goal to choose a route.
 
 **CLICK |** **Plan before moving**
 
 ### W5 · Plan
 
-**LOOK |** **SELECT B → EXECUTE IN REALITY: ONE ACTION**
+**LOOK |** **t+1 → t+2 → t+3; SELECT B → ONE ACTION → LOOK AGAIN · REPLAN**.
 
-**SAY |** Predicting one action isn’t enough, so the system looks several steps ahead and builds a few routes. It compares which is safer and which gets closer to the goal. But in the real world, it only takes the first step on the best route. Then it checks reality and plans again, like GPS updating as your actual position changes.
+**SAY |** Now we use each predicted result as the starting point for the next step. We look ahead to see where a series of actions might take us. The labels t+1, t+2, and t+3 mark the next few steps. A is safe but takes a longer route. B is safe and more direct. C hits the curb, so we rule it out. Based on safety and progress toward the goal, the **planner** chooses B. But look at **ONE ACTION**: in reality, we take only the highlighted first step, then look again, predict again, and replan. The dashed route ahead can still change. **Planning** means using predictions to choose what to do.
 
-**DO |** Compare A, B, and C, stop at **SELECT B**, then point to the single action taken in reality.
+**DO |** Follow **t+1 → t+2 → t+3** along B to show predictions across steps. Compare A, B, and C and point to **SELECT**. End at the first segment, **ONE ACTION**, and **LOOK AGAIN · REPLAN**.
+
+**NOTE |** Three routes and three time steps are a simple illustration, not fixed limits of the algorithm. Executing only the first action and replanning is a common model-predictive-control approach, not a rule for every planning method.
+
+**[Sources] |** Meta AI, [V-JEPA 2: prediction, goal-based planning, and replanning after each action](https://ai.meta.com/blog/v-jepa-2-world-model-benchmarks/), 2025-06-11.
 
 **TRANSITION |** Does “imagining” the future have to mean making a video?
 
@@ -294,7 +300,7 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 **LOOK |** **GENIE 3 / V-JEPA 2**
 
-**SAY |** Real research follows these two paths too. **Genie 3** turns a predicted environment into a world people can see and interact with. **V-JEPA 2** compares robot actions in a hidden state. They take different forms, but serve similar goals: simulate, test, and plan before acting in reality. Uses include training agents, running “what if” tests, and planning robot actions.
+**SAY |** On the left, **Genie 3** turns a predicted environment into a world people can see and interact with. On the right, **V-JEPA 2** compares robot actions in a hidden **predictive state**. Here, **NO VIDEO NEEDED** doesn’t mean no video training or no cameras. It means the model doesn’t need to generate a future video for us to watch. The forms are different, but both can help a system test possible results before acting. Uses include training agents, running “what if” tests, and planning robot actions.
 
 **EXTRA (OPTIONAL) |** Robots are one typical use, not the only one. Think about physics too. If AI could simulate changes under **physical laws** accurately enough, physicists could test many ideas in a virtual lab first. That could save some costly real experiments. But it wouldn’t mean we no longer need experiments. Key findings would still need checks against real observations or experiments.
 
@@ -354,11 +360,11 @@ Read SAY and TRANSITION as the main talk. Add EXTRA (OPTIONAL) after SAY if time
 
 **LOOK |** **WATCH → HIDE → GUESS → CHECK → ADJUST**
 
-**SAY |** Here’s one way to learn from demonstrations. First, we record people controlling robots to complete tasks. During training, the model sees the scene and the goal, but we hide the person’s next action. The model predicts it. Then we reveal the recorded action, compare the difference, and make an update. Repeating this with many demonstrations helps the model get better at choosing its next action.
+**SAY |** Here’s one way to learn from demonstrations. First, we record a person controlling the robot. During training, the model sees the scene and the goal, but we hide the person’s next action. Look at the two middle panels: the model guesses “reach right,” but the recorded action is “reach up-right.” Here, **expert** means the person giving the demonstration, not an expert block in MoE. Training uses this difference to adjust the model’s **parameters**. Repeating this with many demonstrations helps it get better at choosing the next action.
 
 **EXTRA (OPTIONAL) |** VLA training can mix several kinds of data, such as videos, real robot demonstrations, and simulated data. Videos help it learn about scenes and tasks. When people control a real robot in a lab, cameras and **sensors** can record images, joint positions, and gripper states together. We also record the action commands. We then match these records with the language goal, so the model can connect understanding the scene with choosing an action.
 
-**DO |** Follow the five numbered steps, then stop at the many recorded demonstrations. Here, **expert** means the person giving the demonstration, not an expert block in MoE.
+**DO |** Follow the five numbered steps. Compare **REACH RIGHT / REACH UP-RIGHT**, then point to **ADJUST** and the many demonstrations.
 
 **NOTE |** Different VLA models use different data mixes and sensor setups. More sensors are not automatically better, and ordinary video is not the same as real robot data with action records. These are possible training sources; not every model needs all of them.
 
