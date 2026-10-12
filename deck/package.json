@@ -6,6 +6,7 @@
     "node": ">=22.13.0"
   },
   "scripts": {
+    "notes:session-2": "node scripts/build-session-2-notes.mjs",
     "dev": "vinext dev",
     "build": "vinext build",
     "start": "vinext start",

@@ -51,6 +51,25 @@ export default defineConfig(async () => {
       : undefined,
     plugins: [
       vinext(),
+      {
+        name: 'atlas-vinext-production-shims',
+        // Vinext beta.3 can split its router shims into circular client chunks.
+        // Keep them together until the upstream fix in vinext#2795 is adopted.
+        configEnvironment(name: string) {
+          if (name !== 'client') return;
+          return {
+            build: {
+              rolldownOptions: {
+                output: {
+                  codeSplitting: {
+                    groups: [{ name: 'vinext-shims', test: /[\\/]node_modules[\\/]vinext[\\/]dist[\\/]shims[\\/]/ }],
+                  },
+                },
+              },
+            },
+          };
+        },
+      },
       sites(),
       cloudflare({
         viteEnvironment: { name: 'rsc', childEnvironments: ['ssr'] },

@@ -1,5 +1,10 @@
 # Local package-manager cache created during setup
 /.npm-cache/
+/.playwright-cli/
+/deck/.playwright-cli/
+/output/playwright/
+/deck/output/playwright/
+/.sites-publish/
 
 # macOS metadata
 .DS_Store

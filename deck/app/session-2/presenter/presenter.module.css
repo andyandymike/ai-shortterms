@@ -1,0 +1,78 @@
+.console {
+  --paper:#f2ecdc; --paper2:#e4dece; --ink:#121518; --blue:#125f9f; --red:#bc3923; --green:#287e6e; --rule:#bdb9ad; --accent:var(--blue);
+  height:100svh; overflow:auto; background:var(--paper); color:var(--ink); padding:28px clamp(24px,4vw,64px) 22px;
+  font-family:Arial,"Microsoft YaHei",Helvetica,sans-serif; display:flex; flex-direction:column; gap:26px;
+}
+.console[data-accent='red'] { --accent:var(--red); }
+.console[data-accent='green'] { --accent:var(--green); }
+.console :is(button,a):focus-visible { outline:3px solid var(--accent); outline-offset:5px; }
+.console button { border-radius:0; cursor:pointer; }
+.console button:disabled { cursor:default; opacity:.45; }
+.header { display:flex; align-items:flex-start; justify-content:space-between; gap:28px; padding-bottom:24px; border-bottom:2px solid var(--ink); }
+.eyebrow { margin:0; font-size:15px; font-weight:800; letter-spacing:.04em; display:flex; align-items:center; gap:18px; }
+.eyebrow span { color:var(--paper); background:var(--accent); padding:4px 8px; letter-spacing:0; }
+.header h1 { font-size:clamp(27px,3.1vw,46px); line-height:1.12; letter-spacing:-.04em; margin:14px 0 0; font-weight:900; }
+.connection { flex-shrink:0; display:flex; flex-direction:column; align-items:flex-end; gap:10px; font-size:15px; color:#56584f; padding-top:4px; }
+.status { color:var(--green); font-weight:800; }
+.connection[data-connected='false'] .status { color:var(--red); }
+.connectionWarning { margin:-10px 0 0; padding:12px 16px; border-left:4px solid var(--red); background:var(--paper2); font-size:16px; line-height:1.5; }
+.content { display:grid; grid-template-columns:minmax(0,1.55fr) minmax(290px,1fr); gap:clamp(30px,4vw,62px); flex:1; min-height:0; }
+.current,.next { min-width:0; overflow:auto; padding-bottom:20px; }
+.current { padding-right:8px; }
+.sectionHeading { display:flex; justify-content:space-between; align-items:center; gap:15px; color:var(--accent); }
+.sectionHeading h2 { margin:0; font-size:17px; font-weight:850; }
+.sectionHeading>span { font-size:15px; line-height:1.4; text-align:right; color:#56584f; }
+.speech { font-size:clamp(24px,2.25vw,34px); line-height:1.58; font-weight:650; margin:22px 0 30px; white-space:pre-line; }
+.look,.transition { border-top:1px solid var(--rule); padding-top:15px; margin-top:20px; }
+.look h3,.transition h3 { font-size:16px; margin:0 0 8px; font-weight:850; color:var(--accent); }
+.look p,.transition p { font-size:18px; line-height:1.55; margin:0; white-space:pre-line; }
+.next { border-left:1px solid var(--rule); padding-left:clamp(26px,3.5vw,52px); }
+.sectionHeading .change { color:var(--accent); font-weight:750; }
+.next>h3 { font-size:clamp(24px,2.2vw,32px); line-height:1.35; letter-spacing:-.025em; margin:24px 0 16px; font-weight:850; }
+.nextTitle { margin:0 0 18px; font-size:17px; line-height:1.4; color:#56584f; }
+.nextSpeech { font-size:20px; line-height:1.6; margin:0; white-space:pre-line; }
+.playbackNote { font-size:16px; line-height:1.5; color:#56584f; border-top:1px solid var(--rule); padding-top:16px; margin-top:26px; }
+.footer { display:flex; justify-content:space-between; align-items:center; gap:24px; border-top:2px solid var(--ink); padding-top:21px; }
+.secondaryControls { display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+.secondaryControls button { font-size:16px; font-weight:700; border:0; background:transparent; padding:12px 3px; min-height:44px; text-decoration:underline; text-underline-offset:5px; text-decoration-color:var(--rule); }
+.secondaryControls button:hover { color:var(--accent); text-decoration-color:var(--accent); }
+.primaryControls { display:flex; align-items:center; gap:25px; }
+.keyboardHint { font-size:15px; color:#56584f; }
+.primary { min-height:56px; min-width:225px; display:flex; justify-content:space-between; align-items:center; gap:45px; font-size:21px; font-weight:850; padding:12px 23px; color:var(--paper); background:var(--ink); border:1px solid var(--ink); box-shadow:4px 4px 0 var(--accent); }
+.primary:hover:enabled { background:var(--accent); }
+.primary>span { font-size:26px; }
+.empty { min-height:calc(100svh - 120px); display:flex; flex-direction:column; justify-content:center; align-items:flex-start; max-width:740px; margin:0 auto; padding:30px 0; }
+.empty h1 { font-size:clamp(34px,4.5vw,64px); font-weight:900; line-height:1.15; letter-spacing:-.04em; margin:25px 0 20px; }
+.empty p { font-size:22px; line-height:1.65; margin:0 0 35px; }
+.openDeck { display:flex; align-items:center; justify-content:space-between; gap:50px; color:var(--paper); background:var(--ink); box-shadow:4px 4px 0 var(--blue); padding:15px 24px; font-weight:800; font-size:20px; text-decoration:none; }
+@media (max-width:1100px) {
+  .keyboardHint { display:none; }
+  .content { grid-template-columns:minmax(0,1.4fr) minmax(270px,1fr); gap:28px; }
+  .next { padding-left:27px; }
+  .secondaryControls { gap:12px; }
+}
+@media (max-width:760px) {
+  .console { padding:23px; gap:22px; }
+  .header { gap:20px; flex-direction:column; padding-bottom:19px; }
+  .connection { align-items:center; flex-direction:row; justify-content:space-between; width:100%; font-size:14px; }
+  .content { grid-template-columns:minmax(0,1fr); min-height:auto; gap:20px; }
+  .current,.next { overflow:visible; padding-bottom:8px; }
+  .current { padding-right:0; }
+  .next { border-left:0; border-top:1px solid var(--rule); padding:23px 0 0; }
+  .speech { font-size:26px; }
+  .nextSpeech { font-size:19px; }
+  .footer { flex-direction:column-reverse; align-items:stretch; gap:12px; position:sticky; bottom:-22px; background:var(--paper); padding:16px 0 18px; }
+  .primaryControls { display:block; }
+  .primary { width:100%; }
+  .secondaryControls { justify-content:space-between; }
+  .secondaryControls button { font-size:15px; }
+}
+@media (max-height:780px) and (min-width:761px) {
+  .console { padding-top:20px; padding-bottom:18px; gap:20px; }
+  .header { padding-bottom:18px; }
+  .header h1 { font-size:34px; }
+  .speech { font-size:26px; margin:18px 0 23px; }
+  .look,.transition { margin-top:16px; padding-top:13px; }
+  .look p,.transition p { font-size:17px; }
+  .footer { padding-top:16px; }
+}

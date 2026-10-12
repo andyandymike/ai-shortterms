@@ -1,0 +1,174 @@
+.decisionLab { min-width:0; }
+.record { min-width:165px; padding-left:20px; border-left:1px solid var(--rule); display:flex; flex-direction:column; gap:7px; }
+.record>span { font-size:13px; font-weight:800; }
+.record>b { font-size:20px; }
+.comparison { align-items:center; }
+.fanLabel { font-size:18px; font-weight:700; padding:12px 0 4px; }
+.simultaneous { gap:12px; }
+.simultaneous>div>small { font-size:16px; margin-top:12px; }
+.simultaneous>div[data-ready='true']>strong { animation-delay:0ms; }
+.typeStage { display:grid; grid-template-columns:minmax(230px,.65fr) minmax(0,1.6fr); gap:70px; align-items:center; min-height:0; }
+.typeQuestion>span { color:var(--red); font-size:19px; font-weight:850; }
+.typeQuestion>h2 { font-size:clamp(31px,3.2vw,49px); line-height:1.08; letter-spacing:-.04em; margin:20px 0; }
+.typeQuestion>p { font-size:21px; line-height:1.4; }
+.choiceChart { display:grid; gap:30px; }
+.choiceChart>div { display:grid; grid-template-columns:130px minmax(0,1fr) 80px; align-items:center; gap:24px; }
+.choiceChart span { font-size:25px; }
+.choiceChart strong { font-size:37px; font-variant-numeric:tabular-nums; }
+.choiceChart i { height:47px; background:var(--paper2); }
+.choiceChart b { display:block; height:100%; width:100%; background:var(--red); transform-origin:left; transition:transform 650ms ease; }
+.choiceChart [data-leading='true'] span { font-weight:850; }
+.expected { margin-top:25px; display:flex; gap:20px; align-items:center; }
+.expected>span { font-size:15px; font-weight:850; max-width:100px; line-height:1.4; }
+.expected>strong { font-size:78px; color:var(--red); line-height:1; letter-spacing:-.05em; }
+.scoreChart { min-width:0; }
+.rubric { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:15px; align-items:end; }
+.rubric>div { text-align:center; display:flex; flex-direction:column; gap:10px; align-items:center; }
+.rubric strong { font-size:24px; font-variant-numeric:tabular-nums; }
+.rubricBar { height:130px; background:var(--paper2); width:100%; max-width:84px; display:flex; align-items:flex-end; }
+.rubricBar i { display:block; width:100%; background:var(--red); max-height:100%; }
+.rubric b { font-size:30px; line-height:1; }
+.rubric span { font-size:18px; white-space:nowrap; }
+.weightedMean { padding-top:24px; margin-top:24px; border-top:1px solid var(--rule); font-size:21px; text-align:center; white-space:nowrap; }
+.weightedMean b { color:var(--red); font-size:29px; }
+.noul { border-left:1px solid var(--rule); padding-left:65px; }
+.noul>span { font-size:24px; font-family:Consolas,monospace; }
+.noul>strong { display:block; font-size:140px; font-weight:900; color:var(--red); letter-spacing:-.065em; line-height:1.15; }
+.propositionBar { display:flex; width:100%; height:42px; margin:10px 0 22px; }
+.propositionBar>b { width:96%; background:var(--red); }
+.propositionBar>i { flex:1; background:var(--paper2); border-left:3px solid var(--paper); }
+.noul>p { font-size:23px; }
+.calibrationLab { min-width:0; }
+.calibrationSplit { display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr); gap:55px; min-height:0; align-items:center; }
+.stageLabel { display:block; font-size:17px; letter-spacing:.025em; font-weight:850; }
+.calibrationSplit h2 { font-size:30px; letter-spacing:-.035em; line-height:1.15; min-height:69px; margin:20px 0; }
+.training { padding-right:40px; border-right:1px solid var(--rule); }
+.trainingPrediction { display:grid; grid-template-columns:1fr auto; gap:7px 18px; align-items:baseline; margin:20px 0; }
+.trainingPrediction>span { grid-column:1/-1; font-size:17px; font-weight:800; }
+.trainingPrediction>strong { font-size:42px; font-weight:900; letter-spacing:-.045em; line-height:1.1; }
+.trainingPrediction>p { font-size:25px; font-variant-numeric:tabular-nums; }
+.trainingPrediction[data-wrong='true']>strong { color:var(--red); }
+.trainingPrediction>strong>b { font-weight:900; }
+.trainingFeedback { display:flex; justify-content:space-between; align-items:center; gap:18px; font-size:19px; line-height:1.3; min-height:66px; padding:12px 16px; background:var(--paper2); border-left:4px solid var(--rule); }
+.trainingFeedback[data-active='true'] { border-left-color:var(--green); }
+.trainingFeedback>span { font-size:16px; }
+.trainingFeedback>strong { color:var(--green); font-size:31px; white-space:nowrap; }
+.modelUpdate { margin-top:18px; min-height:46px; font-size:18px; line-height:1.4; }
+.modelUpdate[data-active='true'] { color:var(--green); font-weight:750; }
+.modelUpdate>b { display:inline-block; padding:4px 8px; background:var(--green); color:var(--paper); font-size:23px; }
+.testProbability { display:flex; align-items:center; gap:22px; min-height:43px; margin:0 0 17px; font-size:19px; }
+.testProbability>b { font-size:34px; color:var(--green); font-variant-numeric:tabular-nums; }
+.heldOutGrid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:13px; }
+.heldOutGrid>div { min-height:93px; border:1px dashed var(--rule); display:grid; place-items:center; background:var(--paper2); transition:background 300ms; }
+.heldOutGrid strong { font-size:40px; }
+.heldOutGrid [data-revealed='true'] { background:var(--green); border-style:solid; color:var(--paper); }
+.heldOutGrid [data-revealed='true'][data-correct='false'] { background:var(--red); color:var(--ink); }
+.evaluationResult { display:flex; gap:20px; align-items:baseline; margin-top:22px; min-height:45px; }
+.evaluationResult>strong { font-size:35px; color:var(--green); white-space:nowrap; }
+.evaluationResult>span { font-size:19px; }
+.workflow { display:grid; grid-template-columns:minmax(180px,.45fr) minmax(0,1.8fr); gap:45px; min-height:0; align-items:center; }
+.workflowInput>span { font-size:17px; font-weight:850; }
+.workflowInput>h2 { font-size:39px; letter-spacing:-.04em; line-height:1.08; margin-top:18px; }
+.workflowRows { display:grid; gap:28px; }
+.workflowRow { display:grid; grid-template-columns:minmax(180px,1fr) 30px minmax(145px,.7fr) 30px minmax(190px,1fr); gap:15px; align-items:center; }
+.workflowModel { padding:20px; border:1px solid var(--rule); border-top:4px solid var(--blue); }
+.workflowModel[data-kind='jev'] { border-top-color:var(--red); }
+.workflowModel>span,.workflowCode>span { font-size:14px; font-weight:800; }
+.workflowModel>strong { display:block; font-size:43px; letter-spacing:-.045em; margin:12px 0; }
+.workflowModel>p { font-size:18px; }
+.flowArrow { font-size:34px; font-weight:400; text-align:center; }
+.workflowCode { text-align:center; }
+.workflowCode>strong { font-size:30px; display:block; margin-top:14px; }
+.workflowOutcome { display:flex; flex-direction:column; gap:12px; }
+.workflowOutcome>strong { font-size:21px; padding:12px; background:var(--paper2); white-space:nowrap; }
+.workflowOutcome>span { font-size:17px; text-align:center; line-height:1; }
+@media(min-width:851px) and (max-height:800px) {
+ .comparison .simultaneous>div>small { font-size:14px; margin-top:9px; }
+ .fanLabel { font-size:16px; padding-top:7px; }
+ .typeStage { gap:45px; }
+ .typeQuestion>h2 { font-size:36px; margin:16px 0; }
+ .typeQuestion>p { font-size:19px; }
+ .choiceChart { gap:25px; }
+ .choiceChart i { height:38px; }
+ .choiceChart strong { font-size:33px; }
+ .expected { margin-top:18px; }
+ .expected>strong { font-size:65px; }
+ .rubricBar { height:100px; }
+ .weightedMean { font-size:20px; padding-top:17px; margin-top:17px; }
+ .noul>strong { font-size:120px; }
+ .calibrationSplit { gap:38px; }
+ .calibrationSplit h2 { font-size:27px; min-height:62px; margin:14px 0; }
+ .training { padding-right:30px; }
+ .trainingPrediction { margin:15px 0; gap:5px 14px; }
+ .trainingPrediction>strong { font-size:36px; }
+ .trainingPrediction>p { font-size:22px; }
+ .trainingFeedback { padding:10px 14px; min-height:59px; }
+ .trainingFeedback>strong { font-size:28px; }
+ .modelUpdate { margin-top:14px; font-size:17px; }
+ .testProbability { margin-bottom:13px; font-size:18px; }
+ .heldOutGrid>div { min-height:72px; }
+ .evaluationResult { margin-top:17px; }
+ .workflow { gap:28px; }
+ .workflowRows { gap:20px; }
+ .workflowModel { padding:15px; }
+ .workflowModel>strong { font-size:37px; margin:8px 0; }
+ .workflowRow { gap:10px; grid-template-columns:minmax(175px,1fr) 25px minmax(140px,.7fr) 25px minmax(190px,1fr); }
+ .workflowOutcome>strong { padding:10px; font-size:20px; }
+}
+@media(max-width:1000px) {
+ .typeStage { gap:28px; grid-template-columns:minmax(180px,.65fr) minmax(0,1.6fr); }
+ .choiceChart>div { grid-template-columns:100px minmax(0,1fr) 65px; gap:16px; }
+ .choiceChart span { font-size:21px; }
+ .rubric { gap:10px; }
+ .rubric span { font-size:15px; }
+ .weightedMean { font-size:17px; }
+ .calibrationSplit { gap:28px; }
+ .trainingPrediction { gap:6px 10px; }
+ .trainingPrediction>strong { font-size:33px; }
+ .trainingPrediction>p { font-size:20px; }
+ .trainingFeedback { flex-wrap:wrap; gap:8px; }
+ .workflow { grid-template-columns:1fr; gap:18px; }
+ .workflowInput { display:flex; align-items:center; gap:20px; }
+ .workflowInput>h2 { margin:0; font-size:28px; }
+}
+@media(max-width:850px),(max-height:650px) {
+ .typeStage { min-height:340px; }
+ .calibrationSplit { align-items:start; }
+ .training { padding-right:20px; }
+ .calibrationSplit h2 { font-size:25px; }
+ .heldOutGrid { gap:8px; }
+ .heldOutGrid>div { min-height:76px; }
+ .evaluationResult { align-items:flex-start; flex-direction:column; gap:8px; }
+ .workflowRow { grid-template-columns:minmax(145px,1fr) 22px minmax(120px,.7fr) 22px minmax(160px,1fr); gap:8px; }
+ .workflowOutcome>strong { font-size:17px; }
+}
+@media(max-width:600px) {
+ .record { border-left:0; border-top:1px solid var(--rule); padding:12px 0 0; width:100%; }
+ .typeStage { grid-template-columns:1fr; gap:24px; }
+ .typeQuestion>h2 { font-size:31px; margin:12px 0; }
+ .typeQuestion>h2 br { display:none; }
+ .choiceChart>div { grid-template-columns:90px minmax(0,1fr) 60px; gap:12px; }
+ .choiceChart strong { font-size:29px; }
+ .choiceChart i { height:35px; }
+ .rubric { gap:7px; }
+ .rubric span { font-size:13px; white-space:normal; min-height:31px; }
+ .rubricBar { height:105px; }
+ .rubric strong { font-size:19px; }
+ .weightedMean { white-space:normal; font-size:17px; line-height:1.6; }
+ .noul { border-left:0; border-top:1px solid var(--rule); padding:20px 0 0; }
+ .noul>strong { font-size:115px; }
+ .calibrationSplit { grid-template-columns:1fr; gap:30px; }
+ .training { border-right:0; border-bottom:1px solid var(--rule); padding:0 0 25px; }
+ .calibrationSplit h2 { min-height:0; }
+ .trainingPrediction { margin:18px 0; }
+ .heldOutGrid>div { min-height:72px; }
+ .workflowRow { grid-template-columns:1fr; gap:14px; }
+ .flowArrow { transform:rotate(90deg); }
+ .workflowRows { gap:35px; }
+ .workflowOutcome>strong { text-align:center; font-size:22px; }
+ .workflowModel>strong { font-size:38px; }
+ .workflowModel>span,.workflowCode>span { font-size:15px; }
+}
+@media(prefers-reduced-motion:reduce) {
+ .choiceChart b,.heldOutGrid>div { transition:none; }
+}
