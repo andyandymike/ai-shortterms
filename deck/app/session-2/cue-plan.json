@@ -3,1060 +3,1128 @@
     "id": "O1-intro",
     "beat": "O1",
     "label": "今天的三个问题",
-    "action": "打开三个章节的地图",
-    "scene": {
-      "kind": "static"
-    },
     "labelEn": "Three questions for today",
-    "actionEn": "Show the map of the three chapters",
+    "action": "打开三章地图",
+    "actionEn": "Show the three-chapter map",
     "look": [
-      "三个图形：操作界面、选择分支、版本递进。",
-      "Three pictures: an interface, a decision branch, and successive versions."
+      "操作界面、选择分支、版本递进三个图形同时可见。",
+      "Three pictures are visible: an interface, a decision branch and successive versions."
     ],
     "say": [
-      "今天讲三个词：Computer Use、Jev 和 RSI。它们分别回答三个问题：AI 能不能在软件里把事情做完？一个流程需要判断时，该用什么模型？AI 能不能帮助改进制造下一代 AI 的方法？我们每一章都先看一个容易理解的场景，再讲术语、原理和真实例子。屏幕上的小实验是为了看清过程，不是在现场调用这些模型。",
-      "Today we will look at Computer Use, Jev, and RSI. They ask three questions. Can AI finish a task inside software? Which model fits a decision in a workflow? And can AI help improve the method used to build the next AI? In each chapter, we will start with a familiar situation, then explain the terms, the mechanism, and a real example. The small experiments on screen illustrate the process; they are not live model calls."
+      "今天讲 Computer Use、Jev 和 RSI：AI 怎样在软件里把事情办完？流程需要判断时，为什么考虑专门的模型？AI 能不能参与制造下一代 AI？每章沿着一个例子往前走。画面里的小实验帮助我们看清原理，不是现场调用这些模型。",
+      "Today we’ll connect Computer Use, Jev and RSI through three questions. How can AI finish a task inside software? When a workflow needs a decision, why consider a specialized model? And can AI help build the next AI? Each chapter follows a concrete example. The small experiments illustrate the mechanism; they are not live calls to these models."
     ],
     "transition": [
-      "先从最具体的一件事开始：帮客户创建一个退货申请。",
-      "Let’s start with a concrete task: create a return request for a customer."
-    ]
+      "先给客户创建一条退货申请。",
+      "Let’s create a return request for a customer."
+    ],
+    "scene": {
+      "kind": "static",
+      "label": [
+        "三条主线",
+        "Three questions"
+      ],
+      "end": [
+        "开场地图",
+        "The opening map"
+      ],
+      "say": [
+        "今天讲 Computer Use、Jev 和 RSI：AI 怎样在软件里把事情办完？流程需要判断时，为什么考虑专门的模型？AI 能不能参与制造下一代 AI？每章沿着一个例子往前走。画面里的小实验帮助我们看清原理，不是现场调用这些模型。",
+        "Today we’ll connect Computer Use, Jev and RSI through three questions. How can AI finish a task inside software? When a workflow needs a decision, why consider a specialized model? And can AI help build the next AI? Each chapter follows a concrete example. The small experiments illustrate the mechanism; they are not live calls to these models."
+      ]
+    }
   },
   {
-    "id": "C1-goal",
+    "id": "C1-why",
     "beat": "C1",
-    "label": "先给一个可检查的目标",
-    "action": "展示退货表单与任务",
-    "scene": {
-      "kind": "desktop",
-      "from": 0,
-      "to": 0
-    },
-    "labelEn": "Start with a checkable goal",
-    "actionEn": "Show the return form and task",
+    "label": "为什么让 AI 操作界面",
+    "labelEn": "Why let AI operate an interface?",
+    "action": "比较完成退货的两种入口",
+    "actionEn": "Compare two routes to completing a return",
     "look": [
-      "左边是空表单，右边是 1048 号订单的退货目标；暂时没有截图。",
-      "The empty form is on the left. The return goal for order 1048 is on the right, with no screenshot yet."
+      "同一退货目标分成 API 和界面两条路线，两边都以完成记录为终点。",
+      "The return goal branches into an API route and an interface route. Both end with a completed record."
     ],
     "say": [
-      "用户想给 1048 号订单创建退货。如果 AI 只告诉我们点哪里，这件事还没有办完。最后得在应用里出现一条退货记录。Computer Use，就是让 AI 通过软件界面做事。今天我们盯住这张桌面，看看它怎样从一句话走到真正的结果。",
-      "The user wants a return for order 1048. Advice about where to click does not finish the job. We need a return record in the app. Computer Use lets AI work through a software interface. We will follow this same desktop from the request to the result."
+      "客户要给 1048 号订单退货。AI 告诉我们点哪里，还不算办完，应用里得出现退货记录。Computer Use 就是让 AI 通过软件界面做事。软件如果提供 API，也就是给程序调用的接口，可以直接请求创建退货；需要在屏幕上处理时，再观察和操作界面。实际工作可以把两条路接起来。",
+      "The customer wants to return order 1048. Instructions about where to click are not enough; the app needs an actual return record. Computer Use lets AI act through a software interface. An API provides a direct interface for programs, so an available API can create the return directly. When work requires the screen, the system observes and operates the interface. A workflow can combine both routes."
     ],
     "transition": [
-      "动手之前，它能看到哪些信息？",
-      "Before acting, what information does it have?"
-    ]
-  },
-  {
-    "id": "C2-observe",
-    "beat": "C2",
-    "label": "截图进入 context",
-    "action": "截取第一张图，停在 context",
+      "跟着界面这条路，走到完成。",
+      "Let’s follow the interface route to completion."
+    ],
     "scene": {
-      "kind": "desktop",
-      "from": 0,
-      "to": 1
-    },
-    "labelEn": "A screenshot joins context",
-    "actionEn": "Capture the first screen and pause at context",
-    "look": [
-      "第一张屏幕缩略图已经出现在右边的 context。",
-      "The first screen thumbnail has appeared in context on the right."
-    ],
-    "say": [
-      "这张截图现在进入了 context。Context 就是模型这次判断能用的信息：目标是什么，画面现在怎样，之前已经试过什么。右边的小图是它最近看到的屏幕，不一定永远等于左边正在发生的事。",
-      "This screenshot has joined the context: the information available for this decision. What is the goal, what does the screen look like, and what has already been tried? The thumbnail is the most recently observed screen. It may not always match the live application."
-    ],
-    "transition": [
-      "",
-      ""
-    ]
+      "kind": "static",
+      "label": [
+        "API 与界面",
+        "API and interface"
+      ],
+      "end": [
+        "同一目标，两种入口",
+        "Two routes to the same goal"
+      ],
+      "say": [
+        "客户要给 1048 号订单退货。AI 告诉我们点哪里，还不算办完，应用里得出现退货记录。Computer Use 就是让 AI 通过软件界面做事。软件如果提供 API，也就是给程序调用的接口，可以直接请求创建退货；需要在屏幕上处理时，再观察和操作界面。实际工作可以把两条路接起来。",
+        "The customer wants to return order 1048. Instructions about where to click are not enough; the app needs an actual return record. Computer Use lets AI act through a software interface. An API provides a direct interface for programs, so an available API can create the return directly. When work requires the screen, the system observes and operates the interface. A workflow can combine both routes."
+      ]
+    }
   },
   {
-    "id": "C2-ground",
-    "beat": "C2",
-    "label": "从文字找到界面位置",
-    "action": "高亮订单号输入框",
-    "scene": {
-      "kind": "desktop",
-      "from": 1,
-      "to": 2
-    },
-    "labelEn": "Find a position from a description",
-    "actionEn": "Highlight the order-number field",
-    "look": [
-      "鼠标已移到订单框，红色定位框标出了目标。",
-      "The cursor is at the order field, marked by a red target outline."
-    ],
-    "say": [
-      "看见画面是 Vision。把“订单号输入框”对应到这个具体位置，叫 UI grounding。术语听起来抽象，画面上就是这个定位动作。",
-      "Vision reads the screen. UI grounding connects “the order-number field” to this specific position. Here, you can see that connection as a target outline."
-    ],
-    "transition": [
-      "为什么要通过界面走这一遍？",
-      "Why take the route through the interface?"
-    ]
-  },
-  {
-    "id": "C3-api",
-    "beat": "C3",
-    "label": "两种操作入口",
-    "action": "翻页比较 API 和界面操作",
-    "scene": {
-      "kind": "selection",
-      "selection": 0
-    },
-    "labelEn": "Two ways to act",
-    "actionEn": "Compare an API call with interface actions",
-    "look": [
-      "同一个退货目标分成两条路线：API 直接调用，或观察并操作界面，最后都需要完成证据。",
-      "The same return goal branches into an API call or observing and operating the interface. Both routes end with evidence of completion."
-    ],
-    "say": [
-      "API 是软件留给程序的接口。如果订单系统提供它，可以直接请求创建退货。如果任务只能通过界面完成，就需要观察、定位和操作。真实工作里两条路可以配合：能直接调用的部分用 API，需要在屏幕上处理的部分用 Computer Use。",
-      "An API is an interface for software. If the order system provides one, a program can request the return directly. If the task requires the visible interface, it needs observation, targeting and actions. Real workflows can combine both routes: API calls where available, and Computer Use for work on screen."
-    ],
-    "transition": [
-      "现在继续刚才的桌面，看工具怎样把事情做完。",
-      "Now continue on the same desktop and watch the tools do the work."
-    ]
-  },
-  {
-    "id": "C4-fill",
+    "id": "C4-loop",
     "beat": "C4",
-    "label": "动作改变界面",
-    "action": "自动填表，停在新的截图",
-    "scene": {
-      "kind": "desktop",
-      "from": 2,
-      "to": 7
-    },
-    "labelEn": "Actions change the application",
-    "actionEn": "Fill the form and pause after a new screenshot",
+    "label": "从观察到完成",
+    "labelEn": "From observation to completion",
+    "action": "连续播放截图、定位、填表和验证",
+    "actionEn": "Play observation, targeting, form entry and verification",
     "look": [
-      "表单已填好，新截图已经返回；还没有退货回执。",
-      "The form is filled and a fresh screenshot has returned. There is still no receipt."
+      "新截图已确认 R-204 回执；左边的应用结果与右边的 context 对上了。",
+      "A fresh screenshot confirms receipt R-204. The app result matches the context on the right."
     ],
     "say": [
-      "模型提出 tool call，也就是请工具做一件事。鼠标移动、键入文字，是工具在执行。填好以后，新截图返回，模型才知道操作实际产生了什么结果。现在表单填好了，但还没有回执。做到这里，能算完成吗？",
-      "The model requests a tool call: an operation for a tool to perform. The tool moves the cursor and types. A new screenshot then shows what actually happened. The form is filled, but there is no receipt yet. Is that enough to call the task complete?"
+      "截图进入 context，也就是模型这次判断能用的目标、画面和操作记录。把“订单号输入框”对应到画面上的位置，叫 UI grounding。模型再发出 tool call，请工具点击和键入。动作改变界面，新的观察又影响下一步。最后提交成功，新截图带回回执，这才拿到完成证据。Agent 把目标、观察、工具和反馈串成这样一个循环。",
+      "First, the screenshot joins the context: the goal, screen and action history available for this decision. UI grounding connects “the order-number field” to a position on screen. A tool call asks a tool to click or type. Actions change the app, and fresh observations inform the next step. Finally, submission produces a receipt, and a new screenshot supplies evidence of completion. The agent connects goals, observations, tools and feedback in this loop."
     ],
     "transition": [
-      "",
-      ""
-    ]
-  },
-  {
-    "id": "C4-submit",
-    "beat": "C4",
-    "label": "提交，再用新截图验证",
-    "action": "提交申请，自动取回截图并确认回执",
+      "界面突然变了，原计划还能用吗？",
+      "Will the old plan work if the interface changes?"
+    ],
     "scene": {
-      "kind": "desktop",
-      "from": 7,
-      "to": 11
-    },
-    "labelEn": "Submit, then verify in a fresh screenshot",
-    "actionEn": "Submit, capture a fresh screen and confirm the receipt",
-    "look": [
-      "新的截图已经确认 R-204；应用结果与 context 对上了。",
-      "A new screenshot confirms R-204. The application result now matches context."
-    ],
-    "say": [
-      "应用先出现 R-204，随后新截图把回执带进 context，模型才拿到完成的证据。Agent 把目标、观察、工具和反馈串成循环。看过表单、点过提交都不够，要确认应用真的达到了目标。",
-      "The app first shows R-204. A fresh screenshot then brings that receipt into context, giving the model evidence of completion. The agent connects the goal, observations, tools and feedback. Seeing the form or clicking Submit is not enough; check that the application reached the goal."
-    ],
-    "transition": [
-      "接下来改变一下条件，看它还能不能照原计划走。",
-      "Now change the conditions and see whether the old plan still works."
-    ]
+      "kind": "sequence",
+      "segments": [
+        {
+          "kind": "desktop",
+          "label": [
+            "观察与定位",
+            "Observe and locate"
+          ],
+          "end": [
+            "定位输入框",
+            "Locate the field"
+          ],
+          "from": 0,
+          "to": 2,
+          "delay": 700,
+          "hold": 700,
+          "say": [
+            "截图进入 context，也就是模型这次判断能用的目标、画面和操作记录。把“订单号输入框”对应到画面上的位置，叫 UI grounding。",
+            "First, the screenshot joins the context: the goal, screen and action history available for this decision. UI grounding connects “the order-number field” to a position on screen."
+          ]
+        },
+        {
+          "kind": "desktop",
+          "label": [
+            "填写表单",
+            "Fill the form"
+          ],
+          "end": [
+            "完整表单",
+            "The completed form"
+          ],
+          "from": 3,
+          "to": 7,
+          "delay": 600,
+          "hold": 650,
+          "say": [
+            "模型再发出 tool call，请工具点击和键入。动作改变界面，新的观察又影响下一步。",
+            "A tool call asks a tool to click or type. Actions change the app, and fresh observations inform the next step."
+          ]
+        },
+        {
+          "kind": "desktop",
+          "label": [
+            "提交与验证",
+            "Submit and verify"
+          ],
+          "end": [
+            "新截图确认退货已创建",
+            "A fresh screenshot confirms the return"
+          ],
+          "from": 8,
+          "to": 11,
+          "delay": 650,
+          "hold": 900,
+          "say": [
+            "最后提交成功，新截图带回回执，这才拿到完成证据。Agent 把目标、观察、工具和反馈串成这样一个循环。",
+            "Finally, submission produces a receipt, and a new screenshot supplies evidence of completion. The agent connects goals, observations, tools and feedback in this loop."
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "C5-block",
     "beat": "C5",
-    "label": "旧画面会带来错误动作",
-    "action": "插入弹窗，让旧点击失败",
-    "scene": {
-      "kind": "desktop",
-      "from": 8,
-      "to": 9,
-      "interrupted": true
-    },
-    "labelEn": "An old screen can produce the wrong action",
-    "actionEn": "Insert a popup and let the old click fail",
+    "label": "动作执行了，事情办成了吗",
+    "labelEn": "The action ran. Did the task finish?",
+    "action": "弹窗遮挡后执行旧点击",
+    "actionEn": "Show a popup, then execute the old click",
     "look": [
-      "弹窗挡住表单，旧位置已经被点击；没有回执，右边仍是旧截图。",
-      "A popup covers the form. The old position has been clicked, but there is no receipt and the right side still holds the old screenshot."
+      "弹窗挡住表单，旧点击已经执行；没有回执，context 仍保留旧截图。",
+      "A popup covers the form and the old click has executed. There is no receipt, while context still holds the old screenshot."
     ],
     "say": [
-      "弹窗挡住了表单，右边却还保留旧截图。刚才那个点击执行了，但点在遮挡层上，没有退货回执。动作执行成功和任务完成，是两件事。继续照旧点下去，问题还会在。",
-      "The popup covers the form, but the right side still holds the old screenshot. The click executed, yet it hit the overlay and produced no return receipt. Executing an action and completing the task are different things. Repeating the old click will leave the same problem."
+      "这次加一个变化：弹窗挡住了表单，但右边仍然是旧截图。模型按照旧画面给出了点击，工具也确实执行了。问题是，它点在遮挡层上，退货没有创建。只检查“鼠标点过没有”，就会误判完成。先停在这里：下一步该继续点，还是重新看一眼？",
+      "Now a popup covers the form, but context still contains the old screenshot. The model requested a click from that old view, and the tool executed it. It hit the overlay, so no return was created. Checking only whether the mouse clicked would give the wrong impression. Pause here: should it click again, or take another look?"
     ],
     "transition": [
       "",
       ""
-    ]
+    ],
+    "scene": {
+      "kind": "desktop",
+      "label": [
+        "弹窗打断旧计划",
+        "A pop-up blocks the plan"
+      ],
+      "end": [
+        "旧位置点击失败",
+        "The stale click fails"
+      ],
+      "from": 7,
+      "to": 9,
+      "interrupted": true,
+      "delay": 850,
+      "say": [
+        "这次加一个变化：弹窗挡住了表单，但右边仍然是旧截图。模型按照旧画面给出了点击，工具也确实执行了。问题是，它点在遮挡层上，退货没有创建。只检查“鼠标点过没有”，就会误判完成。先停在这里：下一步该继续点，还是重新看一眼？",
+        "Now a popup covers the form, but context still contains the old screenshot. The model requested a click from that old view, and the tool executed it. It hit the overlay, so no return was created. Checking only whether the mouse clicked would give the wrong impression. Pause here: should it click again, or take another look?"
+      ]
+    }
   },
   {
     "id": "C5-recover",
     "beat": "C5",
-    "label": "重新观察，修正动作",
-    "action": "取回新截图，关闭弹窗，重新提交并验证",
-    "scene": {
-      "kind": "desktop",
-      "from": 9,
-      "to": 17,
-      "interrupted": true
-    },
-    "labelEn": "Observe again and change the action",
-    "actionEn": "Capture the popup, close it, resubmit and verify",
+    "label": "用新观察修正下一步",
+    "labelEn": "Use fresh evidence to change the next step",
+    "action": "重新截图、关弹窗、提交并验证",
+    "actionEn": "Observe again, dismiss the popup, submit and verify",
     "look": [
-      "弹窗已关闭，申请重新提交，新截图确认了回执。",
-      "The popup is closed, the request is resubmitted, and a new screenshot confirms the receipt."
+      "弹窗已关闭，申请重新提交，新截图确认回执；恢复过程结束。",
+      "The popup is closed, the return is resubmitted and a fresh screenshot confirms the receipt."
     ],
     "say": [
-      "新截图把弹窗带进 context，下一步就变成先关闭它，再重新提交、确认回执。这里的修正来自新观察；模型的 weights，也就是内部学到的参数，并没有在这次操作中重新训练。",
-      "The fresh screenshot brings the popup into context. The next action becomes closing it, then resubmitting and checking the receipt. The correction follows new evidence. The model’s weights, its learned internal parameters, are not retrained during this interaction."
+      "新截图把弹窗带进 context，下一步就有依据了：先关弹窗，再提交，最后看回执。它没有死守原来的动作列表，而是按眼前的情况修正计划。这里发生的是一次运行过程中的纠正。我们还可以问得更早一点：模型最初是怎样学会看界面、选动作的？",
+      "The fresh screenshot brings the popup into context. Now the next steps have a basis: dismiss it, submit again and check the receipt. The plan changes with the observed situation instead of following the old action list blindly. This is a correction during use. We can also ask an earlier question: how did the model learn to read interfaces and choose actions?"
     ],
     "transition": [
-      "同样的观察和修正，也会出现在 Blender 这样的创作软件里。",
-      "The same observation and correction can happen in creative software such as Blender."
-    ]
-  },
-  {
-    "id": "C6-build",
-    "beat": "C6",
-    "label": "从可编辑场景到渲染图",
-    "action": "搭建房子并生成第一张预览",
+      "先看看训练怎样让这种能力形成。",
+      "Let’s see how training develops this capability."
+    ],
     "scene": {
-      "kind": "blender",
-      "from": 0,
-      "to": 3
-    },
-    "labelEn": "From an editable scene to a render",
-    "actionEn": "Build the house and produce the first preview",
-    "look": [
-      "简化教学动画已搭好房子并 render；正面仍很暗。",
-      "The teaching animation has built and rendered the house. Its front is still dark."
-    ],
-    "say": [
-      "Blender 用来创作三维场景。刚才先用代码建立可编辑的物体，再 render。Render，就是根据场景、相机和灯光算出图像。现在房子出来了。这张预览可以交付了吗？先看一眼，你会改哪里？",
-      "Blender creates 3D scenes. We first used code to build editable objects, then rendered them. Rendering produces an image from the scene, camera and lighting. The house is now visible. Is this preview ready to deliver? Look at it first. What would you change?"
-    ],
-    "transition": [
-      "",
-      ""
-    ]
+      "kind": "sequence",
+      "segments": [
+        {
+          "kind": "desktop",
+          "label": [
+            "重新观察与定位",
+            "Observe again and locate"
+          ],
+          "end": [
+            "新截图看见弹窗，定位关闭按钮",
+            "The fresh screenshot shows the popup and locates Close"
+          ],
+          "from": 10,
+          "to": 11,
+          "interrupted": true,
+          "delay": 700,
+          "hold": 700,
+          "say": [
+            "新截图把弹窗带进 context，下一步就有依据了：先关弹窗，再提交，最后看回执。",
+            "The fresh screenshot brings the popup into context. Now the next steps have a basis: dismiss it, submit again and check the receipt."
+          ]
+        },
+        {
+          "kind": "desktop",
+          "label": [
+            "关闭弹窗、提交与验证",
+            "Dismiss, submit and verify"
+          ],
+          "end": [
+            "新截图确认完成",
+            "A fresh screenshot confirms success"
+          ],
+          "from": 12,
+          "to": 17,
+          "interrupted": true,
+          "delay": 650,
+          "say": [
+            "它没有死守原来的动作列表，而是按眼前的情况修正计划。这里发生的是一次运行过程中的纠正。我们还可以问得更早一点：模型最初是怎样学会看界面、选动作的？",
+            "The plan changes with the observed situation instead of following the old action list blindly. This is a correction during use. We can also ask an earlier question: how did the model learn to read interfaces and choose actions?"
+          ]
+        }
+      ]
+    }
   },
   {
-    "id": "C6-refine",
-    "beat": "C6",
-    "label": "调整后再检查",
-    "action": "检查预览、移动灯光，再检查修正结果",
-    "scene": {
-      "kind": "blender",
-      "from": 3,
-      "to": 6
-    },
-    "labelEn": "Adjust, then inspect again",
-    "actionEn": "Inspect the preview, move the light and check the corrected result",
-    "look": [
-      "灯光已移动，正面变亮，新的预览已完成检查。",
-      "The light has moved, the front is brighter, and the new preview has been checked."
-    ],
-    "say": [
-      "原来的正面太暗，门窗细节看不清。检查把问题定位出来，灯光移过来以后，正面清楚了。修改场景，再 render、再检查，才知道调整有没有达到目的。这里是简化教学动画，说明代码修改和视觉检查怎样配合。",
-      "The original front was too dark to show the doors and windows clearly. Inspection located the problem. Moving the light made the front clearer. Change the scene, render again, then inspect the result to see whether the adjustment worked. This teaching animation shows how code changes and visual inspection work together."
-    ],
-    "transition": [
-      "",
-      ""
-    ]
-  },
-  {
-    "id": "C6-film",
-    "beat": "C6",
-    "label": "真实的成品画面",
-    "action": "自动播放约 30 秒官方成品短片",
-    "scene": {
-      "kind": "film"
-    },
-    "labelEn": "The published result",
-    "actionEn": "Play the approximately 30-second published film",
-    "look": [
-      "约 30 秒的发布案例成片播放后，停在另一张已发布静帧；旁边保留 Python / bpy → Render → Computer Use 的流程。",
-      "After the approximately 30-second published render film, a separate published still remains. The sidebar keeps the Python / bpy → Render → Computer Use workflow visible."
-    ],
-    "say": [
-      "刚才这段是发布案例中的真实 Blender 成片，结束后留着另一张案例静帧。这个流程结合了 bpy，也就是 Blender 的 Python API，先建立场景、render，再通过 Computer Use 打开 Blender 检查。影片展示的是创作结果，不是鼠标操作录像。刚才的小循环，在这里进入了更复杂的创作任务。",
-      "That was the real Blender render from the published case; a separate published still remains at the end. The workflow combines bpy, Blender’s Python API, to build the scene and render it, with Computer Use to open Blender and inspect it. The film shows the creative result, not a mouse-action recording. The small loop we saw earlier is part of this richer creative task."
-    ],
-    "transition": [
-      "这些操作能力是怎么学来的？接下来把训练和使用分开看。",
-      "How are these abilities learned? Next, separate training from using the model."
-    ]
-  },
-  {
-    "id": "C7-practice",
+    "id": "C7-train",
     "beat": "C7",
-    "label": "操作能力从练习与反馈而来",
-    "labelEn": "Practice and feedback shape the ability",
-    "action": "尝试一次点击，检查失败结果",
-    "actionEn": "Try a click and inspect the failed result",
-    "scene": {
-      "kind": "learning",
-      "from": 0,
-      "to": 2
-    },
+    "label": "能力怎样通过练习形成",
+    "labelEn": "How practice changes capability",
+    "action": "播放多任务练习、反馈与参数更新",
+    "actionEn": "Play varied practice, feedback and weight updates",
     "look": [
-      "目标是创建退货，模型却点了取消；没有回执，任务失败成为反馈。",
-      "The goal is to create a return, but the model clicks Cancel. No receipt appears; failure provides feedback."
+      "多种练习的反馈已汇入训练，weights 从 v1 更新为 v2；尚未进入新界面的使用阶段。",
+      "Feedback from varied tasks has entered training. Weights have changed from v1 to v2; the new interface has not appeared yet."
     ],
     "say": [
-      "刚才看的是使用，现在看训练。目标是创建退货，模型却点了取消；点击执行了，任务没有完成。训练会检查结果，让成功和失败提供反馈。图里是简化的练习，不是在浏览器里训练真实模型。",
-      "We have seen the model in use. Now consider training. The goal is a return, but the model clicks Cancel. The action ran; the task failed. Training checks outcomes so successes and failures can provide feedback. This is a simplified exercise, not a live model being trained in the browser."
+      "训练会让模型练习许多任务：找按钮、填写信息、完成流程，再用结果提供反馈。训练程序根据这些反馈，反复调整 weights，也就是模型内部学到的参数。这样改变的是以后处理新任务的能力。以 OpenAI 的 CUA 为例，公开介绍包含强化学习，让模型通过尝试和反馈学习操作。这里把许多轮练习缩成了一段示意。",
+      "Training gives the model many tasks: finding controls, entering information and completing workflows. Their outcomes provide feedback, which the training process uses to adjust weights, the model’s learned parameters. These changes affect future tasks. OpenAI’s CUA, for example, uses reinforcement learning to learn through attempts and feedback. This illustration condenses many practice rounds."
     ],
     "transition": [
       "",
       ""
-    ]
-  },
-  {
-    "id": "C7-update",
-    "beat": "C7",
-    "label": "许多练习改变 weights",
-    "labelEn": "Many practice tasks change weights",
-    "action": "展开多种任务，让反馈引导参数更新",
-    "actionEn": "Show varied tasks and feedback guiding a weight update",
+    ],
     "scene": {
-      "kind": "learning",
-      "from": 3,
-      "to": 5
-    },
-    "look": [
-      "多种任务的成功与失败汇入训练信号，模型格子的数值示意从 v1 变为 v2。",
-      "Successes and failures across tasks supply a training signal. The illustrative weight grid changes from v1 to v2."
-    ],
-    "say": [
-      "练习许多任务，把反馈用于调整 weights：模型内部影响判断的可调数值。反复小幅调整，才可能学到更好的操作方式。Reinforcement learning，强化学习，就是利用结果反馈学习行动的一类方法；OpenAI 的 CUA 使用了这条路线。",
-      "Practice many tasks and use feedback to adjust weights: internal, adjustable numbers that influence predictions. Repeated small updates can teach better actions. Reinforcement learning is a family of methods that learn actions from outcome feedback. OpenAI used this route for CUA."
-    ],
-    "transition": [
-      "",
-      ""
-    ]
+      "kind": "sequence",
+      "segments": [
+        {
+          "kind": "learning",
+          "label": [
+            "练习与反馈",
+            "Practice and feedback"
+          ],
+          "end": [
+            "练习结果进入反馈",
+            "Practice outcomes become feedback"
+          ],
+          "from": 0,
+          "to": 2,
+          "delay": 1000,
+          "hold": 700,
+          "say": [
+            "训练会让模型练习许多任务：找按钮、填写信息、完成流程，再用结果提供反馈。",
+            "Training gives the model many tasks: finding controls, entering information and completing workflows. Their outcomes provide feedback."
+          ]
+        },
+        {
+          "kind": "learning",
+          "label": [
+            "更新 weights",
+            "Update weights"
+          ],
+          "end": [
+            "训练得到新模型",
+            "Training produces an updated model"
+          ],
+          "from": 3,
+          "to": 5,
+          "delay": 950,
+          "say": [
+            "训练程序根据这些反馈，反复调整 weights，也就是模型内部学到的参数。这样改变的是以后处理新任务的能力。以 OpenAI 的 CUA 为例，公开介绍包含强化学习，让模型通过尝试和反馈学习操作。这里把许多轮练习缩成了一段示意。",
+            "The training process uses this feedback to adjust weights, the model’s learned parameters. These changes affect future tasks. OpenAI’s CUA, for example, uses reinforcement learning to learn through attempts and feedback. This illustration condenses many practice rounds."
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "C7-use",
     "beat": "C7",
-    "label": "使用时换 context，参数保持不变",
-    "labelEn": "New context with the same learned weights",
-    "action": "换一张布局不同的截图，定位新的按钮位置",
-    "actionEn": "Use a different layout and locate the button again",
-    "scene": {
-      "kind": "learning",
-      "from": 6,
-      "to": 7
-    },
+    "label": "新画面，不等于重新训练",
+    "labelEn": "A new screen is not retraining",
+    "action": "换到新布局，用固定参数完成定位",
+    "actionEn": "Use fixed weights to find the target in a new layout",
     "look": [
-      "按钮位置变了，模型读取新截图，重新定位；v2 的 weights 保持固定。",
-      "The button has moved. The model uses the new screenshot to locate it; v2’s weights stay fixed."
+      "按钮换了位置，模型根据新截图完成定位；v2 的 weights 保持不变。",
+      "The button has moved. The model finds it from the new screenshot while v2’s weights remain fixed."
     ],
     "say": [
-      "训练后换一张布局不同的画面。新截图进入 context，模型用学到的能力重新找按钮。这里变化的是这次能看到的信息，weights 保持不变。看新截图、修正动作，通常属于 inference，也就是使用已经训练好的模型。",
-      "After training, show a different layout. The screenshot enters context, and the model uses its learned ability to locate the button again. The available information changes; the weights stay fixed. Reading a new screenshot and correcting an action normally happens during inference: using an already trained model."
+      "现在把按钮换个位置。模型读到新截图，更新 context，重新定位目标。刚才学到的 weights 保持不变，就像学会开车以后，看到新的路口要换路线，不需要每过一个路口就重新学开车。前一段训练留下能力，这一段使用眼前的信息。弹窗恢复属于后者。",
+      "Now move the button. The model reads a fresh screenshot, updates context and locates the target again. Its learned weights stay fixed. Once you’ve learned to drive, a new junction may change your route without requiring another driving course. Training establishes capability; use applies that capability to current information. Recovering from the popup belonged to the latter."
     ],
     "transition": [
-      "有些流程暂时不需要操作屏幕，只需要先做一个判断。下一章就是 Jev。",
-      "Some workflows do not need a screen action yet. They need a decision first. That brings us to Jev."
-    ]
+      "再到 Blender 看一次真实创作。",
+      "Now let’s see a real creative task in Blender."
+    ],
+    "scene": {
+      "kind": "learning",
+      "label": [
+        "用新 context 做决定",
+        "Act on new context"
+      ],
+      "end": [
+        "截图变了，weights 保持不变",
+        "New screenshots, fixed weights"
+      ],
+      "from": 6,
+      "to": 7,
+      "delay": 1300,
+      "say": [
+        "现在把按钮换个位置。模型读到新截图，更新 context，重新定位目标。刚才学到的 weights 保持不变，就像学会开车以后，看到新的路口要换路线，不需要每过一个路口就重新学开车。前一段训练留下能力，这一段使用眼前的信息。弹窗恢复属于后者。",
+        "Now move the button. The model reads a fresh screenshot, updates context and locates the target again. Its learned weights stay fixed. Once you’ve learned to drive, a new junction may change your route without requiring another driving course. Training establishes capability; use applies that capability to current information. Recovering from the popup belonged to the latter."
+      ]
+    }
+  },
+  {
+    "id": "C6-film",
+    "beat": "C6",
+    "label": "Blender：代码与视觉检查配合",
+    "labelEn": "Blender: code and visual inspection together",
+    "action": "播放 30 秒真实成片，保留工作流程",
+    "actionEn": "Play the 30-second render with its workflow visible",
+    "look": [
+      "成片播完后停在发布案例静帧，旁边显示 bpy → Render → Computer Use。",
+      "The film ends on a published still, beside the bpy → Render → Computer Use workflow."
+    ],
+    "say": [
+      "这段约三十秒的影片，是发布案例里的真实 Blender 成片。旁边是工作流程：用 bpy，也就是 Blender 的 Python API，建立可编辑场景；再 render，根据物体、相机和灯光算出图像；然后通过 Computer Use 打开 Blender 检查结果。影片展示创作成果，不是鼠标操作录像。这项工作把直接调用和视觉检查接在了一起。",
+      "This approximately thirty-second film is a real Blender render from the published case. Follow the workflow alongside it: bpy, Blender’s Python API, builds an editable scene. Rendering then produces images from the objects, camera and lighting. Computer Use opens Blender to inspect the result. The film shows the creative output, not a recording of mouse actions. Direct programmatic control and visual inspection contribute to the same task."
+    ],
+    "transition": [
+      "流程除了操作，还需要判断。",
+      "Alongside actions, workflows need decisions."
+    ],
+    "scene": {
+      "kind": "film",
+      "label": [
+        "Blender 案例成片",
+        "Blender source film"
+      ],
+      "end": [
+        "成片静帧与 bpy → render → Computer Use 流程",
+        "Source still and the bpy → render → Computer Use workflow"
+      ],
+      "say": [
+        "这段约三十秒的影片，是发布案例里的真实 Blender 成片。旁边是工作流程：用 bpy，也就是 Blender 的 Python API，建立可编辑场景；再 render，根据物体、相机和灯光算出图像；然后通过 Computer Use 打开 Blender 检查结果。影片展示创作成果，不是鼠标操作录像。这项工作把直接调用和视觉检查接在了一起。",
+        "This approximately thirty-second film is a real Blender render from the published case. Follow the workflow alongside it: bpy, Blender’s Python API, builds an editable scene. Rendering then produces images from the objects, camera and lighting. Computer Use opens Blender to inspect the result. The film shows the creative output, not a recording of mouse actions. Direct programmatic control and visual inspection contribute to the same task."
+      ]
+    }
   },
   {
     "id": "J1-question",
     "beat": "J1",
-    "label": "把输入变成流程需要的判断",
-    "action": "读入邮件，提出分流问题，返回 returns",
+    "label": "一个流程需要怎样的判断",
+    "labelEn": "What decision does the workflow need?",
+    "action": "用邮件选择处理部门",
+    "actionEn": "Choose a team for an incoming message",
+    "look": [
+      "邮件进入共享 state，Choice 返回 returns，分类结果可以交给后续流程。",
+      "The message enters shared state. Choice returns returns, a classification the workflow can use."
+    ],
+    "say": [
+      "邮件说鞋子尺码不合适，想退货。系统需要先选处理部门。Jev 是 TypeSafe AI 面向这类判断任务的模型。输入材料叫 state，这里是一封邮件，也可以加入相关记录。Choice 就是从预先给好的选项中选择，比如退货、账单或物流。定义清楚问题和答案范围，结果就容易接入后续流程。",
+      "The message says the shoes are the wrong size and asks for a return. The system needs to choose a team before drafting a reply. Jev is TypeSafe AI’s model for decision tasks like this. State is the input material: a message here, potentially with relevant records. Choice selects from predefined options, such as returns, billing or shipping. Defining the question and answer space makes the result usable by the workflow."
+    ],
+    "transition": [
+      "先看普通 LLM 怎样生成答案。",
+      "First, how does an ordinary LLM generate an answer?"
+    ],
     "scene": {
       "kind": "decision",
-      "from": 0,
-      "to": 3
-    },
-    "labelEn": "Turn the input into a decision the workflow can use",
-    "actionEn": "Read the message, ask the routing question and return returns",
-    "look": [
-      "邮件进入共享 state，分类问题已经返回 returns。",
-      "The message enters the shared state, and the classification question has returned returns."
-    ],
-    "say": [
-      "这封邮件要退货，所以这里选了 returns。Jev 是 TypeSafe AI 的模型，面向答案形状明确的判断任务。画面里的 state，就是这些问题共用的输入材料：这里是一封邮件，实际流程还可以加入相关记录。这些材料构成这次判断的 context。结果是一个流程可以直接使用的分类。",
-      "This message asks for a return, so the answer here is returns. Jev is a TypeSafe AI model for decisions with defined answer shapes. State is the input shared by those questions: a message here, with relevant records available in a real workflow. That material supplies context for the decision. The result is a classification the workflow can use."
-    ],
-    "transition": [
-      "这里先认识一个词：decoding。",
-      "First, let’s introduce decoding."
-    ]
-  },
-  {
-    "id": "J2-the",
-    "beat": "J2",
-    "label": "Decoding：选入一个 token，再预测",
-    "action": "选入 The，停下来观察新候选",
-    "scene": {
-      "kind": "tokens",
-      "tokens": [
-        "The"
+      "label": [
+        "为同一工单选处理组",
+        "Choose a team for the ticket"
       ],
-      "from": 0,
-      "to": 1
-    },
-    "labelEn": "Decoding: choose a token, then predict again",
-    "actionEn": "Select The and pause at the new candidates",
-    "look": [
-      "The 已加入 context，下一组候选变为 returns 与 support。",
-      "The has joined context. The next candidates are returns and support."
-    ],
-    "say": [
-      "Decoding，就是从下一 token 的概率里按规则选一个，加回 context，再预测下一步。Token 可以是一个词、字符或文字片段。刚才选了 The，下一组候选就变成 returns 和 support。前面生成的内容，已经改变了后面的条件。这里的候选和概率都是教学示意。",
-      "Decoding selects a token from predicted probabilities according to a rule, appends it to context, then predicts again. A token can be a word, character or piece of text. After choosing The, the next candidates became returns and support. The generated text changed the conditions for what follows. These candidates and probabilities are a teaching illustration."
-    ],
-    "transition": [
-      "",
-      ""
-    ]
-  },
-  {
-    "id": "J2-we",
-    "beat": "J2",
-    "label": "换开头，观察后续怎样改变",
-    "action": "改选 We，再自动生成 can help .",
-    "scene": {
-      "kind": "tokens",
-      "tokens": [
-        "We",
-        "can",
-        "help",
-        "."
+      "end": [
+        "Choice 返回预设选项",
+        "Choice returns a predefined option"
       ],
-      "from": 0,
-      "to": 4
-    },
-    "labelEn": "Change the beginning and watch what follows",
-    "actionEn": "Choose We, then generate can help .",
-    "look": [
-      "开头换成 We，候选随之改变；We can help . 逐 token 完成。",
-      "Choosing We changes the candidates. We can help . completes one token at a time."
-    ],
-    "say": [
-      "换成 We，后面就适合接 can 或 will，再逐步生成完整句子。每个选入的 token 都会影响下一步。这里自动选最高概率；按概率采样是另一种规则。Decoding 说的就是这一套逐步选取的过程。",
-      "Choose We, and can or will becomes a suitable continuation. Repeat until the sentence is complete. Each selected token conditions the next step. This demo takes the highest probability; sampling is another rule. Decoding is this step-by-step selection process."
-    ],
-    "transition": [
-      "那么，普通 LLM 和 Jev 回答同一个判断题时，有什么不同？",
-      "How do an ordinary LLM and Jev approach the same decision?"
-    ]
-  },
-  {
-    "id": "J3-llm",
-    "beat": "J3",
-    "label": "普通 LLM 也能判断",
-    "action": "逐 token 生成结构化 JSON",
-    "scene": {
-      "kind": "llm",
-      "from": 0,
-      "to": 9
-    },
-    "labelEn": "An ordinary LLM can decide too",
-    "actionEn": "Generate structured JSON token by token",
-    "look": [
-      "左边 LLM 的 JSON 已经逐 token 生成完，右边的 Jev 路径尚未运行。",
-      "The LLM on the left has finished generating JSON token by token. The Jev path on the right has not run yet."
-    ],
-    "say": [
-      "普通 LLM 当然也能做判断。可以让它输出一个标签，约束成 JSON，甚至一次回答好几个问题。左边这个答案就是通过 decoding 逐 token 生成出来的。能不能输出结构化数据，不是普通 LLM 和 Jev 的分界。",
-      "An ordinary LLM can make decisions too. We can ask for a label, constrain the output to JSON, or ask several questions in one call. The answer on the left was generated token by token through decoding. Structured output alone is not the dividing line between an ordinary LLM and Jev."
-    ],
-    "transition": [
-      "",
-      ""
-    ]
-  },
-  {
-    "id": "J3-jev",
-    "beat": "J3",
-    "label": "专门的决策输出",
-    "action": "保留 LLM 结果，播放 Jev 路径",
-    "scene": {
-      "kind": "decision",
       "from": 0,
       "to": 3,
-      "llmStep": 9
-    },
-    "labelEn": "An output path built for decisions",
-    "actionEn": "Keep the LLM result and run the Jev path",
-    "look": [
-      "LLM 结果保留在左边，右边同一 state 的三个类型化问题已经返回结果。",
-      "The LLM result remains on the left. On the right, three typed questions about the same state have returned results."
-    ],
-    "say": [
-      "Jev 回答答案类型预先定义的问题，不自由续写文本。多个问题共用 state，独立判断，可以并行处理；结果和概率交给代码选分支。TypeSafe 还把训练目标放在判断和校准概率上。是否比普通 LLM 合适，要比较实际任务；这里演示输出关系，不是内部架构或速度测试。",
-      "Jev handles predefined decisions rather than freely continuing text. Questions share state, are evaluated independently and can run in parallel. Code uses the results and probabilities to choose a branch. TypeSafe also targets decisions and calibrated probabilities in training. Whether it fits better than an ordinary LLM needs testing on real tasks. This shows output relationships, not internal architecture or measured speed."
-    ],
-    "transition": [
-      "它给出的答案，具体有哪些形状？",
-      "What answer shapes does it provide?"
-    ]
+      "delay": 700,
+      "say": [
+        "邮件说鞋子尺码不合适，想退货。系统需要先选处理部门。Jev 是 TypeSafe AI 面向这类判断任务的模型。输入材料叫 state，这里是一封邮件，也可以加入相关记录。Choice 就是从预先给好的选项中选择，比如退货、账单或物流。定义清楚问题和答案范围，结果就容易接入后续流程。",
+        "The message says the shoes are the wrong size and asks for a return. The system needs to choose a team before drafting a reply. Jev is TypeSafe AI’s model for decision tasks like this. State is the input material: a message here, potentially with relevant records. Choice selects from predefined options, such as returns, billing or shipping. Defining the question and answer space makes the result usable by the workflow."
+      ]
+    }
   },
   {
-    "id": "J4-choice",
-    "beat": "J4",
-    "label": "Choice：在明确选项里选",
-    "action": "放大 Choice 的部门选项与概率",
+    "id": "J2-decode",
+    "beat": "J2",
+    "label": "Decoding：一步接一步生成",
+    "labelEn": "Decoding: generating one step at a time",
+    "action": "连续生成 We can help .",
+    "actionEn": "Generate We can help . in one sequence",
+    "look": [
+      "We、can、help 和句号依次加入 context，完整句子已出现。",
+      "We, can, help and the full stop have joined context, forming the completed sentence."
+    ],
+    "say": [
+      "Decoding 就是逐步选出下一个 token，接到已有内容后面。Token 可能是词、字符或文字片段。画面先选 We，把它加入 context，再预测适合接什么，于是逐步得到 We can help。每一步都以刚刚生成的内容为条件。这一句短话展开了普通 LLM 生成文字的过程。",
+      "Decoding selects the next token and appends it to what is already there. A token can be a word, character or piece of text. The demo chooses We and adds it to context, then predicts what can follow, eventually producing We can help. Each step depends on the content generated so far. This short sentence makes the ordinary LLM’s text-generation process visible."
+    ],
+    "transition": [
+      "把同一封邮件交给两种模型。",
+      "Let’s give both models the same message."
+    ],
     "scene": {
-      "kind": "selection",
-      "selection": 0
-    },
-    "labelEn": "Choice: select from defined options",
-    "actionEn": "Focus on Choice team options and their probabilities",
-    "look": [
-      "Choice 的 returns、billing、shipping 同时可见；概率为 0.94、0.04、0.02。",
-      "Choice shows returns, billing and shipping with probabilities 0.94, 0.04 and 0.02."
-    ],
-    "say": [
-      "Choice 回答“选哪一个”。我们事先给出退货、账单和物流三个选项，它返回选择和各选项的概率。这里退货最高。软件拿到的是一个定义清楚的答案，后面就能按它分流。",
-      "Choice answers “which one?” We define returns, billing and shipping as the available options, and it returns a selection and the option probabilities. Returns leads here. The software receives a defined answer it can use for routing."
-    ],
-    "transition": [
-      "",
-      ""
-    ]
+      "kind": "sequence",
+      "segments": [
+        {
+          "kind": "tokens",
+          "label": [
+            "选出 We，更新 context",
+            "Choose We and update context"
+          ],
+          "end": [
+            "We 已加入 context，下一轮候选已出现",
+            "We has joined context; the next candidates are visible"
+          ],
+          "from": 0,
+          "to": 1,
+          "tokens": [
+            "We",
+            "can",
+            "help",
+            "."
+          ],
+          "delay": 1000,
+          "say": [
+            "Decoding 就是逐步选出下一个 token，接到已有内容后面。Token 可能是词、字符或文字片段。画面先选 We，把它加入 context，再预测适合接什么。",
+            "Decoding selects the next token and appends it to what is already there. A token can be a word, character or piece of text. The demo chooses We and adds it to context, then predicts what can follow."
+          ]
+        },
+        {
+          "kind": "tokens",
+          "label": [
+            "重复预测和追加",
+            "Repeat prediction and appending"
+          ],
+          "end": [
+            "We can help.",
+            "We can help."
+          ],
+          "from": 2,
+          "to": 4,
+          "tokens": [
+            "We",
+            "can",
+            "help",
+            "."
+          ],
+          "delay": 1000,
+          "say": [
+            "于是逐步得到 We can help。每一步都以刚刚生成的内容为条件。这一句短话展开了普通 LLM 生成文字的过程。",
+            "This eventually produces We can help. Each step depends on the content generated so far. This short sentence makes the ordinary LLM’s text-generation process visible."
+          ]
+        }
+      ]
+    }
   },
   {
-    "id": "J4-score",
-    "beat": "J4",
-    "label": "Score：先说明每一档是什么意思",
-    "action": "展示五档 rubric、概率分布与期望分数 1.4",
+    "id": "J3-compare",
+    "beat": "J3",
+    "label": "两种模型，处理同一项判断",
+    "labelEn": "Two models, the same decision",
+    "action": "连续展示 LLM 和 Jev，停在并排结果",
+    "actionEn": "Show both routes, ending with results side by side",
+    "look": [
+      "左边保留 LLM 的 JSON，右边保留共享 state 上的多个类型化判断。",
+      "The LLM’s JSON remains on the left, beside several typed decisions over shared state on the right."
+    ],
+    "say": [
+      "普通 LLM 也能分类、输出 JSON，一次回答多个问题。左边通过 decoding 生成结构化结果。Jev 围绕预先定义的判断来训练和提供接口：问题共用 state，独立判断，返回结果和概率。它还有按标准评分的 Score、判断陈述概率的 Noul。大量重复的有限判断，是考虑 Jev 的理由；是否更合适，要实测准确性、校准、成本和延迟。动画不代表速度对比。",
+      "An ordinary LLM can classify, return JSON and answer several questions in one call. On the left, decoding produces a structured response. Jev’s training and interface focus on predefined decisions: questions share state, are evaluated independently and return results and probabilities. Alongside Choice, Score uses a scoring standard, while Noul estimates the probability of a proposition. Repeated, bounded decisions are a reason to evaluate Jev. Suitability still depends on measured accuracy, calibration, cost and latency. The animation is not a speed comparison."
+    ],
+    "transition": [
+      "从一个错例看训练和校准。",
+      "A mistaken example will introduce training and calibration."
+    ],
     "scene": {
-      "kind": "selection",
-      "selection": 1
-    },
-    "labelEn": "Score: define what each level means",
-    "actionEn": "Show the five-level rubric, its distribution and expected score 1.4",
-    "look": [
-      "五档从 0 routine 到 4 critical；概率依次为 0.1、0.5、0.3、0.1、0，期望分数为 1.4。",
-      "The five levels run from 0 routine to 4 critical. Their probabilities are 0.1, 0.5, 0.3, 0.1 and 0, with an expected score of 1.4."
-    ],
-    "say": [
-      "Score 回答“到什么程度”，但得先给 rubric，也就是评分标准。这里从 0 的常规处理，到 4 的严重紧急，中间每档都有说明。模型给出各档概率，再按分值加权平均，得到 1.4。它是期望分数，不是在随便猜一个看起来精确的数字。",
-      "Score answers “to what degree?” It first needs a rubric: a scoring standard. Here the levels run from 0 for routine handling to 4 for critical urgency, with a definition for each level. The model supplies probabilities for the levels. Their weighted average is 1.4, the expected score. The number is tied to a defined scale."
-    ],
-    "transition": [
-      "",
-      ""
-    ]
+      "kind": "sequence",
+      "segments": [
+        {
+          "kind": "llm",
+          "label": [
+            "LLM 生成结构化答案",
+            "The LLM generates structured output"
+          ],
+          "end": [
+            "JSON 答案生成完毕",
+            "The JSON answer is complete"
+          ],
+          "from": 0,
+          "to": 9,
+          "delay": 180,
+          "hold": 500,
+          "say": [
+            "普通 LLM 也能分类、输出 JSON，一次回答多个问题。左边通过 decoding 生成结构化结果。",
+            "An ordinary LLM can classify, return JSON and answer several questions in one call. On the left, decoding produces a structured response."
+          ]
+        },
+        {
+          "kind": "decision",
+          "label": [
+            "Jev 返回预定义判断",
+            "Jev returns typed decisions"
+          ],
+          "end": [
+            "两条输出路径并排对照",
+            "Both output paths remain side by side"
+          ],
+          "from": 0,
+          "to": 3,
+          "llmStep": 9,
+          "delay": 600,
+          "say": [
+            "Jev 围绕预先定义的判断来训练和提供接口：问题共用 state，独立判断，返回结果和概率。它还有按标准评分的 Score、判断陈述概率的 Noul。大量重复的有限判断，是考虑 Jev 的理由；是否更合适，要实测准确性、校准、成本和延迟。动画不代表速度对比。",
+            "Jev’s training and interface focus on predefined decisions: questions share state, are evaluated independently and return results and probabilities. Alongside Choice, Score uses a scoring standard, while Noul estimates the probability of a proposition. Repeated, bounded decisions are a reason to evaluate Jev. Suitability still depends on measured accuracy, calibration, cost and latency. The animation is not a speed comparison."
+          ]
+        }
+      ]
+    }
   },
   {
-    "id": "J4-noul",
-    "beat": "J4",
-    "label": "Noul：一个陈述有多大概率为真",
-    "action": "展示“客户想退货”的陈述与概率 0.96",
-    "scene": {
-      "kind": "selection",
-      "selection": 2
-    },
-    "labelEn": "Noul: estimate whether a proposition is true",
-    "actionEn": "Show the proposition “the customer wants a return” and probability 0.96",
-    "look": [
-      "Noul 只聚焦一个陈述：客户想退货；示意概率为 0.96。",
-      "Noul focuses on one proposition: the customer wants a return. The illustrative probability is 0.96."
-    ],
-    "say": [
-      "Noul 回答一个陈述为真的概率。比如“客户想退货”，这里给出 0.96。它没有另外再给一个 confidence。Choice 是选项，Score 是有标准的分数，Noul 是陈述概率。画面上这些数值都是教学例子，下一步看怎样训练和检查它们。",
-      "Noul estimates the probability that a proposition is true. For “the customer wants a return,” this illustration gives 0.96. It does not add a separate confidence value. Choice handles options, Score uses a defined scale, and Noul estimates a proposition. These numbers are teaching examples. Next, we will look at training and checking such outputs."
-    ],
-    "transition": [
-      "概率给出来以后，还要学会怎样给得合适。",
-      "Once a probability is supplied, it also needs to be appropriate."
-    ]
-  },
-  {
-    "id": "J5-feedback",
+    "id": "J5-train",
     "beat": "J5",
-    "label": "先看清一次具体的判断错误",
-    "action": "展示重复扣款邮件、v1 的退货判断与账单标注",
-    "scene": {
-      "kind": "calibration",
-      "from": 0,
-      "to": 2
-    },
-    "labelEn": "Inspect a concrete decision error",
-    "actionEn": "Show the duplicate-charge ticket, v1’s returns prediction and the billing label",
+    "label": "把判断反馈带入训练",
+    "labelEn": "Bring decision feedback into training",
+    "action": "连续展示错例、更多反馈和权重更新",
+    "actionEn": "Show a mistaken example, varied feedback and weight updates",
     "look": [
-      "训练邮件说“Charged twice. I’m keeping the shoes.”；v1 预测 returns，概率 0.95，但已知标注是 billing。",
-      "The training ticket says “Charged twice. I’m keeping the shoes.” v1 predicts returns with probability 0.95, but the known label is billing."
+      "v1 的账单错例与后续反馈已经完成展示，weights 更新为 v2；独立新题还没揭晓。",
+      "The billing mistake and further feedback have been shown. Weights have updated to v2; the separate test outcomes remain unrevealed."
     ],
     "say": [
-      "这封邮件说扣了两次钱，鞋子要留着。已知答案是账单问题，模型却选了退货，还给出 0.95。训练先把预测和答案放在一起比较，让错误形成反馈。一次高概率的错误，还不能判断模型整体是否校准。",
-      "The customer was charged twice and wants to keep the shoes. The known answer is billing, but the model chose returns with probability 0.95. Comparing its prediction with the answer provides training feedback. One confident mistake cannot establish whether the model is calibrated overall."
+      "客户说钱扣了两次，鞋子要留下。已知答案是账单，模型却选了退货，还给出很高的概率。训练利用预测与结果的差异，让许多例子的反馈进入参数更新。TypeSafe 把这条路线称为 RLCD，即面向校准判断的强化学习，目标包括做判断和给出校准的概率。这里展示通用关系，公开说明没有展开具体更新算法。",
+      "The customer was charged twice and wants to keep the shoes. The known answer is billing, yet the model chooses returns with a high probability. Training uses differences between predictions and outcomes, bringing feedback from many examples into weight updates. TypeSafe calls its approach RLCD, Reinforcement Learning for Calibrated Decisions, targeting both decisions and calibrated probabilities. This shows the general training relationship; its public explanation does not detail the update algorithm."
     ],
     "transition": [
       "",
       ""
-    ]
-  },
-  {
-    "id": "J5-update",
-    "beat": "J5",
-    "label": "反馈怎样改变模型",
-    "action": "展开多种训练案例，示意反馈与 weights 更新",
+    ],
     "scene": {
-      "kind": "calibration",
-      "from": 3,
-      "to": 5
-    },
-    "labelEn": "How feedback changes the model",
-    "actionEn": "Show varied cases, training feedback and a weight update",
-    "look": [
-      "不同工单与已知结果提供训练反馈，weights 格子变化，模型从 v1 变为 v2。",
-      "Varied tickets and known outcomes provide feedback. The weight grid changes, taking the model from v1 to v2."
-    ],
-    "say": [
-      "许多例子的反馈变成训练信号，用来调整 weights，影响以后面对新输入时的判断。TypeSafe 将这条路线称为 RLCD：Reinforcement Learning for Calibrated Decisions，面向判断与校准概率的强化学习。这里展示通用原理；公开说明没有给出具体更新算法。",
-      "Feedback from many examples becomes a signal for adjusting weights, affecting judgments on future inputs. TypeSafe calls its approach RLCD: Reinforcement Learning for Calibrated Decisions. It targets decisions and calibrated probabilities. This shows the general principle; the public explanation does not specify the update algorithm."
-    ],
-    "transition": [
-      "",
-      ""
-    ]
+      "kind": "sequence",
+      "segments": [
+        {
+          "kind": "calibration",
+          "label": [
+            "错误案例的反馈",
+            "Feedback on a wrong decision"
+          ],
+          "end": [
+            "错且自信的判断受到反馈",
+            "Feedback for a confidently wrong decision"
+          ],
+          "from": 0,
+          "to": 2,
+          "delay": 900,
+          "hold": 650,
+          "say": [
+            "客户说钱扣了两次，鞋子要留下。已知答案是账单，模型却选了退货，还给出很高的概率。",
+            "The customer was charged twice and wants to keep the shoes. The known answer is billing, yet the model chooses returns with a high probability."
+          ]
+        },
+        {
+          "kind": "calibration",
+          "label": [
+            "多例反馈更新 weights",
+            "Varied feedback updates weights"
+          ],
+          "end": [
+            "weights 更新为 v2，新题留到下一段",
+            "Weights updated to v2; separate cases come next"
+          ],
+          "from": 3,
+          "to": 5,
+          "delay": 850,
+          "say": [
+            "训练利用预测与结果的差异，让许多例子的反馈进入参数更新。TypeSafe 把这条路线称为 RLCD，即面向校准判断的强化学习，目标包括做判断和给出校准的概率。这里展示通用关系，公开说明没有展开具体更新算法。",
+            "Training uses differences between predictions and outcomes, bringing feedback from many examples into weight updates. TypeSafe calls its approach RLCD, Reinforcement Learning for Calibrated Decisions, targeting both decisions and calibrated probabilities. This shows the general training relationship; its public explanation does not detail the update algorithm."
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "J5-heldout",
     "beat": "J5",
-    "label": "在新案例上检查 calibration",
-    "action": "一次揭晓整组独立新案例，比较预测概率与实际结果",
-    "scene": {
-      "kind": "calibration",
-      "from": 6,
-      "to": 7
-    },
-    "labelEn": "Check calibration on the new cases",
-    "actionEn": "Reveal the separate batch together and compare predictions with outcomes",
+    "label": "用独立新题检查 Calibration",
+    "labelEn": "Check calibration on separate cases",
+    "action": "一次揭晓整组新题结果",
+    "actionEn": "Reveal the separate case outcomes together",
     "look": [
-      "v2 的 weights 固定；另一批新题报出约 0.8，十个结果同时揭晓，八对两错。",
-      "v2’s weights stay fixed. A separate batch has predictions near 0.8; all ten outcomes appear together, eight correct and two wrong."
+      "固定 weights 的 v2 完成新题，十个教学结果同时揭晓：八对、两错。",
+      "With weights fixed, v2’s ten illustrative test outcomes appear together: eight correct and two wrong."
     ],
     "say": [
-      "换一批没参与训练的新题。Calibration 检查许多相近概率的预测，和实际发生的频率能否对上。这里的 0.8 属于新题，不是把旧答案的 0.95 调低；也不保证每十题恰好八对。十道教学题不能证明训练已经改善模型。",
-      "Use cases that did not contribute to training. Calibration asks whether many predictions with similar probabilities match observed frequencies. This 0.8 belongs to new cases; it is not a reduction of the earlier 0.95, nor a guarantee of eight successes in every ten. Ten teaching cases cannot prove that training improved the model."
+      "训练完，换一批没参与训练的新题。Calibration，校准，检查的是模型报出的概率和长期实际发生的频率能不能对上。比如大量报出约八成把握的判断，实际是否也约八成正确。这里十题八对只是帮助理解，不是性能证明，更不保证每十题都恰好八对。看一次自信的回答，无法替代这种检查。",
+      "After training, use cases that did not contribute to it. Calibration asks whether reported probabilities match observed frequencies over many cases. Across many predictions near eighty percent, are roughly eighty percent correct? Eight correct answers here illustrate the idea; they do not establish performance or guarantee that every ten will contain eight successes. One confident answer cannot replace this evaluation."
     ],
     "transition": [
-      "再把这个问题带回刚才那封邮件。",
-      "Now bring that question back to our message."
-    ]
+      "这些概率，怎样影响流程的下一步？",
+      "How do these probabilities affect the next step?"
+    ],
+    "scene": {
+      "kind": "sequence",
+      "segments": [
+        {
+          "kind": "calibration",
+          "label": [
+            "先看独立新题",
+            "Inspect the separate cases first"
+          ],
+          "end": [
+            "新题报出约八成概率，结果尚未揭晓",
+            "Separate cases report roughly eighty percent; outcomes remain hidden"
+          ],
+          "from": 6,
+          "to": 6,
+          "delay": 0,
+          "hold": 0,
+          "say": [
+            "训练完，换一批没参与训练的新题。Calibration，校准，检查的是模型报出的概率和长期实际发生的频率能不能对上。比如大量报出约八成把握的判断，实际是否也约八成正确。",
+            "After training, use cases that did not contribute to it. Calibration asks whether reported probabilities match observed frequencies over many cases. Across many predictions near eighty percent, are roughly eighty percent correct?"
+          ]
+        },
+        {
+          "kind": "calibration",
+          "label": [
+            "揭晓独立测试结果",
+            "Reveal held-out outcomes"
+          ],
+          "end": [
+            "比较概率与实际结果频率",
+            "Compare probabilities with outcome frequencies"
+          ],
+          "from": 7,
+          "to": 7,
+          "delay": 0,
+          "hold": 0,
+          "say": [
+            "这里十题八对只是帮助理解，不是性能证明，更不保证每十题都恰好八对。看一次自信的回答，无法替代这种检查。",
+            "Eight correct answers here illustrate the idea; they do not establish performance or guarantee that every ten will contain eight successes. One confident answer cannot replace this evaluation."
+          ]
+        }
+      ]
+    }
   },
   {
-    "id": "J6-distribution",
-    "beat": "J6",
-    "label": "选项概率与 confidence",
-    "action": "展开部门分布，停在分歧处",
-    "scene": {
-      "kind": "decision",
-      "from": 0,
-      "to": 4,
-      "mixed": true
-    },
-    "labelEn": "Option probability and confidence",
-    "actionEn": "Show the team distribution and pause at the ambiguity",
+    "id": "J8-ambiguity",
+    "beat": "J8",
+    "label": "一句邮件里有两个问题",
+    "labelEn": "Two issues in one message",
+    "action": "展示混合请求，停在分流之前",
+    "actionEn": "Show the mixed request and pause before routing",
     "look": [
-      "Team 分布为 returns 0.61、billing 0.35、shipping 0.04，confidence 为 0.42。",
-      "Team probabilities are returns 0.61, billing 0.35 and shipping 0.04; confidence is 0.42."
+      "邮件同时提到尺码退货和重复扣款，部门判断分散；尚未进入处理分支。",
+      "The message mentions a wrong-size return and a duplicate charge. The team decision is mixed, with no route taken yet."
     ],
     "say": [
-      "邮件现在既要退货，又有重复扣款。退货排第一，账单也占了明显一部分。0.61 是某个选项的概率，confidence 则概括整个分布的形状。它们不是两个版本的正确率，分歧会影响接下来的流程。",
-      "The message now asks for a return and reports a duplicate charge. Returns leads, but billing also has substantial probability. The 0.61 describes an option; confidence summarizes the distribution’s shape. These are not two versions of accuracy. The ambiguity matters for the next workflow step."
+      "现在客户既想退货，又说扣了两次钱。退货排在前面，但账单也占了明显一部分。这里不是让大家记住几个小数，而是看清问题本身有歧义。假如系统只拿最高的那一个选项就往下走，另一件事可能被忽略。先停在这个分岔口：你会直接交给退货部门，还是先把两个需求理清？",
+      "Now the customer wants a return and reports a duplicate charge. Returns leads, but billing also has substantial probability. The point is the ambiguity, not the decimal values. Taking only the leading option could leave the second issue unattended. Pause at this branch: would you send it straight to returns, or first clarify the two requests?"
     ],
     "transition": [
       "",
       ""
-    ]
-  },
-  {
-    "id": "J6-reason",
-    "beat": "J6",
-    "label": "换个问题可以很清楚",
-    "action": "切到退货原因的分布",
+    ],
     "scene": {
       "kind": "decision",
-      "from": 4,
+      "label": [
+        "查看混合诉求",
+        "Inspect mixed intent"
+      ],
+      "end": [
+        "分布已经出现，尚未选择路线",
+        "The distribution is visible; the route is undecided"
+      ],
+      "from": 1,
       "to": 4,
       "mixed": true,
-      "question": "reason"
-    },
-    "labelEn": "Another question can be clear",
-    "actionEn": "Switch to the return-reason distribution",
-    "look": [
-      "问题已切为 Return reason；wrong_size 为 1.00，另一个原因项为 0。",
-      "The question is now Return reason. wrong_size is 1.00 and the other reason is 0."
-    ],
-    "say": [
-      "换一个问题：退货原因是什么？尺码不合适写得很明确。同一段 state，对一个问题模糊，对另一个问题可以清楚。这里把输入简化了，借用官方文档里的部门与原因数值来讲区别；不是这封新邮件的实测结果，也不是现场调用。",
-      "Ask a different question: what is the return reason? Wrong size is explicit. The same state can be ambiguous for one question and clear for another. This simplified input borrows the team and reason values from the official documentation to illustrate the distinction. They are not measurements on this new message or results from a live call."
-    ],
-    "transition": [
-      "判断有了分歧，接下来该让流程做什么？",
-      "When the decision is mixed, what should the workflow do next?"
-    ]
+      "delay": 700,
+      "say": [
+        "现在客户既想退货，又说扣了两次钱。退货排在前面，但账单也占了明显一部分。这里不是让大家记住几个小数，而是看清问题本身有歧义。假如系统只拿最高的那一个选项就往下走，另一件事可能被忽略。先停在这个分岔口：你会直接交给退货部门，还是先把两个需求理清？",
+        "Now the customer wants a return and reports a duplicate charge. Returns leads, but billing also has substantial probability. The point is the ambiguity, not the decimal values. Taking only the leading option could leave the second issue unattended. Pause at this branch: would you send it straight to returns, or first clarify the two requests?"
+      ]
+    }
   },
   {
-    "id": "J8-person",
+    "id": "J8-route",
     "beat": "J8",
-    "label": "有歧义时先澄清",
-    "action": "沿用刚才的混合请求，把信封交给人澄清",
+    "label": "让判断服务于下一步",
+    "labelEn": "Use the decision to guide the next step",
+    "action": "先澄清，再展示模型与代码的分工",
+    "actionEn": "Clarify first, then show the division of work",
+    "look": [
+      "信封进入澄清分支；完整流程保留 Jev 判断、代码分支、LLM 回复和人工澄清。",
+      "The message takes the clarification branch. The workflow shows Jev decisions, code-based routing, LLM replies and human clarification."
+    ],
+    "say": [
+      "这条教学流程选择先请人澄清。分流规则由实际业务制定，概率帮助我们决定下一步，不替我们制定政策。Jev 负责范围明确的判断，普通代码选分支，生成式 LLM 可以写解释和回复，人处理需要澄清的情况。这样看，选择模型就是看工作里缺哪一项能力，再在真实任务上比较。",
+      "This teaching workflow asks a person to clarify first. Routing rules come from the actual business; probabilities inform the next action without setting the policy themselves. Jev handles bounded decisions, code selects a branch, a generative LLM can draft explanations and replies, and people clarify ambiguity. Model selection starts with the capability the workflow needs, followed by testing on real tasks."
+    ],
+    "transition": [
+      "再看 AI 能否帮助改进下一代 AI。",
+      "Now, can AI help improve the next AI?"
+    ],
     "scene": {
       "kind": "decision",
+      "label": [
+        "根据判断选择后续动作",
+        "Use the decision to choose an action"
+      ],
+      "end": [
+        "先澄清，再处理",
+        "Clarify before proceeding"
+      ],
       "from": 4,
       "to": 5,
       "mixed": true,
-      "selection": 0
-    },
-    "labelEn": "Clarify when the evidence is mixed",
-    "actionEn": "Continue with the same mixed request and route the envelope to a person",
-    "look": [
-      "沿用 J6 的邮件与部门判断，信封进入 Person 分支；没有重新添加扣款问题。",
-      "The message and team decision continue from J6. The envelope enters the Person branch without adding the charge issue again."
-    ],
-    "say": [
-      "刚才这封邮件有两个问题，部门判断也有分歧。于是这条教学规则让人先澄清，信封就沿这条路走。概率的作用落到了实际行动上。真实系统怎样分流，还要由自己的政策与风险决定，这里没有通用阈值。",
-      "The same message raises two issues, and the team decision is mixed. This teaching policy therefore asks a person to clarify, and the envelope takes that route. The probability now affects an action. A real system must set routing conditions for its own policy and risk; there is no universal threshold here."
-    ],
-    "transition": [
-      "",
-      ""
-    ]
-  },
-  {
-    "id": "J8-workflow",
-    "beat": "J8",
-    "label": "各个环节各做一件事",
-    "action": "展开 Jev、普通代码、LLM 与人工的完整工作流",
-    "scene": {
-      "kind": "decision",
-      "from": 5,
-      "to": 5,
-      "mixed": true,
-      "selection": 1
-    },
-    "labelEn": "Give each part of the workflow a defined job",
-    "actionEn": "Expand the workflow across Jev, ordinary code, an LLM and a person",
-    "look": [
-      "完整流程显示：Jev 给出有限判断，普通代码选择分支，LLM 写回复或人来澄清。",
-      "The full workflow shows Jev making a bounded decision, ordinary code selecting a branch, then an LLM drafting a reply or a person clarifying."
-    ],
-    "say": [
-      "Jev 适合评估的是大量重复、答案范围明确的判断。普通代码负责分支；需要写解释或回复时，生成式 LLM 有它的用途；需要澄清时就交给人。要操作画面，还得有视觉模型和工具，Jev 当前接收文字与 JSON。是否采用它，要在自己的任务上比较准确性、calibration、成本和延迟。",
-      "Jev is worth evaluating for many repeated decisions with a defined answer space. Ordinary code handles branching. A generative LLM can write an explanation or reply, while a person can clarify ambiguity. Screen interaction still needs a vision model and tools; Jev currently takes text and JSON. Whether to use it depends on accuracy, calibration, cost and latency on your own tasks."
-    ],
-    "transition": [
-      "最后，把视角从处理任务，转到改进处理任务的方法。",
-      "Finally, move from handling tasks to improving the method used to handle them."
-    ]
+      "delay": 900,
+      "say": [
+        "这条教学流程选择先请人澄清。分流规则由实际业务制定，概率帮助我们决定下一步，不替我们制定政策。Jev 负责范围明确的判断，普通代码选分支，生成式 LLM 可以写解释和回复，人处理需要澄清的情况。这样看，选择模型就是看工作里缺哪一项能力，再在真实任务上比较。",
+        "This teaching workflow asks a person to clarify first. Routing rules come from the actual business; probabilities inform the next action without setting the policy themselves. Jev handles bounded decisions, code selects a branch, a generative LLM can draft explanations and replies, and people clarify ambiguity. Model selection starts with the capability the workflow needs, followed by testing on real tasks."
+      ]
+    }
   },
   {
     "id": "R1-intro",
     "beat": "R1",
-    "label": "改进者本身能否变强",
-    "action": "翻到 RSI 的递归问题",
-    "scene": {
-      "kind": "static"
-    },
-    "labelEn": "Can the improver itself become stronger?",
-    "actionEn": "Introduce the recursive question in RSI",
+    "label": "改进能力能否传到下一代",
+    "labelEn": "Can improvement ability carry forward?",
+    "action": "展示后继系统与带问号的回程",
+    "actionEn": "Show a successor and a questioned return path",
     "look": [
-      "两张配方纸从 v1 指向 v2，回程箭头带着问号。",
-      "Two recipe sheets connect v1 to v2, with a question mark on the return path."
+      "A 指向后继 B，B 通往下一轮的箭头保留问号。",
+      "A points to successor B. The path from B into another cycle retains a question mark."
     ],
     "say": [
-      "RSI 是 Recursive Self-Improvement，递归自我改进。改一次答案，改变的是这次输出；留下更好的算法或工具，改变的是可复用的方法。RSI 再问一层：AI 能否帮助造出更有能力的后继系统，而后继系统又更擅长推动下一轮改进？递归说的是，改进能力能不能继续传下去。图上的问号表示，这个循环还需要研究和验证。",
-      "RSI means Recursive Self-Improvement. Revising one answer changes an output. Retaining a better algorithm or tool improves a reusable method. RSI asks a further question: can AI help build a more capable successor that becomes better at driving another improvement cycle? The recursion concerns whether that ability carries forward. The question mark shows a loop that still needs investigation and evidence."
+      "RSI 是 Recursive Self-Improvement，递归自我改进。研究常常有很多想法，缺的是实现和实验的时间，所以会让 AI 帮忙提出、实现和检查方案。RSI 再问一步：AI 能否帮助造出更有能力的后继，而后继又更擅长推动下一轮改进？关键是改进能力能不能继续传下去。让同一个模型改写一次答案，还没有走到这个问题。",
+      "RSI means Recursive Self-Improvement. Research often has more ideas than time for implementation and experiments, motivating AI assistance with proposals, implementation and checks. RSI asks a further question: can AI help build a more capable successor that becomes better at driving another improvement cycle? The issue is whether improvement ability carries forward. Asking the same model to revise one answer does not establish that."
     ],
     "transition": [
-      "为什么大家想把研究过程的一部分交给 AI？",
-      "Why use AI for part of the research process?"
-    ]
+      "用一个小实验看看，什么改进值得留下。",
+      "A small experiment will show which changes deserve to stay."
+    ],
+    "scene": {
+      "kind": "static",
+      "label": [
+        "改进改进的方法",
+        "Improve the method of improvement"
+      ],
+      "end": [
+        "A → B → C？",
+        "A → B → C?"
+      ],
+      "say": [
+        "RSI 是 Recursive Self-Improvement，递归自我改进。研究常常有很多想法，缺的是实现和实验的时间，所以会让 AI 帮忙提出、实现和检查方案。RSI 再问一步：AI 能否帮助造出更有能力的后继，而后继又更擅长推动下一轮改进？关键是改进能力能不能继续传下去。让同一个模型改写一次答案，还没有走到这个问题。",
+        "RSI means Recursive Self-Improvement. Research often has more ideas than time for implementation and experiments, motivating AI assistance with proposals, implementation and checks. RSI asks a further question: can AI help build a more capable successor that becomes better at driving another improvement cycle? The issue is whether improvement ability carries forward. Asking the same model to revise one answer does not establish that."
+      ]
+    }
   },
   {
-    "id": "R3-search",
-    "beat": "R3",
-    "label": "想法多，能试的少",
-    "action": "从一个想法展开到多个候选与有限实验",
-    "scene": {
-      "kind": "research",
-      "from": 0,
-      "to": 1
-    },
-    "labelEn": "Many ideas, limited experiments",
-    "actionEn": "Expand one idea into many candidates and a limited set of experiments",
+    "id": "R4-challenge",
+    "beat": "R4",
+    "label": "操作更少，就该留下吗",
+    "labelEn": "Should we keep the one that does less work?",
+    "action": "运行 A 基线与 B 候选，暂停在检查之前",
+    "actionEn": "Run baseline A and candidate B, pausing before B’s check",
     "look": [
-      "一个想法展开成多个候选，能进入实验的只有其中一部分。",
-      "One idea expands into several candidates, only some of which can enter experiments."
+      "A 已通过检查；B 已运行结束、操作较少，但尚未检查或标红，保留者仍是 A。",
+      "A has passed its checks. B has finished with fewer operations, but has not been checked or marked red. A remains retained."
     ],
     "say": [
-      "研究常常不缺想法，缺的是把想法写成可运行的东西，再逐个做实验的时间。候选越来越多，能试的仍然有限。所以大家希望让 AI 帮忙：多提出一些方案，把实现和实验的一部分工作接过去。",
-      "Research often has more ideas than time to turn them into working implementations and run experiments. Candidates multiply, while the number that can be tested remains limited. This motivates using AI to propose alternatives and help with parts of implementation and experimentation."
+      "任务很简单：把数字从小到大排好，一个也不能丢。这些事先写好的程序会在本地真正运行，方块和计数来自实际操作。先看 A 完成任务，再换 B。B 用的操作明显少了，好像节省了不少工作。先别急着替换：结果还没有检查。你会根据操作量直接留下 B 吗？",
+      "The task is simple: put the numbers in ascending order without losing any. These prewritten programs run locally; the block movements and counts come from their actual operations. A completes the task, then B uses noticeably less work. Before replacing A, remember that B’s result has not been checked. Would the lower operation count alone persuade you to keep B?"
     ],
     "transition": [
       "",
       ""
-    ]
-  },
-  {
-    "id": "R3-loop",
-    "beat": "R3",
-    "label": "提出、执行、检查，再保留",
-    "action": "展开 AI 提案、实现、测试与保留方法的循环",
+    ],
     "scene": {
-      "kind": "research",
-      "from": 1,
-      "to": 3
-    },
-    "labelEn": "Propose, run, check, then retain",
-    "actionEn": "Show the loop from AI proposals through implementation, tests and retained methods",
-    "look": [
-      "候选经过实现和测试，只有经检查的改进进入保留方法的位置。",
-      "Candidates pass through implementation and testing. Only checked improvements reach the retained-method stage."
-    ],
-    "say": [
-      "提出候选只是开始。它要能运行，要接受独立检查，通过后才能留下给下一次任务用。下面把循环缩成一个小问题：数字从小到大排好，一个也不能丢。先检查正确性，再比操作量。这次候选程序事先写好了，会在本地真的运行；不是现场让 AI 发明算法。",
-      "A proposal is only the start. It must run and face independent checks before an improvement can be retained for another task. We will shrink this loop to a small problem: sort numbers in ascending order without losing any values. Check correctness first, then compare work. These candidates are prewritten programs that really run locally, not algorithms invented live by AI."
-    ],
-    "transition": [
-      "先用原方法建立基线，再让候选来挑战它。",
-      "Establish a baseline with the original method, then test alternatives."
-    ]
+      "kind": "sequence",
+      "segments": [
+        {
+          "kind": "sort",
+          "label": [
+            "运行并检查基线 A",
+            "Run and check baseline A"
+          ],
+          "end": [
+            "保留已验证的 A",
+            "Keep verified A"
+          ],
+          "candidate": "A",
+          "run": true,
+          "checked": true,
+          "delay": 75,
+          "hold": 950,
+          "say": [
+            "任务很简单：把数字从小到大排好，一个也不能丢。事先写好的程序在本地真正运行，方块和计数来自实际操作。A 已排好并通过检查，下面是它用的操作量。",
+            "The task is simple: put the numbers in ascending order without losing any. These prewritten programs run locally; the movements and counts come from their actual operations. A has sorted the numbers and passed the checks. Below is the work it used."
+          ]
+        },
+        {
+          "kind": "sort",
+          "label": [
+            "运行候选 B，暂不检查",
+            "Run B before checking"
+          ],
+          "end": [
+            "B 已运行完，正确性尚未检查",
+            "B has finished; correctness is unchecked"
+          ],
+          "candidate": "B",
+          "run": true,
+          "checked": false,
+          "delay": 110,
+          "hold": 900,
+          "say": [
+            "再换 B。B 用的操作明显少了。先别急着替换：结果还没有检查。你会根据操作量直接留下 B 吗？",
+            "Now B uses noticeably less work. Before replacing A, remember that B’s result has not been checked. Would the lower operation count alone persuade you to keep B?"
+          ]
+        }
+      ]
+    }
   },
   {
-    "id": "R4-a",
+    "id": "R4-keep",
     "beat": "R4",
-    "label": "原方法先建立基线",
-    "action": "运行 A，并自动检查完整测试组",
-    "scene": {
-      "kind": "sort",
-      "candidate": "A",
-      "run": true,
-      "checked": true
-    },
-    "labelEn": "Establish the baseline",
-    "actionEn": "Run A and check the full fixed test suite automatically",
+    "label": "先做对，再比较改进",
+    "labelEn": "Check correctness before comparing improvement",
+    "action": "检查淘汰 B，运行并验证 C",
+    "actionEn": "Reject B after checking, then run and verify C",
     "look": [
-      "A 已运行完成并通过 6 / 6 检查；方块顺序与操作计数保持可见。",
-      "A has finished and passed 6 / 6 checks. The output order and operation count remain visible."
+      "B 的错误已揭晓；C 通过六项检查，在同组测试上操作更少，保留者更新为 C。",
+      "B’s errors are revealed. C passes all six checks, uses less work on the same suite and becomes the retained method."
     ],
     "say": [
-      "A 反复比较相邻数字，需要时交换。看见方块移动了吗？计数来自刚才实际发生的比较和写入。右边还会测试其他输入，确认不是只把这一个例子做对。",
-      "A repeatedly compares neighbors and swaps when needed. The block movements and counts come from the actual comparisons and array writes. The evaluator also checks other inputs, not just the example on screen."
+      "一检查，B 的顺序还不对。少做了操作，却没有完成任务，所以淘汰。接着运行 C：它通过六项检查，在同一组测试里也比 A 用更少的操作，这才值得替换。留下的是一个下次还能使用的程序。六项测试支持的是这组结果，不能证明所有输入都正确。这里最重要的是提出候选之后，必须有独立检查。",
+      "The check reveals that B’s output is still out of order. It did less work without completing the task, so it is rejected. C then passes all six checks and uses less work than A on the same suite, earning its place as the retained program. That program can be reused on later tasks. Six tests support these results, not correctness for every possible input. A proposal needs an independent check."
     ],
     "transition": [
-      "",
-      ""
-    ]
-  },
-  {
-    "id": "R4-b",
-    "beat": "R4",
-    "label": "更少操作，却没有做对",
-    "action": "运行 B，自动检查并拒绝错误候选",
+      "真实研究中的 AlphaEvolve 也使用这条思路。",
+      "AlphaEvolve uses this approach in real research."
+    ],
     "scene": {
-      "kind": "sort",
-      "candidate": "B",
-      "run": true,
-      "checked": true
-    },
-    "labelEn": "Less work, but the wrong result",
-    "actionEn": "Run B, check it and reject the faulty candidate",
-    "look": [
-      "B 的错误已标红，固定测试没有全部通过，保留者仍是 A。",
-      "B’s errors are marked red. It failed part of the fixed suite, and A is still retained."
-    ],
-    "say": [
-      "B 只走一遍，操作少了，但顺序还不对。自动检查把错误标红，保留者仍然是 A。少做了工作，却没完成任务，就不能算改进。",
-      "B makes one pass and uses less work, but the output is still out of order. The check marks the errors red, and A stays retained. Less work without completing the task is not an improvement."
-    ],
-    "transition": [
-      "",
-      ""
-    ]
+      "kind": "sequence",
+      "segments": [
+        {
+          "kind": "sort",
+          "label": [
+            "检查并拒绝 B",
+            "Check and reject B"
+          ],
+          "end": [
+            "B 没有通过正确性检查",
+            "B fails the correctness check"
+          ],
+          "candidate": "B",
+          "checked": true,
+          "hold": 1500,
+          "say": [
+            "一检查，B 的顺序还不对。少做了操作，却没有完成任务，所以淘汰。",
+            "The check reveals that B’s output is still out of order. It did less work without completing the task, so it is rejected."
+          ]
+        },
+        {
+          "kind": "sort",
+          "label": [
+            "运行并检查 C",
+            "Run and check C"
+          ],
+          "end": [
+            "保留通过测试且操作更少的 C",
+            "Keep C after it passes with less work"
+          ],
+          "candidate": "C",
+          "run": true,
+          "checked": true,
+          "delay": 140,
+          "hold": 1000,
+          "say": [
+            "接着运行 C：它通过六项检查，在同一组测试里也比 A 用更少的操作，这才值得替换。留下的是一个下次还能使用的程序。六项测试支持的是这组结果，不能证明所有输入都正确。这里最重要的是提出候选之后，必须有独立检查。",
+            "C then passes all six checks and uses less work than A on the same suite, earning its place as the retained program. That program can be reused on later tasks. Six tests support these results, not correctness for every possible input. A proposal needs an independent check."
+          ]
+        }
+      ]
+    }
   },
   {
-    "id": "R4-c",
-    "beat": "R4",
-    "label": "正确后再比较计算量",
-    "action": "运行 C，通过检查后保留改进",
-    "scene": {
-      "kind": "sort",
-      "candidate": "C",
-      "run": true,
-      "checked": true
-    },
-    "labelEn": "Compare work after correctness",
-    "actionEn": "Run C, check it and retain the improvement",
-    "look": [
-      "C 已通过 6 / 6 检查，整组操作量少于 A，保留者更新为 C。",
-      "C passed 6 / 6 checks, used less work than A on the suite, and is now the retained method."
-    ],
-    "say": [
-      "C 把每个新数字插入已经有序的左侧。它通过六项检查，并在同一组测试上做了更少的工作，这次才替换 A。留下的是可复用的程序；六项测试只支持这组结果，既不证明所有输入都正确，也不证明完整 RSI。",
-      "C inserts each new item into the sorted left side. It passes all six checks and uses less work on the same suite, so it replaces A. What persists is a reusable program. Six tests support a bounded result, not correctness for every input or proof of full RSI."
-    ],
-    "transition": [
-      "真实研究里，也有用模型提出候选、再用程序筛选的例子。",
-      "Real research also uses models to propose candidates and programs to evaluate them."
-    ]
-  },
-  {
-    "id": "R5-research",
+    "id": "R5-example",
     "beat": "R5",
-    "label": "AlphaEvolve 也先提出，再检查",
-    "action": "播放 Gemini 提出代码、测试淘汰与保留的研究流程",
+    "label": "真实改进，数字各有范围",
+    "labelEn": "A real improvement, with bounded measurements",
+    "action": "展示 AlphaEvolve 流程与两项结果",
+    "actionEn": "Show AlphaEvolve and its two reported results",
+    "look": [
+      "Gemini → 候选代码 → 自动评估流程与 23%／约 1% 两项结果同屏可见。",
+      "The Gemini → candidate code → automated evaluation flow appears beside 23% and approximately 1%."
+    ],
+    "say": [
+      "AlphaEvolve 用 Gemini 提出代码候选，再由自动评估筛选。DeepMind 报告过一个矩阵乘法 kernel 加速 23%。Kernel 是训练中反复调用的一小段计算程序。这个改进让 Gemini 整体训练时间减少约 1%。一个数字讲组件，一个讲整体，证明的是具体计算效率改善，还没有测到研究能力能否一代接一代增强。",
+      "AlphaEvolve uses Gemini to propose code candidates and automated evaluation to select them. DeepMind reported a twenty-three percent speedup in a matrix-multiplication kernel, a small computation routine used repeatedly during training. That local improvement reduced total Gemini training time by about one percent. One figure concerns the component and the other the whole process. They establish a specific efficiency improvement, without measuring research ability growing across successive generations."
+    ],
+    "transition": [
+      "递归还缺后继系统能力这一环。",
+      "Recursion also needs evidence about the successor’s capability."
+    ],
     "scene": {
       "kind": "research",
+      "label": [
+        "AlphaEvolve 的搜索与结果",
+        "AlphaEvolve search and results"
+      ],
+      "end": [
+        "局部 kernel 收益与整体收益并列",
+        "Kernel and whole-training gains together"
+      ],
       "from": 0,
-      "to": 2
-    },
-    "labelEn": "AlphaEvolve also proposes, then checks",
-    "actionEn": "Show Gemini proposing code, tests rejecting candidates and retention",
-    "look": [
-      "Gemini 提出代码候选，自动测试淘汰失败方案，通过评估的改进被保留。",
-      "Gemini proposes code candidates. Automated tests reject failures, and evaluated improvements are retained."
-    ],
-    "say": [
-      "真实研究里的 AlphaEvolve 用 Gemini 提出代码候选，再由自动评估筛选。刚才排序台上的规则还在：候选得真正执行，经得住检查，才值得留下。模型负责寻找方案，评估负责告诉我们有没有改善。",
-      "In real research, AlphaEvolve uses Gemini to propose code candidates and automated evaluation to select them. The rule from our sorting bench still applies: a candidate must run and survive checks before it is worth retaining. The model searches for alternatives; evaluation tells us whether they improve the task."
-    ],
-    "transition": [
-      "",
-      ""
-    ]
+      "to": 3,
+      "delay": 900,
+      "say": [
+        "AlphaEvolve 用 Gemini 提出代码候选，再由自动评估筛选。DeepMind 报告过一个矩阵乘法 kernel 加速 23%。Kernel 是训练中反复调用的一小段计算程序。这个改进让 Gemini 整体训练时间减少约 1%。一个数字讲组件，一个讲整体，证明的是具体计算效率改善，还没有测到研究能力能否一代接一代增强。",
+        "AlphaEvolve uses Gemini to propose code candidates and automated evaluation to select them. DeepMind reported a twenty-three percent speedup in a matrix-multiplication kernel, a small computation routine used repeatedly during training. That local improvement reduced total Gemini training time by about one percent. One figure concerns the component and the other the whole process. They establish a specific efficiency improvement, without measuring research ability growing across successive generations."
+      ]
+    }
   },
   {
-    "id": "R5-evidence",
-    "beat": "R5",
-    "label": "组件快了多少，整体省了多少",
-    "action": "揭示矩阵乘法 kernel 的 23% 与整体训练时间的约 1%",
-    "scene": {
-      "kind": "research",
-      "from": 2,
-      "to": 3
-    },
-    "labelEn": "A component speedup and its overall effect",
-    "actionEn": "Reveal the 23% matrix-kernel speedup and roughly 1% total training-time reduction",
-    "look": [
-      "两个数字分别对应矩阵乘法 kernel 加速 23%，以及 Gemini 整体训练时间减少约 1%。",
-      "The two figures refer to a 23% matrix-multiplication kernel speedup and about a 1% reduction in total Gemini training time."
-    ],
-    "say": [
-      "DeepMind 报告过一个矩阵乘法 kernel 加速 23%。Kernel 可以先理解为训练里反复调用的一小段计算程序。它变快后，Gemini 的整体训练时间减少约 1%。一个数字讲组件，一个数字讲整体。算法改进的证据很具体，但它没有在测模型智力提高多少。",
-      "DeepMind reported a 23 percent speedup in a matrix-multiplication kernel. Think of a kernel as a small computation routine used repeatedly during training. That speedup reduced total Gemini training time by about 1 percent. One figure describes the component; the other describes the whole process. This is specific evidence of an algorithmic improvement, not a measurement of increased intelligence."
-    ],
-    "transition": [
-      "从更好的组件，到更好的改进者，中间还缺什么？",
-      "What is missing between a better component and a better improver?"
-    ]
-  },
-  {
-    "id": "R6-recipe",
+    "id": "R6-build",
     "beat": "R6",
-    "label": "A 提出修改训练配方",
-    "labelEn": "A proposes a training-recipe change",
-    "action": "找出缺少失败案例的问题，补进排查练习",
-    "actionEn": "Find missing failure examples and propose diagnostic exercises",
-    "scene": {
-      "kind": "successor",
-      "from": 0,
-      "to": 1
-    },
+    "label": "新版本有了，能力更强了吗",
+    "labelEn": "A new version exists. Is it more capable?",
+    "action": "提出新配方并训练 B，停在未评估状态",
+    "actionEn": "Propose a new recipe and train B, stopping before evaluation",
     "look": [
-      "A 发现训练材料几乎只有成功案例；新配方补进失败实验与原因。",
-      "A finds mostly successful training examples. The proposed recipe adds failed experiments and their diagnoses."
+      "A 提议补充失败实验及排查材料，B 已按新配方完成训练；研究能力仍是问号。",
+      "A proposes failed experiments and diagnostic examples. B has trained with the new recipe, while its research capability remains a question."
     ],
     "say": [
-      "先看一条假设路径。AI A 发现训练材料几乎只有成功实验，于是提出：补进不同失败原因，以及怎样排查的练习。这里改的是下一代的训练数据配方。补了材料不代表一定更强，还要经过训练和检验。",
-      "Consider a hypothetical route. AI A notices that the training material mostly shows successful experiments. It proposes examples of different failures and how to investigate them. That changes a successor’s training-data recipe. Adding examples does not guarantee a stronger model; the proposal still needs training and testing."
+      "看一条假设路径。AI A 发现训练材料几乎都是成功实验，于是提议补进失败案例和排查方法。按这个新配方训练 B，练习和反馈改变了保存下来的 weights。到这里，我们得到一个新版本，但还不能说它更强。补材料可能有帮助，也可能没有；真正要看的，是它面对新研究问题时，能不能提出更有用的改进。",
+      "Consider a hypothetical route. AI A notices that the training material mostly contains successful experiments, and proposes adding failures and ways to investigate them. B trains with that recipe; practice and feedback change its saved weights. We now have a new version, but not yet evidence that it is more capable. The added material may or may not help. The question is whether B can propose more useful improvements on new research problems."
     ],
     "transition": [
       "",
       ""
-    ]
-  },
-  {
-    "id": "R6-train",
-    "beat": "R6",
-    "label": "按新配方训练 B",
-    "labelEn": "Train B using the new recipe",
-    "action": "展示做练习、比较 loss、更新 weights 的过程",
-    "actionEn": "Show practice, loss comparison and weight updates",
+    ],
     "scene": {
-      "kind": "successor",
-      "from": 2,
-      "to": 3
-    },
-    "look": [
-      "新材料进入 B 的训练；练习与目标比较得到 loss，参数格子随更新变化。",
-      "The new examples enter B’s training. Comparing attempts with targets produces loss, and the weight grid changes."
-    ],
-    "say": [
-      "接着按新配方训练 B：做练习，对照目标计算 loss，也就是误差，再调整 weights，如此反复。这里变化的是保存下来的参数；让模型重答一遍，通常只改变这次输出。训练完成，也还不能宣布 B 更强。",
-      "Next, train B using the new recipe: attempt examples, compare with targets to calculate loss, an error score, then adjust weights and repeat. Saved parameters change. Asking for another reply usually changes only the current output. Completing training does not yet establish that B is stronger."
-    ],
-    "transition": [
-      "",
-      ""
-    ]
+      "kind": "sequence",
+      "segments": [
+        {
+          "kind": "successor",
+          "label": [
+            "修改训练材料",
+            "Change the training material"
+          ],
+          "end": [
+            "失败实验和诊断进入配方",
+            "Add failed experiments and diagnoses"
+          ],
+          "from": 0,
+          "to": 1,
+          "delay": 1000,
+          "hold": 750,
+          "say": [
+            "看一条假设路径。AI A 发现训练材料几乎都是成功实验，于是提议补进失败案例和排查方法。",
+            "Consider a hypothetical route. AI A notices that the training material mostly contains successful experiments, and proposes adding failures and ways to investigate them."
+          ]
+        },
+        {
+          "kind": "successor",
+          "label": [
+            "训练后继 B",
+            "Train successor B"
+          ],
+          "end": [
+            "B 已训练，研究能力尚未验证",
+            "B is trained; its research ability is untested"
+          ],
+          "from": 2,
+          "to": 3,
+          "delay": 1200,
+          "say": [
+            "按这个新配方训练 B，练习和反馈改变了保存下来的 weights。到这里，我们得到一个新版本，但还不能说它更强。补材料可能有帮助，也可能没有；真正要看的，是它面对新研究问题时，能不能提出更有用的改进。",
+            "B trains with that recipe; practice and feedback change its saved weights. We now have a new version, but not yet evidence that it is more capable. The added material may or may not help. The question is whether B can propose more useful improvements on new research problems."
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "R6-next",
     "beat": "R6",
-    "label": "检查能力，再尝试下一轮",
-    "labelEn": "Evaluate the ability before another cycle",
-    "action": "独立比较 A 与 B 的研究能力，再显示通往 C 的条件箭头",
-    "actionEn": "Compare A and B on separate research tasks, then show the conditional path to C",
-    "scene": {
-      "kind": "successor",
-      "from": 4,
-      "to": 5
-    },
+    "label": "通过独立评估，才尝试下一轮",
+    "labelEn": "Evaluate independently before another cycle",
+    "action": "比较 A 与 B，条件满足才进入 B → C",
+    "actionEn": "Compare A and B; proceed to B → C only with evidence",
     "look": [
-      "独立新任务比较 A 与 B；只有研究能力确有改善，才进入 B 帮助改进 C 的尝试。",
-      "Separate research tasks compare A and B. Evidence of improved research ability is required before B attempts to help improve C."
+      "未参与训练的研究任务比较 A 与 B；研究能力确有改善，才有条件尝试 B 帮助改进 C。",
+      "Research tasks excluded from training compare A with B. Improved research ability is the condition for trying B’s help in building C."
     ],
     "say": [
-      "拿没用于训练的研究任务，比较 A 和 B：谁能找准失败原因，提出值得做的实验？只有研究能力确实改善，才有理由让 B 尝试下一轮修改。它能否再造出更好的后继，仍需逐轮验证。人继续设定目标、评估、权限与停止条件。",
-      "Compare A and B on research tasks not used for training: which can diagnose a failure and propose a useful experiment? Evidence of improved research ability would justify asking B to attempt another change. Whether it can help build a better successor still needs checking each cycle. People continue to set objectives, evaluation, permissions and stopping conditions."
+      "拿没用于训练的研究任务来比较 A 和 B：谁更能找准失败原因，提出值得做的实验？只有这项能力确实改善，才有理由让 B 尝试改进 C。如果它又能带来更好的后继，递归才开始有证据，而且每一轮都要重新验证。人仍要设定目标、评估方法、权限和停止条件。图上这条回路是需要证明的路径。",
+      "Compare A and B on research tasks excluded from training: which diagnoses failures better and proposes worthwhile experiments? Evidence of improvement justifies trying B’s help with C. If B helps produce a better successor in turn, that begins to support recursion, with each cycle requiring fresh validation. People still set objectives, evaluation methods, permissions and stopping conditions. This return path is something to establish with evidence."
     ],
     "transition": [
-      "最后，把三个词放回同一张地图。",
-      "Finally, put the three terms back on one map."
-    ]
+      "回到开场的三个问题。",
+      "Let’s return to the three opening questions."
+    ],
+    "scene": {
+      "kind": "sequence",
+      "segments": [
+        {
+          "kind": "successor",
+          "label": [
+            "比较独立研究能力",
+            "Compare independent research ability"
+          ],
+          "end": [
+            "用没参与训练的研究任务比较 A 与 B",
+            "Compare A and B on research tasks excluded from training"
+          ],
+          "from": 4,
+          "to": 4,
+          "delay": 0,
+          "hold": 0,
+          "say": [
+            "拿没用于训练的研究任务来比较 A 和 B：谁更能找准失败原因，提出值得做的实验？",
+            "Compare A and B on research tasks excluded from training: which diagnoses failures better and proposes worthwhile experiments?"
+          ]
+        },
+        {
+          "kind": "successor",
+          "label": [
+            "有证据才尝试下一轮",
+            "Try another cycle only with evidence"
+          ],
+          "end": [
+            "只有能力提升才尝试下一轮",
+            "A further cycle depends on improved ability"
+          ],
+          "from": 5,
+          "to": 5,
+          "delay": 0,
+          "hold": 0,
+          "say": [
+            "只有这项能力确实改善，才有理由让 B 尝试改进 C。如果它又能带来更好的后继，递归才开始有证据，而且每一轮都要重新验证。人仍要设定目标、评估方法、权限和停止条件。图上这条回路是需要证明的路径。",
+            "Evidence of improvement justifies trying B’s help with C. If B helps produce a better successor in turn, that begins to support recursion, with each cycle requiring fresh validation. People still set objectives, evaluation methods, permissions and stopping conditions. This return path is something to establish with evidence."
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "E1-close",
     "beat": "E1",
-    "label": "用三个问题收尾",
-    "action": "回到三个术语与它们的成功依据",
-    "scene": {
-      "kind": "static"
-    },
-    "labelEn": "Close with three questions",
-    "actionEn": "Return to the three terms and their evidence of success",
+    "label": "三个词，三种检查",
+    "labelEn": "Three terms, three checks",
+    "action": "回到三章地图及成功依据",
+    "actionEn": "Return to the chapter map and evidence of success",
     "look": [
-      "三个开场图形再次出现，现在对应三种不同的成功依据。",
-      "The three opening pictures return, now paired with three different kinds of evidence of success."
+      "三个开场图形再次出现，分别对应完成任务、可靠判断、改进能力进入下一代。",
+      "The opening pictures return, paired with task completion, reliable decisions and improvement ability passing to a successor."
     ],
     "say": [
-      "Computer Use 让 AI 通过界面行动，证据是应用有没有完成目标。Jev 面向定义清楚的判断任务，证据是它在实际工作中判断得是否可靠。RSI 讨论改进能力能否进入下一代并继续循环，这需要更强的证明。以后遇到新的 AI 术语，可以先问：它改变了什么？我们怎么知道？还有什么没有被证明？",
-      "Computer Use lets AI act through an interface; the evidence is whether the application reached the goal. Jev targets defined decision tasks; the evidence is how reliably it works in the actual workflow. RSI asks whether improvement ability can carry into a successor and repeat, which needs stronger evidence. When you encounter a new AI term, ask: what changed, how do we know, and what remains unproven?"
+      "Computer Use 让 AI 通过界面行动，我们检查应用里的目标有没有完成。Jev 面向定义清楚的判断，我们检查它在真实任务中是否可靠、是否适合接入流程。RSI 关注改进能力能否进入后继并继续循环，这要靠逐轮的独立验证。遇到新的 AI 术语，可以沿着今天这条线去看：它做了什么，能力从哪里来，结果又怎样检查。",
+      "Computer Use lets AI act through interfaces; we check whether the application reached the goal. Jev targets defined decisions; we check reliability and suitability in the real workflow. RSI concerns improvement ability passing to a successor and continuing the cycle, which requires independent evidence at each round. For a new AI term, follow the same questions: what does it do, where does its capability come from, and how do we check the result?"
     ],
     "transition": [
-      "这就是今天的三个新词。",
-      "Those are our three terms for today."
-    ]
+      "今天先讲到这里。",
+      "That’s where we’ll finish today."
+    ],
+    "scene": {
+      "kind": "static",
+      "label": [
+        "三个验证问题",
+        "Three checks"
+      ],
+      "end": [
+        "总结画面",
+        "The closing map"
+      ],
+      "say": [
+        "Computer Use 让 AI 通过界面行动，我们检查应用里的目标有没有完成。Jev 面向定义清楚的判断，我们检查它在真实任务中是否可靠、是否适合接入流程。RSI 关注改进能力能否进入后继并继续循环，这要靠逐轮的独立验证。遇到新的 AI 术语，可以沿着今天这条线去看：它做了什么，能力从哪里来，结果又怎样检查。",
+        "Computer Use lets AI act through interfaces; we check whether the application reached the goal. Jev targets defined decisions; we check reliability and suitability in the real workflow. RSI concerns improvement ability passing to a successor and continuing the cycle, which requires independent evidence at each round. For a new AI term, follow the same questions: what does it do, where does its capability come from, and how do we check the result?"
+      ]
+    }
   }
 ]

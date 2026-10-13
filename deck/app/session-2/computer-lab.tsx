@@ -116,12 +116,14 @@ export function BlenderLab() {
   const cueId = guided?.cueId ?? 'standalone';
   const guidedStatus = guided?.status;
   const completeFilm = guided?.onComplete;
+  const reportUnavailable = guided?.onMediaUnavailable;
   const [failedCue, setFailedCue] = useState<string | null>(null);
   const failed = failedCue === cueId;
   const showStill = failed || guidedStatus === 'ready';
   const video = useRef<HTMLVideoElement>(null);
   const videoCue = useRef<string | null>(null);
   useEffect(() => {
+    if (failed && guidedStatus === 'playing') { completeFilm?.(); return; }
     const element = video.current;
     if (!element || !film || !guidedStatus || showStill) return;
     if (videoCue.current !== cueId) {
@@ -130,21 +132,23 @@ export function BlenderLab() {
     }
     let active = true;
     if (guidedStatus === 'playing') {
+      if (element.ended || (Number.isFinite(element.duration) && element.duration > 0 && element.currentTime >= element.duration)) { completeFilm?.(); return; }
       void element.play().catch(() => {
         if (active) {
           setFailedCue(cueId);
+          reportUnavailable?.();
           completeFilm?.();
         }
       });
     } else element.pause();
     return () => { active = false; element.pause(); };
-  }, [film, cueId, guidedStatus, showStill, completeFilm]);
+  }, [film, cueId, guidedStatus, showStill, completeFilm, failed, reportUnavailable]);
   const complete = step === buildSteps.length - 1;
   const { playing, setPlaying } = usePlayback(() => setStep(value => Math.min(value + 1, buildSteps.length - 1)), complete || film, 1400);
   const [phase, caption, action] = buildSteps[step];
   return <div className={s.lab} data-lab="blender">
     <div className={s.blenderStage}>
-      {film ? <div className={s.sourceFilm}>{showStill ? <Image unoptimized src="/media/session-2/blender-garden-house.webp" width={1600} height={900} alt="Published Blender Garden House render; source still" /> : <video ref={video} controls={!guided} playsInline muted preload="metadata" src="/media/session-2/blender-house-tour.webm" poster="/media/session-2/blender-garden-house.webp" aria-label="Published Blender render, not an action recording" onEnded={completeFilm} onError={() => { setFailedCue(cueId); completeFilm?.(); }} />}</div> : <div className={s.buildViewport}>
+      {film ? <div className={s.sourceFilm}>{showStill ? <Image unoptimized src="/media/session-2/blender-garden-house.webp" width={1600} height={900} alt="Published Blender Garden House render; source still" /> : <video ref={video} controls={!guided} playsInline muted preload="metadata" src="/media/session-2/blender-house-tour.webm" poster="/media/session-2/blender-garden-house.webp" aria-label="Published Blender render, not an action recording" onLoadedMetadata={(event) => guided?.onMediaProgress(event.currentTarget.currentTime, event.currentTarget.duration)} onTimeUpdate={(event) => guided?.onMediaProgress(event.currentTarget.currentTime, event.currentTarget.duration)} onWaiting={(event) => guided?.onMediaProgress(event.currentTarget.currentTime, event.currentTarget.duration, true)} onPlaying={(event) => guided?.onMediaProgress(event.currentTarget.currentTime, event.currentTarget.duration, false)} onEnded={completeFilm} onError={() => { setFailedCue(cueId); reportUnavailable?.(); completeFilm?.(); }} />}</div> : <div className={s.buildViewport}>
         <svg viewBox="0 0 780 390" role="img" aria-label={`Teaching house scene: ${phase}. ${caption}`}>
           <rect width="780" height="390" fill="#e4dece" />
           <g stroke="#bdb9ad" strokeWidth="1">{Array.from({ length: 10 }, (_, i) => <g key={i}><path d={`M${i * 90 - 100} 390 390 ${i * 24 + 70}`} /><path d={`M${i * 100} 390 770 ${100 + i * 23}`} /></g>)}</g>

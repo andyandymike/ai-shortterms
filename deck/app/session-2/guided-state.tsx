@@ -14,8 +14,13 @@ export type GuidedFrame = {
   experiment?: { candidate: Candidate; input: number; step: number; checked: boolean; kept: Candidate; tested: Candidate[] };
   selection?: number;
 };
-export type GuidedStatus = 'playing' | 'paused' | 'ready';
-export type GuidedState = { frame: GuidedFrame; status: GuidedStatus; cueId: string; onComplete: () => void };
+export type GuidedStatus = 'prepared' | 'playing' | 'paused' | 'ready';
+export type GuidedState = {
+  frame: GuidedFrame; status: GuidedStatus; cueId: string;
+  onComplete: () => void;
+  onMediaUnavailable: () => void;
+  onMediaProgress: (currentTime: number, duration: number, waiting?: boolean) => void;
+};
 const Context = createContext<GuidedState | null>(null);
 export function GuidedProvider({ value, children }: { value: GuidedState; children: ReactNode }) {
   return <Context.Provider value={value}>{children}</Context.Provider>;

@@ -102,10 +102,11 @@ function ConnectedPresenter({ session }: { session: string }) {
   const connected = connection === 'connected';
   const playing = snapshot.status === 'playing';
   const paused = snapshot.status === 'paused';
+  const prepared = snapshot.status === 'prepared';
   const ended = !snapshot.next && snapshot.status === 'ready';
-  const primary = playing ? '暂停动画' : paused ? '继续播放' : ended ? '演示结束' : '下一步';
   const nextChangesPage = snapshot.next && snapshot.next.beatId !== snapshot.beatId;
-  const status = !connected ? '连接中断 · 正在重连' : playing ? '动画播放中' : paused ? '动画已暂停' : '停在讲解点';
+  const primary = playing ? '暂停播放' : paused ? '继续这次变化' : ended ? '演示结束' : prepared ? snapshot.unavailable ? '显示替代静帧' : '展示当前画面' : nextChangesPage ? '下一页' : '下一画面';
+  const status = !connected ? '连接中断 · 正在重连' : snapshot.unavailable ? '视频不可用 · 已显示静帧' : playing ? snapshot.waiting ? '视频缓冲中' : '变化结束会自动停住' : paused ? '已手动暂停' : prepared ? '等待展示当前画面' : '画面已停住 · 讲完再继续';
   const accent = snapshot.beatId.startsWith('J') ? 'red' : snapshot.beatId.startsWith('R') ? 'green' : 'blue';
 
   return (
@@ -117,45 +118,51 @@ function ConnectedPresenter({ session }: { session: string }) {
         </div>
         <div className={styles.connection} data-connected={connected}>
           <span className={styles.status} role="status">{status}</span>
-          <span>{snapshot.index + 1} / {snapshot.total} 个讲解点</span>
+          <span>第 {snapshot.page} / {snapshot.pages} 页 · 画面 {snapshot.part} / {snapshot.parts}</span>
         </div>
       </header>
 
       {!connected && <p className={styles.connectionWarning} role="alert">观众画面暂时没有响应，控制已停用。请确认观众窗口仍然打开；连接恢复后会自动同步。</p>}
 
+      <section className={styles.playback} aria-label="当前讲解画面">
+        <div className={styles.playbackHeading}><strong>{snapshot.unavailable ? '视频不可用，改用案例静帧' : prepared ? '展示后自动停住' : snapshot.status === 'ready' ? '这幅画面会一直保留' : snapshot.waiting ? '等待视频缓冲' : paused ? '暂停在变化途中' : '正在抵达讲解画面'}</strong><span>讲解不限时</span></div>
+        <p><b>{snapshot.status === 'ready' ? '当前画面' : '将停在'}</b> {snapshot.end}</p>
+        {!snapshot.unavailable && (playing || paused) && snapshot.duration > 0 && <progress aria-label="画面过渡进度" value={snapshot.elapsed} max={snapshot.duration} />}
+      </section>
+
       <div className={styles.content}>
         <section ref={currentPanel} className={styles.current} aria-labelledby="current-cue-title">
           <div className={styles.sectionHeading}>
-            <h2 id="current-cue-title">{playing ? '动画结束后讲' : paused ? '续播结束后讲' : '现在讲'}</h2>
+            <h2 id="current-cue-title">{playing || paused || prepared ? '停住后讲这些' : '现在讲'}</h2>
             <span>{snapshot.label}</span>
           </div>
           <p className={styles.speech}>{snapshot.say}</p>
-          {snapshot.look && <div className={styles.look}><h3>观众看这里</h3><p>{snapshot.look}</p></div>}
           {snapshot.transition && <div className={styles.transition}><h3>接下去这样讲</h3><p>{snapshot.transition}</p></div>}
         </section>
 
         <aside ref={nextPanel} className={styles.next} aria-labelledby="next-cue-title">
           <div className={styles.sectionHeading}>
-            <h2 id="next-cue-title">下一步</h2>
+            <h2 id="next-cue-title">讲完后，下一次点击</h2>
             {snapshot.next && <span className={styles.change}>{nextChangesPage ? '换到下一页' : '留在这一页'}</span>}
           </div>
           {snapshot.next ? <>
             <h3>{snapshot.next.action}</h3>
             <p className={styles.nextTitle}>{snapshot.next.title}</p>
+            <p className={styles.nextRange}>停在：{snapshot.next.end}</p>
             <p className={styles.nextSpeech}>{snapshot.next.say}</p>
           </> : <>
             <h3>演示到这里结束。</h3>
             <p className={styles.nextSpeech}>可以留在这张总结画面，进入交流。</p>
           </>}
-          {(playing || paused) && <p className={styles.playbackNote}>{playing ? '动画会自动停在这个讲解点；播放中点击主按钮可以暂停。' : '点击“继续播放”，会先完成当前动画。'}</p>}
+          {(playing || paused) && <p className={styles.playbackNote}>当前变化结束后自动停住；讲完再继续，才会进入这里。</p>}
         </aside>
       </div>
 
       <footer className={styles.footer}>
         <div className={styles.secondaryControls}>
-          <button type="button" onClick={() => send('back')} disabled={!connected || snapshot.index === 0}>← 上一步</button>
-          <button type="button" onClick={() => send('replay')} disabled={!connected}>重播当前段</button>
-          {(playing || paused) && <button type="button" onClick={() => send('skip')} disabled={!connected}>直接看结果</button>}
+          <button type="button" onClick={() => send('back')} disabled={!connected || (snapshot.index === 0 && snapshot.phase === 0)}>← 上一画面</button>
+          <button type="button" onClick={() => send('replay')} disabled={!connected}>重放这次变化</button>
+          {(playing || paused || prepared) && <button type="button" onClick={() => send('skip')} disabled={!connected}>直接到讲解画面</button>}
         </div>
         <div className={styles.primaryControls}>
           <span className={styles.keyboardHint}>空格 / → 与主按钮相同</span>

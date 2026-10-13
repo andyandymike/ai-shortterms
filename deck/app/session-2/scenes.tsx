@@ -19,7 +19,7 @@ function MapScene({ closing = false }: { closing?: boolean }) {
 }
 
 function ComputerScene({ id }: { id:string }) {
-  if (id === 'C3') return <ApiRouteScene />;
+  if (id === 'C1') return <ApiRouteScene />;
   if (['C1', 'C2', 'C4', 'C5'].includes(id)) return <DesktopLab id={id} />;
   if (id === 'C6') return <BlenderLab />;
   if (id === 'C7') return <ComputerLearningScene />;

@@ -172,3 +172,12 @@
 @media(prefers-reduced-motion:reduce) {
  .choiceChart b,.heldOutGrid>div { transition:none; }
 }
+/* Append to app/session-2/jev-refinement.module.css */
+.ambiguousRoute { display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.25fr); align-items:center; gap:48px; min-height:0; }
+.routingChoice>span { font-size:18px; font-weight:850; color:var(--red); }
+.routingChoice>h2,.routingResult>h2 { font-size:32px; line-height:1.15; letter-spacing:-.035em; margin:16px 0 24px; }
+.routingResult { min-width:0; border-left:1px solid var(--rule); padding-left:35px; }
+.routingResult>h2 { min-height:37px; }
+.routingResult svg { height:auto; min-height:170px; }
+@media(max-width:1100px) { .ambiguousRoute { gap:28px; } .routingResult { padding-left:24px; } .routingChoice>h2,.routingResult>h2 { font-size:28px; } }
+@media(max-width:850px),(max-height:650px) { .ambiguousRoute { width:100%; grid-template-columns:1fr; gap:32px; } .routingResult { border-left:0; border-top:1px solid var(--rule); padding:20px 0 0; } .routingResult svg { max-height:230px; width:100%; } }

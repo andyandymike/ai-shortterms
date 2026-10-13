@@ -13,7 +13,18 @@ export type PresenterSnapshot = {
   status: GuidedStatus;
   frame: number;
   frames: number;
-  next: null | { beatId: string; title: string; label: string; say: string; action: string };
+  page: number;
+  pages: number;
+  part: number;
+  parts: number;
+  duration: number;
+  elapsed: number;
+  waiting: boolean;
+  unavailable: boolean;
+  phase: number;
+  phases: string[];
+  end: string;
+  next: null | { beatId: string; title: string; label: string; say: string; action: string; duration: number; phases: string[]; end: string };
 };
 export type PresenterMessage =
   | { type: 'hello' }

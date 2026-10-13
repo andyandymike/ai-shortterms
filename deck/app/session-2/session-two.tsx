@@ -20,22 +20,33 @@ const subscribeSession = (notify: () => void) => {
 };
 
 function readCue(hash: string) {
-  const [chapterId, beatId, cueId] = hash.slice(1).split('/');
+  const [chapterId, beatId, cueId, checkpoint] = hash.slice(1).split('/');
   const chapter = chapters.find(item => item.id === chapterId) ?? chapters[0];
-  const mergedBeats: Record<string, string> = { J7: 'J8', R2: 'R1', R7: 'R6' };
+  const mergedBeats: Record<string, string> = { C2:'C4', C3:'C1', J4:'J3', J6:'J8', J7:'J8', R2:'R1', R3:'R1', R7:'R6' };
   const beat = chapter.beats.find(item => item.id === (mergedBeats[beatId] ?? beatId)) ?? chapter.beats[0];
   const exact = cues.findIndex(cue => cue.id === cueId && cue.beat === beat.id);
-  return exact < 0 ? firstCueForBeat(beat.id) : exact;
+  const index = exact < 0 ? firstCueForBeat(beat.id) : exact;
+  const phase = Math.max(0, Math.min(cues[index].phases.length - 1, Math.trunc(Number(checkpoint) || 1) - 1));
+  return { index, phase };
 }
 
 export default function SessionTwo() {
-  const { state, dispatch } = useCuePlayer();
+  const { state, dispatch, elapsed, duration, mediaWaiting } = useCuePlayer();
   const cue = cues[state.index];
   const chapterIndex = chapters.findIndex(item => item.beats.some(beat => beat.id === cue.beat));
   const chapter = chapters[chapterIndex];
   const step = chapter.beats.findIndex(item => item.id === cue.beat);
   const beat = chapter.beats[step];
-  const sceneKind = cue.scene.kind === 'sort' ? 'Code experiment' : cue.scene.kind === 'film' ? '' : ['C3','J4','R3','R5'].includes(cue.beat) || ['desktop', 'blender', 'tokens', 'decision', 'llm', 'calibration', 'learning', 'successor'].includes(cue.scene.kind) ? 'Teaching demo' : '';
+  const sceneKind = cue.beat === 'R4' ? 'Code experiment' : ['O1','E1','C6'].includes(cue.beat) ? '' : 'Teaching demo';
+  const phase = state.phase;
+  const currentPicture = cue.phases[phase];
+  const nextIndex = phase + 1 < cue.phases.length ? state.index : state.index + 1;
+  const nextPhase = nextIndex === state.index ? phase + 1 : 0;
+  const nextCue = cues[nextIndex];
+  const isFilm = !!cue.timeline[state.frame].media;
+  const primaryLabel = state.status === 'playing' ? isFilm ? 'Pause film' : 'Pause transition' : state.status === 'paused' ? isFilm ? 'Resume film' : 'Resume transition' : state.status === 'prepared' ? state.mediaUnavailable ? 'Show source still' : isFilm ? 'Play source film' : 'Show this picture' : nextCue?.beat === cue.beat ? 'Next picture' : 'Next page';
+  const picture = cues.slice(0, state.index).filter(item => item.beat === cue.beat).reduce((sum, item) => sum + item.phases.length, 0) + phase + 1;
+  const pictures = cues.filter(item => item.beat === cue.beat).reduce((sum, item) => sum + item.phases.length, 0);
   const [sourcesOpen, setSourcesOpen] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
   const touchStart = useRef<{ x:number; y:number } | null>(null);
@@ -43,35 +54,45 @@ export default function SessionTwo() {
   const session = useSyncExternalStore(subscribeSession, readSession, serverSession);
   const snapshot = useRef<PresenterSnapshot | null>(null);
   const command = useRef<(message: Extract<PresenterMessage, { type: 'command' }>) => void>(() => {});
+  const lastProceed = useRef(-Infinity);
 
-  const enter = useCallback((index: number, settled = false) => {
+  const enter = useCallback((index: number, settled = false, autoplay = false, targetPhase?: number) => {
     const target = cues[Math.max(0, Math.min(cues.length - 1, index))];
+    const phase = Math.max(0, Math.min(target.phases.length - 1, targetPhase ?? (settled ? target.phases.length - 1 : 0)));
     const targetChapter = chapters.find(item => item.beats.some(beat => beat.id === target.beat))!;
-    window.history.replaceState(null, '', `#${targetChapter.id}/${target.beat}/${target.id}`);
-    dispatch({ type: 'enter', index, settled });
+    window.history.replaceState(null, '', `#${targetChapter.id}/${target.beat}/${target.id}/${phase + 1}`);
+    dispatch({ type: 'enter', index, phase, settled, autoplay });
     setSourcesOpen(false);
   }, [dispatch, setSourcesOpen]);
 
   const go = useCallback((nextChapter: number, nextStep = 0) => {
+    lastProceed.current = -Infinity;
     const index = Math.max(0, Math.min(chapters.length - 1, nextChapter));
     const target = chapters[index];
     const targetBeat = target.beats[Math.max(0, Math.min(target.beats.length - 1, nextStep))];
     enter(firstCueForBeat(targetBeat.id));
   }, [enter]);
 
-  const restart = useCallback(() => enter(state.index), [enter, state.index]);
-  const finish = useCallback(() => dispatch({ type: 'skip' }), [dispatch]);
-  const back = useCallback(() => { if (state.index > 0) enter(state.index - 1, true); }, [enter, state.index]);
+  const restart = useCallback(() => enter(state.index, false, true, state.phase), [enter, state.index, state.phase]);
+  const finish = useCallback(() => dispatch({ type: 'media-complete', revision: state.revision, frame: state.frame }), [dispatch, state.revision, state.frame]);
+  const mediaProgress = useCallback((currentTime: number, duration: number, waiting?: boolean) => dispatch({ type:'media-progress', revision:state.revision, frame:state.frame, currentTime, duration, waiting }), [dispatch, state.revision, state.frame]);
+  const mediaUnavailable = useCallback(() => dispatch({ type:'media-unavailable', revision:state.revision, frame:state.frame }), [dispatch, state.revision, state.frame]);
+  const back = useCallback(() => { if (state.phase > 0) enter(state.index, true, false, state.phase - 1); else if (state.index > 0) enter(state.index - 1, true); }, [enter, state.index, state.phase]);
 
   const proceed = useCallback(() => {
+    // A double click is one intention, including when the next page is static.
+    const now = performance.now();
+    if (now - lastProceed.current < 350) return;
+    lastProceed.current = now;
     setSourcesOpen(false);
     if (state.status === 'playing') dispatch({ type: 'pause' });
     else if (state.status === 'paused') dispatch({ type: 'resume' });
-    else if (state.index < cues.length - 1) enter(state.index + 1);
-  }, [state.status, state.index, dispatch, enter, setSourcesOpen]);
+    else if (state.status === 'prepared') dispatch({ type: 'start' });
+    else if (nextIndex < cues.length) enter(nextIndex, false, true, nextPhase);
+  }, [state.status, nextIndex, nextPhase, dispatch, enter, setSourcesOpen]);
 
   useEffect(() => {
-    const navigate = () => enter(readCue(window.location.hash));
+    const navigate = () => { lastProceed.current = -Infinity; const target = readCue(window.location.hash); enter(target.index, false, false, target.phase); };
     navigate();
     window.addEventListener('hashchange', navigate);
     return () => window.removeEventListener('hashchange', navigate);
@@ -86,18 +107,24 @@ export default function SessionTwo() {
       if (message.action === 'replay') restart();
       if (message.action === 'skip') dispatch({ type: 'skip' });
     };
-    const next = cues[state.index + 1];
+    const next = cues[nextIndex];
+    const nextPicture = next?.phases[nextPhase];
     const nextBeat = next && chapters.flatMap(chapter => chapter.beats).find(beat => beat.id === next.beat)!;
     snapshot.current = {
       cueId: `${cue.id}/${state.revision}`, index: state.index, total: cues.length,
-      beatId: cue.beat, title: beat.title, label: cue.label,
-      say: cue.say?.[0] ?? cue.label, look: cue.look?.[0] ?? cue.action,
-      transition: cue.transition?.[0] ?? '', status: state.status,
-      frame: state.frame + 1, frames: cue.frames.length,
-      next: next ? { beatId: next.beat, title: nextBeat.title, label: next.label, say: next.say?.[0] ?? next.label, action: next.action } : null,
+      beatId: cue.beat, title: beat.title, label: currentPicture.label[0],
+      say: currentPicture.say[0], look: currentPicture.end[0],
+      transition: phase === cue.phases.length - 1 ? cue.transition?.[0] ?? '' : '', status: state.status,
+      frame: state.frame - currentPicture.start + 1, frames: currentPicture.endFrame - currentPicture.start + 1,
+      page: chapters.flatMap(chapter => chapter.beats).findIndex(item => item.id === cue.beat) + 1,
+      pages: chapters.flatMap(chapter => chapter.beats).length,
+      part: picture, parts: pictures,
+      duration, elapsed, waiting: mediaWaiting, unavailable:state.mediaUnavailable,
+      phase, phases: cues.filter(item => item.beat === cue.beat).flatMap(item => item.phases.map(part => part.label[0])), end: currentPicture.end[0],
+      next: next && nextPicture ? { beatId: next.beat, title: nextBeat.title, label: nextPicture.label[0], say: nextPicture.say[0], action: nextPicture.label[0], duration: nextPicture.duration, phases: [nextPicture.label[0]], end: nextPicture.end[0] } : null,
     };
     channel.current?.postMessage({ type: 'state', state: snapshot.current } satisfies PresenterMessage);
-  }, [state, cue, beat.title, proceed, back, restart, dispatch]);
+  }, [state, cue, beat.title, proceed, back, restart, dispatch, elapsed, duration, mediaWaiting, phase, currentPicture, nextIndex, nextPhase, picture, pictures]);
 
   useEffect(() => {
     if (!session) return;
@@ -143,7 +170,7 @@ export default function SessionTwo() {
   }, [chapter.sources.length, go, proceed, back, restart, sourcesOpen, dispatch]);
 
   return (
-    <main className={s.shell} data-accent={chapter.color} data-cue={cue.id} data-status={state.status} data-frame={state.frame}>
+    <main className={s.shell} data-accent={chapter.color} data-cue={cue.id} data-status={state.status} data-frame={state.frame} data-phase={state.phase}>
       <section className={s.slide} aria-label={`${chapter.name}, ${beat.id}: ${beat.label}`}
         onTouchStart={(event) => { touchStart.current = (event.target as Element).closest('button, a, video, [data-horizontal-scroll]') ? null : { x:event.touches[0].clientX, y:event.touches[0].clientY }; }}
         onTouchEnd={(event) => { const start = touchStart.current; touchStart.current = null; if (!start) return; const dx = event.changedTouches[0].clientX - start.x; const dy = event.changedTouches[0].clientY - start.y; if (Math.abs(dx) > 80 && Math.abs(dx) > Math.abs(dy) * 2) { if (dx < 0) proceed(); else back(); } }}>
@@ -151,25 +178,28 @@ export default function SessionTwo() {
           <p className={s.eyebrow}><span>{beat.id}</span>{chapter.term}{sceneKind && <span className={s.sceneKind}>{sceneKind}</span>}</p>
           <h1>{beat.title}</h1>
         </div>
-        <GuidedProvider value={{ frame: cue.frames[state.frame], status: state.status, cueId: `${cue.id}/${state.revision}`, onComplete: finish }}><LabProvider><div className={s.scene}><ChapterScene id={beat.id} /></div></LabProvider></GuidedProvider>
+        <GuidedProvider value={{ frame: cue.frames[state.frame], status: state.status, cueId: `${cue.id}/${state.revision}`, onComplete: finish, onMediaProgress: mediaProgress, onMediaUnavailable: mediaUnavailable }}><LabProvider><div className={s.scene}><ChapterScene id={beat.id} /></div></LabProvider></GuidedProvider>
         <div className={s.storyControls}>
           <nav className={s.steps} aria-label={`${chapter.name} steps`}>
             {chapter.beats.map((item, index) => <button key={item.id} onClick={() => go(chapterIndex, index)} aria-current={step === index ? 'step' : undefined} aria-label={`${item.id}: ${item.label}`} title={`${item.id} · ${item.label}`} />)}
             <span>{step + 1} / {chapter.beats.length}</span>
           </nav>
-          {state.index === cues.length - 1 ? <Link href="/" className={s.primary}>Back to the collection ↗</Link> : <button className={s.primary} onClick={proceed} aria-label={state.status === 'playing' ? 'Pause animation' : state.status === 'paused' ? 'Resume animation' : 'Continue presentation'}>{state.status === 'playing' ? 'Pause' : state.status === 'paused' ? 'Resume' : 'Continue'}<span aria-hidden="true">{state.status === 'playing' ? 'Ⅱ' : state.status === 'paused' ? '▶' : '→'}</span></button>}
+          <div className={s.playbackControls}>
+            <div className={s.segmentProgress} title={currentPicture.end[1]}><span>{state.mediaUnavailable ? 'Video unavailable · source still' : `Picture ${picture} / ${pictures} · ${state.status === 'ready' ? 'Holding for explanation' : state.status === 'prepared' ? 'Ready to show' : state.status === 'paused' ? 'Paused' : mediaWaiting ? 'Buffering' : 'Auto-hold at the end'}`}</span>{!state.mediaUnavailable && duration > 0 && ['playing','paused'].includes(state.status) && <progress aria-label="Picture transition progress" max={duration} value={elapsed} />}</div>
+            {state.index === cues.length - 1 ? <Link href="/" className={s.primary}>Back to the collection ↗</Link> : <button className={s.primary} onClick={proceed} aria-label={primaryLabel}>{primaryLabel}<span aria-hidden="true">{state.status === 'playing' ? 'Ⅱ' : state.status === 'paused' || state.status === 'prepared' ? '▶' : '→'}</span></button>}
+          </div>
         </div>
       </section>
       <footer className={s.footer}>
         <Link href="/" className={s.collection} title="Back to the collection">↖ AI / FIELD NOTES</Link>
         <nav className={s.chapterNav} aria-label="Chapters">{chapters.map((item, index) => <button key={item.id} aria-current={index === chapterIndex ? 'page' : undefined} onClick={() => go(index)}><span>{String(index).padStart(2, '0')}</span>{item.name}</button>)}</nav>
-        <div className={s.utility}><a href={`/session-2/presenter?session=${encodeURIComponent(session)}`} target="_blank" rel="noopener" title="Open speaker notes and next action in a new tab">Presenter ↗</a><button onClick={showSources} disabled={!chapter.sources.length} title="Sources (S)" aria-haspopup="dialog">Sources</button><button onClick={back} disabled={state.index === 0} aria-label="Previous cue">←</button></div>
+        <div className={s.utility}><a href={`/session-2/presenter?session=${encodeURIComponent(session)}`} target="_blank" rel="noopener" title="Open speaker notes and next action in a new tab">Presenter ↗</a><button onClick={showSources} disabled={!chapter.sources.length} title="Sources (S)" aria-haspopup="dialog">Sources</button><button onClick={back} disabled={state.index === 0 && phase === 0} aria-label="Previous picture">←</button></div>
       </footer>
       <dialog className={s.sources} ref={dialog} onCancel={() => setSourcesOpen(false)} onClose={() => setSourcesOpen(false)} aria-labelledby="sources-title">
         <div className={s.sourceHeading}><h2 id="sources-title">{chapter.name} / Sources</h2><button onClick={() => setSourcesOpen(false)} aria-label="Close sources">×</button></div>
         <h3>{beat.label}</h3>
         <p>{beat.subtitle} {beat.takeaway}</p>
-        <p>Teaching notes updated 3 October 2026. Interactive examples are teaching simulations unless explicitly labeled as a source example.</p>
+        <p>Teaching notes updated 12 October 2026. Interactive examples are teaching simulations unless explicitly labeled as a source example.</p>
         <h3>About these demonstrations</h3>
         {(demonstrationNotes[chapter.id] ?? []).map(note => <p key={note}>{note}</p>)}
         <h3>Primary sources</h3>
