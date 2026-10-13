@@ -51,9 +51,9 @@ Computer Use → Jev → RSI。按 **${pages.length} 页**组织口播，同一�
 
 打开观众页底部的 **Presenter ↗**，把观众页放到投影，讲者窗口留在自己的屏幕。Presenter 显示当前画面的口播，以及下一次点击会出现什么。
 
-**短过渡后，画面自动停住，讲多久都可以。**讲完当前段落，再按主按钮进入下一画面；本页讲完后，同一按钮进入下一页。画面不会自行继续，显示的过渡进度不限制讲解时间。
+**动画默认不播放。**主按钮先进入下一画面或下一页，再点同一个按钮上的“播放动画”才开始变化。每段短过渡结束后自动停住，讲多久都可以；讲完再继续。影片同样等待点击播放，显示的过渡进度不限制讲解时间。
 
-通过目录、章节链接或刷新进入时，先准备本页画面，等你点击开始。下文短引用块标出当前留住的画面，不用念。正文对应这一画面；回退和重播也只针对当前画面。Blender 成片约 30 秒，播放结束后同样停住，可再解释制作流程。
+每章先停在独立的术语开场页，讲完再进入例子。直接跳到动画页或刷新时，先准备画面，等你点击开始。下文短引用块标出当前留住的画面，不用念。正文对应这一画面；回退和重播也只针对当前画面。Blender 成片约 30 秒，播放结束后同样停住，可再解释制作流程。
 
 `,
   `# Talk 02 speaker notes | From Answers to Actions
@@ -62,9 +62,9 @@ Computer Use → Jev → RSI. The script follows **${pages.length} pages**, with
 
 Open **Presenter ↗** in the audience footer. Put the audience view on the projector and keep the presenter window on your screen. Presenter shows the narration for the current visual and what the next click will reveal.
 
-**After a short transition, the visual holds for as long as you need.** Finish the corresponding paragraph, then use the main button for the next visual or, at the end of the page, the next page. The visual never advances by itself. Transition progress is not a limit on speaking time.
+**Animations wait for you to press play.** The main button first enters the next visual or page; press the same button, now labeled “Play animation,” to start. After the short transition, the visual holds for as long as you need. Finish speaking before continuing. The source film also waits for play. Transition progress is not a limit on speaking time.
 
-A directory entry, chapter link or refresh prepares the page and waits for you to start. The short blockquotes identify the visual to hold; they are not spoken. Each paragraph belongs to that visual. Back and replay also apply to the current visual. The Blender film runs for about thirty seconds, then holds so you can explain its workflow.
+Each chapter holds on a dedicated term opening; continue to the example when you finish speaking. A direct link or refresh on an animated page prepares its visual and waits for you to start. The short blockquotes identify the visual to hold; they are not spoken. Each paragraph belongs to that visual. Back and replay also apply to the current visual. The Blender film runs for about thirty seconds, then holds so you can explain its workflow.
 
 `,
 ];
@@ -98,9 +98,9 @@ const bilingualIntro = `# 第二场双语排练稿｜Talk 02 bilingual rehearsal
 
 同一份内容按 **${pages.length} 页**组织，实际演讲选一种语言。页内段落对应当前留住的画面，不增加新的讲解主题。
 
-打开观众页底部的 **Presenter ↗**。每次短过渡后，画面自动停住，留给讲者和观众充分时间。讲完当前段落，再按主按钮进入下一画面或下一页；不会按倒计时催你继续。引用块只标画面，不用念。目录、章节链接与刷新先准备画面；回退和重播针对当前画面。
+打开观众页底部的 **Presenter ↗**。动画与影片默认等待点击播放。主按钮先进入下一画面或下一页，再点同一个按钮播放；每段短过渡后自动停住，讲完再继续。引用块只标画面，不用念。目录、章节链接与刷新同样等待播放；回退保留上一画面，重播会重新播放当前这一段。
 
-Choose one language for the talk. Each visual holds after its short transition for as long as you need. Finish its paragraph, then use the main button for the next visual or page. No countdown controls speaking time. Blockquotes identify the visual and are not spoken. Direct navigation prepares the page; Back and Replay apply to the current visual.
+Choose one language for the talk. Animations and the film wait for play. The main button first enters the next visual or page; press the same button again to play. Each short transition ends in a visual that holds until you finish speaking. Blockquotes identify the visual and are not spoken. Direct navigation also waits for play. Back holds the previous visual; Replay explicitly restarts the current one.
 
 `;
 const bilingual = bilingualIntro + pages.map((page, index) => pageHeader(page, index, 0, true)

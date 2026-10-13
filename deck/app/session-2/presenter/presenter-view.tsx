@@ -105,8 +105,8 @@ function ConnectedPresenter({ session }: { session: string }) {
   const prepared = snapshot.status === 'prepared';
   const ended = !snapshot.next && snapshot.status === 'ready';
   const nextChangesPage = snapshot.next && snapshot.next.beatId !== snapshot.beatId;
-  const primary = playing ? '暂停播放' : paused ? '继续这次变化' : ended ? '演示结束' : prepared ? snapshot.unavailable ? '显示替代静帧' : '展示当前画面' : nextChangesPage ? '下一页' : '下一画面';
-  const status = !connected ? '连接中断 · 正在重连' : snapshot.unavailable ? '视频不可用 · 已显示静帧' : playing ? snapshot.waiting ? '视频缓冲中' : '变化结束会自动停住' : paused ? '已手动暂停' : prepared ? '等待展示当前画面' : '画面已停住 · 讲完再继续';
+  const primary = playing ? '暂停播放' : paused ? '继续这次变化' : ended ? '演示结束' : prepared ? snapshot.unavailable ? '显示替代静帧' : snapshot.beatId === 'C6' ? '播放影片' : '播放动画' : nextChangesPage ? '下一页' : '下一画面';
+  const status = !connected ? '连接中断 · 正在重连' : snapshot.unavailable ? '视频不可用 · 已显示静帧' : playing ? snapshot.waiting ? '视频缓冲中' : '变化结束会自动停住' : paused ? '已手动暂停' : prepared ? '等待点击播放' : '画面已停住 · 讲完再继续';
   const accent = snapshot.beatId.startsWith('J') ? 'red' : snapshot.beatId.startsWith('R') ? 'green' : 'blue';
 
   return (
@@ -125,7 +125,7 @@ function ConnectedPresenter({ session }: { session: string }) {
       {!connected && <p className={styles.connectionWarning} role="alert">观众画面暂时没有响应，控制已停用。请确认观众窗口仍然打开；连接恢复后会自动同步。</p>}
 
       <section className={styles.playback} aria-label="当前讲解画面">
-        <div className={styles.playbackHeading}><strong>{snapshot.unavailable ? '视频不可用，改用案例静帧' : prepared ? '展示后自动停住' : snapshot.status === 'ready' ? '这幅画面会一直保留' : snapshot.waiting ? '等待视频缓冲' : paused ? '暂停在变化途中' : '正在抵达讲解画面'}</strong><span>讲解不限时</span></div>
+        <div className={styles.playbackHeading}><strong>{snapshot.unavailable ? '视频不可用，改用案例静帧' : prepared ? '点击播放后，本段结束会停住' : snapshot.status === 'ready' ? '这幅画面会一直保留' : snapshot.waiting ? '等待视频缓冲' : paused ? '暂停在变化途中' : '正在抵达讲解画面'}</strong><span>讲解不限时</span></div>
         <p><b>{snapshot.status === 'ready' ? '当前画面' : '将停在'}</b> {snapshot.end}</p>
         {!snapshot.unavailable && (playing || paused) && snapshot.duration > 0 && <progress aria-label="画面过渡进度" value={snapshot.elapsed} max={snapshot.duration} />}
       </section>
@@ -142,13 +142,13 @@ function ConnectedPresenter({ session }: { session: string }) {
 
         <aside ref={nextPanel} className={styles.next} aria-labelledby="next-cue-title">
           <div className={styles.sectionHeading}>
-            <h2 id="next-cue-title">讲完后，下一次点击</h2>
-            {snapshot.next && <span className={styles.change}>{nextChangesPage ? '换到下一页' : '留在这一页'}</span>}
+            <h2 id="next-cue-title">接下来的画面</h2>
+            {snapshot.next && <span className={styles.change}>{nextChangesPage ? '下一页' : '留在这一页'}</span>}
           </div>
           {snapshot.next ? <>
             <h3>{snapshot.next.action}</h3>
             <p className={styles.nextTitle}>{snapshot.next.title}</p>
-            <p className={styles.nextRange}>停在：{snapshot.next.end}</p>
+            <p className={styles.nextRange}>{snapshot.next.duration > 0 ? '进入后等待播放；播放后停在：' : '画面：'}{snapshot.next.end}</p>
             <p className={styles.nextSpeech}>{snapshot.next.say}</p>
           </> : <>
             <h3>演示到这里结束。</h3>

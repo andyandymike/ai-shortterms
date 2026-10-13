@@ -1,40 +1,54 @@
 # 第二场双语排练稿｜Talk 02 bilingual rehearsal
 
-同一份内容按 **16 页**组织，实际演讲选一种语言。页内段落对应当前留住的画面，不增加新的讲解主题。
+同一份内容按 **19 页**组织，实际演讲选一种语言。页内段落对应当前留住的画面，不增加新的讲解主题。
 
-打开观众页底部的 **Presenter ↗**。每次短过渡后，画面自动停住，留给讲者和观众充分时间。讲完当前段落，再按主按钮进入下一画面或下一页；不会按倒计时催你继续。引用块只标画面，不用念。目录、章节链接与刷新先准备画面；回退和重播针对当前画面。
+打开观众页底部的 **Presenter ↗**。动画与影片默认等待点击播放。主按钮先进入下一画面或下一页，再点同一个按钮播放；每段短过渡后自动停住，讲完再继续。引用块只标画面，不用念。目录、章节链接与刷新同样等待播放；回退保留上一画面，重播会重新播放当前这一段。
 
-Choose one language for the talk. Each visual holds after its short transition for as long as you need. Finish its paragraph, then use the main button for the next visual or page. No countdown controls speaking time. Blockquotes identify the visual and are not spoken. Direct navigation prepares the page; Back and Replay apply to the current visual.
+Choose one language for the talk. Animations and the film wait for play. The main button first enters the next visual or page; press the same button again to play. Each short transition ends in a visual that holds until you finish speaking. Blockquotes identify the visual and are not spoken. Direct navigation also waits for play. Back holds the previous visual; Replay explicitly restarts the current one.
 
-## 01 · O1｜今天的三个问题 / From answers to actions.
+## 01 · O1｜本场内容概览 / Talk 02 overview
 
 [打开本页](/session-2#opening/O1)
 
 **中文**
 
-今天讲 Computer Use、Jev 和 RSI：AI 怎样在软件里把事情办完？流程需要判断时，为什么考虑专门的模型？AI 能不能参与制造下一代 AI？每章沿着一个例子往前走。画面里的小实验帮助我们看清原理，不是现场调用这些模型。先给客户创建一条退货申请。
+今天讲 Computer Use、Jev 和 RSI：AI 怎样在软件里把事情办完？流程需要判断时，为什么考虑专门的模型？AI 能不能参与制造下一代 AI？每章沿着一个例子往前走。画面里的小实验帮助我们看清原理，不是现场调用这些模型。先从 Computer Use 开始。
 
 **English**
 
-Today we’ll connect Computer Use, Jev and RSI through three questions. How can AI finish a task inside software? When a workflow needs a decision, why consider a specialized model? And can AI help build the next AI? Each chapter follows a concrete example. The small experiments illustrate the mechanism; they are not live calls to these models. Let’s create a return request for a customer.
+Today we’ll connect Computer Use, Jev and RSI through three questions. How can AI finish a task inside software? When a workflow needs a decision, why consider a specialized model? And can AI help build the next AI? Each chapter follows a concrete example. The small experiments illustrate the mechanism; they are not live calls to these models. Let’s start with Computer Use.
 
 ---
 
-## 02 · C1｜为什么让 AI 操作界面 / Two routes into the same app.
+## 02 · C0｜Computer Use 是什么 / Computer Use
+
+[打开本页](/session-2#computer-use/C0)
+
+**中文**
+
+Computer Use，就是让 AI 通过软件界面做事。AI 看屏幕、决定下一步，再由工具执行点击或输入。用一笔退货看看，它怎样把事情办完。
+
+**English**
+
+Computer Use lets AI act through a software interface. The AI observes the screen and decides what to do; tools carry out clicks or typing. Let’s see how it completes a customer return.
+
+---
+
+## 03 · C1｜为什么需要 Computer Use / Why Computer Use?
 
 [打开本页](/session-2#computer-use/C1)
 
 **中文**
 
-客户要给 1048 号订单退货。AI 告诉我们点哪里，还不算办完，应用里得出现退货记录。Computer Use 就是让 AI 通过软件界面做事。软件如果提供 API，也就是给程序调用的接口，可以直接请求创建退货；需要在屏幕上处理时，再观察和操作界面。实际工作可以把两条路接起来。跟着界面这条路，走到完成。
+客户要给 1048 号订单退货。AI 告诉我们点哪里，还不算办完，应用里得出现退货记录。软件如果提供 API，也就是给程序调用的接口，可以直接请求创建退货；需要在屏幕上处理时，再观察和操作界面。实际工作可以把两条路接起来。跟着界面这条路，走到完成。
 
 **English**
 
-The customer wants to return order 1048. Instructions about where to click are not enough; the app needs an actual return record. Computer Use lets AI act through a software interface. An API provides a direct interface for programs, so an available API can create the return directly. When work requires the screen, the system observes and operates the interface. A workflow can combine both routes. Let’s follow the interface route to completion.
+The customer wants to return order 1048. Instructions about where to click are not enough; the app needs an actual return record. An API provides a direct interface for programs, so an available API can create the return directly. When work requires the screen, the system observes and operates the interface. A workflow can combine both routes. Let’s follow the interface route to completion.
 
 ---
 
-## 03 · C4｜从观察到完成 / See. Act. Check.
+## 04 · C4｜Computer Use 如何工作 / How Computer Use works
 
 [打开本页](/session-2#computer-use/C4)
 
@@ -68,7 +82,7 @@ Finally, submission produces a receipt, and a new screenshot supplies evidence o
 
 ---
 
-## 04 · C5｜动作执行了，事情办成了吗 / Change the screen. What now?
+## 05 · C5｜Computer Use 如何处理意外 / How Computer Use recovers
 
 [打开本页](/session-2#computer-use/C5)
 
@@ -102,7 +116,7 @@ The plan changes with the observed situation instead of following the old action
 
 ---
 
-## 05 · C7｜能力怎样通过练习形成 / Practice changes the model.
+## 06 · C7｜Computer Use 如何训练 / How Computer Use is trained
 
 [打开本页](/session-2#computer-use/C7)
 
@@ -136,7 +150,7 @@ Now move the button. The model reads a fresh screenshot, updates context and loc
 
 ---
 
-## 06 · C6｜Blender：代码与视觉检查配合 / Blender: build, render, inspect.
+## 07 · C6｜Computer Use 的 Blender 案例 / Computer Use in Blender
 
 [打开本页](/session-2#computer-use/C6)
 
@@ -154,7 +168,21 @@ This approximately thirty-second film is a real Blender render from the publishe
 
 ---
 
-## 07 · J1｜一个流程需要怎样的判断 / Sometimes you need a decision.
+## 08 · J0｜Jev 是什么 / Jev
+
+[打开本页](/session-2#jev/J0)
+
+**中文**
+
+Jev 是 TypeSafe AI 的 System One 模型，面向范围明确的判断任务，比如分类和评分。这一章看它怎样把判断交给后续流程。先让一封客户邮件找到处理部门。
+
+**English**
+
+Jev is TypeSafe AI’s System One model for bounded decision tasks, such as classification and scoring. This chapter follows a decision into the next step of a workflow. Start by choosing a team for a customer message.
+
+---
+
+## 09 · J1｜Jev 能做什么 / What Jev does
 
 [打开本页](/session-2#jev/J1)
 
@@ -162,17 +190,17 @@ This approximately thirty-second film is a real Blender render from the publishe
 
 > 留住画面：Choice 返回预设选项
 
-邮件说鞋子尺码不合适，想退货。系统需要先选处理部门。Jev 是 TypeSafe AI 面向这类判断任务的模型。输入材料叫 state，这里是一封邮件，也可以加入相关记录。Choice 就是从预先给好的选项中选择，比如退货、账单或物流。定义清楚问题和答案范围，结果就容易接入后续流程。先看普通 LLM 怎样生成答案。
+邮件说鞋子尺码不合适，想退货。系统需要先选处理部门。输入材料叫 state，这里是一封邮件，也可以加入相关记录。Choice 就是从预先给好的选项中选择，比如退货、账单或物流。定义清楚问题和答案范围，结果就容易接入后续流程。先看普通 LLM 怎样生成答案。
 
 **English**
 
 > Hold this visual: Choice returns a predefined option
 
-The message says the shoes are the wrong size and asks for a return. The system needs to choose a team before drafting a reply. Jev is TypeSafe AI’s model for decision tasks like this. State is the input material: a message here, potentially with relevant records. Choice selects from predefined options, such as returns, billing or shipping. Defining the question and answer space makes the result usable by the workflow. First, how does an ordinary LLM generate an answer?
+The message says the shoes are the wrong size and asks for a return. The system needs to choose a team before drafting a reply. State is the input material: a message here, potentially with relevant records. Choice selects from predefined options, such as returns, billing or shipping. Defining the question and answer space makes the result usable by the workflow. First, how does an ordinary LLM generate an answer?
 
 ---
 
-## 08 · J2｜Decoding：一步接一步生成 / Choose a token. Change what follows.
+## 10 · J2｜Decoding 如何工作 / How decoding works
 
 [打开本页](/session-2#jev/J2)
 
@@ -198,7 +226,7 @@ This eventually produces We can help. Each step depends on the content generated
 
 ---
 
-## 09 · J3｜两种模型，处理同一项判断 / Same decision. Different output path.
+## 11 · J3｜Jev 与普通 LLM 的输出方式 / How Jev differs from an LLM
 
 [打开本页](/session-2#jev/J3)
 
@@ -206,107 +234,121 @@ This eventually produces We can help. Each step depends on the content generated
 
 > 留住画面：JSON 答案生成完毕
 
-普通 LLM 也能分类、输出 JSON，一次回答多个问题。左边通过 decoding 生成结构化结果。
+左边给普通 LLM 加上 JSON Schema，也就是规定字段、类型和允许的值。它完全可以一次返回合法 JSON、回答多个问题。约束 decoding 会限制哪些 token 可以出现，但答案仍然逐段生成；这里展示的是可读片段，不是它真实的 token 切分。
 
 > 留住画面：两条输出路径并排对照
 
-Jev 围绕预先定义的判断来训练和提供接口：问题共用 state，独立判断，返回结果和概率。它还有按标准评分的 Score、判断陈述概率的 Noul。大量重复的有限判断，是考虑 Jev 的理由；是否更合适，要实测准确性、校准、成本和延迟。动画不代表速度对比。从一个错例看训练和校准。
+右边的 Jev 收窄了输出能力：不续写自由文本，而是回答预先定义的问题。多个问题共用 state，独立判断并可并行处理。Choice 做分类，Score 按标准评分，Noul 返回一个陈述的概率。两边都能把结果交给代码；差别在模型面向什么来训练和输出。这里不做速度比较。从一个错例看训练和校准。
 
 **English**
 
 > Hold this visual: The JSON answer is complete
 
-An ordinary LLM can classify, return JSON and answer several questions in one call. On the left, decoding produces a structured response.
+On the left, an ordinary LLM uses JSON Schema to specify fields, types and allowed values. It can return valid JSON and answer several questions in one call. Constrained decoding limits which tokens may appear, while the response is still generated sequentially. These are readable display fragments, not an actual tokenizer trace.
 
 > Hold this visual: Both output paths remain side by side
 
-Jev’s training and interface focus on predefined decisions: questions share state, are evaluated independently and return results and probabilities. Alongside Choice, Score uses a scoring standard, while Noul estimates the probability of a proposition. Repeated, bounded decisions are a reason to evaluate Jev. Suitability still depends on measured accuracy, calibration, cost and latency. The animation is not a speed comparison. A mistaken example will introduce training and calibration.
+Jev narrows its output capability: it answers predefined questions instead of continuing free-form text. Questions share state, are evaluated independently and can run in parallel. Choice classifies, Score uses a scoring standard, and Noul returns a proposition’s probability. Both routes give results to code; their training and output design differ. This animation is not a speed comparison. A mistaken example will introduce training and calibration.
 
 ---
 
-## 10 · J5｜把判断反馈带入训练 / Learn from feedback. Check on new cases.
+## 12 · J5｜Jev 如何训练 / How Jev is trained
 
 [打开本页](/session-2#jev/J5)
 
 **中文**
 
-> 留住画面：错且自信的判断受到反馈
+> 留住画面：预测 returns 0.95，已知答案是 billing
 
-客户说钱扣了两次，鞋子要留下。已知答案是账单，模型却选了退货，还给出很高的概率。
+先看这一封：钱扣了两次，但鞋子要留下。模型却选了退货，给出 0.95；对照右边的已知答案，应该交给账单部门。训练时，我们可以把这种差异作为反馈：不只看选对没有，还要看它给出的概率。一次错例说明这次需要反馈，不能单凭它评价整个模型的校准程度。
 
-> 留住画面：weights 更新为 v2，新题留到下一段
+> 留住画面：同一封邮件的预测从 returns 变为 billing
 
-训练利用预测与结果的差异，让许多例子的反馈进入参数更新。TypeSafe 把这条路线称为 RLCD，即面向校准判断的强化学习，目标包括做判断和给出校准的概率。这里展示通用关系，公开说明没有展开具体更新算法。
+现在让许多带答案的例子一起提供反馈，反复更新 weights，也就是模型内部影响判断的参数。再看同一封邮件，预测条从退货移向账单，这样就能看见训练改变了什么。TypeSafe 把面向决策和校准概率的后训练称为 RLCD。画面里的 v1、v2 和数值只是示意，不代表看过这一封就必定这样变化；公开资料也没有披露具体更新算法。学会旧题还不够，接下来换新题。
 
-> 留住画面：新题报出约八成概率，结果尚未揭晓
+> 留住画面：新邮件预测 billing 0.80，答案暂不揭晓
 
-训练完，换一批没参与训练的新题。Calibration，校准，检查的是模型报出的概率和长期实际发生的频率能不能对上。比如大量报出约八成把握的判断，实际是否也约八成正确。
+这次换成订单 2062：付款被处理了两遍。它没参与刚才的训练，措辞也不同。现在 weights 固定，只让模型作答。它给账单部门约 0.80 的概率。先把答案藏起来，是为了区分“靠训练记住旧题”和“面对新材料作判断”。
 
-> 留住画面：比较概率与实际结果频率
+> 留住画面：新邮件选对；十个教学结果帮助解释 calibration
 
-这里十题八对只是帮助理解，不是性能证明，更不保证每十题都恰好八对。看一次自信的回答，无法替代这种检查。这些概率，怎样影响流程的下一步？
+这封的答案确实是账单，但一封答对还不够。Calibration，校准，要看很多次：模型报出约八成概率的那些判断，长期是否也约八成正确。下面用十个结果里的八对两错帮助理解。这不是 Jev 的实测成绩，也不保证每十次都恰好八对。训练目标是一回事，换到自己的任务上是否做到了，还得这样检验。那么，普通 LLM 直接返回同样的 JSON，不也可以吗？
 
 **English**
 
-> Hold this visual: Feedback for a confidently wrong decision
+> Hold this visual: Prediction: returns at 0.95; known answer: billing
 
-The customer was charged twice and wants to keep the shoes. The known answer is billing, yet the model chooses returns with a high probability.
+Start with one email: the customer was charged twice but is keeping the shoes. The model picks returns with probability 0.95; the known answer on the right is billing. During training, this mismatch can provide feedback on both the decision and its probability. One mistake provides feedback for this example; it does not establish the model’s overall calibration.
 
-> Hold this visual: Weights updated to v2; separate cases come next
+> Hold this visual: The same email now receives billing instead of returns
 
-Training uses differences between predictions and outcomes, bringing feedback from many examples into weight updates. TypeSafe calls its approach RLCD, Reinforcement Learning for Calibrated Decisions, targeting both decisions and calibrated probabilities. This shows the general training relationship; its public explanation does not detail the update algorithm.
+Now many labeled examples provide feedback for repeated updates to weights, the internal parameters that shape predictions. Revisit the same email: the bars move from returns toward billing, making the illustrated change visible. TypeSafe calls its post-training for decisions and calibrated probabilities RLCD. The versions and numbers are illustrative, not a guaranteed change after seeing one email; the detailed update algorithm is not disclosed here. Doing better on an old case is not enough, so test new ones next.
 
-> Hold this visual: Separate cases report roughly eighty percent; outcomes remain hidden
+> Hold this visual: The new email receives billing at 0.80; its answer is hidden
 
-After training, use cases that did not contribute to it. Calibration asks whether reported probabilities match observed frequencies over many cases. Across many predictions near eighty percent, are roughly eighty percent correct?
+This time, payment for order 2062 went through twice. This differently worded email did not contribute to training. Keep the weights fixed and ask for a prediction: billing at about 0.80. Hiding the answer distinguishes revisiting a training example from making a decision on new material.
 
-> Hold this visual: Compare probabilities with outcome frequencies
+> Hold this visual: This email is correct; ten illustrative outcomes explain calibration
 
-Eight correct answers here illustrate the idea; they do not establish performance or guarantee that every ten will contain eight successes. One confident answer cannot replace this evaluation. How do these probabilities affect the next step?
+The correct answer is billing, but one correct prediction is not enough. Calibration requires many cases: among predictions near eighty percent, are roughly eighty percent correct over time? Eight successes out of ten below illustrate the idea. They are not measured Jev results, and every group of ten need not contain exactly eight successes. A training objective is one thing; checking that it holds on your tasks is another. Could an ordinary LLM simply return the same JSON?
 
 ---
 
-## 11 · J8｜一句邮件里有两个问题 / A decision becomes a next step.
+## 13 · J8｜为什么考虑 Jev，而不只用 LLM JSON / Why use Jev instead of LLM JSON?
 
 [打开本页](/session-2#jev/J8)
 
 **中文**
 
-> 留住画面：分布已经出现，尚未选择路线
+> 留住画面：同样的合法 JSON，继续看训练和概率质量
 
-现在客户既想退货，又说扣了两次钱。退货排在前面，但账单也占了明显一部分。这里不是让大家记住几个小数，而是看清问题本身有歧义。假如系统只拿最高的那一个选项就往下走，另一件事可能被忽略。先停在这个分岔口：你会直接交给退货部门，还是先把两个需求理清？
+可以。这里故意让两边返回一模一样的 JSON，连数字都一样；它们是教学数值，没有现场调用模型。给 LLM 加 JSON Schema，完全可以解决字段和格式问题。但写出 0.61，不等于这个概率已经校准。Jev 的区别是专门面向这类有限判断和概率来训练、提供输出。普通 LLM 也能做额外训练或校准；Jev 也必须实测。选择它的理由不能只是“会返回 JSON”。
 
-> 留住画面：先澄清，再处理
+> 留住画面：三封邮件完成分流，再比较是否值得换模型
 
-这条教学流程选择先请人澄清。分流规则由实际业务制定，概率帮助我们决定下一步，不替我们制定政策。Jev 负责范围明确的判断，普通代码选分支，生成式 LLM 可以写解释和回复，人处理需要澄清的情况。这样看，选择模型就是看工作里缺哪一项能力，再在真实任务上比较。再看 AI 能否帮助改进下一代 AI。
+把工作放大到每天反复分流工单：问的总是“交给哪个部门”，代码真正需要的是选项和可用的概率。这里按教学规则，概率达到 0.80 才直接分流，混合诉求交给人复核；用普通 LLM 也能实现。考虑 Jev，是因为这项工作不需要自由续写，而它把训练和输出集中在判断上，值得检查是否能在同样质量下减少延迟和成本。偶尔分类，或本来就需要一封完整回复，LLM JSON 可能已经够用。最终拿同一批新工单比较判断错误、校准、延迟和成本；演示不替我们宣布谁赢。再看 AI 能否帮助改进下一代 AI。
 
 **English**
 
-> Hold this visual: The distribution is visible; the route is undecided
+> Hold this visual: Identical valid JSON; examine training and probability quality
 
-Now the customer wants a return and reports a duplicate charge. Returns leads, but billing also has substantial probability. The point is the ambiguity, not the decimal values. Taking only the leading option could leave the second issue unattended. Pause at this branch: would you send it straight to returns, or first clarify the two requests?
+Yes. Both sides deliberately show identical JSON, including the numbers. These are teaching values, with no live model calls. JSON Schema can constrain an LLM’s fields and format, but writing 0.61 does not establish calibration. Jev’s distinction is specialized training and outputs for bounded decisions and probabilities. Ordinary LLMs can also receive additional training or calibration, and Jev still requires evaluation. Returning JSON alone is not a reason to choose it.
 
-> Hold this visual: Clarify before proceeding
+> Hold this visual: Three tickets are routed; compare whether changing models is worthwhile
 
-This teaching workflow asks a person to clarify first. Routing rules come from the actual business; probabilities inform the next action without setting the policy themselves. Jev handles bounded decisions, code selects a branch, a generative LLM can draft explanations and replies, and people clarify ambiguity. Model selection starts with the capability the workflow needs, followed by testing on real tasks. Now, can AI help improve the next AI?
+Scale this to routing tickets repeatedly every day. The question stays the same: which team? Code needs a choice and usable probabilities. Under our illustrative rule, a top probability of at least 0.80 routes directly; the mixed request goes to human review. An ordinary LLM can do this too. Jev is worth considering because this job does not need free-form generation, and its training and outputs focus on decisions: test whether that reduces latency or cost at the same required quality. For occasional classification, or a workflow already needing a complete written reply, LLM JSON may suffice. Compare errors, calibration, latency and cost on the same new tickets; this demonstration does not declare a winner. Now, can AI help improve the next AI?
 
 ---
 
-## 12 · R1｜改进能力能否传到下一代 / Improve the recipe for improving.
+## 14 · R0｜RSI 是什么 / RSI
+
+[打开本页](/session-2#rsi/R0)
+
+**中文**
+
+RSI 是 Recursive Self-Improvement，递归自我改进。它问的是：AI 能否帮助造出更有能力的后继，而后继又更擅长推动下一轮改进？关键在于，改进能力能不能继续传下去。
+
+**English**
+
+RSI means Recursive Self-Improvement. Can AI help build a more capable successor that becomes better at driving another improvement cycle? The key is whether improvement ability can carry forward.
+
+---
+
+## 15 · R1｜递归改进是什么意思 / What recursive improvement means
 
 [打开本页](/session-2#rsi/R1)
 
 **中文**
 
-RSI 是 Recursive Self-Improvement，递归自我改进。研究常常有很多想法，缺的是实现和实验的时间，所以会让 AI 帮忙提出、实现和检查方案。RSI 再问一步：AI 能否帮助造出更有能力的后继，而后继又更擅长推动下一轮改进？关键是改进能力能不能继续传下去。让同一个模型改写一次答案，还没有走到这个问题。用一个小实验看看，什么改进值得留下。
+研究常常有很多想法，缺的是实现和实验的时间，所以会让 AI 帮忙提出、实现和检查方案。图里的 A 帮助改进出 B，B 通往下一轮的箭头仍然带着问号：它是否真的更擅长研究，能不能把改进能力传下去，都需要验证。让同一个模型改写一次答案，还没有走到这个问题。用一个小实验看看，什么改进值得留下。
 
 **English**
 
-RSI means Recursive Self-Improvement. Research often has more ideas than time for implementation and experiments, motivating AI assistance with proposals, implementation and checks. RSI asks a further question: can AI help build a more capable successor that becomes better at driving another improvement cycle? The issue is whether improvement ability carries forward. Asking the same model to revise one answer does not establish that. A small experiment will show which changes deserve to stay.
+Research often has more ideas than time for implementation and experiments, motivating AI assistance with proposals, implementation and checks. Here A helps improve B, but the arrow from B into another cycle still has a question mark. Whether B is better at research, and whether that ability carries forward, must be tested. Asking the same model to revise one answer does not establish that. A small experiment will show which changes deserve to stay.
 
 ---
 
-## 13 · R4｜操作更少，就该留下吗 / Which program should we keep?
+## 16 · R4｜如何检验一次改进 / How to test an improvement
 
 [打开本页](/session-2#rsi/R4)
 
@@ -348,67 +390,59 @@ C then passes all six checks and uses less work than A on the same suite, earnin
 
 ---
 
-## 14 · R5｜真实改进，数字各有范围 / Propose code. Test it. Keep the gain.
+## 17 · R5｜AI 如何改进训练 AI 的工具 / How AI improves AI training
 
 [打开本页](/session-2#rsi/R5)
 
 **中文**
 
-> 留住画面：局部 kernel 收益与整体收益并列
+> 留住画面：改进后的 kernel 已进入 Gemini 训练过程
 
-AlphaEvolve 用 Gemini 提出代码候选，再由自动评估筛选。DeepMind 报告过一个矩阵乘法 kernel 加速 23%。Kernel 是训练中反复调用的一小段计算程序。这个改进让 Gemini 整体训练时间减少约 1%。一个数字讲组件，一个讲整体，证明的是具体计算效率改善，还没有测到研究能力能否一代接一代增强。递归还缺后继系统能力这一环。
+看这段代码从哪里来，又到哪里去。AlphaEvolve 用 Gemini 提出代码改法，再检查结果是否正确、运行是否更快。Kernel 就是训练时反复调用的一小段计算程序。通过检查的改进，又进入 Gemini 的训练过程。DeepMind 报告，这个矩阵计算 kernel 提速 23%，让整体训练时间减少约 1%。这两个数是局部和整体的结果证据；这一页的重点是，AI 已经能帮助改进用来训练 AI 的工具。接下来沿着这项节省，看看还要补上什么，才能形成递归。
 
 **English**
 
-> Hold this visual: Kernel and whole-training gains together
+> Hold this visual: The improved kernel enters Gemini training
 
-AlphaEvolve uses Gemini to propose code candidates and automated evaluation to select them. DeepMind reported a twenty-three percent speedup in a matrix-multiplication kernel, a small computation routine used repeatedly during training. That local improvement reduced total Gemini training time by about one percent. One figure concerns the component and the other the whole process. They establish a specific efficiency improvement, without measuring research ability growing across successive generations. Recursion also needs evidence about the successor’s capability.
+Follow where this code comes from and where it goes. AlphaEvolve uses Gemini to propose code changes, then checks correctness and speed. A kernel is a small compute routine called repeatedly during training. The validated improvement enters Gemini’s training process. DeepMind reported a 23% speedup for this matrix kernel, reducing total training time by about 1%. The figures describe the component and the whole process; the central point is that AI can help improve the tools used to train AI. Follow that saving next: what else would be needed to make improvement recursive?
 
 ---
 
-## 15 · R6｜新版本有了，能力更强了吗 / Train a successor. Test the improver.
+## 18 · R6｜改进如何进入下一代，并形成递归 / How improvement becomes recursive
 
 [打开本页](/session-2#rsi/R6)
 
 **中文**
 
-> 留住画面：失败实验和诊断进入配方
+> 留住画面：有了后继 B，但还不知道它是否更擅长改进
 
-看一条假设路径。AI A 发现训练材料几乎都是成功实验，于是提议补进失败案例和排查方法。
+上面保留刚才有报告支持的结果：kernel 改善让训练更高效。下面开始是假设延伸。把当前帮助做研发的 AI 叫 A：如果把节省的算力用于更多训练或实验，可能得到后继 B。但训练更省，不会自动让 B 更聪明，更不保证它更会做研究，所以这里保留问号。
 
-> 留住画面：B 已训练，研究能力尚未验证
+> 留住画面：相同任务与预算，检验 B 是否更会改进
 
-按这个新配方训练 B，练习和反馈改变了保存下来的 weights。到这里，我们得到一个新版本，但还不能说它更强。补材料可能有帮助，也可能没有；真正要看的，是它面对新研究问题时，能不能提出更有用的改进。
+怎样检查？继续用同一种工作：换一段没有参与刚才开发的 kernel，给 A 和 B 相同的任务与尝试预算。看谁能找到结果正确、提速有用的改法。这里测的是 B 能否更好地参与下一次改进，而不只是上次训练省了多少时间。
 
-> 留住画面：用没参与训练的研究任务比较 A 与 B
+> 留住画面：若 B 的改进帮助开发 C，下一代再次接受检验
 
-拿没用于训练的研究任务来比较 A 和 B：谁更能找准失败原因，提出值得做的实验？
-
-> 留住画面：只有能力提升才尝试下一轮
-
-只有这项能力确实改善，才有理由让 B 尝试改进 C。如果它又能带来更好的后继，递归才开始有证据，而且每一轮都要重新验证。人仍要设定目标、评估方法、权限和停止条件。图上这条回路是需要证明的路径。回到开场的三个问题。
+假如 B 确实更擅长这项工作，就让它接过原来 A 的位置，提出下一项 kernel 改进，再帮助开发 C。C 也要重新检验。Recursive，递归，强调的就是这种反馈：上一轮得到的更有能力的 AI，又参与推动下一轮改进。图里的后半段是需要验证的路径；Google 的那项 kernel 成果本身，还没有证明这个循环成立。回到开场的三个问题。
 
 **English**
 
-> Hold this visual: Add failed experiments and diagnoses
+> Hold this visual: Successor B exists in this scenario; its improvement ability is still unknown
 
-Consider a hypothetical route. AI A notices that the training material mostly contains successful experiments, and proposes adding failures and ways to investigate them.
+The reported result stays at the top: the improved kernel makes training more efficient. What follows is hypothetical. Call the current AI research assistant A. Reinvesting saved compute in more training or experiments might help produce successor B. More efficient training does not automatically make B more capable, especially at research, so its ability remains a question.
 
-> Hold this visual: B is trained; its research ability is untested
+> Hold this visual: The same tasks and budget test whether B is better at improving
 
-B trains with that recipe; practice and feedback change its saved weights. We now have a new version, but not yet evidence that it is more capable. The added material may or may not help. The question is whether B can propose more useful improvements on new research problems.
+How would we test that? Keep the type of work the same: use new kernels excluded from the earlier development, and give A and B the same tasks and experiment budget. Compare their ability to find correct changes with useful speedups. This tests whether B can contribute more to the next improvement, beyond the time saved in its own training.
 
-> Hold this visual: Compare A and B on research tasks excluded from training
+> Hold this visual: If B’s improvement helps develop C, that successor is tested again
 
-Compare A and B on research tasks excluded from training: which diagnoses failures better and proposes worthwhile experiments?
-
-> Hold this visual: A further cycle depends on improved ability
-
-Evidence of improvement justifies trying B’s help with C. If B helps produce a better successor in turn, that begins to support recursion, with each cycle requiring fresh validation. People still set objectives, evaluation methods, permissions and stopping conditions. This return path is something to establish with evidence. Let’s return to the three opening questions.
+If B is better at this work, it can take the role A held, propose the next kernel improvement, and help develop C. C must be evaluated again. Recursive describes this feedback: the more capable AI produced by one round contributes to the next round of improvement. The latter part of this diagram is a path to test; Google’s reported kernel result alone does not establish the cycle. Let’s return to the three opening questions.
 
 ---
 
-## 16 · E1｜三个词，三种检查 / Three ways to move forward.
+## 19 · E1｜三个概念的比较 / Comparing the three concepts
 
 [打开本页](/session-2#closing/E1)
 

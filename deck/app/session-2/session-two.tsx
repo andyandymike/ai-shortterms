@@ -38,17 +38,18 @@ export default function SessionTwo() {
   const step = chapter.beats.findIndex(item => item.id === cue.beat);
   const beat = chapter.beats[step];
   const slideTitle = beat.term ? `${beat.term.name}${beat.term.fullName ? ` · ${beat.term.fullName}` : ''}` : beat.title;
-  const sceneKind = cue.beat === 'R4' ? 'Code experiment' : ['O1','E1','C6'].includes(cue.beat) ? '' : 'Teaching demo';
+  const sceneKind = cue.beat === 'R4' ? 'Code experiment' : cue.beat === 'R5' ? 'Reported example' : cue.beat === 'R6' ? 'Hypothetical extension' : ['O1','E1','C6'].includes(cue.beat) ? '' : 'Teaching demo';
   const phase = state.phase;
   const currentPicture = cue.phases[phase];
   const nextIndex = phase + 1 < cue.phases.length ? state.index : state.index + 1;
   const nextPhase = nextIndex === state.index ? phase + 1 : 0;
   const nextCue = cues[nextIndex];
   const isFilm = !!cue.timeline[state.frame].media;
-  const primaryLabel = state.status === 'playing' ? isFilm ? 'Pause film' : 'Pause transition' : state.status === 'paused' ? isFilm ? 'Resume film' : 'Resume transition' : state.status === 'prepared' ? state.mediaUnavailable ? 'Show source still' : isFilm ? 'Play source film' : 'Show this picture' : nextCue?.beat === cue.beat ? 'Next picture' : 'Next page';
+  const primaryLabel = state.status === 'playing' ? isFilm ? 'Pause film' : 'Pause transition' : state.status === 'paused' ? isFilm ? 'Resume film' : 'Resume transition' : state.status === 'prepared' ? state.mediaUnavailable ? 'Show source still' : isFilm ? 'Play source film' : 'Play animation' : nextCue?.beat === cue.beat ? 'Next picture' : 'Next page';
   const picture = cues.slice(0, state.index).filter(item => item.beat === cue.beat).reduce((sum, item) => sum + item.phases.length, 0) + phase + 1;
   const pictures = cues.filter(item => item.beat === cue.beat).reduce((sum, item) => sum + item.phases.length, 0);
   const [sourcesOpen, setSourcesOpen] = useState(false);
+  const viewport = useRef<HTMLElement>(null);
   const dialog = useRef<HTMLDialogElement>(null);
   const touchStart = useRef<{ x:number; y:number } | null>(null);
   const channel = useRef<BroadcastChannel | null>(null);
@@ -56,6 +57,8 @@ export default function SessionTwo() {
   const snapshot = useRef<PresenterSnapshot | null>(null);
   const command = useRef<(message: Extract<PresenterMessage, { type: 'command' }>) => void>(() => {});
   const lastProceed = useRef(-Infinity);
+
+  useEffect(() => { if (viewport.current) viewport.current.scrollTop = 0; }, [cue.beat]);
 
   const enter = useCallback((index: number, settled = false, autoplay = false, targetPhase?: number) => {
     const target = cues[Math.max(0, Math.min(cues.length - 1, index))];
@@ -89,7 +92,8 @@ export default function SessionTwo() {
     if (state.status === 'playing') dispatch({ type: 'pause' });
     else if (state.status === 'paused') dispatch({ type: 'resume' });
     else if (state.status === 'prepared') dispatch({ type: 'start' });
-    else if (nextIndex < cues.length) enter(nextIndex, false, true, nextPhase);
+    // Navigation prepares the next visual; only an explicit play or replay starts it.
+    else if (nextIndex < cues.length) enter(nextIndex, false, false, nextPhase);
   }, [state.status, nextIndex, nextPhase, dispatch, enter, setSourcesOpen]);
 
   useEffect(() => {
@@ -171,22 +175,33 @@ export default function SessionTwo() {
   }, [chapter.sources.length, go, proceed, back, restart, sourcesOpen, dispatch]);
 
   return (
-    <main className={s.shell} data-accent={chapter.color} data-cue={cue.id} data-status={state.status} data-frame={state.frame} data-phase={state.phase}>
+    <main ref={viewport} className={s.shell} data-accent={chapter.color} data-cue={cue.id} data-status={state.status} data-frame={state.frame} data-phase={state.phase}>
       <section className={s.slide} aria-label={`${chapter.name}, ${beat.id}: ${beat.label}`}
         onTouchStart={(event) => { touchStart.current = (event.target as Element).closest('button, a, video, [data-horizontal-scroll]') ? null : { x:event.touches[0].clientX, y:event.touches[0].clientY }; }}
         onTouchEnd={(event) => { const start = touchStart.current; touchStart.current = null; if (!start) return; const dx = event.changedTouches[0].clientX - start.x; const dy = event.changedTouches[0].clientY - start.y; if (Math.abs(dx) > 80 && Math.abs(dx) > Math.abs(dy) * 2) { if (dx < 0) proceed(); else back(); } }}>
-        <div className={s.heading} data-chapter-opening={!!beat.term}>
-          <p className={s.eyebrow}><span>{beat.id}</span>{beat.term ? `CHAPTER ${String(chapterIndex).padStart(2, '0')}` : chapter.term}{sceneKind && <span className={s.sceneKind}>{sceneKind}</span>}</p>
-          {beat.term ? <><h1><span>{beat.term.name}</span>{beat.term.fullName && <span className={s.termExpansion}>{beat.term.fullName}</span>}</h1><p className={s.chapterMeaning}>{beat.title}</p></> : <h1>{beat.title}</h1>}
-        </div>
-        <GuidedProvider value={{ frame: cue.frames[state.frame], status: state.status, cueId: `${cue.id}/${state.revision}`, onComplete: finish, onMediaProgress: mediaProgress, onMediaUnavailable: mediaUnavailable }}><LabProvider><div className={s.scene}><ChapterScene id={beat.id} /></div></LabProvider></GuidedProvider>
+        {beat.term ? <div className={s.chapterCover} data-chapter-opening={beat.id}>
+          <p className={s.coverIndex}><span>{String(chapterIndex).padStart(2, '0')}</span>CHAPTER</p>
+          <div className={s.coverBody}>
+            <h1 data-long={beat.term.name.length > 8}>{beat.term.name === 'Computer Use' ? <>Computer<br />Use</> : beat.term.name}</h1>
+            <div className={s.coverDefinition}>
+              {beat.term.fullName && <p className={s.coverExpansion}>{beat.term.fullName.split(' ').map((word, index, words) => <span key={index}>{word}{index < words.length - 1 && ' '}</span>)}</p>}
+              <p className={s.coverMeaning}>{beat.subtitle}</p>
+            </div>
+          </div>
+        </div> : <>
+          <div className={s.heading}>
+            <p className={s.eyebrow}><span>{beat.id}</span>{chapter.term}{sceneKind && <span className={s.sceneKind}>{sceneKind}</span>}</p>
+            <h1>{beat.title}</h1>
+          </div>
+          <GuidedProvider value={{ frame: cue.frames[state.frame], status: state.status, cueId: `${cue.id}/${state.revision}`, onComplete: finish, onMediaProgress: mediaProgress, onMediaUnavailable: mediaUnavailable }}><LabProvider><div className={s.scene}><ChapterScene id={beat.id} /></div></LabProvider></GuidedProvider>
+        </>}
         <div className={s.storyControls}>
           <nav className={s.steps} aria-label={`${chapter.name} steps`}>
             {chapter.beats.map((item, index) => <button key={item.id} onClick={() => go(chapterIndex, index)} aria-current={step === index ? 'step' : undefined} aria-label={`${item.id}: ${item.label}`} title={`${item.id} · ${item.label}`} />)}
             <span>{step + 1} / {chapter.beats.length}</span>
           </nav>
           <div className={s.playbackControls}>
-            <div className={s.segmentProgress} title={currentPicture.end[1]}><span>{state.mediaUnavailable ? 'Video unavailable · source still' : `Picture ${picture} / ${pictures} · ${state.status === 'ready' ? 'Holding for explanation' : state.status === 'prepared' ? 'Ready to show' : state.status === 'paused' ? 'Paused' : mediaWaiting ? 'Buffering' : 'Auto-hold at the end'}`}</span>{!state.mediaUnavailable && duration > 0 && ['playing','paused'].includes(state.status) && <progress aria-label="Picture transition progress" max={duration} value={elapsed} />}</div>
+            <div className={s.segmentProgress} title={currentPicture.end[1]}><span>{state.mediaUnavailable ? 'Video unavailable · source still' : `Picture ${picture} / ${pictures} · ${state.status === 'ready' ? 'Holding for explanation' : state.status === 'prepared' ? 'Ready to play' : state.status === 'paused' ? 'Paused' : mediaWaiting ? 'Buffering' : 'Auto-hold at the end'}`}</span>{!state.mediaUnavailable && duration > 0 && ['playing','paused'].includes(state.status) && <progress aria-label="Picture transition progress" max={duration} value={elapsed} />}</div>
             {state.index === cues.length - 1 ? <Link href="/" className={s.primary}>Back to the collection ↗</Link> : <button className={s.primary} onClick={proceed} aria-label={primaryLabel}>{primaryLabel}<span aria-hidden="true">{state.status === 'playing' ? 'Ⅱ' : state.status === 'paused' || state.status === 'prepared' ? '▶' : '→'}</span></button>}
           </div>
         </div>

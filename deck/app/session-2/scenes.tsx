@@ -2,7 +2,9 @@
 
 import { DesktopLab, BlenderLab } from './computer-lab';
 import { DecodingLab, DecisionLab } from './jev-lab';
-import { ComputerLearningScene, DecisionLearningScene, RecursiveLearningScene } from './learning-scenes';
+import { ComputerLearningScene } from './learning-scenes';
+import { JevTrainingScene, JevFitScene } from './jev-explainer';
+import { AlphaEvolveStory, RecursiveImprovementStory } from './rsi-story';
 import { SortingLab } from './rsi-lab';
 import { useGuided } from './guided-state';
 import s from './session-two.module.css';
@@ -28,7 +30,8 @@ function ComputerScene({ id }: { id:string }) {
 
 function JevScene({ id }: { id:string }) {
   if (id === 'J2') return <DecodingLab />;
-  if (id === 'J5') return <DecisionLearningScene />;
+  if (id === 'J5') return <JevTrainingScene />;
+  if (id === 'J8') return <JevFitScene />;
   return <DecisionLab id={id} />;
 }
 
@@ -103,33 +106,12 @@ function ResearchBottleneckScene() {
   </div>;
 }
 
-function AlphaEvolveScene() {
-  const stage = useSelection();
-  const captions = ['Gemini proposes alternative code.', 'Evaluators test the code; failures leave the search.', 'Retain the better algorithm for further search.', 'A faster component can make the full training run shorter.'];
-  return <div className={c.alphaScene} data-stage={stage} data-horizontal-scroll>
-    <div className={c.sceneStatement} aria-live="polite">{captions[stage]}</div>
-    <svg className={c.alphaCanvas} viewBox="0 0 1160 320" role="img" aria-label={`${captions[stage]} Illustrative AlphaEvolve process: Gemini proposes code, automated evaluators test it, and better candidates are retained.`}>
-      <text className={c.columnHeading} x="36" y="35">GEMINI PROPOSES CODE</text><text className={c.columnHeading} x="460" y="35">AUTOMATED EVALUATION</text><text className={c.columnHeading} x="900" y="35">RETAIN</text>
-      <path className={c.processConnector} d="M270 177h157m-16-11 16 11-16 11M716 177h134m-16-11 16 11-16 11" />
-      <rect className={c.evaluatorFrame} x="448" y="62" width="260" height="233" rx="4" />
-      <text className={c.evaluatorLabel} x="576" y="91" textAnchor="middle">Correct? Better?</text>
-      <rect className={c.retainSlot} x="868" y="103" width="246" height="171" rx="4" />
-      <text className={c.reuseLabel} x="991" y="248" textAnchor="middle">{stage >= 2 ? '↻  Search again' : 'Tested algorithm'}</text>
-      {['A', 'B', 'C'].map((label, index) => <Candidate key={label} label={label} x={stage >= 2 && index === 2 ? 916 : stage >= 1 ? 500 : 74} y={stage >= 2 && index === 2 ? 139 : stage >= 1 ? 104 + index * 61 : 74 + index * 75} state={stage >= 1 ? index === 2 ? 'kept' : 'rejected' : 'waiting'} />)}
-    </svg>
-    <div className={c.kernelDefinition}><strong>Kernel</strong><span>A small compute routine used repeatedly in training.</span></div>
-    <div className={c.measuredResult} data-visible={stage === 3} aria-hidden={stage !== 3}>
-      <span>GOOGLE DEEPMIND REPORTED</span><div><strong>23%</strong><span>matrix kernel speedup</span></div><b aria-hidden="true">→</b><div><strong>1%</strong><span>less total Gemini training time</span></div>
-    </div>
-  </div>;
-}
-
 function RsiScene({ id }: { id:string }) {
   if (id === 'R1') return <SuccessorScene />;
   if (id === 'R3') return <ResearchBottleneckScene />;
   if (id === 'R4') return <SortingLab id={id} />;
-  if (id === 'R5') return <AlphaEvolveScene />;
-  if (id === 'R6') return <RecursiveLearningScene />;
+  if (id === 'R5') return <AlphaEvolveStory />;
+  if (id === 'R6') return <RecursiveImprovementStory />;
   return null;
 }
 
