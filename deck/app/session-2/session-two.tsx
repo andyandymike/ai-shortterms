@@ -37,6 +37,7 @@ export default function SessionTwo() {
   const chapter = chapters[chapterIndex];
   const step = chapter.beats.findIndex(item => item.id === cue.beat);
   const beat = chapter.beats[step];
+  const slideTitle = beat.term ? `${beat.term.name}${beat.term.fullName ? ` · ${beat.term.fullName}` : ''}` : beat.title;
   const sceneKind = cue.beat === 'R4' ? 'Code experiment' : ['O1','E1','C6'].includes(cue.beat) ? '' : 'Teaching demo';
   const phase = state.phase;
   const currentPicture = cue.phases[phase];
@@ -112,7 +113,7 @@ export default function SessionTwo() {
     const nextBeat = next && chapters.flatMap(chapter => chapter.beats).find(beat => beat.id === next.beat)!;
     snapshot.current = {
       cueId: `${cue.id}/${state.revision}`, index: state.index, total: cues.length,
-      beatId: cue.beat, title: beat.title, label: currentPicture.label[0],
+      beatId: cue.beat, title: slideTitle, label: currentPicture.label[0],
       say: currentPicture.say[0], look: currentPicture.end[0],
       transition: phase === cue.phases.length - 1 ? cue.transition?.[0] ?? '' : '', status: state.status,
       frame: state.frame - currentPicture.start + 1, frames: currentPicture.endFrame - currentPicture.start + 1,
@@ -121,10 +122,10 @@ export default function SessionTwo() {
       part: picture, parts: pictures,
       duration, elapsed, waiting: mediaWaiting, unavailable:state.mediaUnavailable,
       phase, phases: cues.filter(item => item.beat === cue.beat).flatMap(item => item.phases.map(part => part.label[0])), end: currentPicture.end[0],
-      next: next && nextPicture ? { beatId: next.beat, title: nextBeat.title, label: nextPicture.label[0], say: nextPicture.say[0], action: nextPicture.label[0], duration: nextPicture.duration, phases: [nextPicture.label[0]], end: nextPicture.end[0] } : null,
+      next: next && nextPicture ? { beatId: next.beat, title: nextBeat.term ? `${nextBeat.term.name}${nextBeat.term.fullName ? ` · ${nextBeat.term.fullName}` : ''}` : nextBeat.title, label: nextPicture.label[0], say: nextPicture.say[0], action: nextPicture.label[0], duration: nextPicture.duration, phases: [nextPicture.label[0]], end: nextPicture.end[0] } : null,
     };
     channel.current?.postMessage({ type: 'state', state: snapshot.current } satisfies PresenterMessage);
-  }, [state, cue, beat.title, proceed, back, restart, dispatch, elapsed, duration, mediaWaiting, phase, currentPicture, nextIndex, nextPhase, picture, pictures]);
+  }, [state, cue, slideTitle, proceed, back, restart, dispatch, elapsed, duration, mediaWaiting, phase, currentPicture, nextIndex, nextPhase, picture, pictures]);
 
   useEffect(() => {
     if (!session) return;
@@ -174,9 +175,9 @@ export default function SessionTwo() {
       <section className={s.slide} aria-label={`${chapter.name}, ${beat.id}: ${beat.label}`}
         onTouchStart={(event) => { touchStart.current = (event.target as Element).closest('button, a, video, [data-horizontal-scroll]') ? null : { x:event.touches[0].clientX, y:event.touches[0].clientY }; }}
         onTouchEnd={(event) => { const start = touchStart.current; touchStart.current = null; if (!start) return; const dx = event.changedTouches[0].clientX - start.x; const dy = event.changedTouches[0].clientY - start.y; if (Math.abs(dx) > 80 && Math.abs(dx) > Math.abs(dy) * 2) { if (dx < 0) proceed(); else back(); } }}>
-        <div className={s.heading}>
-          <p className={s.eyebrow}><span>{beat.id}</span>{chapter.term}{sceneKind && <span className={s.sceneKind}>{sceneKind}</span>}</p>
-          <h1>{beat.title}</h1>
+        <div className={s.heading} data-chapter-opening={!!beat.term}>
+          <p className={s.eyebrow}><span>{beat.id}</span>{beat.term ? `CHAPTER ${String(chapterIndex).padStart(2, '0')}` : chapter.term}{sceneKind && <span className={s.sceneKind}>{sceneKind}</span>}</p>
+          {beat.term ? <><h1><span>{beat.term.name}</span>{beat.term.fullName && <span className={s.termExpansion}>{beat.term.fullName}</span>}</h1><p className={s.chapterMeaning}>{beat.title}</p></> : <h1>{beat.title}</h1>}
         </div>
         <GuidedProvider value={{ frame: cue.frames[state.frame], status: state.status, cueId: `${cue.id}/${state.revision}`, onComplete: finish, onMediaProgress: mediaProgress, onMediaUnavailable: mediaUnavailable }}><LabProvider><div className={s.scene}><ChapterScene id={beat.id} /></div></LabProvider></GuidedProvider>
         <div className={s.storyControls}>

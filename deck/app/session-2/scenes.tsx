@@ -12,9 +12,9 @@ function Cursor() { return <svg viewBox="0 0 80 90" aria-hidden="true"><path d="
 
 function MapScene({ closing = false }: { closing?: boolean }) {
   return <div className={s.map}>
-    <div className={s.mapColumn}><div className={`${s.mapArt} ${s.actArt}`}><div className={s.miniWindow}><i /><i /><i /><div /><div /><b>Done ✓</b></div><div className={s.bigCursor}><Cursor /></div></div><p>01 / COMPUTER USE</p><h2>Act.</h2><span>{closing ? 'Did the application reach the goal?' : 'Use the interface to get work done.'}</span></div>
-    <div className={s.mapColumn}><div className={`${s.mapArt} ${s.decideArt}`}><span>?</span><div><b>A</b><b className={s.chosen}>B ✓</b><b>C</b></div></div><p>02 / JEV</p><h2>Decide.</h2><span>{closing ? 'Is the decision useful and reliable?' : 'Return the decision the workflow needs.'}</span></div>
-    <div className={s.mapColumn}><div className={`${s.mapArt} ${s.improveArt}`}><span>v1</span><b>↗</b><span>v2</span><b>↗</b><span>?</span></div><p>03 / RSI</p><h2>Improve.</h2><span>{closing ? 'Can a better successor improve again?' : 'Ask how improvement can repeat.'}</span></div>
+    <div className={s.mapColumn}><div className={`${s.mapArt} ${s.actArt}`}><div className={s.miniWindow}><i /><i /><i /><div /><div /><b>Done ✓</b></div><div className={s.bigCursor}><Cursor /></div></div><p>01 / ACT</p><h2>Computer<br />Use</h2><span>{closing ? 'Did the application reach the goal?' : 'Use the interface to get work done.'}</span></div>
+    <div className={s.mapColumn}><div className={`${s.mapArt} ${s.decideArt}`}><span>?</span><div><b>A</b><b className={s.chosen}>B ✓</b><b>C</b></div></div><p>02 / DECIDE</p><h2>Jev</h2><span>{closing ? 'Is the decision useful and reliable?' : 'Return the decision the workflow needs.'}</span></div>
+    <div className={s.mapColumn}><div className={`${s.mapArt} ${s.improveArt}`}><span>v1</span><b>↗</b><span>v2</span><b>↗</b><span>?</span></div><p>03 / IMPROVE</p><h2>RSI</h2><span>{closing ? 'Can a better successor improve again?' : 'Ask how improvement can repeat.'}</span></div>
   </div>;
 }
 

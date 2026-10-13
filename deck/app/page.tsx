@@ -12,12 +12,12 @@ export default function Directory() {
       <div className={styles.sessions}>
         <article className={styles.session}>
           <div className={styles.number}>01<span>THE FOUNDATIONS</span></div>
-          <div className={styles.copy}><p className={styles.kicker}>FOUR CONCEPTS · TWO SHIFTS</p><h2>Beyond Bigger Models</h2><p>MoE · Distillation · World Model · VLA</p></div>
+          <div className={styles.copy}><p className={styles.talkTitle}>Beyond Bigger Models</p><h2><span>MoE</span> · <span>Distillation</span><br /><span>World Model</span> · <span>VLA</span></h2></div>
           <Link className={styles.enter} href="/session-1">Enter talk 01 <span aria-hidden="true">↗</span></Link>
         </article>
         <article className={`${styles.session} ${styles.current}`}>
           <div className={styles.number}>02<span>THE NEXT MOVES</span></div>
-          <div className={styles.copy}><p className={styles.kicker}>ACT · DECIDE · IMPROVE</p><h2>From Answers to Actions</h2><p>Computer Use · Jev · RSI</p></div>
+          <div className={styles.copy}><p className={styles.talkTitle}>From Answers to Actions</p><h2><span>Computer Use</span> · <span>Jev</span> · <span>RSI</span></h2></div>
           <Link className={styles.enter} href="/session-2">Enter talk 02 <span aria-hidden="true">↗</span></Link>
         </article>
       </div>
