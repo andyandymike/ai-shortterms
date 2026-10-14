@@ -100,17 +100,21 @@ This approximately thirty-second film is a real Blender render from the publishe
 
 [Open this page](/session-2#jev/J0)
 
-Jev is TypeSafe AI’s System One model for bounded decision tasks, such as classification and scoring. This chapter follows a decision into the next step of a workflow. Start by choosing a team for a customer message.
+Jev is TypeSafe’s model in the class it calls System One. It is designed for focused decisions, such as choosing a team for an email or rating a risk. Let’s start with how we ask it a question. Start with a return request.
 
 ---
 
-## 09 · J1｜What Jev does
+## 09 · J1｜How to ask Jev a question
 
 [Open this page](/session-2#jev/J1)
 
-> Hold this visual: Choice returns a predefined option
+> Hold this visual: One question, one answer; we chose the three team options
 
-The message says the shoes are the wrong size and asks for a return. The system needs to choose a team before drafting a reply. State is the input material: a message here, potentially with relevant records. Choice selects from predefined options, such as returns, billing or shipping. Defining the question and answer space makes the result usable by the workflow. First, how does an ordinary LLM generate an answer?
+This customer wants a return. We write a question: which team should handle it? We supply returns, billing and shipping as the options. That is a Choice. We provide the question and options; Jev evaluates the input and assigns probabilities. We define what it may choose, while the model determines the result.
+
+> Hold this visual: Two questions, two answers; Choice, Score and Noul are available types
+
+Now add: does the customer want a return? We use Noul, which gives the probability of yes. Two questions produce two answers. Choice, Score and Noul below are three available types, not three required outputs. Score rates something against levels we define. We can change the questions, options and question count in the request without retraining the model. Next, how does an ordinary LLM produce an answer?
 
 ---
 
@@ -132,13 +136,13 @@ This eventually produces We can help. Each step depends on the content generated
 
 [Open this page](/session-2#jev/J3)
 
-> Hold this visual: The JSON answer is complete
+> Hold this visual: One JSON response contains both answers
 
-On the left, an ordinary LLM uses JSON Schema to specify fields, types and allowed values. It can return valid JSON and answer several questions in one call. Constrained decoding limits which tokens may appear, while the response is still generated sequentially. These are readable display fragments, not an actual tokenizer trace.
+Both models get the same two questions. An ordinary LLM can answer them in one request and use JSON Schema to constrain the format. It still decodes the JSON token by token. We display readable chunks here; they are not actual tokenizer boundaries.
 
-> Hold this visual: Both output paths remain side by side
+> Hold this visual: The API packages the two independent answers as JSON
 
-Jev narrows its output capability: it answers predefined questions instead of continuing free-form text. Questions share state, are evaluated independently and can run in parallel. Choice classifies, Score uses a scoring standard, and Noul returns a proposition’s probability. Both routes give results to code; their training and output design differ. This animation is not a speed comparison. A mistaken example will introduce training and calibration.
+According to TypeSafe, Jev outputs these probabilities in parallel instead of generating free-form text. Both questions use the same state and are evaluated independently. The API packages the answers as JSON. The delivery format can be the same while the model’s output process differs. These values are illustrative, and the animation is not a timing measurement. How is this decision capability trained?
 
 ---
 
@@ -146,35 +150,31 @@ Jev narrows its output capability: it answers predefined questions instead of co
 
 [Open this page](/session-2#jev/J5)
 
-> Hold this visual: Prediction: returns at 0.95; known answer: billing
+> Hold this visual: Prediction: returns at 95%; known answer: billing
 
-Start with one email: the customer was charged twice but is keeping the shoes. The model picks returns with probability 0.95; the known answer on the right is billing. During training, this mismatch can provide feedback on both the decision and its probability. One mistake provides feedback for this example; it does not establish the model’s overall calibration.
+We have been using the model; now we illustrate training. The email says the customer was charged twice and is keeping the shoes. The model chooses returns with 95% probability, but the known answer is billing. Mistakes like this provide feedback for learning both better choices and appropriate probabilities.
 
-> Hold this visual: The same email now receives billing instead of returns
+> Hold this visual: The same email is now assigned to billing
 
-Now many labeled examples provide feedback for repeated updates to weights, the internal parameters that shape predictions. Revisit the same email: the bars move from returns toward billing, making the illustrated change visible. TypeSafe calls its post-training for decisions and calibrated probabilities RLCD. The versions and numbers are illustrative, not a guaranteed change after seeing one email; the detailed update algorithm is not disclosed here. Doing better on an old case is not enough, so test new ones next.
+Practice on many examples with known answers, using feedback to adjust the weights: the internal parameters that shape decisions. Revisit the same email; it now favors billing. TypeSafe calls its post-training for decisions and calibrated probabilities RLCD. This change illustrates the principle, not its undisclosed algorithm. New cases are needed to check what was learned.
 
-> Hold this visual: The new email receives billing at 0.80; its answer is hidden
+> Hold this visual: 80% should mean roughly eight in ten over many cases
 
-This time, payment for order 2062 went through twice. This differently worded email did not contribute to training. Keep the weights fixed and ask for a prediction: billing at about 0.80. Hiding the answer distinguishes revisiting a training example from making a decision on new material.
-
-> Hold this visual: This email is correct; ten illustrative outcomes explain calibration
-
-The correct answer is billing, but one correct prediction is not enough. Calibration requires many cases: among predictions near eighty percent, are roughly eighty percent correct over time? Eight successes out of ten below illustrate the idea. They are not measured Jev results, and every group of ten need not contain exactly eight successes. A training objective is one thing; checking that it holds on your tasks is another. Could an ordinary LLM simply return the same JSON?
+Try an email not used in training: a payment went through twice. Keep the weights fixed and ask for a prediction. It selects billing with 80% probability. Calibration asks whether predictions near 80% are correct about 80% of the time across many cases. The ten squares illustrate the idea; this one email cannot establish calibration. With output and training in view, why consider using Jev?
 
 ---
 
-## 13 · J8｜Why use Jev instead of LLM JSON?
+## 13 · J8｜Why use Jev?
 
 [Open this page](/session-2#jev/J8)
 
-> Hold this visual: Identical valid JSON; examine training and probability quality
+> Hold this visual: Less sequential output work; the input still needs processing
 
-Yes. Both sides deliberately show identical JSON, including the numbers. These are teaching values, with no live model calls. JSON Schema can constrain an LLM’s fields and format, but writing 0.61 does not establish calibration. Jev’s distinction is specialized training and outputs for bounded decisions and probabilities. Ordinary LLMs can also receive additional training or calibration, and Jev still requires evaluation. Returning JSON alone is not a reason to choose it.
+Both routes make one request and read the input. The middle differs: an LLM generates successive tokens, while Jev outputs decision probabilities in parallel without generating the answer as text. Reducing sequential output work can lower latency; its training and design also focus on these tasks. The gain still depends on input length, the comparison model, hardware and network. Animation duration is not a benchmark.
 
-> Hold this visual: Three tickets are routed; compare whether changing models is worthwhile
+> Hold this visual: The ticket is assigned to returns; an LLM can write the reply
 
-Scale this to routing tickets repeatedly every day. The question stays the same: which team? Code needs a choice and usable probabilities. Under our illustrative rule, a top probability of at least 0.80 routes directly; the mixed request goes to human review. An ordinary LLM can do this too. Jev is worth considering because this job does not need free-form generation, and its training and outputs focus on decisions: test whether that reduces latency or cost at the same required quality. For occasional classification, or a workflow already needing a complete written reply, LLM JSON may suffice. Compare errors, calibration, latency and cost on the same new tickets; this demonstration does not declare a winner. Now, can AI help improve the next AI?
+Every incoming ticket needs a routing decision. Frequent, focused judgments make Jev worth testing: let it decide, let code route, and use an LLM when a written reply is needed. If probabilities drive the workflow, check their calibration. For occasional classification or a complete reply in one call, an existing LLM with JSON may suffice. Compare errors and probability quality first, then latency and cost on the same tickets. Finally, can AI help improve the next AI?
 
 ---
 

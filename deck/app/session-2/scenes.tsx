@@ -4,6 +4,7 @@ import { DesktopLab, BlenderLab } from './computer-lab';
 import { DecodingLab, DecisionLab } from './jev-lab';
 import { ComputerLearningScene } from './learning-scenes';
 import { JevTrainingScene, JevFitScene } from './jev-explainer';
+import { JevQuestionsScene, JevOutputScene } from './jev-output';
 import { AlphaEvolveStory, RecursiveImprovementStory } from './rsi-story';
 import { SortingLab } from './rsi-lab';
 import { useGuided } from './guided-state';
@@ -29,7 +30,9 @@ function ComputerScene({ id }: { id:string }) {
 }
 
 function JevScene({ id }: { id:string }) {
+  if (id === 'J1') return <JevQuestionsScene />;
   if (id === 'J2') return <DecodingLab />;
+  if (id === 'J3') return <JevOutputScene />;
   if (id === 'J5') return <JevTrainingScene />;
   if (id === 'J8') return <JevFitScene />;
   return <DecisionLab id={id} />;

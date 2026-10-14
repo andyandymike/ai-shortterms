@@ -33,46 +33,58 @@ C7 保留训练与使用的比较：先留住练习反馈，再看 weights 更�
 
 ## Jev · J0、J1、J2、J3、J5、J8
 
-Jev 是 TypeSafe AI 的模型名称，不是 Jevons paradox 或 JEPA。System One 是厂商对这类决策模型的称呼。
+Jev 是 TypeSafe 的模型名，System One 是厂商对这类决策模型的称呼。2026-10-14 复核官方接口、Models、RLCD 介绍和发布文章。这一章保留 6 页、12 个停留画面：J1 从一幅改为两幅，让观众看见题目数量可以变；J5 从四幅收为三幅。全场仍为 19 页、36 个画面、25 组讲解。
 
 | 术语 | 解释 |
 | --- | --- |
-| Token | 模型使用的文本单位，可以是字符、词或文本片段 |
-| Decoding | 从模型预测的下一 token 概率中按规则选择，再接回 context，继续生成 |
-| State | 多个判断问题共用的输入材料，可以包含文字、JSON 与相关记录；它为这些判断提供 context |
-| Choice | 在明确候选项之间分类，返回标签、概率分布和 confidence |
-| Score | 根据 rubric 评分，返回期望分数、等级概率和 confidence |
-| Noul | 对一个陈述返回 0–1 概率，没有单独的 confidence |
-| Rubric | 评分标准，以及每个等级的含义 |
-| Calibration | 在很多相似预测中，预测概率和实际出现频率是否相符 |
-| Confidence | 从分布形状计算的统计量；不是最高选项概率，也不是正确率 |
-| RLCD | Reinforcement Learning for Calibrated Decisions；TypeSafe 介绍的训练方法 |
+| State | 提供给问题的输入材料，例如邮件、订单记录和规则；这些内容提供 context |
+| Choice | 从调用者提供的选项中选择；返回选项、各选项概率与 confidence |
+| Score | 按调用者定义的有序等级评分；返回分数、等级概率等 |
+| Noul | 判断一个是非问题，返回“是”的概率 |
+| Token | 模型使用的文本单位，可以是字符、词或文字片段 |
+| Decoding | 选择下一个 token，接到已有内容后面，继续生成 |
+| Weights | 模型内部影响判断的参数 |
+| RLCD | Reinforcement Learning for Calibrated Decisions，TypeSafe 的决策与概率校准后训练 |
+| Calibration | 在很多独立样本上，预测概率与实际频率是否相符 |
 
-J1 让同一封邮件进入 state，借 Choice 展示明确的分类结果。J2 只保留 We can help. 这一条生成路径，先留住 We 已进入 context 后的下一轮候选，再生成完整句子，说明前面的 token 会改变后面的条件；不再重放 The 分支或展开采样规则。候选、切分和概率是有限的教学示意，没有调用真实 LLM。Decoding 的参考来源是 Hugging Face 的生成策略文档；TypeSafe 的 machine-learning primer 在这里用于 RLCD 与决策训练。
+### 问题、题型、选项、答案数量
 
-J3 公平比较两个输出路径。左侧明确使用 LLM + JSON Schema：字段、类型和允许值可以受约束，普通 LLM 能返回合法 JSON、一次回答多个问题。约束 decoding 限制可生成的 token，响应仍按序列生成；动画使用可读片段，不是实际 token 切分。Jev 把输出范围收窄到预先定义的决策类型，放弃自由字符串续写；多个问题共用 state，独立评估并可并行处理，不依赖前一个答案再生成下一个答案。结果与概率交给普通代码决定工作流。这里画的是接口与输出关系；完整内部架构没有公开，不声称没有 Transformer、只需一次 forward pass，或不会发生语义判断错误。动画时长也不是模型延迟。
+J1 左侧是调用者提供的请求。第一幅问“哪个部门处理”，选择 Choice，并提供 returns、billing、shipping 三个选项；右侧是一份 Choice 答案，内含三个选项的概率。第二幅增加“客户是否想退货”，选择 Noul，右侧增加一份答案。因此是两题、两份答案，不是“Jev 固定输出三个值”。Choice、Score、Noul 是三种可选题型，也不是每次必须各用一个。图中概率由教学作者设定，实际值应随输入和问题变化。
 
-补充参考：输出类型细节（原 J4 内容，不设独立主讲页）。主线在 J1 解释 Choice，在 J3 简述 Score 与 Noul；以下数值和计算用于备查。Choice 的清晰请求分布为 returns 0.94、billing 0.04、shipping 0.02。Score 使用五档教学 rubric：0 routine、1 soon、2 same-day、3 urgent、4 critical；概率为 0.1、0.5、0.3、0.1、0，期望分数为 0×0.1 + 1×0.5 + 2×0.3 + 3×0.1 + 4×0 = 1.4。Noul 的教学陈述是“客户想退货”，概率为 0.96。它们不是实测成绩；没有提供 confidence 的示例不另编一个数值。
+调用者在每次请求里定义 questions、instructions、type、criteria 和答案 ID。候选选项或评分等级需要提前给出，但题目并非训练时写死的题库。同一模型可以处理新的问题定义，无需每道题重新训练。官方 Models 页说明当前各账户使用同一组模型 weights，领域资料和规则通过请求提供。问题数量受接口和 context 限制，不能理解成无限；Choice 当前最多 255 个候选项，这个上限不在主讲中展开。
 
-J5 保留四个讲解画面，沿具体邮件解释训练。第一段显示“重复扣款但保留鞋子”：v1 预测 returns 0.95、billing 0.04、shipping 0.01；再揭晓已知答案 billing。第二段保留这封邮件，让多个带答案例子的反馈进入 weights 更新，再将同一封邮件的教学预测改为 returns 0.10、billing 0.88、shipping 0.02。这样变化的是具体预测，而不只是抽象参数格子。它表示多例、反复训练可能改变预测，不表示单个样本的固定概率调整，也不表示这些是实测训练前后的输出。RLCD 是 TypeSafe 介绍的面向决策和校准概率的后训练，公开说明未披露具体更新算法；本演示没有复现它。
+### LLM、Jev 和 JSON
 
-第三段换成未参与训练的新邮件：“订单 2062 的付款处理了两遍。”v2 的 weights 固定，显示 returns 0.12、billing 0.80、shipping 0.08，先不揭晓答案。第四段对照已知答案 billing，并用一组接近 0.80 的教学预测及八对两错的结果解释 calibration。新题的 0.80 不由旧题的 0.95 直接减出来。一个错误不能证明整体校准不足，一个正确预测或十个示例也不能证明训练有效；0.8 不保证每十次必有八次正确。校准需要在大量独立样本中比较概率与实际频率。
+J2 延续 We can help. 的短句，解释常见自回归 LLM 如何逐 token 生成；先留住第一个 token，再生成完整句子。候选概率与 token 切分均为教学示意。
 
-补充参考：概率与 confidence 细节（原 J6 内容，不设独立主讲页）。Confidence 是由分布计算的统计量，不等于最高选项的概率。Choice 在三个候选项、最高概率为 0.61 时，按文档公式得到 confidence 约 0.42；本次 J8 直接用最高选项概率演示分流，不显示或混用 confidence。不同问题可以具有不同的不确定性，不能把这封邮件某一问题的概率挪给另一问题。
+J3 两边回答与 J1 相同的两道题，并使用相同的教学概率。左边明确是 LLM + JSON Schema：普通 LLM 也能在一次请求中回答多题、按格式返回 JSON。画面按可读片段逐步显示，不是实际 tokenizer 或 API 调用记录。右边按 TypeSafe 的公开说明展示并行概率输出：多个问题共用 state，但各自的答案不作为其他题的隐藏 context。对 Choice 而言，多个选项的概率共同构成一份答案，并不相互独立；独立性指不同问题的评估。
 
-J8 仍在同一页讲两段。第一段使用同一封混合诉求邮件，让 LLM + JSON Schema 和 Jev 展示相同的 JSON：returns 0.61、billing 0.35、shipping 0.04。数字全部作为教学设定，既不代表现场模型输出，也不代表两个 API 的原始响应结构。刻意保持格式和数字相同，是为了排除“只有 Jev 能返回 JSON”的错误理由：Schema 能约束格式，一个合法数字不能独自证明校准。Jev 的专门决策训练与概率输出是值得评估的设计取舍；普通 LLM 也可接受额外训练或校准，双方都需要独立评估。
+JSON 是 API 交付结果的形式。根据厂商所述，Jev 模型不靠自回归文字生成来写出这些概率，API 仍可把结构化结果组织成 JSON。因此区别不能概括为“一个逐字写三个字段，另一个固定同时写三个字段”。完整内部架构没有公开；不声称每次只需一次 forward pass、不含 Transformer 或不会判断错。格式合法也不保证答案正确或概率校准，普通 LLM 同样可以另行训练或校准。
 
-第二段模拟反复处理工单。退货、账单和混合请求的最高选项概率分别设为 0.94、0.93、0.61；普通代码按“最高概率 ≥ 0.80 才直接分流，否则人工复核”的教学规则处理。这条流程同样能由普通 LLM 驱动，阈值不是通用生产建议。场景要说明的选择依据是工作负载：高频、范围明确的分类和评分不需要自由生成，值得检查专门决策模型是否能在相同质量要求下改善延迟或成本；偶发任务、或者本来需要生成完整回复时，LLM JSON 可能已经够用。应对同一批独立新工单比较判断错误、calibration、延迟和成本。这里没有编造测评成绩，也不宣布 Jev 普遍更准、更快或更便宜。
+### 训练与校准
 
-- [TypeSafe：Introducing System One models and Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev)
-- [TypeSafe：Models / supported inputs](https://docs.typesafe.ai/models)
-- [TypeSafe：Choice / support-ticket example](https://docs.typesafe.ai/primitives/choice)
+J5 的三个画面用一般训练原理解释 RLCD 的目标，没有复现厂商算法或数据。先看一封重复扣款但保留商品的邮件：示意模型错误地给 returns 0.95，已知答案为 billing。再展示许多带答案例子提供反馈、反复调整 weights；同一封邮件的示意预测变成 returns 0.10、billing 0.88、shipping 0.02。变化不是单个错例的固定更新公式，也不是实测提升。
+
+最后换成未参与训练的新邮件，weights 固定，模型给 billing 0.80，再揭晓答案及十个小格。八对两错帮助解释 calibration：很多接近 0.8 的预测，其正确比例应接近 80%。一封答对或十个示例不能证明校准，任意十次也不保证恰好八次正确。RLCD 的正式英文名放在术语和参考资料中，口播重点跟随“练习、反馈、调整、新题检查”的画面，不反复念长定义。
+
+### 为什么可能更快，什么时候考虑使用
+
+J8 第一幅只展开计算步骤。两边都是一次请求，也都需要处理输入；中间的输出工作不同：常见自回归 LLM 反复生成下一个 token，Jev 按厂商所述并行输出判断概率。减少顺序输出工作是降低延迟的一个原因，厂商还描述了专门的架构、parallel sampler 和训练方法。不能把原因归结为省掉聊天界面、JSON.parse、三个网络调用，或仅仅少输出几个字符。
+
+图中方框宽度、出现顺序和播放时长均不表示实测耗时。实际比较还取决于输入长度、对比模型及 reasoning 设置、输出要求、硬件和网络。厂商发布的测试报告了速度优势，但也说明短输入对 Jev 有利，某些 LLM 对照使用生成完整概率的 wrapper，这比仅输出标签更慢。主讲不套用一个普遍倍数，也没有把演示动画当性能证明。
+
+第二幅回到退货邮件：每来一封工单，Jev 给出处理部门，普通代码将它分到队列，需要文字回复时可交给 LLM。这是一种分工示例，普通 LLM 也可以完成同一流程。高频、范围明确的判断值得测试专门模型；偶发分类或本就需要完整回复时，现有 LLM JSON 可能足够。选择前应在同一批独立工单上比较判断错误、概率校准、延迟和成本。该页删掉了原来的两份大 JSON、三条工单及密集选型文字。
+
+- [TypeSafe：问题由谁定义，如何同时问多题](https://docs.typesafe.ai/primitives)
+- [TypeSafe：Choice 的请求、选项与答案](https://docs.typesafe.ai/primitives/choice)
 - [TypeSafe：Score](https://docs.typesafe.ai/primitives/score)
 - [TypeSafe：Noul](https://docs.typesafe.ai/primitives/noul)
-- [TypeSafe：Confidence](https://docs.typesafe.ai/confidence)
-- [TypeSafe：Machine-learning primer / RLCD](https://docs.typesafe.ai/introduction/machine-learning-primer)
-- [Hugging Face：Generation strategies / decoding](https://huggingface.co/docs/transformers/main/en/generation_strategies)
-- [Anthropic：Structured outputs](https://platform.claude.com/docs/en/build-with-claude/structured-outputs)
+- [TypeSafe：模型输入与通过请求定制行为](https://docs.typesafe.ai/models)
+- [TypeSafe：RLCD 与校准](https://docs.typesafe.ai/introduction/machine-learning-primer)
+- [TypeSafe：并行输出、速度结果与测评限制](https://typesafe.ai/blog/introducing-system-one-models-and-jev)
+- [TypeSafe：Confidence 与概率的区别](https://docs.typesafe.ai/confidence)
+- [Hugging Face：Generation strategies](https://huggingface.co/docs/transformers/main/en/generation_strategies)
+- [Anthropic：JSON Schema 与 constrained decoding](https://platform.claude.com/docs/en/build-with-claude/structured-outputs)
 
 ## RSI · R0、R1、R4、R5、R6
 
@@ -95,4 +107,4 @@ R6 没有训练真实后继、运行 A/B 研究能力测评或证明递归已经
 
 ## 时间不足时
 
-各画面停留时间由讲者决定，没有讲解倒计时。时间紧时，可缩短解释或用「直接到讲解画面」跳过当前画面的过渡；主按钮继续到下一画面。建议保留 C5 的观察与修正、C7 的训练与 inference、J3 的公平比较、J5 的独立检查、J8 的相同 JSON 与重复工单比较，以及 R5–R6 中同一项 kernel 改进如何可能进入后继和下一轮研发。不要把动画速度讲成模型性能；R4 即使跳到结果，也应说明 B 未完成任务、C 经过独立检查才被保留。
+各画面停留时间由讲者决定，没有讲解倒计时。时间紧时，可缩短解释或用「直接到讲解画面」跳过当前画面的过渡；主按钮继续到下一画面。建议保留 C5 的观察与修正、C7 的训练与 inference、J3 的公平比较、J5 的独立检查、J1 的自定义问题、J8 的输出工作与工单分流，以及 R5–R6 中同一项 kernel 改进如何可能进入后继和下一轮研发。不要把动画速度讲成模型性能；R4 即使跳到结果，也应说明 B 未完成任务、C 经过独立检查才被保留。

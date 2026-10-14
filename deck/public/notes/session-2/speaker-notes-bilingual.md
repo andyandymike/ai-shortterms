@@ -174,29 +174,37 @@ This approximately thirty-second film is a real Blender render from the publishe
 
 **中文**
 
-Jev 是 TypeSafe AI 的 System One 模型，面向范围明确的判断任务，比如分类和评分。这一章看它怎样把判断交给后续流程。先让一封客户邮件找到处理部门。
+Jev 是 TypeSafe 的一个模型，属于他们所说的 System One model。它用来处理范围清楚的判断，比如把邮件分给哪个部门、给一项风险打几分。先看我们怎么给它出题。用一封退货邮件开始。
 
 **English**
 
-Jev is TypeSafe AI’s System One model for bounded decision tasks, such as classification and scoring. This chapter follows a decision into the next step of a workflow. Start by choosing a team for a customer message.
+Jev is TypeSafe’s model in the class it calls System One. It is designed for focused decisions, such as choosing a team for an email or rating a risk. Let’s start with how we ask it a question. Start with a return request.
 
 ---
 
-## 09 · J1｜Jev 能做什么 / What Jev does
+## 09 · J1｜谁来定义 Jev 的问题 / How to ask Jev a question
 
 [打开本页](/session-2#jev/J1)
 
 **中文**
 
-> 留住画面：Choice 返回预设选项
+> 留住画面：一题对应一个答案；三个部门是我们给的选项
 
-邮件说鞋子尺码不合适，想退货。系统需要先选处理部门。输入材料叫 state，这里是一封邮件，也可以加入相关记录。Choice 就是从预先给好的选项中选择，比如退货、账单或物流。定义清楚问题和答案范围，结果就容易接入后续流程。先看普通 LLM 怎样生成答案。
+这封邮件想退货。我们先写一道题：交给哪个部门？再给出退货、账单、物流三个选项。这叫 Choice。问题和选项都由我们提供，Jev 负责根据输入判断，并给每个选项一个概率。我们规定能选哪些，具体选谁、概率多少，由模型算。
+
+> 留住画面：两题、两个答案；Choice、Score、Noul 是可选题型
+
+现在再问一句：客户是不是想退货？这题选 Noul，返回“是”的概率。两道题就有两个答案。底下的 Choice、Score、Noul 是三种题型，不是固定三个输出；Score 用来按我们定的标准打分。题目、选项和题目数量都能在请求里改，换一道题不用重新训练模型。再看普通 LLM 怎样生成答案。
 
 **English**
 
-> Hold this visual: Choice returns a predefined option
+> Hold this visual: One question, one answer; we chose the three team options
 
-The message says the shoes are the wrong size and asks for a return. The system needs to choose a team before drafting a reply. State is the input material: a message here, potentially with relevant records. Choice selects from predefined options, such as returns, billing or shipping. Defining the question and answer space makes the result usable by the workflow. First, how does an ordinary LLM generate an answer?
+This customer wants a return. We write a question: which team should handle it? We supply returns, billing and shipping as the options. That is a Choice. We provide the question and options; Jev evaluates the input and assigns probabilities. We define what it may choose, while the model determines the result.
+
+> Hold this visual: Two questions, two answers; Choice, Score and Noul are available types
+
+Now add: does the customer want a return? We use Noul, which gives the probability of yes. Two questions produce two answers. Choice, Score and Noul below are three available types, not three required outputs. Score rates something against levels we define. We can change the questions, options and question count in the request without retraining the model. Next, how does an ordinary LLM produce an answer?
 
 ---
 
@@ -226,29 +234,29 @@ This eventually produces We can help. Each step depends on the content generated
 
 ---
 
-## 11 · J3｜Jev 与普通 LLM 的输出方式 / How Jev differs from an LLM
+## 11 · J3｜Jev 和 LLM 怎样产生答案 / How Jev differs from an LLM
 
 [打开本页](/session-2#jev/J3)
 
 **中文**
 
-> 留住画面：JSON 答案生成完毕
+> 留住画面：一次请求的 JSON 包含两题的答案
 
-左边给普通 LLM 加上 JSON Schema，也就是规定字段、类型和允许的值。它完全可以一次返回合法 JSON、回答多个问题。约束 decoding 会限制哪些 token 可以出现，但答案仍然逐段生成；这里展示的是可读片段，不是它真实的 token 切分。
+现在给两边相同的两道题。左边的普通 LLM 可以一次回答，也可以用 JSON Schema 规定输出格式。它仍然通过 decoding，一个 token 接一个 token 地生成这份 JSON。这里把文字分成方便阅读的片段，实际 token 切分可能不同。
 
-> 留住画面：两条输出路径并排对照
+> 留住画面：两个独立答案由 API 装进 JSON
 
-右边的 Jev 收窄了输出能力：不续写自由文本，而是回答预先定义的问题。多个问题共用 state，独立判断并可并行处理。Choice 做分类，Score 按标准评分，Noul 返回一个陈述的概率。两边都能把结果交给代码；差别在模型面向什么来训练和输出。这里不做速度比较。从一个错例看训练和校准。
+按 TypeSafe 的公开说明，Jev 不写自由文本，而是并行输出这些判断的概率。两道题都看同一份 state，各自判断，不必等上一题答完。API 再把结果装成 JSON 交给程序。所以差别在模型怎样产生答案；接口返回的格式可以一样。图里的数字是教学设定，动画不代表实际速度。这种判断能力怎么训练出来？
 
 **English**
 
-> Hold this visual: The JSON answer is complete
+> Hold this visual: One JSON response contains both answers
 
-On the left, an ordinary LLM uses JSON Schema to specify fields, types and allowed values. It can return valid JSON and answer several questions in one call. Constrained decoding limits which tokens may appear, while the response is still generated sequentially. These are readable display fragments, not an actual tokenizer trace.
+Both models get the same two questions. An ordinary LLM can answer them in one request and use JSON Schema to constrain the format. It still decodes the JSON token by token. We display readable chunks here; they are not actual tokenizer boundaries.
 
-> Hold this visual: Both output paths remain side by side
+> Hold this visual: The API packages the two independent answers as JSON
 
-Jev narrows its output capability: it answers predefined questions instead of continuing free-form text. Questions share state, are evaluated independently and can run in parallel. Choice classifies, Score uses a scoring standard, and Noul returns a proposition’s probability. Both routes give results to code; their training and output design differ. This animation is not a speed comparison. A mistaken example will introduce training and calibration.
+According to TypeSafe, Jev outputs these probabilities in parallel instead of generating free-form text. Both questions use the same state and are evaluated independently. The API packages the answers as JSON. The delivery format can be the same while the model’s output process differs. These values are illustrative, and the animation is not a timing measurement. How is this decision capability trained?
 
 ---
 
@@ -258,65 +266,57 @@ Jev narrows its output capability: it answers predefined questions instead of co
 
 **中文**
 
-> 留住画面：预测 returns 0.95，已知答案是 billing
+> 留住画面：预测退货 95%，已知答案是账单
 
-先看这一封：钱扣了两次，但鞋子要留下。模型却选了退货，给出 0.95；对照右边的已知答案，应该交给账单部门。训练时，我们可以把这种差异作为反馈：不只看选对没有，还要看它给出的概率。一次错例说明这次需要反馈，不能单凭它评价整个模型的校准程度。
+前面是在使用模型，这里用简化例子看模型训练的目标。邮件说“钱扣了两次，鞋子我要留着”，模型却选退货，还给了 95% 的概率。对答案，应该是账单部门。训练时，这类错误会成为反馈：既要学会选对，也要学会给出合适的概率。
 
-> 留住画面：同一封邮件的预测从 returns 变为 billing
+> 留住画面：同一封邮件的判断变为 billing
 
-现在让许多带答案的例子一起提供反馈，反复更新 weights，也就是模型内部影响判断的参数。再看同一封邮件，预测条从退货移向账单，这样就能看见训练改变了什么。TypeSafe 把面向决策和校准概率的后训练称为 RLCD。画面里的 v1、v2 和数值只是示意，不代表看过这一封就必定这样变化；公开资料也没有披露具体更新算法。学会旧题还不够，接下来换新题。
+让模型练很多有答案的例子，根据反馈反复调整 weights，也就是影响判断的内部参数。再看同一封邮件，它这次偏向账单。TypeSafe 把面向决策和概率校准的后训练叫 RLCD。这里用一个变化说明训练在做什么，具体算法没有公开；真正有没有学会，要用新题检查。
 
-> 留住画面：新邮件预测 billing 0.80，答案暂不揭晓
+> 留住画面：80% 的含义：长期接近八成正确
 
-这次换成订单 2062：付款被处理了两遍。它没参与刚才的训练，措辞也不同。现在 weights 固定，只让模型作答。它给账单部门约 0.80 的概率。先把答案藏起来，是为了区分“靠训练记住旧题”和“面对新材料作判断”。
-
-> 留住画面：新邮件选对；十个教学结果帮助解释 calibration
-
-这封的答案确实是账单，但一封答对还不够。Calibration，校准，要看很多次：模型报出约八成概率的那些判断，长期是否也约八成正确。下面用十个结果里的八对两错帮助理解。这不是 Jev 的实测成绩，也不保证每十次都恰好八对。训练目标是一回事，换到自己的任务上是否做到了，还得这样检验。那么，普通 LLM 直接返回同样的 JSON，不也可以吗？
+换一封没参与训练的邮件：付款被处理了两遍。现在 weights 固定，只让模型作答。它选账单，给出 80% 的概率。Calibration，校准，就是检查它说八成把握的时候，长期是不是也大约八成正确。下面十个格子只是帮助理解；要判断是否校准，得看大量新题，不能只看这一封。知道了输出和训练，再看为什么值得考虑它。
 
 **English**
 
-> Hold this visual: Prediction: returns at 0.95; known answer: billing
+> Hold this visual: Prediction: returns at 95%; known answer: billing
 
-Start with one email: the customer was charged twice but is keeping the shoes. The model picks returns with probability 0.95; the known answer on the right is billing. During training, this mismatch can provide feedback on both the decision and its probability. One mistake provides feedback for this example; it does not establish the model’s overall calibration.
+We have been using the model; now we illustrate training. The email says the customer was charged twice and is keeping the shoes. The model chooses returns with 95% probability, but the known answer is billing. Mistakes like this provide feedback for learning both better choices and appropriate probabilities.
 
-> Hold this visual: The same email now receives billing instead of returns
+> Hold this visual: The same email is now assigned to billing
 
-Now many labeled examples provide feedback for repeated updates to weights, the internal parameters that shape predictions. Revisit the same email: the bars move from returns toward billing, making the illustrated change visible. TypeSafe calls its post-training for decisions and calibrated probabilities RLCD. The versions and numbers are illustrative, not a guaranteed change after seeing one email; the detailed update algorithm is not disclosed here. Doing better on an old case is not enough, so test new ones next.
+Practice on many examples with known answers, using feedback to adjust the weights: the internal parameters that shape decisions. Revisit the same email; it now favors billing. TypeSafe calls its post-training for decisions and calibrated probabilities RLCD. This change illustrates the principle, not its undisclosed algorithm. New cases are needed to check what was learned.
 
-> Hold this visual: The new email receives billing at 0.80; its answer is hidden
+> Hold this visual: 80% should mean roughly eight in ten over many cases
 
-This time, payment for order 2062 went through twice. This differently worded email did not contribute to training. Keep the weights fixed and ask for a prediction: billing at about 0.80. Hiding the answer distinguishes revisiting a training example from making a decision on new material.
-
-> Hold this visual: This email is correct; ten illustrative outcomes explain calibration
-
-The correct answer is billing, but one correct prediction is not enough. Calibration requires many cases: among predictions near eighty percent, are roughly eighty percent correct over time? Eight successes out of ten below illustrate the idea. They are not measured Jev results, and every group of ten need not contain exactly eight successes. A training objective is one thing; checking that it holds on your tasks is another. Could an ordinary LLM simply return the same JSON?
+Try an email not used in training: a payment went through twice. Keep the weights fixed and ask for a prediction. It selects billing with 80% probability. Calibration asks whether predictions near 80% are correct about 80% of the time across many cases. The ten squares illustrate the idea; this one email cannot establish calibration. With output and training in view, why consider using Jev?
 
 ---
 
-## 13 · J8｜为什么考虑 Jev，而不只用 LLM JSON / Why use Jev instead of LLM JSON?
+## 13 · J8｜为什么 Jev 可能更快 / Why use Jev?
 
 [打开本页](/session-2#jev/J8)
 
 **中文**
 
-> 留住画面：同样的合法 JSON，继续看训练和概率质量
+> 留住画面：减少顺序生成的工作；输入仍需读取
 
-可以。这里故意让两边返回一模一样的 JSON，连数字都一样；它们是教学数值，没有现场调用模型。给 LLM 加 JSON Schema，完全可以解决字段和格式问题。但写出 0.61，不等于这个概率已经校准。Jev 的区别是专门面向这类有限判断和概率来训练、提供输出。普通 LLM 也能做额外训练或校准；Jev 也必须实测。选择它的理由不能只是“会返回 JSON”。
+两边都只调用一次，也都要读输入。差别在中间：LLM 要一轮轮生成后面的 token；Jev 专门输出判断概率，可以并行给出，不必把答案作为文字逐步生成。减少的是这段顺序输出的工作，所以有机会降低延迟。它也为这种任务专门训练和设计。具体快多少，还受输入长度、对比模型、硬件和网络影响，不能拿动画的时长当成绩。
 
-> 留住画面：三封邮件完成分流，再比较是否值得换模型
+> 留住画面：邮件已分到退货队列，写回复仍可用 LLM
 
-把工作放大到每天反复分流工单：问的总是“交给哪个部门”，代码真正需要的是选项和可用的概率。这里按教学规则，概率达到 0.80 才直接分流，混合诉求交给人复核；用普通 LLM 也能实现。考虑 Jev，是因为这项工作不需要自由续写，而它把训练和输出集中在判断上，值得检查是否能在同样质量下减少延迟和成本。偶尔分类，或本来就需要一封完整回复，LLM JSON 可能已经够用。最终拿同一批新工单比较判断错误、校准、延迟和成本；演示不替我们宣布谁赢。再看 AI 能否帮助改进下一代 AI。
+例如每来一封工单，都先判断该交给谁。这样的判断量大、范围清楚，值得试 Jev：让它给判断，代码分流，需要写回复再用 LLM。要用到概率时，也要检查它是否校准。如果只是偶尔分类，或者一次就要拿到完整回复，现有的 LLM JSON 可能已经够用。选型时用同一批工单，先看错误和概率是否可用，再比延迟和成本。最后看 AI 能否帮助改进下一代 AI。
 
 **English**
 
-> Hold this visual: Identical valid JSON; examine training and probability quality
+> Hold this visual: Less sequential output work; the input still needs processing
 
-Yes. Both sides deliberately show identical JSON, including the numbers. These are teaching values, with no live model calls. JSON Schema can constrain an LLM’s fields and format, but writing 0.61 does not establish calibration. Jev’s distinction is specialized training and outputs for bounded decisions and probabilities. Ordinary LLMs can also receive additional training or calibration, and Jev still requires evaluation. Returning JSON alone is not a reason to choose it.
+Both routes make one request and read the input. The middle differs: an LLM generates successive tokens, while Jev outputs decision probabilities in parallel without generating the answer as text. Reducing sequential output work can lower latency; its training and design also focus on these tasks. The gain still depends on input length, the comparison model, hardware and network. Animation duration is not a benchmark.
 
-> Hold this visual: Three tickets are routed; compare whether changing models is worthwhile
+> Hold this visual: The ticket is assigned to returns; an LLM can write the reply
 
-Scale this to routing tickets repeatedly every day. The question stays the same: which team? Code needs a choice and usable probabilities. Under our illustrative rule, a top probability of at least 0.80 routes directly; the mixed request goes to human review. An ordinary LLM can do this too. Jev is worth considering because this job does not need free-form generation, and its training and outputs focus on decisions: test whether that reduces latency or cost at the same required quality. For occasional classification, or a workflow already needing a complete written reply, LLM JSON may suffice. Compare errors, calibration, latency and cost on the same new tickets; this demonstration does not declare a winner. Now, can AI help improve the next AI?
+Every incoming ticket needs a routing decision. Frequent, focused judgments make Jev worth testing: let it decide, let code route, and use an LLM when a written reply is needed. If probabilities drive the workflow, check their calibration. For occasional classification or a complete reply in one call, an existing LLM with JSON may suffice. Compare errors and probability quality first, then latency and cost on the same tickets. Finally, can AI help improve the next AI?
 
 ---
 
