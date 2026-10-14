@@ -53,24 +53,7 @@ export function JevTrainingScene() {
 
 export function JevFitScene() {
   const step = useGuided()?.frame.decision?.step ?? 0;
-  const workflow = step >= 4;
   return <div className={s.fit} data-learning="jev-fit" data-step={step}>
-    {!workflow ? <>
-      <div className={s.sharedInput}><span className={s.label}>WHY JEV CAN BE FASTER</span><strong>Less sequential work when producing the answer.</strong></div>
-      <div className={s.workDiagram} aria-label="Output work comparison, not a latency benchmark">
-        <div className={s.workLane}>
-          <strong>LLM</strong><div className={s.readInput}>Read<br />input</div><b className={s.arrow}>→</b>
-          <div className={s.outputWork} data-visible={step >= 1}><span>SEQUENTIAL DECODING</span><div className={s.tokenChain}><b>token</b><i>→</i><b>token</b><i>→</i><b>…</b></div><em>Each next token uses the previous output.</em></div>
-          <b className={s.arrow}>→</b><div className={s.delivery}>JSON</div>
-        </div>
-        <div className={s.workLane}>
-          <strong>Jev</strong><div className={s.readInput}>Read<br />input</div><b className={s.arrow}>→</b>
-          <div className={`${s.outputWork} ${s.parallelWork}`} data-visible={step >= 2}><span>PARALLEL DECISIONS</span><div className={s.probabilityBlocks}><b>Team probabilities</b><b>Return probability</b></div><em>Answers do not wait for one another.</em></div>
-          <b className={s.arrow}>→</b><div className={s.delivery}>JSON</div>
-        </div>
-      </div>
-      <div className={s.speedConclusion} data-visible={step >= 3}><strong>The output work changes. Reading the input still takes time.</strong><span>Mechanism diagram · not a timed race</span></div>
-    </> : <>
       <div className={s.sharedInput}><span className={s.label}>A DECISION FOR EVERY INCOMING TICKET</span><strong>“The shoes are too small. Please help me return them.”</strong></div>
       <div className={s.workflow}>
         <div className={s.ticketStack} aria-label="Incoming support tickets"><div /><div /><div><span>NEW TICKET</span><strong>Wrong size.<br />Wants a return.</strong></div></div>
@@ -80,7 +63,6 @@ export function JevFitScene() {
         <div className={s.destination} data-active={step >= 6}><span>CODE / ROUTE</span><strong>Returns queue</strong><p>{step >= 6 ? 'Ticket assigned ✓' : 'Await decision'}</p></div>
       </div>
       <div className={s.replyStep} data-visible={step >= 6}><span>NEED A WRITTEN REPLY?</span><strong>LLM → “We can help you return the shoes.”</strong></div>
-      <p className={s.fitConclusion}>Frequent decisions: consider Jev. A complete written answer: use an LLM.</p>
-    </>}
+      <p className={s.fitConclusion}>Compare on your tickets: errors → latency → cost.</p>
   </div>;
 }

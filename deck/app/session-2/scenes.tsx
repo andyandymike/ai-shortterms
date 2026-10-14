@@ -61,19 +61,6 @@ function ApiRouteScene() {
   </div>;
 }
 
-function SuccessorScene() {
-  return <div className={c.successorScene}>
-    <div className={c.successorChain}>
-      <div className={c.researcher}><span>CURRENT AI</span><div className={c.recipe}><b>AI v1</b><i /><i /><i /><strong>Does the research</strong></div></div>
-      <div className={c.buildLink}><span>Help develop</span><b aria-hidden="true">→</b><small>Train + test</small></div>
-      <div className={`${c.researcher} ${c.successor}`}><span>THE NEW AI</span><div className={c.recipe}><b>AI v2 ?</b><i /><i /><i /><strong>Better at AI research?</strong></div></div>
-      <div className={c.buildLink}><span>Take over?</span><b aria-hidden="true">⇢</b><small>Improve again</small></div>
-      <div className={c.nextResearcher}><span>NEXT CYCLE</span><strong>v3 ?</strong><span>Develop the next AI</span></div>
-    </div>
-    <div className={c.inheritLine}><span aria-hidden="true">↶</span><strong>The AI doing the improving must improve too.</strong></div>
-  </div>;
-}
-
 function useSelection() {
   const guided = useGuided();
   return Math.min(3, Math.max(0, guided?.frame.selection ?? 0));
@@ -109,7 +96,6 @@ function ResearchBottleneckScene() {
 }
 
 function RsiScene({ id }: { id:string }) {
-  if (id === 'R1') return <SuccessorScene />;
   if (id === 'R3') return <ResearchBottleneckScene />;
   if (id === 'R4') return <SortingLab id={id} />;
   if (id === 'R5') return <AlphaEvolveStory />;

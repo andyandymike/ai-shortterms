@@ -1,18 +1,18 @@
 # Talk 02 speaker notes | From Answers to Actions
 
-Computer Use → Jev → RSI. The script follows **19 pages**, with paragraphs matched to the visuals within each page.
+Computer Use → Jev → RSI. **18 pages**, with visual numbers matching Presenter.
 
-Open **Presenter ↗** in the audience footer. Put the audience view on the projector and keep the presenter window on your screen. Presenter shows the narration for the current visual and what the next click will reveal.
-
-**Animations wait for you to press play.** The main button first enters the next visual or page; press the same button, now labeled “Play animation,” to start. After the short transition, the visual holds for as long as you need. Finish speaking before continuing. The source film also waits for play. Transition progress is not a limit on speaking time.
-
-Each chapter holds on a dedicated term opening; continue to the example when you finish speaking. A direct link or refresh on an animated page prepares its visual and waits for you to start. The short blockquotes identify the visual to hold; they are not spoken. Each paragraph belongs to that visual. Back and replay also apply to the current visual. The Blender film runs for about thirty seconds, then holds so you can explain its workflow.
+**Play → automatic hold → speak this paragraph → continue.** Animations and the film wait for play; held visuals have no speaking countdown. Blockquotes identify the picture and are not spoken. Each page ends with a separate transition. [Controls and contents](index.md).
 
 ## 01 · O1｜Talk 02 overview
 
 [Open this page](/session-2#opening/O1)
 
-Today we’ll connect Computer Use, Jev and RSI through three questions. How can AI finish a task inside software? When a workflow needs a decision, why consider a specialized model? And can AI help build the next AI? Each chapter follows a concrete example. The small experiments illustrate the mechanism; they are not live calls to these models. Let’s start with Computer Use.
+> Visual 1 / 1 · The opening map
+
+Today we’ll follow three ideas: how Computer Use operates software, how Jev makes decisions for a workflow, and how improvement could repeat in RSI. A returns workflow connects the first two chapters. The interactive diagrams are teaching examples, not live model calls; the Blender section includes a real published render.
+
+**Transition｜** Start with Computer Use.
 
 ---
 
@@ -20,7 +20,11 @@ Today we’ll connect Computer Use, Jev and RSI through three questions. How can
 
 [Open this page](/session-2#computer-use/C0)
 
-Computer Use lets AI act through a software interface. The AI observes the screen and decides what to do; tools carry out clicks or typing. Let’s see how it completes a customer return.
+> Visual 1 / 1 · Computer Use and its plain-language meaning fill a dedicated page.
+
+Computer Use lets AI act through a software interface: observe the screen, choose the next action, and use tools to click or type.
+
+**Transition｜** Why work through the interface?
 
 ---
 
@@ -28,7 +32,11 @@ Computer Use lets AI act through a software interface. The AI observes the scree
 
 [Open this page](/session-2#computer-use/C1)
 
-The customer wants to return order 1048. Instructions about where to click are not enough; the app needs an actual return record. An API provides a direct interface for programs, so an available API can create the return directly. When work requires the screen, the system observes and operates the interface. A workflow can combine both routes. Let’s follow the interface route to completion.
+> Visual 1 / 1 · Two routes to the same goal
+
+The goal is to create a return for order 1048. The upper route uses an API, an interface programs can call directly. The lower route handles work without a suitable API by filling and submitting the form through the interface. Computer Use supplies that route, and a task can combine both.
+
+**Transition｜** Follow the interface route through the task.
 
 ---
 
@@ -36,17 +44,19 @@ The customer wants to return order 1048. Instructions about where to click are n
 
 [Open this page](/session-2#computer-use/C4)
 
-> Hold this visual: Locate the field
+> Visual 1 / 3 · Locate the field
 
-First, the screenshot joins the context: the goal, screen and action history available for this decision. UI grounding connects “the order-number field” to a position on screen.
+The context on the right contains the goal, screenshot and action history available to the model. The order-number field is now marked on the left. Connecting what we want to a position on screen is called UI grounding.
 
-> Hold this visual: The completed form
+> Visual 2 / 3 · The completed form
 
-A tool call asks a tool to click or type. Actions change the app, and fresh observations inform the next step.
+The form is now filled. Through tool calls, the model asks tools to enter the order number and choose a reason. A fresh screenshot returns to context. This confirms the fields, but the return has not been created yet.
 
-> Hold this visual: A fresh screenshot confirms the return
+> Visual 3 / 3 · A fresh screenshot confirms the return
 
-Finally, submission produces a receipt, and a new screenshot supplies evidence of completion. The agent connects goals, observations, tools and feedback in this loop. Will the old plan work if the interface changes?
+After submission, the app produced receipt R-204, and a fresh screenshot brought it back. Now the goal is confirmed. The agent connects observation, decisions, actions and checks into a loop.
+
+**Transition｜** What if the screen changes after the screenshot?
 
 ---
 
@@ -54,17 +64,19 @@ Finally, submission produces a receipt, and a new screenshot supplies evidence o
 
 [Open this page](/session-2#computer-use/C5)
 
-> Hold this visual: The stale click fails
+> Visual 1 / 3 · The stale click fails
 
-Now a popup covers the form, but context still contains the old screenshot. The model requested a click from that old view, and the tool executed it. It hit the overlay, so no return was created. Checking only whether the mouse clicked would give the wrong impression. Pause here: should it click again, or take another look?
+This time a popup covers the form, while context still holds the old screenshot. The tool clicked the old position, but no return was created. Executing a click and completing the task are different outcomes.
 
-> Hold this visual: The fresh screenshot shows the popup and locates Close
+> Visual 2 / 3 · The fresh screenshot shows the popup and locates Close
 
-The fresh screenshot brings the popup into context. Now the next steps have a basis: dismiss it, submit again and check the receipt.
+The fresh screenshot has brought the popup into context, and its Close button is located. The model can now choose an action based on the actual obstruction.
 
-> Hold this visual: A fresh screenshot confirms success
+> Visual 3 / 3 · A fresh screenshot confirms success
 
-The plan changes with the observed situation instead of following the old action list blindly. This is a correction during use. We can also ask an earlier question: how did the model learn to read interfaces and choose actions? Let’s see how training develops this capability.
+The agent dismissed the popup, checked the form, submitted again and verified the receipt. Recovery came from fresh observations and revised actions, without retraining the model during the task.
+
+**Transition｜** Where did the ability to act come from? Look at training.
 
 ---
 
@@ -72,17 +84,19 @@ The plan changes with the observed situation instead of following the old action
 
 [Open this page](/session-2#computer-use/C7)
 
-> Hold this visual: Practice outcomes become feedback
+> Visual 1 / 3 · The click failed to create a return; the outcome becomes training feedback
 
-Training gives the model many tasks: finding controls, entering information and completing workflows. Their outcomes provide feedback.
+Start with one practice attempt: the click ran, but no return was created. Training feedback must reflect the task outcome, rather than a click alone.
 
-> Hold this visual: Training produces an updated model
+> Visual 2 / 3 · Training produces an updated model
 
-The training process uses this feedback to adjust weights, the model’s learned parameters. These changes affect future tasks. OpenAI’s CUA, for example, uses reinforcement learning to learn through attempts and feedback. This illustration condenses many practice rounds.
+Across many practice tasks, feedback guides updates to the weights: the model’s learned parameters. OpenAI’s computer-using agent uses reinforcement learning. This diagram condenses many rounds of practice and updates.
 
-> Hold this visual: New screenshots, fixed weights
+> Visual 3 / 3 · New screenshots, fixed weights
 
-Now move the button. The model reads a fresh screenshot, updates context and locates the target again. Its learned weights stay fixed. Once you’ve learned to drive, a new junction may change your route without requiring another driving course. Training establishes capability; use applies that capability to current information. Recovering from the popup belonged to the latter. Now let’s see a real creative task in Blender.
+Now we are in inference: using the trained model. The button moved, so the new screenshot changes context. The weights in the middle stay fixed while the model locates the button again. Recovering from the popup belongs to this stage too.
+
+**Transition｜** Now see how it fits into a Blender workflow.
 
 ---
 
@@ -90,9 +104,11 @@ Now move the button. The model reads a fresh screenshot, updates context and loc
 
 [Open this page](/session-2#computer-use/C6)
 
-> Hold this visual: Source still and the bpy → render → Computer Use workflow
+> Visual 1 / 1 · Source still and the bpy → render → Computer Use workflow
 
-This approximately thirty-second film is a real Blender render from the published case. Follow the workflow alongside it: bpy, Blender’s Python API, builds an editable scene. Rendering then produces images from the objects, camera and lighting. Computer Use opens Blender to inspect the result. The film shows the creative output, not a recording of mouse actions. Direct programmatic control and visual inspection contribute to the same task. Alongside actions, workflows need decisions.
+This is Thomas Ricouard’s published Blender render: the finished result, not a mouse-action recording. On the right, bpy is Blender’s Python API for building an editable scene. Rendering turns the scene into images, and Computer Use opens Blender to inspect it. Programmatic access and interface actions work together.
+
+**Transition｜** A workflow also needs decisions: which team should receive an email?
 
 ---
 
@@ -100,7 +116,11 @@ This approximately thirty-second film is a real Blender render from the publishe
 
 [Open this page](/session-2#jev/J0)
 
-Jev is TypeSafe’s model in the class it calls System One. It is designed for focused decisions, such as choosing a team for an email or rating a risk. Let’s start with how we ask it a question. Start with a return request.
+> Visual 1 / 1 · Jev: a model for focused decisions
+
+Jev is TypeSafe’s System One model for decisions with a defined answer space. For example, which team should receive an email? Let’s see how to ask it.
+
+**Transition｜** Start with a return email.
 
 ---
 
@@ -108,13 +128,15 @@ Jev is TypeSafe’s model in the class it calls System One. It is designed for f
 
 [Open this page](/session-2#jev/J1)
 
-> Hold this visual: One question, one answer; we chose the three team options
+> Visual 1 / 2 · One question, one answer; we chose the three team options
 
-This customer wants a return. We write a question: which team should handle it? We supply returns, billing and shipping as the options. That is a Choice. We provide the question and options; Jev evaluates the input and assigns probabilities. We define what it may choose, while the model determines the result.
+The return email is the input, called state here. We define the question, “Which team?”, and supply returns, billing and shipping as options. This question type is Choice. Jev assigns probabilities; we define the options, and the model makes the judgment.
 
-> Hold this visual: Two questions, two answers; Choice, Score and Noul are available types
+> Visual 2 / 2 · Two questions, two answers; Choice, Score and Noul are available types
 
-Now add: does the customer want a return? We use Noul, which gives the probability of yes. Two questions produce two answers. Choice, Score and Noul below are three available types, not three required outputs. Score rates something against levels we define. We can change the questions, options and question count in the request without retraining the model. Next, how does an ordinary LLM produce an answer?
+Add “Does the customer want a return?” Noul gives the probability of yes, so two questions now have two answers. Choice, Score and Noul are question types, not three mandatory outputs; Score uses a rating scale we define. Questions and their number can change with each request without retraining for each new question.
+
+**Transition｜** An ordinary LLM can answer too. First, see how it generates text.
 
 ---
 
@@ -122,13 +144,11 @@ Now add: does the customer want a return? We use Noul, which gives the probabili
 
 [Open this page](/session-2#jev/J2)
 
-> Hold this visual: We has joined context; the next candidates are visible
+> Visual 1 / 1 · We has joined context; the next candidates are visible
 
-Decoding selects the next token and appends it to what is already there. A token can be a word, character or piece of text. The demo chooses We and adds it to context, then predicts what can follow.
+When an ordinary LLM writes text, it selects the next token step by step: decoding. A token can be a word, character or text fragment. We has been added to the context on the left; the next candidates are can and will. Each new token informs the next prediction, and repeating the process produces text.
 
-> Hold this visual: We can help.
-
-This eventually produces We can help. Each step depends on the content generated so far. This short sentence makes the ordinary LLM’s text-generation process visible. Let’s give both models the same message.
+**Transition｜** Now compare the LLM and Jev on the same two questions.
 
 ---
 
@@ -136,13 +156,15 @@ This eventually produces We can help. Each step depends on the content generated
 
 [Open this page](/session-2#jev/J3)
 
-> Hold this visual: One JSON response contains both answers
+> Visual 1 / 2 · One JSON response contains both answers
 
-Both models get the same two questions. An ordinary LLM can answer them in one request and use JSON Schema to constrain the format. It still decodes the JSON token by token. We display readable chunks here; they are not actual tokenizer boundaries.
+Return to the same email and two questions. The LLM can answer both in one request, with JSON Schema constraining fields and types. It still decodes the JSON sequentially. We use larger readable chunks for the display.
 
-> Hold this visual: The API packages the two independent answers as JSON
+> Visual 2 / 2 · The API packages the two independent answers as JSON
 
-According to TypeSafe, Jev outputs these probabilities in parallel instead of generating free-form text. Both questions use the same state and are evaluated independently. The API packages the answers as JSON. The delivery format can be the same while the model’s output process differs. These values are illustrative, and the animation is not a timing measurement. How is this decision capability trained?
+According to TypeSafe, Jev produces each question’s probabilities in parallel from the same state; the API packages them as JSON. Avoiding sequential text output can reduce latency, but the actual gain needs measurement. Both deliver JSON through different output processes.
+
+**Transition｜** The output process differs; the decisions still need training.
 
 ---
 
@@ -150,31 +172,31 @@ According to TypeSafe, Jev outputs these probabilities in parallel instead of ge
 
 [Open this page](/session-2#jev/J5)
 
-> Hold this visual: Prediction: returns at 95%; known answer: billing
+> Visual 1 / 3 · Prediction: returns at 95%; known answer: billing
 
-We have been using the model; now we illustrate training. The email says the customer was charged twice and is keeping the shoes. The model chooses returns with 95% probability, but the known answer is billing. Mistakes like this provide feedback for learning both better choices and appropriate probabilities.
+Now the email reports a duplicate charge and says the customer is keeping the shoes. The known answer is billing, but our illustrative model assigns 95% to returns. Training must address both the wrong choice and the misplaced confidence.
 
-> Hold this visual: The same email is now assigned to billing
+> Visual 2 / 3 · The same email is now assigned to billing
 
-Practice on many examples with known answers, using feedback to adjust the weights: the internal parameters that shape decisions. Revisit the same email; it now favors billing. TypeSafe calls its post-training for decisions and calibrated probabilities RLCD. This change illustrates the principle, not its undisclosed algorithm. New cases are needed to check what was learned.
+As in the previous chapter, feedback from many examples adjusts the weights. TypeSafe calls this further training RLCD, aiming for better decisions and better-calibrated probabilities. The same email now favors billing; new cases are still needed to test learning.
 
-> Hold this visual: 80% should mean roughly eight in ten over many cases
+> Visual 3 / 3 · 80% should mean roughly eight in ten over many cases
 
-Try an email not used in training: a payment went through twice. Keep the weights fixed and ask for a prediction. It selects billing with 80% probability. Calibration asks whether predictions near 80% are correct about 80% of the time across many cases. The ten squares illustrate the idea; this one email cannot establish calibration. With output and training in view, why consider using Jev?
+The new email above was not used in training. With weights fixed, the model gives billing 80%. Calibration checks many such predictions: are those near 80% correct about 80% of the time? The ten squares illustrate that idea; one email cannot establish calibration.
+
+**Transition｜** Now put the decision back into a workflow.
 
 ---
 
-## 13 · J8｜Why use Jev?
+## 13 · J8｜When to use Jev
 
 [Open this page](/session-2#jev/J8)
 
-> Hold this visual: Less sequential output work; the input still needs processing
+> Visual 1 / 1 · The ticket is assigned to returns; an LLM can write the reply
 
-Both routes make one request and read the input. The middle differs: an LLM generates successive tokens, while Jev outputs decision probabilities in parallel without generating the answer as text. Reducing sequential output work can lower latency; its training and design also focus on these tasks. The gain still depends on input length, the comparison model, hardware and network. Animation duration is not a benchmark.
+Back to the original return email: Jev makes the decision, code routes the ticket, and an LLM can write a reply. Frequent, focused decisions are a useful workload for comparing the two options: errors first, then latency and cost. For occasional classification or a complete reply in one call, the existing LLM with JSON may already suffice.
 
-> Hold this visual: The ticket is assigned to returns; an LLM can write the reply
-
-Every incoming ticket needs a routing decision. Frequent, focused judgments make Jev worth testing: let it decide, let code route, and use an LLM when a written reply is needed. If probabilities drive the workflow, check their calibration. For occasional classification or a complete reply in one call, an existing LLM with JSON may suffice. Compare errors and probability quality first, then latency and cost on the same tickets. Finally, can AI help improve the next AI?
+**Transition｜** Now turn to development: can AI help improve the next AI?
 
 ---
 
@@ -182,70 +204,76 @@ Every incoming ticket needs a routing decision. Frequent, focused judgments make
 
 [Open this page](/session-2#rsi/R0)
 
-RSI means Recursive Self-Improvement. Can AI help build a more capable successor that becomes better at driving another improvement cycle? The key is whether improvement ability can carry forward.
+> Visual 1 / 1 · RSI, Recursive Self-Improvement and the successor question fill a dedicated page.
+
+RSI means Recursive Self-Improvement: AI helps develop a new AI that is better at research, and that new AI drives another round of improvement. Start with one small improvement loop.
+
+**Transition｜** Use a sorting program to see which changes deserve to stay.
 
 ---
 
-## 15 · R1｜What recursive improvement means
-
-[Open this page](/session-2#rsi/R1)
-
-Separate the AI doing the research from the program it is changing. Suppose AI v1 helps develop v2, which is better at AI development, and v2 then helps develop v3. That is the recursive idea. Better research ability needs evidence. Revising a program several times does not mean the AI doing the work has itself improved. First, see how to check one improvement. Then follow it back into AI development.
-
----
-
-## 16 · R4｜How an improvement loop works
+## 15 · R4｜How an improvement loop works
 
 [Open this page](/session-2#rsi/R4)
 
-> Hold this visual: A works; keep it for now
+> Visual 1 / 3 · A works; keep it for now
 
-Start with method A. It sorts correctly, but uses a lot of operations. We want less work without losing any numbers or getting the order wrong. A, B and C are versions of a sorting program, not generations of AI. These prewritten programs really run locally.
+A is the original sorting program, and it works. We count comparisons and array writes, adding them to measure work in this example. We want the same correct result with less work. A, B and C are prewritten programs, and the animation follows their execution.
 
-> Hold this visual: B leaves the output out of order; keep using A
+> Visual 2 / 3 · B leaves the output out of order; keep using A
 
-First attempt: B makes fewer passes to save work. It does use fewer operations, but the red numbers are still out of order. B cannot replace A. The program marked IN USE on the right is still A.
+First, try B with just one pass. It uses less work, but the red numbers are still out of order. Reject B; IN USE on the right remains A.
 
-> Hold this visual: C passes the same suite with less work and replaces A
+> Visual 3 / 3 · C passes the same suite with less work and replaces A
 
-After B fails, try another sorting method, C. It passes the same six checks with less work than A, so C replaces A as the program in use. This is an improvement loop: try a change, check it, and keep useful improvements. The sorting program improved; the AI doing the research did not thereby upgrade. This alone is not full RSI. The six checks establish results for this suite only. Google uses this kind of loop on code used to train AI instead of sorting code.
+After B fails, try C. It passes the same six checks with less total work, so it replaces A. This loop improved a sorting program, not the AI doing the research. By itself, it is not RSI.
+
+**Transition｜** Google applies a similar loop to code used in AI training.
 
 ---
 
-## 17 · R5｜How AlphaEvolve improves AI training
+## 16 · R5｜How AlphaEvolve improves AI training
 
 [Open this page](/session-2#rsi/R5)
 
-> Hold this visual: The proposed kernel change passes the checks
+> Visual 1 / 2 · The proposed kernel change passes the checks
 
-Replace the sorting program with a kernel: a small compute routine, such as matrix multiplication repeated during AI training. AlphaEvolve uses Gemini to propose changes, then evaluators check correctness and speed. The idea resembles our A, B, C example: propose a change, test it, and retain useful improvements.
+Replace the sorting program with a kernel used in AI training: a small repeated computation, such as matrix multiplication. AlphaEvolve uses Gemini to propose changes, then evaluators check correctness and speed. K has now passed those checks.
 
-> Hold this visual: The improved K enters Gemini training; the reported savings appear
+> Visual 2 / 2 · The improved K enters Gemini training; the reported savings appear
 
-Watch K move into Gemini training. This is the connection: code improved with AI is used to train AI. DeepMind reported a 23% kernel speedup and about 1% less total training time. That makes the case relevant to RSI: the improvement feeds back into how AI is built. It demonstrates training efficiency, not that a new AI became a better researcher or took over the next round. What would make it recursive? The new AI would need to take over the next improvement round.
+The same K has entered Gemini training. DeepMind reported a 23% kernel speedup and about 1% less total training time. The link to RSI is that a tool improved with AI is used to train AI. This establishes a training-efficiency gain, not a better AI researcher.
+
+**Transition｜** The missing step is for the new AI to take over the next improvement round.
 
 ---
 
-## 18 · R6｜How improvement becomes recursive
+## 17 · R6｜How improvement becomes recursive
 
 [Open this page](/session-2#rsi/R6)
 
-> Hold this visual: v2 appears; better research ability remains unproven
+> Visual 1 / 3 · v2 appears; better research ability remains unproven
 
-This is a hypothetical next step, not a result Google has demonstrated. Call the AI doing the research v1. Suppose saved compute is used for more training and helps develop v2. We now have a new AI on the right. More efficient training does not establish better research ability, so v2 still has a question mark.
+The rest is hypothetical. Suppose saved compute funds more training and helps develop v2 on the right. That does not establish that v2 is better at research than v1, so it still has a question mark.
 
-> Hold this visual: v1 and v2: new tasks, the same budget
+> Visual 2 / 3 · v1 and v2: new tasks, the same budget
 
-How would we test that? Give v1 and v2 new kernel-optimization tasks and the same experiment budget. Compare their ability to find correct, useful improvements. We need to know whether v2 can do the next round of research better. No winner is shown here; these are the conditions for the test.
+Give v1 and v2 new kernel-optimization tasks with the same experiment budget. Compare their ability to find correct, useful improvements. This tests their ability to improve the next round; no winner is shown here.
 
-> Hold this visual: v2 replaces v1 and proposes the next improvement; v3? appears on the right
+> Visual 3 / 3 · v2 replaces v1 and proposes the next improvement; v3? appears on the right
 
-Watch the position on the left. v1 did the research; now v2 takes over. If v2 really is better at this work, it proposes another training improvement that helps develop v3. v3 must still be tested on new tasks. This is the recursive step: the AI produced by one improvement round becomes the improver in the next. Google’s case demonstrates the earlier efficiency gain, not that this whole loop has been completed. All three chapters return to one question: what have we actually verified?
+If evaluation shows that v2 is better at this work, it takes v1’s place on the left and helps develop v3. v3 must be evaluated again. The AI produced by one round becomes the improver in the next: that is the recursive step.
+
+**Transition｜** Return to the three concepts.
 
 ---
 
-## 19 · E1｜Comparing the three concepts
+## 18 · E1｜Comparing the three concepts
 
 [Open this page](/session-2#closing/E1)
 
-Computer Use lets AI act through interfaces; we check whether the application reached the goal. Jev targets defined decisions; we check reliability and suitability in the real workflow. RSI concerns improvement ability passing to a successor and continuing the cycle, which requires independent evidence at each round. For a new AI term, follow the same questions: what does it do, where does its capability come from, and how do we check the result? That’s where we’ll finish today.
+> Visual 1 / 1 · The closing map
+
+Computer Use asks whether the action achieved its goal. Jev asks whether a decision is reliable and worth its cost. RSI asks whether the improved AI can make the next round of research better. All three need evidence, but they need evidence of different things.
+
+**Transition｜** That’s where we’ll leave it today.

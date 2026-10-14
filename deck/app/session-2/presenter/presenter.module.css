@@ -47,6 +47,8 @@
 .next>h3 { font-size:clamp(24px,2.2vw,32px); line-height:1.35; letter-spacing:-.025em; margin:24px 0 16px; font-weight:850; }
 .nextTitle { margin:0 0 18px; font-size:17px; line-height:1.4; color:#56584f; }
 .nextSpeech { font-size:20px; line-height:1.6; margin:0; white-space:pre-line; }
+.nextPreview summary { cursor:pointer; font-size:17px; font-weight:750; padding:8px 0; }
+.nextPreview[open] summary { margin-bottom:12px; }
 .playbackNote { font-size:16px; line-height:1.5; color:#56584f; border-top:1px solid var(--rule); padding-top:16px; margin-top:26px; }
 .footer { display:flex; justify-content:space-between; align-items:center; gap:24px; border-top:2px solid var(--ink); padding-top:21px; }
 .secondaryControls { display:flex; align-items:center; gap:16px; flex-wrap:wrap; }

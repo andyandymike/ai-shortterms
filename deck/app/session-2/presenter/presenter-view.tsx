@@ -38,7 +38,7 @@ function ConnectedPresenter({ session }: { session: string }) {
     consolePanel.current?.scrollTo(0, 0);
     currentPanel.current?.scrollTo(0, 0);
     nextPanel.current?.scrollTo(0, 0);
-  }, [snapshot?.cueId]);
+  }, [snapshot?.cueId, snapshot?.phase]);
 
   useEffect(() => {
     if (typeof BroadcastChannel === 'undefined') {
@@ -81,7 +81,7 @@ function ConnectedPresenter({ session }: { session: string }) {
     const onKey = (event: KeyboardEvent) => {
       if (event.repeat || event.altKey || event.ctrlKey || event.metaKey) return;
       const target = event.target;
-      if (target instanceof HTMLElement && (target.isContentEditable || target.closest('input, textarea, select, video'))) return;
+      if (target instanceof HTMLElement && (target.isContentEditable || target.closest('input, textarea, select, video, summary'))) return;
       if ([' ', 'ArrowRight', 'PageDown', 'n', 'N'].includes(event.key)) {
         event.preventDefault();
         send('continue');
@@ -137,7 +137,7 @@ function ConnectedPresenter({ session }: { session: string }) {
             <span>{snapshot.label}</span>
           </div>
           <p className={styles.speech}>{snapshot.say}</p>
-          {snapshot.transition && <div className={styles.transition}><h3>接下去这样讲</h3><p>{snapshot.transition}</p></div>}
+          {snapshot.transition && <div className={styles.transition}><h3>本页讲完后转场</h3><p>{snapshot.transition}</p></div>}
         </section>
 
         <aside ref={nextPanel} className={styles.next} aria-labelledby="next-cue-title">
@@ -149,7 +149,10 @@ function ConnectedPresenter({ session }: { session: string }) {
             <h3>{snapshot.next.action}</h3>
             <p className={styles.nextTitle}>{snapshot.next.title}</p>
             <p className={styles.nextRange}>{snapshot.next.duration > 0 ? '进入后等待播放；播放后停在：' : '画面：'}{snapshot.next.end}</p>
-            <p className={styles.nextSpeech}>{snapshot.next.say}</p>
+            <details key={`${snapshot.cueId}-${snapshot.phase}`} className={styles.nextPreview}>
+              <summary>预看下一段讲稿</summary>
+              <p className={styles.nextSpeech}>{snapshot.next.say}</p>
+            </details>
           </> : <>
             <h3>演示到这里结束。</h3>
             <p className={styles.nextSpeech}>可以留在这张总结画面，进入交流。</p>

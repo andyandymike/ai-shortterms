@@ -22,7 +22,7 @@ const subscribeSession = (notify: () => void) => {
 function readCue(hash: string) {
   const [chapterId, beatId, cueId, checkpoint] = hash.slice(1).split('/');
   const chapter = chapters.find(item => item.id === chapterId) ?? chapters[0];
-  const mergedBeats: Record<string, string> = { C2:'C4', C3:'C1', J4:'J3', J6:'J8', J7:'J8', R2:'R1', R3:'R1', R7:'R6' };
+  const mergedBeats: Record<string, string> = { C2:'C4', C3:'C1', J4:'J3', J6:'J8', J7:'J8', R1:'R0', R2:'R4', R3:'R4', R7:'R6' };
   const beat = chapter.beats.find(item => item.id === (mergedBeats[beatId] ?? beatId)) ?? chapter.beats[0];
   const exact = cues.findIndex(cue => cue.id === cueId && cue.beat === beat.id);
   const index = exact < 0 ? firstCueForBeat(beat.id) : exact;
@@ -215,7 +215,7 @@ export default function SessionTwo() {
         <div className={s.sourceHeading}><h2 id="sources-title">{chapter.name} / Sources</h2><button onClick={() => setSourcesOpen(false)} aria-label="Close sources">×</button></div>
         <h3>{beat.label}</h3>
         <p>{beat.subtitle} {beat.takeaway}</p>
-        <p>Teaching notes updated 14 October 2026. Interactive examples are teaching simulations unless explicitly labeled as a source example.</p>
+        <p>Teaching notes updated 15 October 2026. Interactive examples are teaching simulations unless explicitly labeled as a source example.</p>
         <h3>About these demonstrations</h3>
         {(demonstrationNotes[chapter.id] ?? []).map(note => <p key={note}>{note}</p>)}
         <h3>Primary sources</h3>

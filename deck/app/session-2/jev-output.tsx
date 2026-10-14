@@ -62,6 +62,6 @@ export function JevOutputScene() {
         <p>The API packages these answers as JSON.</p>
       </section>
     </div>
-    <div className={s.conclusion}><strong>JSON is the delivery format.</strong><span>The model’s output process is different.</span></div>
+    <div className={s.conclusion}><strong>{ready ? 'Less sequential output work.' : 'JSON is the delivery format.'}</strong><span>{ready ? 'Potential latency gains need measurement.' : 'The model’s output process is different.'}</span></div>
   </div>;
 }
