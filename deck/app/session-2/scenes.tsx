@@ -64,14 +64,13 @@ function ApiRouteScene() {
 function SuccessorScene() {
   return <div className={c.successorScene}>
     <div className={c.successorChain}>
-      <div className={c.researcher}><span>AI RESEARCHER A</span><div className={c.recipe}><b>Recipe v1</b><i /><i /><i /><strong>Research ability</strong></div></div>
-      <div className={c.buildLink}><span>Improve the recipe</span><b aria-hidden="true">→</b><small>Build + evaluate</small></div>
-      <div className={`${c.researcher} ${c.successor}`}><span>SUCCESSOR B ?</span><div className={c.recipe}><b>Recipe v2</b><i /><i /><i /><strong>Better research ability?</strong></div></div>
-      <div className={c.buildLink}><span>Use that ability</span><b aria-hidden="true">⇢</b><small>Improve again?</small></div>
-      <div className={c.nextResearcher}><span>NEXT CYCLE</span><strong>C ?</strong><span>Build a better successor</span></div>
+      <div className={c.researcher}><span>CURRENT AI</span><div className={c.recipe}><b>AI v1</b><i /><i /><i /><strong>Does the research</strong></div></div>
+      <div className={c.buildLink}><span>Help develop</span><b aria-hidden="true">→</b><small>Train + test</small></div>
+      <div className={`${c.researcher} ${c.successor}`}><span>THE NEW AI</span><div className={c.recipe}><b>AI v2 ?</b><i /><i /><i /><strong>Better at AI research?</strong></div></div>
+      <div className={c.buildLink}><span>Take over?</span><b aria-hidden="true">⇢</b><small>Improve again</small></div>
+      <div className={c.nextResearcher}><span>NEXT CYCLE</span><strong>v3 ?</strong><span>Develop the next AI</span></div>
     </div>
-    <div className={c.inheritLine}><span aria-hidden="true">↶</span><strong>The ability to improve must carry into the next cycle.</strong></div>
-    <div className={c.improvementScale}><span>Fix an answer <b>one result</b></span><span>Keep a better method <b>reusable change</b></span><span>Improve the improver <b>the recursive question</b></span></div>
+    <div className={c.inheritLine}><span aria-hidden="true">↶</span><strong>The AI doing the improving must improve too.</strong></div>
   </div>;
 }
 

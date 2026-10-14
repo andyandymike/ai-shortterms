@@ -215,7 +215,7 @@ export default function SessionTwo() {
         <div className={s.sourceHeading}><h2 id="sources-title">{chapter.name} / Sources</h2><button onClick={() => setSourcesOpen(false)} aria-label="Close sources">×</button></div>
         <h3>{beat.label}</h3>
         <p>{beat.subtitle} {beat.takeaway}</p>
-        <p>Teaching notes updated 12 October 2026. Interactive examples are teaching simulations unless explicitly labeled as a source example.</p>
+        <p>Teaching notes updated 14 October 2026. Interactive examples are teaching simulations unless explicitly labeled as a source example.</p>
         <h3>About these demonstrations</h3>
         {(demonstrationNotes[chapter.id] ?? []).map(note => <p key={note}>{note}</p>)}
         <h3>Primary sources</h3>

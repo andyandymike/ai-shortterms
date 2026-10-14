@@ -334,111 +334,111 @@ RSI means Recursive Self-Improvement. Can AI help build a more capable successor
 
 ---
 
-## 15 · R1｜递归改进是什么意思 / What recursive improvement means
+## 15 · R1｜什么变好了，才算递归 / What recursive improvement means
 
 [打开本页](/session-2#rsi/R1)
 
 **中文**
 
-研究常常有很多想法，缺的是实现和实验的时间，所以会让 AI 帮忙提出、实现和检查方案。图里的 A 帮助改进出 B，B 通往下一轮的箭头仍然带着问号：它是否真的更擅长研究，能不能把改进能力传下去，都需要验证。让同一个模型改写一次答案，还没有走到这个问题。用一个小实验看看，什么改进值得留下。
+先分清两个东西：做研发的 AI，和它正在修改的程序。如果 AI v1 帮我们开发出更会做 AI 研发的 v2，再由 v2 接着开发 v3，这才是这里说的递归。研究能力有没有提高，要靠实验；改了几版程序，不等于改程序的 AI 自己升级了。先把“怎么检查一次改进”演清楚，再看它怎么回到 AI 身上。
 
 **English**
 
-Research often has more ideas than time for implementation and experiments, motivating AI assistance with proposals, implementation and checks. Here A helps improve B, but the arrow from B into another cycle still has a question mark. Whether B is better at research, and whether that ability carries forward, must be tested. Asking the same model to revise one answer does not establish that. A small experiment will show which changes deserve to stay.
+Separate the AI doing the research from the program it is changing. Suppose AI v1 helps develop v2, which is better at AI development, and v2 then helps develop v3. That is the recursive idea. Better research ability needs evidence. Revising a program several times does not mean the AI doing the work has itself improved. First, see how to check one improvement. Then follow it back into AI development.
 
 ---
 
-## 16 · R4｜如何检验一次改进 / How to test an improvement
+## 16 · R4｜原来的办法 A / How an improvement loop works
 
 [打开本页](/session-2#rsi/R4)
 
 **中文**
 
-> 留住画面：保留已验证的 A
+> 留住画面：A 能做对，先保留 A
 
-任务很简单：把数字从小到大排好，一个也不能丢。事先写好的程序在本地真正运行，方块和计数来自实际操作。A 已排好并通过检查，下面是它用的操作量。
+先看原来的办法 A。它能排对，但用的操作比较多。我们的目标是少做些操作，同时一个数字都不丢、顺序也不能错。这里 A、B、C 是三版排序程序，不是三代 AI；事先写好的程序确实在本地运行。
 
-> 留住画面：B 已运行完，正确性尚未检查
+> 留住画面：B 顺序不对，继续使用 A
 
-再换 B。B 用的操作明显少了。先别急着替换：结果还没有检查。你会根据操作量直接留下 B 吗？
+第一次尝试 B：少排几遍，能不能省点工作？它确实少做了操作，但看红色的数字，顺序还不对。所以 B 不能替换 A，右边“正在使用”的仍然是 A。
 
-> 留住画面：B 没有通过正确性检查
+> 留住画面：C 通过同一组测试，且操作更少；A 被 C 替换
 
-一检查，B 的顺序还不对。少做了操作，却没有完成任务，所以淘汰。
-
-> 留住画面：保留通过测试且操作更少的 C
-
-接着运行 C：它通过六项检查，在同一组测试里也比 A 用更少的操作，这才值得替换。留下的是一个下次还能使用的程序。六项测试支持的是这组结果，不能证明所有输入都正确。这里最重要的是提出候选之后，必须有独立检查。真实研究中的 AlphaEvolve 也使用这条思路。
+B 失败后，再试 C，换一种排序办法。这次它通过同样的六项检查，用的操作也比 A 少，所以把正在使用的程序从 A 换成 C。这展示了改进循环：尝试、检查、留下有用的改动。但到这里，变好的是排序程序，做研发的 AI 并没有因此升级，所以还不能叫完整的 RSI。六项检查也只说明这组测试的结果。Google 的例子沿用这个循环，只是把排序程序换成了训练 AI 用的程序。
 
 **English**
 
-> Hold this visual: Keep verified A
+> Hold this visual: A works; keep it for now
 
-The task is simple: put the numbers in ascending order without losing any. These prewritten programs run locally; the movements and counts come from their actual operations. A has sorted the numbers and passed the checks. Below is the work it used.
+Start with method A. It sorts correctly, but uses a lot of operations. We want less work without losing any numbers or getting the order wrong. A, B and C are versions of a sorting program, not generations of AI. These prewritten programs really run locally.
 
-> Hold this visual: B has finished; correctness is unchecked
+> Hold this visual: B leaves the output out of order; keep using A
 
-Now B uses noticeably less work. Before replacing A, remember that B’s result has not been checked. Would the lower operation count alone persuade you to keep B?
+First attempt: B makes fewer passes to save work. It does use fewer operations, but the red numbers are still out of order. B cannot replace A. The program marked IN USE on the right is still A.
 
-> Hold this visual: B fails the correctness check
+> Hold this visual: C passes the same suite with less work and replaces A
 
-The check reveals that B’s output is still out of order. It did less work without completing the task, so it is rejected.
-
-> Hold this visual: Keep C after it passes with less work
-
-C then passes all six checks and uses less work than A on the same suite, earning its place as the retained program. That program can be reused on later tasks. Six tests support these results, not correctness for every possible input. A proposal needs an independent check. AlphaEvolve uses this approach in real research.
+After B fails, try another sorting method, C. It passes the same six checks with less work than A, so C replaces A as the program in use. This is an improvement loop: try a change, check it, and keep useful improvements. The sorting program improved; the AI doing the research did not thereby upgrade. This alone is not full RSI. The six checks establish results for this suite only. Google uses this kind of loop on code used to train AI instead of sorting code.
 
 ---
 
-## 17 · R5｜AI 如何改进训练 AI 的工具 / How AI improves AI training
+## 17 · R5｜Google 把改进用在了哪里 / How AlphaEvolve improves AI training
 
 [打开本页](/session-2#rsi/R5)
 
 **中文**
 
-> 留住画面：改进后的 kernel 已进入 Gemini 训练过程
+> 留住画面：Gemini 提出的 kernel 改法通过检查
 
-看这段代码从哪里来，又到哪里去。AlphaEvolve 用 Gemini 提出代码改法，再检查结果是否正确、运行是否更快。Kernel 就是训练时反复调用的一小段计算程序。通过检查的改进，又进入 Gemini 的训练过程。DeepMind 报告，这个矩阵计算 kernel 提速 23%，让整体训练时间减少约 1%。这两个数是局部和整体的结果证据；这一页的重点是，AI 已经能帮助改进用来训练 AI 的工具。接下来沿着这项节省，看看还要补上什么，才能形成递归。
+现在把排序程序换成 kernel。Kernel 就是反复执行一小段计算的程序，比如训练 AI 时的矩阵乘法。AlphaEvolve 让 Gemini 提出改法，再由评估器检查结果对不对、运行有没有更快。和刚才 A、B、C 的思路一样：提出改法，测试，再留下有用的改动。
+
+> 留住画面：改好的 K 进入 Gemini 训练；提效数字出现
+
+看这块 K：它被放进了 Gemini 的训练过程。不同就在这里——AI 改的程序，又用来训练 AI。DeepMind 报告，这个 kernel 提速 23%，整体训练时间减少约 1%。所以这个案例和 RSI 有关：改进已经回到了 AI 的制造过程。但它证明的是训练更省，还没证明新 AI 更会做研发，更没证明新 AI 已经接手下一轮。还差哪一步才是递归？接下来要看，新 AI 能不能反过来接手改进工作。
 
 **English**
 
-> Hold this visual: The improved kernel enters Gemini training
+> Hold this visual: The proposed kernel change passes the checks
 
-Follow where this code comes from and where it goes. AlphaEvolve uses Gemini to propose code changes, then checks correctness and speed. A kernel is a small compute routine called repeatedly during training. The validated improvement enters Gemini’s training process. DeepMind reported a 23% speedup for this matrix kernel, reducing total training time by about 1%. The figures describe the component and the whole process; the central point is that AI can help improve the tools used to train AI. Follow that saving next: what else would be needed to make improvement recursive?
+Replace the sorting program with a kernel: a small compute routine, such as matrix multiplication repeated during AI training. AlphaEvolve uses Gemini to propose changes, then evaluators check correctness and speed. The idea resembles our A, B, C example: propose a change, test it, and retain useful improvements.
+
+> Hold this visual: The improved K enters Gemini training; the reported savings appear
+
+Watch K move into Gemini training. This is the connection: code improved with AI is used to train AI. DeepMind reported a 23% kernel speedup and about 1% less total training time. That makes the case relevant to RSI: the improvement feeds back into how AI is built. It demonstrates training efficiency, not that a new AI became a better researcher or took over the next round. What would make it recursive? The new AI would need to take over the next improvement round.
 
 ---
 
-## 18 · R6｜改进如何进入下一代，并形成递归 / How improvement becomes recursive
+## 18 · R6｜假设训练改进帮助开发 v2 / How improvement becomes recursive
 
 [打开本页](/session-2#rsi/R6)
 
 **中文**
 
-> 留住画面：有了后继 B，但还不知道它是否更擅长改进
+> 留住画面：v2 出现，但是否更会做研发仍未知
 
-上面保留刚才有报告支持的结果：kernel 改善让训练更高效。下面开始是假设延伸。把当前帮助做研发的 AI 叫 A：如果把节省的算力用于更多训练或实验，可能得到后继 B。但训练更省，不会自动让 B 更聪明，更不保证它更会做研究，所以这里保留问号。
+从这里开始是假设，不是 Google 已经完成的结果。把做研发的 AI 叫 v1。假如把省下的算力用于更多训练，帮助开发出了 v2，右边就有了一个新 AI。但训练更省，不等于它更会做研究，所以 v2 还带着问号。
 
-> 留住画面：相同任务与预算，检验 B 是否更会改进
+> 留住画面：v1 和 v2：新任务，相同预算
 
-怎样检查？继续用同一种工作：换一段没有参与刚才开发的 kernel，给 A 和 B 相同的任务与尝试预算。看谁能找到结果正确、提速有用的改法。这里测的是 B 能否更好地参与下一次改进，而不只是上次训练省了多少时间。
+怎么检验？给 v1 和 v2 一组新的 kernel 优化任务，用相同的尝试预算。比较谁能找到结果正确、确实有用的改法。我们要知道的是：v2 能不能把下一轮研发做得更好。这里没有展示胜负，只是在说明需要什么证据。
 
-> 留住画面：若 B 的改进帮助开发 C，下一代再次接受检验
+> 留住画面：v2 接替 v1，提出下一项改进；右侧出现 v3？
 
-假如 B 确实更擅长这项工作，就让它接过原来 A 的位置，提出下一项 kernel 改进，再帮助开发 C。C 也要重新检验。Recursive，递归，强调的就是这种反馈：上一轮得到的更有能力的 AI，又参与推动下一轮改进。图里的后半段是需要验证的路径；Google 的那项 kernel 成果本身，还没有证明这个循环成立。回到开场的三个问题。
+注意左边的位置：原来是 v1 在做研发，现在由 v2 接手。假设 v2 确实更擅长这件事，它就继续提出训练改进，帮助开发 v3；v3 仍然要用新的任务检验。这里的递归，就是上一轮改进出来的 AI，又成为下一轮的改进者。Google 的案例说明前面的工具已经能提效，还没有证明这条回路已经跑通。三个章节最后都回到一个问题：我们究竟验证了什么？
 
 **English**
 
-> Hold this visual: Successor B exists in this scenario; its improvement ability is still unknown
+> Hold this visual: v2 appears; better research ability remains unproven
 
-The reported result stays at the top: the improved kernel makes training more efficient. What follows is hypothetical. Call the current AI research assistant A. Reinvesting saved compute in more training or experiments might help produce successor B. More efficient training does not automatically make B more capable, especially at research, so its ability remains a question.
+This is a hypothetical next step, not a result Google has demonstrated. Call the AI doing the research v1. Suppose saved compute is used for more training and helps develop v2. We now have a new AI on the right. More efficient training does not establish better research ability, so v2 still has a question mark.
 
-> Hold this visual: The same tasks and budget test whether B is better at improving
+> Hold this visual: v1 and v2: new tasks, the same budget
 
-How would we test that? Keep the type of work the same: use new kernels excluded from the earlier development, and give A and B the same tasks and experiment budget. Compare their ability to find correct changes with useful speedups. This tests whether B can contribute more to the next improvement, beyond the time saved in its own training.
+How would we test that? Give v1 and v2 new kernel-optimization tasks and the same experiment budget. Compare their ability to find correct, useful improvements. We need to know whether v2 can do the next round of research better. No winner is shown here; these are the conditions for the test.
 
-> Hold this visual: If B’s improvement helps develop C, that successor is tested again
+> Hold this visual: v2 replaces v1 and proposes the next improvement; v3? appears on the right
 
-If B is better at this work, it can take the role A held, propose the next kernel improvement, and help develop C. C must be evaluated again. Recursive describes this feedback: the more capable AI produced by one round contributes to the next round of improvement. The latter part of this diagram is a path to test; Google’s reported kernel result alone does not establish the cycle. Let’s return to the three opening questions.
+Watch the position on the left. v1 did the research; now v2 takes over. If v2 really is better at this work, it proposes another training improvement that helps develop v3. v3 must still be tested on new tasks. This is the recursive step: the AI produced by one improvement round becomes the improver in the next. Google’s case demonstrates the earlier efficiency gain, not that this whole loop has been completed. All three chapters return to one question: what have we actually verified?
 
 ---
 

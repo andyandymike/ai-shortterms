@@ -190,39 +190,39 @@ RSI means Recursive Self-Improvement. Can AI help build a more capable successor
 
 [Open this page](/session-2#rsi/R1)
 
-Research often has more ideas than time for implementation and experiments, motivating AI assistance with proposals, implementation and checks. Here A helps improve B, but the arrow from B into another cycle still has a question mark. Whether B is better at research, and whether that ability carries forward, must be tested. Asking the same model to revise one answer does not establish that. A small experiment will show which changes deserve to stay.
+Separate the AI doing the research from the program it is changing. Suppose AI v1 helps develop v2, which is better at AI development, and v2 then helps develop v3. That is the recursive idea. Better research ability needs evidence. Revising a program several times does not mean the AI doing the work has itself improved. First, see how to check one improvement. Then follow it back into AI development.
 
 ---
 
-## 16 · R4｜How to test an improvement
+## 16 · R4｜How an improvement loop works
 
 [Open this page](/session-2#rsi/R4)
 
-> Hold this visual: Keep verified A
+> Hold this visual: A works; keep it for now
 
-The task is simple: put the numbers in ascending order without losing any. These prewritten programs run locally; the movements and counts come from their actual operations. A has sorted the numbers and passed the checks. Below is the work it used.
+Start with method A. It sorts correctly, but uses a lot of operations. We want less work without losing any numbers or getting the order wrong. A, B and C are versions of a sorting program, not generations of AI. These prewritten programs really run locally.
 
-> Hold this visual: B has finished; correctness is unchecked
+> Hold this visual: B leaves the output out of order; keep using A
 
-Now B uses noticeably less work. Before replacing A, remember that B’s result has not been checked. Would the lower operation count alone persuade you to keep B?
+First attempt: B makes fewer passes to save work. It does use fewer operations, but the red numbers are still out of order. B cannot replace A. The program marked IN USE on the right is still A.
 
-> Hold this visual: B fails the correctness check
+> Hold this visual: C passes the same suite with less work and replaces A
 
-The check reveals that B’s output is still out of order. It did less work without completing the task, so it is rejected.
-
-> Hold this visual: Keep C after it passes with less work
-
-C then passes all six checks and uses less work than A on the same suite, earning its place as the retained program. That program can be reused on later tasks. Six tests support these results, not correctness for every possible input. A proposal needs an independent check. AlphaEvolve uses this approach in real research.
+After B fails, try another sorting method, C. It passes the same six checks with less work than A, so C replaces A as the program in use. This is an improvement loop: try a change, check it, and keep useful improvements. The sorting program improved; the AI doing the research did not thereby upgrade. This alone is not full RSI. The six checks establish results for this suite only. Google uses this kind of loop on code used to train AI instead of sorting code.
 
 ---
 
-## 17 · R5｜How AI improves AI training
+## 17 · R5｜How AlphaEvolve improves AI training
 
 [Open this page](/session-2#rsi/R5)
 
-> Hold this visual: The improved kernel enters Gemini training
+> Hold this visual: The proposed kernel change passes the checks
 
-Follow where this code comes from and where it goes. AlphaEvolve uses Gemini to propose code changes, then checks correctness and speed. A kernel is a small compute routine called repeatedly during training. The validated improvement enters Gemini’s training process. DeepMind reported a 23% speedup for this matrix kernel, reducing total training time by about 1%. The figures describe the component and the whole process; the central point is that AI can help improve the tools used to train AI. Follow that saving next: what else would be needed to make improvement recursive?
+Replace the sorting program with a kernel: a small compute routine, such as matrix multiplication repeated during AI training. AlphaEvolve uses Gemini to propose changes, then evaluators check correctness and speed. The idea resembles our A, B, C example: propose a change, test it, and retain useful improvements.
+
+> Hold this visual: The improved K enters Gemini training; the reported savings appear
+
+Watch K move into Gemini training. This is the connection: code improved with AI is used to train AI. DeepMind reported a 23% kernel speedup and about 1% less total training time. That makes the case relevant to RSI: the improvement feeds back into how AI is built. It demonstrates training efficiency, not that a new AI became a better researcher or took over the next round. What would make it recursive? The new AI would need to take over the next improvement round.
 
 ---
 
@@ -230,17 +230,17 @@ Follow where this code comes from and where it goes. AlphaEvolve uses Gemini to 
 
 [Open this page](/session-2#rsi/R6)
 
-> Hold this visual: Successor B exists in this scenario; its improvement ability is still unknown
+> Hold this visual: v2 appears; better research ability remains unproven
 
-The reported result stays at the top: the improved kernel makes training more efficient. What follows is hypothetical. Call the current AI research assistant A. Reinvesting saved compute in more training or experiments might help produce successor B. More efficient training does not automatically make B more capable, especially at research, so its ability remains a question.
+This is a hypothetical next step, not a result Google has demonstrated. Call the AI doing the research v1. Suppose saved compute is used for more training and helps develop v2. We now have a new AI on the right. More efficient training does not establish better research ability, so v2 still has a question mark.
 
-> Hold this visual: The same tasks and budget test whether B is better at improving
+> Hold this visual: v1 and v2: new tasks, the same budget
 
-How would we test that? Keep the type of work the same: use new kernels excluded from the earlier development, and give A and B the same tasks and experiment budget. Compare their ability to find correct changes with useful speedups. This tests whether B can contribute more to the next improvement, beyond the time saved in its own training.
+How would we test that? Give v1 and v2 new kernel-optimization tasks and the same experiment budget. Compare their ability to find correct, useful improvements. We need to know whether v2 can do the next round of research better. No winner is shown here; these are the conditions for the test.
 
-> Hold this visual: If B’s improvement helps develop C, that successor is tested again
+> Hold this visual: v2 replaces v1 and proposes the next improvement; v3? appears on the right
 
-If B is better at this work, it can take the role A held, propose the next kernel improvement, and help develop C. C must be evaluated again. Recursive describes this feedback: the more capable AI produced by one round contributes to the next round of improvement. The latter part of this diagram is a path to test; Google’s reported kernel result alone does not establish the cycle. Let’s return to the three opening questions.
+Watch the position on the left. v1 did the research; now v2 takes over. If v2 really is better at this work, it proposes another training improvement that helps develop v3. v3 must still be tested on new tasks. This is the recursive step: the AI produced by one improvement round becomes the improver in the next. Google’s case demonstrates the earlier efficiency gain, not that this whole loop has been completed. All three chapters return to one question: what have we actually verified?
 
 ---
 
