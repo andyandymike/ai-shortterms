@@ -1,7 +1,5 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
 import { useLab } from './lab-state';
 import { useGuided } from './guided-state';
 import { Caption, Controls, usePlayback } from './lab-controls';
@@ -95,82 +93,5 @@ export function DesktopLab({ id }: { id: string }) {
     <Controls label="desktop loop" playing={playing} complete={complete} onPlay={() => { if (complete) setDesktop(value => ({ ...value, step: 0 })); setPlaying(!playing); }} onStep={() => { setPlaying(false); advance(); }} onReset={reset}>
       <button className={s.intervention} aria-label="Insert a pop-up" onClick={() => { setPlaying(false); setDesktop({ step: 8, interrupted: true }); }}>＋ Insert a pop-up</button>
     </Controls>
-  </div>;
-}
-
-const buildSteps = [
-  ['SCENE', 'Objects stay editable.', 'bpy · create scene'],
-  ['BUILD', 'Add walls and a roof as separate objects.', 'bpy · mesh objects'],
-  ['DETAIL', 'Add windows, a door and a platform.', 'bpy · object transforms'],
-  ['RENDER', 'The first preview is ready. What would you change?', 'render · first preview'],
-  ['INSPECT', 'The preview exposes the problem. Change the light, then check again.', 'inspect · dark front face'],
-  ['REFINE', 'Move the key light. The front of the scene becomes readable.', 'bpy · adjust light position'],
-  ['CHECK', 'The new preview confirms the change.', 'render · inspect the new preview'],
-];
-export function BlenderLab() {
-  const [localStep, setStep] = useState(0);
-  const [localFilm, setFilm] = useState(false);
-  const guided = useGuided();
-  const step = guided?.frame.blender?.step ?? localStep;
-  const film = guided ? Boolean(guided.frame.blender?.film) : localFilm;
-  const cueId = guided?.cueId ?? 'standalone';
-  const guidedStatus = guided?.status;
-  const completeFilm = guided?.onComplete;
-  const reportUnavailable = guided?.onMediaUnavailable;
-  const [failedCue, setFailedCue] = useState<string | null>(null);
-  const failed = failedCue === cueId;
-  const showStill = failed || guidedStatus === 'ready';
-  const video = useRef<HTMLVideoElement>(null);
-  const videoCue = useRef<string | null>(null);
-  useEffect(() => {
-    if (failed && guidedStatus === 'playing') { completeFilm?.(); return; }
-    const element = video.current;
-    if (!element || !film || !guidedStatus || showStill) return;
-    if (videoCue.current !== cueId) {
-      element.currentTime = 0;
-      videoCue.current = cueId;
-    }
-    let active = true;
-    if (guidedStatus === 'playing') {
-      if (element.ended || (Number.isFinite(element.duration) && element.duration > 0 && element.currentTime >= element.duration)) { completeFilm?.(); return; }
-      void element.play().catch(() => {
-        if (active) {
-          setFailedCue(cueId);
-          reportUnavailable?.();
-          completeFilm?.();
-        }
-      });
-    } else element.pause();
-    return () => { active = false; element.pause(); };
-  }, [film, cueId, guidedStatus, showStill, completeFilm, failed, reportUnavailable]);
-  const complete = step === buildSteps.length - 1;
-  const { playing, setPlaying } = usePlayback(() => setStep(value => Math.min(value + 1, buildSteps.length - 1)), complete || film, 1400);
-  const [phase, caption, action] = buildSteps[step];
-  return <div className={s.lab} data-lab="blender">
-    <div className={s.blenderStage}>
-      {film ? <div className={s.sourceFilm}>{showStill ? <Image unoptimized src="/media/session-2/blender-garden-house.webp" width={1600} height={900} alt="Published Blender Garden House render; source still" /> : <video ref={video} controls={!guided} playsInline muted preload="metadata" src="/media/session-2/blender-house-tour.webm" poster="/media/session-2/blender-garden-house.webp" aria-label="Published Blender render, not an action recording" onLoadedMetadata={(event) => guided?.onMediaProgress(event.currentTarget.currentTime, event.currentTarget.duration)} onTimeUpdate={(event) => guided?.onMediaProgress(event.currentTarget.currentTime, event.currentTarget.duration)} onWaiting={(event) => guided?.onMediaProgress(event.currentTarget.currentTime, event.currentTarget.duration, true)} onPlaying={(event) => guided?.onMediaProgress(event.currentTarget.currentTime, event.currentTarget.duration, false)} onEnded={completeFilm} onError={() => { setFailedCue(cueId); reportUnavailable?.(); completeFilm?.(); }} />}</div> : <div className={s.buildViewport}>
-        <svg viewBox="0 0 780 390" role="img" aria-label={`Teaching house scene: ${phase}. ${caption}`}>
-          <rect width="780" height="390" fill="#e4dece" />
-          <g stroke="#bdb9ad" strokeWidth="1">{Array.from({ length: 10 }, (_, i) => <g key={i}><path d={`M${i * 90 - 100} 390 390 ${i * 24 + 70}`} /><path d={`M${i * 100} 390 770 ${100 + i * 23}`} /></g>)}</g>
-          <path d="m159 277 247-140 252 147-247 100Z" fill={step >= 2 ? '#b8bf9b' : 'none'} stroke="#125f9f" strokeWidth="2" />
-          <g className={s.houseLayer} data-visible={step >= 1}>
-            <path d="m263 186 140 81v88l-140-81Z" fill={step >= 3 && step < 5 ? '#363a40' : step >= 5 ? '#efd291' : '#f2ecdc'} className={s.litFace} stroke="#121518" strokeWidth="2" />
-            <path d="m403 267 150-88v90l-150 86Z" fill="#afbdbb" stroke="#121518" strokeWidth="2" />
-            <path d="m243 188 89-120 143 85-72 120Z" fill="#125f9f" stroke="#121518" strokeWidth="2" />
-            <path d="m332 68 150 85 91 31-98-31Z" fill="#244655" stroke="#121518" strokeWidth="2" />
-            <path d="m475 153 78 26-150 88Z" fill="#f2ecdc" stroke="#121518" strokeWidth="2" />
-          </g>
-          <g className={s.houseLayer} data-visible={step >= 2} stroke="#121518" strokeWidth="2"><path d="m285 215 40 23v41l-40-24Z" fill="#78bcb3" /><path d="m347 251 31 18v69l-31-18Z" fill="#bc7651" /><path d="m431 267 92-54v43l-92 54Z" fill="#78bcb3" /></g>
-          {step >= 3 && <><path d="m164 293-50 14v43l50 8 30-31Z" fill="#121518" /><path d="m170 311 27-10v42l-27-13Z" fill="#125f9f" /><text x="86" y="380" fontSize="13" fontWeight="800">CAMERA</text><path d="m198 316 88-61M198 331l137-3" fill="none" stroke="#125f9f" strokeDasharray="5 5" /></>}
-          <g className={s.sceneLight} style={{ transform: `translate(${step >= 5 ? 165 : 625}px, ${step >= 5 ? 91 : 143}px)` }}><circle r="23" fill="#efc84a" stroke="#121518" strokeWidth="2" />{[0, 45, 90, 135].map(angle => <path key={angle} d="M-38 0h11M27 0h11" transform={`rotate(${angle})`} stroke="#efc84a" strokeWidth="4" />)}<text x="0" y="-44" textAnchor="middle" fontSize="12" fontWeight="800">KEY LIGHT</text></g>
-          {step === 4 && <g><rect x="261" y="204" width="145" height="151" fill="none" stroke="#e3482d" strokeWidth="3" strokeDasharray="7 5" /><text x="288" y="380" fill="#b42e17" fontSize="14" fontWeight="800">TOO DARK → CHANGE THE LIGHT</text></g>}
-          {step === 0 && <text x="390" y="185" textAnchor="middle" fontSize="26" fontWeight="800">An empty scene.</text>}
-        </svg>
-        <code className={s.viewportCommand}>{action}</code>
-      </div>}
-      <aside className={s.buildNotes} data-source={film}>{film ? <><span className={s.sourceWorkflowLabel}>PUBLISHED WORKFLOW</span>{[['Python / bpy', 'Build an editable scene'], ['Render', 'Inspect preview images'], ['Computer Use', 'Open Blender & check']].map(([title, detail], index) => <div key={title} data-active="true"><b>0{index + 1}</b><section><strong>{title}</strong><span>{detail}</span></section></div>)}<p>Thomas Ricouard / OpenAI</p></> : ['Build', 'Render', 'Inspect'].map((text, index) => <div key={text} data-active={step >= index * 2 + 1}><b>0{index + 1}</b><strong>{text}</strong></div>)}</aside>
-    </div>
-    <Caption phase={film ? 'SOURCE RENDER' : phase}>{film ? failed ? 'Published still · video unavailable.' : showStill ? 'Published still · workflow shown at right.' : 'Finished render · the workflow combines Python and Computer Use.' : caption}</Caption>
-    {!guided && (film ? <div className={s.controls}><button onClick={() => { video.current?.pause(); setFilm(false); }}>← Back to the process</button><span className={s.demoNote}>Published render</span></div> : <Controls label="Blender process" playing={playing} complete={complete} onPlay={() => { if (complete) setStep(0); setPlaying(!playing); }} onStep={() => { setPlaying(false); setStep(value => Math.min(value + 1, 6)); }} onReset={() => { setPlaying(false); setStep(0); }}><button className={s.intervention} onClick={() => { setPlaying(false); setFilm(true); }}>Watch source film ↗</button></Controls>)}
   </div>;
 }

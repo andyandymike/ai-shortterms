@@ -14,7 +14,7 @@
 .model[data-future=true]>rect{stroke-dasharray:7 5}
 .kernel>path:first-child{fill:var(--paper);stroke:var(--green);stroke-width:3}
 .kernel>path:last-child{fill:none;stroke:var(--green);stroke-width:3}
-.kernel>text{font-size:38px;font-weight:750;fill:var(--green)}
+.kernel>text{font-size:24px;font-weight:750;fill:var(--green)}
 .training>rect:first-child{fill:var(--paper2);stroke:var(--rule);stroke-width:2;transition:stroke .4s}
 .training[data-active=true]>rect:first-child{stroke:var(--green)}
 .training>path{stroke:var(--rule);stroke-width:4;fill:none}
@@ -26,7 +26,7 @@
 .kernelBench>text{font-size:23px;font-weight:700;fill:#65685e}
 .kernelBench[data-tested=true]>rect{stroke:var(--green)}
 .kernelBench[data-tested=true]>text{fill:var(--green)}
-.movingKernel{opacity:0;transition:transform .85s ease-in-out,opacity .35s}
+.movingKernel{opacity:0;transition:transform .7s ease-in-out,opacity .35s}
 .movingKernel[data-visible=true]{opacity:1}
 .leftBehind{opacity:0;transition:opacity .4s}
 .leftBehind[data-visible=true]{opacity:.18}

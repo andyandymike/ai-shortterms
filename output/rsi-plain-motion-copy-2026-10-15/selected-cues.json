@@ -1,0 +1,432 @@
+[
+  {
+    "id": "R0-term",
+    "beat": "R0",
+    "label": "改好的助手再接棒",
+    "labelEn": "The improved assistant takes over",
+    "action": "停留在章节开场",
+    "actionEn": "Hold the chapter opening",
+    "look": [
+      "RSI 与英文全称独占开场页",
+      "RSI and its full name fill the opening page"
+    ],
+    "say": [
+      "RSI 是 Recursive Self-Improvement，递归自我改进。设想一个 AI 助手先改好自己的工具，再让带着新工具的助手做下一次改进。我们要看的是：改好的那个，能不能接着改自己？先从一次容易看懂的改进开始。",
+      "RSI means Recursive Self-Improvement. Imagine an AI assistant improving its own tools. The assistant with those new tools then works on the next improvement. Can the improved assistant keep improving itself? Start with one change we can easily check."
+    ],
+    "transition": [
+      "先从一个容易看懂的排序程序开始。",
+      "Start with a sorting program we can inspect."
+    ],
+    "scene": {
+      "kind": "static",
+      "label": [
+        "改好的助手能否继续改自己",
+        "Can the improved assistant improve itself again?"
+      ],
+      "end": [
+        "RSI 与英文全称独占开场页",
+        "RSI and its full name fill the opening page"
+      ],
+      "say": [
+        "RSI 是 Recursive Self-Improvement，递归自我改进。设想一个 AI 助手先改好自己的工具，再让带着新工具的助手做下一次改进。我们要看的是：改好的那个，能不能接着改自己？先从一次容易看懂的改进开始。",
+        "RSI means Recursive Self-Improvement. Imagine an AI assistant improving its own tools. The assistant with those new tools then works on the next improvement. Can the improved assistant keep improving itself? Start with one change we can easily check."
+      ]
+    }
+  },
+  {
+    "id": "R4-challenge",
+    "beat": "R4",
+    "label": "从原程序 A 开始",
+    "labelEn": "Start with program A",
+    "action": "播放 A，停在检查结果",
+    "actionEn": "Run A and hold its checked result",
+    "look": [
+      "A 排对了，右侧仍使用 A",
+      "A sorts correctly and remains in use"
+    ],
+    "say": [
+      "A 是原来使用的排序程序，结果正确。现在想让它少做些工作。这里把比较和写入次数加起来当作工作量，不是运行秒数。三个候选是预先写好的，数字移动来自实际执行。",
+      "A is our original sorting program, and its result is correct. We want it to do less work. Here work is the number of comparisons plus array writes, not elapsed seconds. The three candidates are prewritten, and the numbers follow their actual execution."
+    ],
+    "transition": [
+      "",
+      ""
+    ],
+    "scene": {
+      "kind": "sort",
+      "candidate": "A",
+      "run": true,
+      "checked": true,
+      "delay": 55,
+      "hold": 650,
+      "label": [
+        "原来的程序",
+        "The original program"
+      ],
+      "end": [
+        "A 排对了，右侧仍使用 A",
+        "A sorts correctly and remains in use"
+      ],
+      "say": [
+        "A 是原来使用的排序程序，结果正确。现在想让它少做些工作。这里把比较和写入次数加起来当作工作量，不是运行秒数。三个候选是预先写好的，数字移动来自实际执行。",
+        "A is our original sorting program, and its result is correct. We want it to do less work. Here work is the number of comparisons plus array writes, not elapsed seconds. The three candidates are prewritten, and the numbers follow their actual execution."
+      ]
+    }
+  },
+  {
+    "id": "R4-keep",
+    "beat": "R4",
+    "label": "两次尝试",
+    "labelEn": "Two attempts",
+    "action": "分别播放 B、C，每次检查后自动停住",
+    "actionEn": "Run B and C separately; hold after each check",
+    "look": [
+      "C 通过六项测试，以更少工作替换 A",
+      "C passes six tests with less work and replaces A"
+    ],
+    "say": [
+      "第一次尝试 B，只走一遍，工作确实少了，但红色数字还没排对。改得快没有用，先得正确，所以右边 IN USE 仍然是 A。 再试 C。它通过同一组六项测试，工作量也更少，才替换 A。这次变好的是排序程序。下一页，把注意力转向做事的助手：如果它改的是自己的工具，又会怎样？",
+      "The first attempt, B, makes only one pass. It uses less work, but the red numbers are still out of order. A cheaper change must still be correct, so IN USE stays A. Try C next. It passes the same six tests with less work, so it replaces A. Here we improved a sorting program. Next, watch the assistant doing the work: what happens when it changes its own tools?"
+    ],
+    "transition": [
+      "接下来，助手开始改自己的工具。",
+      "Now the assistant changes its own tool."
+    ],
+    "scene": {
+      "kind": "sequence",
+      "segments": [
+        {
+          "kind": "sort",
+          "candidate": "B",
+          "run": true,
+          "checked": true,
+          "delay": 100,
+          "hold": 700,
+          "label": [
+            "第一次尝试失败",
+            "The first attempt fails"
+          ],
+          "end": [
+            "B 的结果有误，继续使用 A",
+            "B gives an incorrect result; keep A"
+          ],
+          "say": [
+            "第一次尝试 B，只走一遍，工作确实少了，但红色数字还没排对。改得快没有用，先得正确，所以右边 IN USE 仍然是 A。",
+            "The first attempt, B, makes only one pass. It uses less work, but the red numbers are still out of order. A cheaper change must still be correct, so IN USE stays A."
+          ]
+        },
+        {
+          "kind": "sort",
+          "candidate": "C",
+          "run": true,
+          "checked": true,
+          "delay": 110,
+          "hold": 700,
+          "label": [
+            "第二次尝试被采用",
+            "The second attempt is adopted"
+          ],
+          "end": [
+            "C 通过六项测试，以更少工作替换 A",
+            "C passes six tests with less work and replaces A"
+          ],
+          "say": [
+            "再试 C。它通过同一组六项测试，工作量也更少，才替换 A。这次变好的是排序程序。下一页，把注意力转向做事的助手：如果它改的是自己的工具，又会怎样？",
+            "Try C next. It passes the same six tests with less work, so it replaces A. Here we improved a sorting program. Next, watch the assistant doing the work: what happens when it changes its own tools?"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "R8-agent",
+    "beat": "R8",
+    "label": "改自己的工具，再接棒",
+    "labelEn": "Change its own tool, then take over",
+    "action": "分三次播放：改自己的工具、检查、B 接棒",
+    "actionEn": "Play three pictures: own tool changes, testing, then B takes over",
+    "look": [
+      "B 从右边移到左边，带着新工具开始尝试下一次修改",
+      "B moves from right to left and uses its new tool to begin another change"
+    ],
+    "say": [
+      "看 A 自己的工具。原来改完就用，现在 A 在中间加了一步检查：先看看改动能不能用，再使用。DGM 研究中有这类改进；这里把它画成一个简单例子。 这套新工具还要放到其他编程任务里试一试。检查之后，留下带着新工具的 B。这里的测试只是示意；真实研究要评估整个助手做事的结果。 注意 B 回到了左边。现在由 B 带着新工具，继续尝试改自己的工具。上一轮的成果，成了下一轮动手改进的助手。DGM 展示了这样的回路；下一次能否再改好，还要继续检查。",
+      "Look at A’s own tool. It used to go straight from editing to using the result. A adds a check in between: check that the edit can be applied before using it. DGM includes this kind of improvement; this is a simple illustration. Try the new tool on other coding tasks. After checking it, keep B with the new tool. The tests here are only an illustration; the research evaluates how the whole assistant performs. Notice B moving back to the left. B now uses its new tool to try another change to itself. The result of one round becomes the assistant doing the next round. DGM shows this kind of loop; whether the next change helps still needs checking."
+    ],
+    "transition": [
+      "另一个例子里，传到下一轮的是训练材料。",
+      "In the next example, training material carries the process forward."
+    ],
+    "scene": {
+      "kind": "sequence",
+      "segments": [
+        {
+          "kind": "research",
+          "from": 0,
+          "to": 3,
+          "delay": 1050,
+          "hold": 850,
+          "label": [
+            "A 改自己的工具",
+            "A changes its own tool"
+          ],
+          "end": [
+            "同一块 Check 移进 A 自己的 Edit → Use 工具",
+            "The same Check tile moves into A’s own Edit → Use tool"
+          ],
+          "say": [
+            "看 A 自己的工具。原来改完就用，现在 A 在中间加了一步检查：先看看改动能不能用，再使用。DGM 研究中有这类改进；这里把它画成一个简单例子。",
+            "Look at A’s own tool. It used to go straight from editing to using the result. A adds a check in between: check that the edit can be applied before using it. DGM includes this kind of improvement; this is a simple illustration."
+          ]
+        },
+        {
+          "kind": "research",
+          "from": 3,
+          "to": 5,
+          "delay": 1050,
+          "hold": 850,
+          "label": [
+            "试过之后，留下 B",
+            "Test it, then keep B"
+          ],
+          "end": [
+            "新工具在其他任务上接受检查，带着它的助手 B 出现在右边",
+            "The new tool is tested on other tasks; assistant B appears on the right with that tool"
+          ],
+          "say": [
+            "这套新工具还要放到其他编程任务里试一试。检查之后，留下带着新工具的 B。这里的测试只是示意；真实研究要评估整个助手做事的结果。",
+            "Try the new tool on other coding tasks. After checking it, keep B with the new tool. The tests here are only an illustration; the research evaluates how the whole assistant performs."
+          ]
+        },
+        {
+          "kind": "research",
+          "from": 5,
+          "to": 8,
+          "delay": 1050,
+          "hold": 850,
+          "label": [
+            "B 回来，继续改自己",
+            "B returns to work on itself"
+          ],
+          "end": [
+            "B 从右边移到左边，带着新工具开始尝试下一次修改",
+            "B moves from right to left and uses its new tool to begin another change"
+          ],
+          "say": [
+            "注意 B 回到了左边。现在由 B 带着新工具，继续尝试改自己的工具。上一轮的成果，成了下一轮动手改进的助手。DGM 展示了这样的回路；下一次能否再改好，还要继续检查。",
+            "Notice B moving back to the left. B now uses its new tool to try another change to itself. The result of one round becomes the assistant doing the next round. DGM shows this kind of loop; whether the next change helps still needs checking."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "R9-training",
+    "beat": "R9",
+    "label": "新模型来做下一批材料",
+    "labelEn": "The new model makes the next batch",
+    "action": "分三次播放：筛选解题过程、训练、B 生成下一批",
+    "actionEn": "Play three pictures: select solutions, train, then B makes the next batch",
+    "look": [
+      "B 移到左边，写出下一轮要筛选的解题过程",
+      "B moves to the left and writes solutions for the next round of selection"
+    ],
+    "say": [
+      "STaR 从已有题目和标准答案开始。A 写出解题过程，再核对最后的答案，留下答对的那几份。纸上是它写出的解题过程，题目和标准答案由外部提供。 这些被选中的解题过程移进训练，成为练习材料。积累很多这样的材料，再用它们训练模型，得到 B。图里的几张纸代表一大批例子。 B 回到了左边，开始写下一批解题过程。它既是上一轮训练的结果，又在制作下一轮的训练材料。这就是这个例子里回来的那一步。",
+      "STaR starts with supplied questions and known answers. A writes solution steps, then the final answers are checked. Keep the sheets whose answers match. The model writes the solutions; the questions and answer key come from outside. The selected solutions move into training as practice material. Collect many such examples and use them to train a model, producing B. The few sheets here stand for a much larger batch. B moves back to the left and writes the next batch of solutions. It is both the result of the last training round and the maker of material for the next one. That is what comes back into the next round."
+    ],
+    "transition": [
+      "再看一个只展示了部分过程的例子：AI 让训练更快。",
+      "Now an example that shows part of the process: AI makes training faster."
+    ],
+    "scene": {
+      "kind": "sequence",
+      "segments": [
+        {
+          "kind": "research",
+          "from": 0,
+          "to": 2,
+          "delay": 1050,
+          "hold": 850,
+          "label": [
+            "留下答对的解题过程",
+            "Keep solutions with matching answers"
+          ],
+          "end": [
+            "A 写出的解题过程经过答案核对，选出的纸张留下",
+            "A’s solution sheets are checked against known answers; selected sheets remain"
+          ],
+          "say": [
+            "STaR 从已有题目和标准答案开始。A 写出解题过程，再核对最后的答案，留下答对的那几份。纸上是它写出的解题过程，题目和标准答案由外部提供。",
+            "STaR starts with supplied questions and known answers. A writes solution steps, then the final answers are checked. Keep the sheets whose answers match. The model writes the solutions; the questions and answer key come from outside."
+          ]
+        },
+        {
+          "kind": "research",
+          "from": 2,
+          "to": 4,
+          "delay": 1050,
+          "hold": 850,
+          "label": [
+            "材料进入训练，得到 B",
+            "Train on those sheets to produce B"
+          ],
+          "end": [
+            "选中的解题过程移入训练，右边出现新模型 B",
+            "Selected solutions move into training; the new model B appears on the right"
+          ],
+          "say": [
+            "这些被选中的解题过程移进训练，成为练习材料。积累很多这样的材料，再用它们训练模型，得到 B。图里的几张纸代表一大批例子。",
+            "The selected solutions move into training as practice material. Collect many such examples and use them to train a model, producing B. The few sheets here stand for a much larger batch."
+          ]
+        },
+        {
+          "kind": "research",
+          "from": 4,
+          "to": 6,
+          "delay": 1050,
+          "hold": 850,
+          "label": [
+            "B 来写下一批解题过程",
+            "B writes the next batch of solutions"
+          ],
+          "end": [
+            "B 移到左边，写出下一轮要筛选的解题过程",
+            "B moves to the left and writes solutions for the next round of selection"
+          ],
+          "say": [
+            "B 回到了左边，开始写下一批解题过程。它既是上一轮训练的结果，又在制作下一轮的训练材料。这就是这个例子里回来的那一步。",
+            "B moves back to the left and writes the next batch of solutions. It is both the result of the last training round and the maker of material for the next one. That is what comes back into the next round."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "R5-example",
+    "beat": "R5",
+    "label": "让训练中的小计算更快",
+    "labelEn": "Speed up a small training computation",
+    "action": "检查改动，再把同一块计算放回训练",
+    "actionEn": "Check the change, then move the same computation into training",
+    "look": [
+      "同一块计算移入 Gemini 训练，显示已报告的效率收益",
+      "The same computation enters Gemini training and the reported gains appear"
+    ],
+    "say": [
+      "训练 AI 时，有些小计算会反复运行。AlphaEvolve 让 Gemini 试着改快其中一个，再检查结果有没有算对、是否真的更快。接下来，这块改好的计算会放回训练里。 同一块计算回到了 Gemini 的训练中。DeepMind 报告，这段计算平均加速 23%，让整体训练时间约少 1%。这说明训练更快了；这个结果没有展示新模型回来做下一轮改进。",
+      "Training AI repeats some small computations many times. AlphaEvolve uses Gemini to try improving one, then checks whether it is correct and faster. The improved computation will go back into training. The same computation goes into Gemini training. DeepMind reported an average 23% speedup for that routine and about 1% less total training time. Training became faster; this result does not show the new model returning to make the next improvement."
+    ],
+    "transition": [
+      "最后并排看清：哪些例子真的接上了下一轮？",
+      "Finally, compare which examples show something returning for the next round."
+    ],
+    "scene": {
+      "kind": "sequence",
+      "segments": [
+        {
+          "kind": "research",
+          "from": 0,
+          "to": 2,
+          "delay": 1050,
+          "hold": 850,
+          "label": [
+            "改快一个反复运行的小计算",
+            "Speed up a repeated small computation"
+          ],
+          "end": [
+            "Gemini 提出的改动接受正确性与速度检查",
+            "Gemini’s proposed change is checked for correctness and speed"
+          ],
+          "say": [
+            "训练 AI 时，有些小计算会反复运行。AlphaEvolve 让 Gemini 试着改快其中一个，再检查结果有没有算对、是否真的更快。接下来，这块改好的计算会放回训练里。",
+            "Training AI repeats some small computations many times. AlphaEvolve uses Gemini to try improving one, then checks whether it is correct and faster. The improved computation will go back into training."
+          ]
+        },
+        {
+          "kind": "research",
+          "from": 2,
+          "to": 3,
+          "delay": 1050,
+          "hold": 850,
+          "label": [
+            "放回训练，节省时间",
+            "Put it into training to save time"
+          ],
+          "end": [
+            "同一块计算移入 Gemini 训练，显示已报告的效率收益",
+            "The same computation enters Gemini training and the reported gains appear"
+          ],
+          "say": [
+            "同一块计算回到了 Gemini 的训练中。DeepMind 报告，这段计算平均加速 23%，让整体训练时间约少 1%。这说明训练更快了；这个结果没有展示新模型回来做下一轮改进。",
+            "The same computation goes into Gemini training. DeepMind reported an average 23% speedup for that routine and about 1% less total training time. Training became faster; this result does not show the new model returning to make the next improvement."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "R6-next",
+    "beat": "R6",
+    "label": "谁接过了下一轮",
+    "labelEn": "Who takes over the next round",
+    "action": "先对照已有结果，再播放 B 回到左边接棒",
+    "actionEn": "Compare the evidence, then play B returning to take over",
+    "look": [
+      "B 回到左边成为改进者，右边的 C 仍带问号",
+      "B returns to the left to make another improvement; C on the right still has a question mark"
+    ],
+    "say": [
+      "DGM 中，改好的助手继续改自己的工具。STaR 中，新模型制作下一轮的训练材料。AlphaEvolve 这个成果让训练更快，但没有展示新模型接棒。这三个例子走到了不同的地方。 看 B 的移动：它先出现在右边，是这轮的结果；接着回到左边，成为下一轮动手改进的助手。RSI 要看的，就是改好的自己能不能继续改自己。C 还带着问号，因为下一次是否进步，仍要测试。",
+      "In DGM, the improved assistant works on its own tools again. In STaR, the new model makes material for the next training round. This AlphaEvolve result makes training faster, but does not show the new model taking over. The examples show different parts of the process. Watch B move. First it appears on the right as this round’s result. Then it returns to the left to make the next improvement. RSI asks whether the improved system can keep improving itself. C still has a question mark because the next improvement must be tested."
+    ],
+    "transition": [
+      "回到今天的三个问题：能否操作、能否判断、能否继续改进。",
+      "Return to our three questions: can it act, decide and keep improving?"
+    ],
+    "scene": {
+      "kind": "sequence",
+      "segments": [
+        {
+          "kind": "research",
+          "from": 0,
+          "to": 0,
+          "delay": 0,
+          "hold": 0,
+          "label": [
+            "三个例子走到了不同的地方",
+            "The examples show different parts of the process"
+          ],
+          "end": [
+            "DGM：新助手继续改自己；STaR：新模型做下一批材料；AlphaEvolve：训练更快，下一轮未展示",
+            "DGM: improved helper works on itself again; STaR: new model makes the next practice set; AlphaEvolve: training is faster, next round not shown"
+          ],
+          "say": [
+            "DGM 中，改好的助手继续改自己的工具。STaR 中，新模型制作下一轮的训练材料。AlphaEvolve 这个成果让训练更快，但没有展示新模型接棒。这三个例子走到了不同的地方。",
+            "In DGM, the improved assistant works on its own tools again. In STaR, the new model makes material for the next training round. This AlphaEvolve result makes training faster, but does not show the new model taking over. The examples show different parts of the process."
+          ]
+        },
+        {
+          "kind": "research",
+          "from": 1,
+          "to": 7,
+          "delay": 1000,
+          "hold": 850,
+          "label": [
+            "上一轮的成果，接过下一轮",
+            "The result of one round takes over the next"
+          ],
+          "end": [
+            "B 回到左边成为改进者，右边的 C 仍带问号",
+            "B returns to the left to make another improvement; C on the right still has a question mark"
+          ],
+          "say": [
+            "看 B 的移动：它先出现在右边，是这轮的结果；接着回到左边，成为下一轮动手改进的助手。RSI 要看的，就是改好的自己能不能继续改自己。C 还带着问号，因为下一次是否进步，仍要测试。",
+            "Watch B move. First it appears on the right as this round’s result. Then it returns to the left to make the next improvement. RSI asks whether the improved system can keep improving itself. C still has a question mark because the next improvement must be tested."
+          ]
+        }
+      ]
+    }
+  }
+]

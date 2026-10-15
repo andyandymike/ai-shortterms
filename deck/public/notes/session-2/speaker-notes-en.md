@@ -104,9 +104,17 @@ Now we are in inference: using the trained model. The button moved, so the new s
 
 [Open this page](/session-2#computer-use/C6)
 
-> Visual 1 / 1 · Source still and the bpy → render → Computer Use workflow
+> Visual 1 / 3 · The task: remove the cube, add a sphere and raise it
 
-This is Thomas Ricouard’s published Blender render: the finished result, not a mouse-action recording. On the right, bpy is Blender’s Python API for building an editable scene. Rendering turns the scene into images, and Computer Use opens Blender to inspect it. Programmatic access and interface actions work together.
+The task is concrete: remove the default cube, add a UV Sphere, and move it upward. We can check the result directly in Blender. This is an edited Astra demonstration published by Kakarot Labs.
+
+> Visual 2 / 3 · The sphere is raised in Blender, with Z set to 2; the same source frame is held if playback fails
+
+The sphere is now raised. The recording shows a search menu, a sphere being added, and the Z position changing from 0 to 2. The natural-language task becomes interface actions, and the result can be checked inside Blender.
+
+> Visual 3 / 3 · A separate project: an architecture render and the Python / bpy and Computer Use roles
+
+Now a separate, more complex project: Thomas Ricouard’s architecture render. Blender’s Python API, bpy, builds an editable scene; Computer Use opens the application to inspect it. The two approaches can work together.
 
 **Transition｜** A workflow also needs decisions: which team should receive an email?
 
@@ -214,13 +222,13 @@ Jev is worth testing when a small decision repeats, its answer space is defined,
 
 > Visual 1 / 1 · RSI and its full name fill the opening page
 
-Developing AI involves proposing ideas, running experiments and checking results. People have limited time for those trials, so we want AI to help. Recursive Self-Improvement asks a further question: can the improved AI system participate in the next improvement round? First see how we judge one change, then compare three approaches.
+RSI means Recursive Self-Improvement. Imagine an AI assistant improving its own tools. The assistant with those new tools then works on the next improvement. Can the improved assistant keep improving itself? Start with one change we can easily check.
 
 **Transition｜** Start with a sorting program we can inspect.
 
 ---
 
-## 15 · R4｜How an improvement loop works
+## 15 · R4｜Try a change. Check the result.
 
 [Open this page](/session-2#rsi/R4)
 
@@ -234,71 +242,79 @@ The first attempt, B, makes only one pass. It uses less work, but the red number
 
 > Visual 3 / 3 · C passes six tests with less work and replaces A
 
-Try C next. It passes the same six tests with less work, so it replaces A. That is propose, test and retain. So far, a sorting program has improved. Now apply that idea to an AI system’s own tools, parameters or training code.
+Try C next. It passes the same six tests with less work, so it replaces A. Here we improved a sorting program. Next, watch the assistant doing the work: what happens when it changes its own tools?
 
-**Transition｜** First: keep the model, change how the agent works.
+**Transition｜** Now the assistant changes its own tool.
 
 ---
 
-## 16 · R8｜How an agent improves its workflow
+## 16 · R8｜The improved assistant takes over
 
 [Open this page](/session-2#rsi/R8)
 
-> Visual 1 / 2 · Validate the patch is inserted; a failed patch is revised and applied
+> Visual 1 / 3 · The same Check tile moves into A’s own Edit → Use tool
 
-The first route changes agent code. Think of an agent as a model plus its tools and workflow. The LLM weights on the left stay fixed. The middle gains a patch check: if an edit cannot apply, return the error and retry. DGM, the Darwin Gödel Machine, reported this kind of tool improvement. This is a simplified illustration.
+Look at A’s own tool. It used to go straight from editing to using the result. A adds a check in between: check that the edit can be applied before using it. DGM includes this kind of improvement; this is a simple illustration.
 
-> Visual 2 / 2 · Evaluate variants on other coding tasks; v2 from the archive helps make later variants
+> Visual 2 / 3 · The new tool is tested on other tasks; assistant B appears on the right with that tool
 
-One successful patch is not enough: evaluate the whole agent on other coding tasks. DGM keeps an archive and explores from different variants; this diagram shows one branch. A modified agent also participates in later self-modification. The system can improve even though its base model was not retrained.
+Try the new tool on other coding tasks. After checking it, keep B with the new tool. The tests here are only an illustration; the research evaluates how the whole assistant performs.
 
-**Transition｜** The second route changes the model’s weights.
+> Visual 3 / 3 · B moves from right to left and uses its new tool to begin another change
+
+Notice B moving back to the left. B now uses its new tool to try another change to itself. The result of one round becomes the assistant doing the next round. DGM shows this kind of loop; whether the next change helps still needs checking.
+
+**Transition｜** In the next example, training material carries the process forward.
 
 ---
 
-## 17 · R9｜How a model learns from its own solutions
+## 17 · R9｜The new model makes the next batch
 
 [Open this page](/session-2#rsi/R9)
 
-> Visual 1 / 2 · Matching answers are selected; the wrong 7 is retried with a hint and becomes 10
+> Visual 1 / 3 · A’s solution sheets are checked against known answers; selected sheets remain
 
-The second route resembles collecting useful practice solutions. STaR starts with existing questions and known answers, and asks the model for solution steps. Keep the first correct answer. For the second, wrong answer of 7, give the answer 10 as a hint and try again. The model generates the solution steps; the questions and answer key come from outside.
+STaR starts with supplied questions and known answers. A writes solution steps, then the final answers are checked. Keep the sheets whose answers match. The model writes the solutions; the questions and answer key come from outside.
 
-> Visual 2 / 2 · Fine-tuning changes weights; the resulting model generates another batch of solutions
+> Visual 2 / 3 · Selected solutions move into training; the new model B appears on the right
 
-Collect many such examples, then fine-tune: train on the selected questions and solutions to change the weights. The resulting model generates the next batch for another round of selection and training. This goes beyond adding a hint to one conversation’s context. A matching answer does not guarantee sound reasoning, so evaluate learning on new questions.
+The selected solutions move into training as practice material. Collect many such examples and use them to train a model, producing B. The few sheets here stand for a much larger batch.
 
-**Transition｜** The third route improves the computation used for training.
+> Visual 3 / 3 · B moves to the left and writes solutions for the next round of selection
+
+B moves back to the left and writes the next batch of solutions. It is both the result of the last training round and the maker of material for the next one. That is what comes back into the next round.
+
+**Transition｜** Now an example that shows part of the process: AI makes training faster.
 
 ---
 
-## 18 · R5｜How AlphaEvolve improves AI training
+## 18 · R5｜AI helps make AI training faster
 
 [Open this page](/session-2#rsi/R5)
 
-> Visual 1 / 2 · Gemini’s proposed kernel change passes correctness and speed checks
+> Visual 1 / 2 · Gemini’s proposed change is checked for correctness and speed
 
-Training repeatedly runs small compute routines called kernels. A large computation can be divided into smaller pieces; how those pieces fit the hardware affects efficiency. AlphaEvolve uses Gemini to propose changes, then runs checks for correctness and speed. As with sorting, a claim of improvement is not enough.
+Training AI repeats some small computations many times. AlphaEvolve uses Gemini to try improving one, then checks whether it is correct and faster. The improved computation will go back into training.
 
-> Visual 2 / 2 · The same K enters Gemini training and the reported efficiency gains appear
+> Visual 2 / 2 · The same computation enters Gemini training and the reported gains appear
 
-The improved K now goes into Gemini training. DeepMind reported an average 23% kernel speedup and about 1% less total training time. Repeated computation makes those savings useful. This establishes more efficient training; better AI research ability needs separate evidence.
+The same computation goes into Gemini training. DeepMind reported an average 23% speedup for that routine and about 1% less total training time. Training became faster; this result does not show the new model returning to make the next improvement.
 
-**Transition｜** The three approaches change different things. Now locate the recursive step.
+**Transition｜** Finally, compare which examples show something returning for the next round.
 
 ---
 
-## 19 · R6｜When does improvement become recursive?
+## 19 · R6｜Who comes back for the next round?
 
 [Open this page](/session-2#rsi/R6)
 
-> Visual 1 / 2 · Three columns compare agent code, model weights and training tools
+> Visual 1 / 2 · DGM: improved helper works on itself again; STaR: new model makes the next practice set; AlphaEvolve: training is faster, next round not shown
 
-Side by side: DGM changes tools and workflows, STaR trains weights, and AlphaEvolve improves training code. These are useful examples, not an exhaustive taxonomy of RSI. The shared question is whether an improvement feeds back and helps the system make later improvements.
+In DGM, the improved assistant works on its own tools again. In STaR, the new model makes material for the next training round. This AlphaEvolve result makes training faster, but does not show the new model taking over. The examples show different parts of the process.
 
-> Visual 2 / 2 · Conditional loop: v2 takes over on the left; v3 appears with a question mark
+> Visual 2 / 2 · B returns to the left to make another improvement; C on the right still has a question mark
 
-The return arrow is the recursive step: the improved system participates in the next improvement round. A system can include both a model and its tools and workflow. Compare on new tasks with the same budget to test whether improvement ability grew. DGM demonstrates a bounded coding-agent feedback loop; these examples do not establish unlimited self-improvement.
+Watch B move. First it appears on the right as this round’s result. Then it returns to the left to make the next improvement. RSI asks whether the improved system can keep improving itself. C still has a question mark because the next improvement must be tested.
 
 **Transition｜** Return to our three questions: can it act, decide and keep improving?
 

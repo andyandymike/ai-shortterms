@@ -1,6 +1,7 @@
 'use client';
 
-import { DesktopLab, BlenderLab } from './computer-lab';
+import { DesktopLab } from './computer-lab';
+import { BlenderCase } from './blender-case';
 import { DecodingLab, DecisionLab } from './jev-lab';
 import { ComputerLearningScene } from './learning-scenes';
 import { JevTrainingScene, JevFitScene } from './jev-explainer';
@@ -25,7 +26,7 @@ function MapScene({ closing = false }: { closing?: boolean }) {
 function ComputerScene({ id }: { id:string }) {
   if (id === 'C1') return <ApiRouteScene />;
   if (['C1', 'C2', 'C4', 'C5'].includes(id)) return <DesktopLab id={id} />;
-  if (id === 'C6') return <BlenderLab />;
+  if (id === 'C6') return <BlenderCase />;
   if (id === 'C7') return <ComputerLearningScene />;
   return null;
 }

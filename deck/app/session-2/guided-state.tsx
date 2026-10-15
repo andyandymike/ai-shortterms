@@ -5,7 +5,7 @@ import type { Candidate } from './sorting';
 
 export type GuidedFrame = {
   desktop?: { step: number; interrupted: boolean };
-  blender?: { step: number; film?: boolean };
+  blender?: { step: number; film?: boolean; clip?: number };
   tokens?: string[];
   decision?: { step: number; mixed: boolean; llmStep: number; question: 'team' | 'reason'; lane?: 'llm' | 'jev' };
   calibration?: number;
@@ -20,6 +20,7 @@ export type GuidedState = {
   onComplete: () => void;
   onMediaUnavailable: () => void;
   onMediaProgress: (currentTime: number, duration: number, waiting?: boolean) => void;
+  onMediaPlayback: (playing: boolean) => void;
 };
 const Context = createContext<GuidedState | null>(null);
 export function GuidedProvider({ value, children }: { value: GuidedState; children: ReactNode }) {

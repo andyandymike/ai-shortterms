@@ -44,17 +44,17 @@
 12. [J5 · How Jev is trained](/session-2#jev/J5)
 13. [J8 · When to use Jev](/session-2#jev/J8)
 14. [R0 · RSI](/session-2#rsi/R0)
-15. [R4 · How an improvement loop works](/session-2#rsi/R4)
-16. [R8 · How an agent improves its workflow](/session-2#rsi/R8)
-17. [R9 · How a model learns from its own solutions](/session-2#rsi/R9)
-18. [R5 · How AlphaEvolve improves AI training](/session-2#rsi/R5)
-19. [R6 · When does improvement become recursive?](/session-2#rsi/R6)
+15. [R4 · Try a change. Check the result.](/session-2#rsi/R4)
+16. [R8 · The improved assistant takes over](/session-2#rsi/R8)
+17. [R9 · The new model makes the next batch](/session-2#rsi/R9)
+18. [R5 · AI helps make AI training faster](/session-2#rsi/R5)
+19. [R6 · Who comes back for the next round?](/session-2#rsi/R6)
 20. [E1 · Comparing the three concepts](/session-2#closing/E1)
 
 C4 依次保留定位结果、填好的表单和验证回执。R4 依次保留原程序 A、被拒绝的尝试 B、替换 A 的 C。每段口播只对应当时停住的结果。
 
 ## 开讲前
 
-确认 Presenter 同步，试一次继续、回退和重播。Blender 影片约 30 秒，静音播放，结束后停住；若无法播放，显示案例静帧。它是创作成片，配合右侧流程讲解。
+确认 Presenter 同步，试一次继续、回退和重播。C6 共三幅画面：任务录像 5 秒、界面操作 12 秒、另一个项目的成片 6 秒。每段都等待点击播放，结束后自动停住，没有讲解倒计时。前两段使用 YouTube 原作者播放器，排练时确认可以访问；不可播放时明确提示并显示已核对的操作静帧，仍可继续下一幅。第三段房屋成片与前面的球体任务是两个独立案例。
 
-教学互动无需模型密钥或在线请求；排序程序在本地执行。来源与限制见[参考稿](reference.md)。整场时长以实际排练为准。
+教学互动无需模型密钥；Blender 操作录像需要访问 YouTube，其他教学动画和排序程序在本地执行。来源与限制见[参考稿](reference.md)。整场时长以实际排练为准。

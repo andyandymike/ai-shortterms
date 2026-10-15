@@ -1,0 +1,394 @@
+[
+  {
+    "id": "R0-term",
+    "beat": "R0",
+    "label": "RSI 想解决什么",
+    "labelEn": "What RSI is trying to do",
+    "action": "停留在章节开场",
+    "actionEn": "Hold the chapter opening",
+    "look": [
+      "RSI 与英文全称独占开场页",
+      "RSI and its full name fill the opening page"
+    ],
+    "say": [
+      "研发 AI 要反复想方案、写实验、检查结果。人能做的尝试有限，所以希望 AI 也能承担这些工作。RSI，Recursive Self-Improvement，递归自我改进，进一步问：改进后的 AI 系统，能不能继续参与下一轮改进？先看怎样判断一次改动有没有用，再看三种不同做法。",
+      "Developing AI involves proposing ideas, running experiments and checking results. People have limited time for those trials, so we want AI to help. Recursive Self-Improvement asks a further question: can the improved AI system participate in the next improvement round? First see how we judge one change, then compare three approaches."
+    ],
+    "transition": [
+      "先从一个容易看懂的排序程序开始。",
+      "Start with a sorting program we can inspect."
+    ],
+    "scene": {
+      "kind": "static",
+      "label": [
+        "从改进到递归",
+        "From improvement to recursion"
+      ],
+      "end": [
+        "RSI 与英文全称独占开场页",
+        "RSI and its full name fill the opening page"
+      ],
+      "say": [
+        "研发 AI 要反复想方案、写实验、检查结果。人能做的尝试有限，所以希望 AI 也能承担这些工作。RSI，Recursive Self-Improvement，递归自我改进，进一步问：改进后的 AI 系统，能不能继续参与下一轮改进？先看怎样判断一次改动有没有用，再看三种不同做法。",
+        "Developing AI involves proposing ideas, running experiments and checking results. People have limited time for those trials, so we want AI to help. Recursive Self-Improvement asks a further question: can the improved AI system participate in the next improvement round? First see how we judge one change, then compare three approaches."
+      ]
+    }
+  },
+  {
+    "id": "R4-challenge",
+    "beat": "R4",
+    "label": "从原程序 A 开始",
+    "labelEn": "Start with program A",
+    "action": "播放 A，停在检查结果",
+    "actionEn": "Run A and hold its checked result",
+    "look": [
+      "A 排对了，右侧仍使用 A",
+      "A sorts correctly and remains in use"
+    ],
+    "say": [
+      "A 是原来使用的排序程序，结果正确。现在想让它少做些工作。这里把比较和写入次数加起来当作工作量，不是运行秒数。三个候选是预先写好的，数字移动来自实际执行。",
+      "A is our original sorting program, and its result is correct. We want it to do less work. Here work is the number of comparisons plus array writes, not elapsed seconds. The three candidates are prewritten, and the numbers follow their actual execution."
+    ],
+    "transition": [
+      "",
+      ""
+    ],
+    "scene": {
+      "kind": "sort",
+      "candidate": "A",
+      "run": true,
+      "checked": true,
+      "delay": 55,
+      "hold": 650,
+      "label": [
+        "原来的程序",
+        "The original program"
+      ],
+      "end": [
+        "A 排对了，右侧仍使用 A",
+        "A sorts correctly and remains in use"
+      ],
+      "say": [
+        "A 是原来使用的排序程序，结果正确。现在想让它少做些工作。这里把比较和写入次数加起来当作工作量，不是运行秒数。三个候选是预先写好的，数字移动来自实际执行。",
+        "A is our original sorting program, and its result is correct. We want it to do less work. Here work is the number of comparisons plus array writes, not elapsed seconds. The three candidates are prewritten, and the numbers follow their actual execution."
+      ]
+    }
+  },
+  {
+    "id": "R4-keep",
+    "beat": "R4",
+    "label": "两次尝试",
+    "labelEn": "Two attempts",
+    "action": "分别播放 B、C，每次检查后自动停住",
+    "actionEn": "Run B and C separately; hold after each check",
+    "look": [
+      "C 通过六项测试，以更少工作替换 A",
+      "C passes six tests with less work and replaces A"
+    ],
+    "say": [
+      "第一次尝试 B，只走一遍，工作确实少了，但红色数字还没排对。改得快没有用，先得正确，所以右边 IN USE 仍然是 A。 再试 C。它通过同一组六项测试，工作量也更少，才替换 A。这就是提出改法、测试、保留结果。眼下变好的是排序程序；如果改的是 AI 自己的工具、参数，或者训练程序，才开始接近我们今天要讲的几条路线。",
+      "The first attempt, B, makes only one pass. It uses less work, but the red numbers are still out of order. A cheaper change must still be correct, so IN USE stays A. Try C next. It passes the same six tests with less work, so it replaces A. That is propose, test and retain. So far, a sorting program has improved. Now apply that idea to an AI system’s own tools, parameters or training code."
+    ],
+    "transition": [
+      "第一种做法：模型不变，改它做事的方法。",
+      "First: keep the model, change how the agent works."
+    ],
+    "scene": {
+      "kind": "sequence",
+      "segments": [
+        {
+          "kind": "sort",
+          "candidate": "B",
+          "run": true,
+          "checked": true,
+          "delay": 100,
+          "hold": 700,
+          "label": [
+            "第一次尝试失败",
+            "The first attempt fails"
+          ],
+          "end": [
+            "B 的结果有误，继续使用 A",
+            "B gives an incorrect result; keep A"
+          ],
+          "say": [
+            "第一次尝试 B，只走一遍，工作确实少了，但红色数字还没排对。改得快没有用，先得正确，所以右边 IN USE 仍然是 A。",
+            "The first attempt, B, makes only one pass. It uses less work, but the red numbers are still out of order. A cheaper change must still be correct, so IN USE stays A."
+          ]
+        },
+        {
+          "kind": "sort",
+          "candidate": "C",
+          "run": true,
+          "checked": true,
+          "delay": 110,
+          "hold": 700,
+          "label": [
+            "第二次尝试被采用",
+            "The second attempt is adopted"
+          ],
+          "end": [
+            "C 通过六项测试，以更少工作替换 A",
+            "C passes six tests with less work and replaces A"
+          ],
+          "say": [
+            "再试 C。它通过同一组六项测试，工作量也更少，才替换 A。这就是提出改法、测试、保留结果。眼下变好的是排序程序；如果改的是 AI 自己的工具、参数，或者训练程序，才开始接近我们今天要讲的几条路线。",
+            "Try C next. It passes the same six tests with less work, so it replaces A. That is propose, test and retain. So far, a sorting program has improved. Now apply that idea to an AI system’s own tools, parameters or training code."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "R8-agent",
+    "beat": "R8",
+    "label": "改 Agent 的工作方法",
+    "labelEn": "Improve the agent’s workflow",
+    "action": "播放新增检查，再播放评估与复用",
+    "actionEn": "Play the added check, then evaluation and reuse",
+    "look": [
+      "在别的编程任务上评估版本，版本库中的 v2 参与后续修改",
+      "Evaluate variants on other coding tasks; v2 from the archive helps make later variants"
+    ],
+    "say": [
+      "第一条路线改 Agent 的代码。Agent 可以理解成模型加上工具和做事流程。左边 LLM 的 weights 没变，变的是中间：编辑代码后先检查补丁能不能应用，有错就返回重试。DGM，也就是 Darwin Gödel Machine，报告过这类自改工具的做法；这里把过程画成一个简单例子。 一个补丁成功还不够，要用别的编程任务评估整个 Agent。DGM 会保留一个版本库，从不同版本继续探索；图里只画了一条分支。关键是，改好的 Agent 也会参与后面的自我修改。底层模型没重训，系统的做事能力仍然可能改善。",
+      "The first route changes agent code. Think of an agent as a model plus its tools and workflow. The LLM weights on the left stay fixed. The middle gains a patch check: if an edit cannot apply, return the error and retry. DGM, the Darwin Gödel Machine, reported this kind of tool improvement. This is a simplified illustration. One successful patch is not enough: evaluate the whole agent on other coding tasks. DGM keeps an archive and explores from different variants; this diagram shows one branch. A modified agent also participates in later self-modification. The system can improve even though its base model was not retrained."
+    ],
+    "transition": [
+      "第二条路线直接改变模型的 weights。",
+      "The second route changes the model’s weights."
+    ],
+    "scene": {
+      "kind": "sequence",
+      "segments": [
+        {
+          "kind": "research",
+          "from": 0,
+          "to": 3,
+          "delay": 750,
+          "hold": 700,
+          "label": [
+            "加一个会复用的检查步骤",
+            "Add a reusable check"
+          ],
+          "end": [
+            "工作流新增 Validate the patch，失败补丁修正后成功应用",
+            "Validate the patch is inserted; a failed patch is revised and applied"
+          ],
+          "say": [
+            "第一条路线改 Agent 的代码。Agent 可以理解成模型加上工具和做事流程。左边 LLM 的 weights 没变，变的是中间：编辑代码后先检查补丁能不能应用，有错就返回重试。DGM，也就是 Darwin Gödel Machine，报告过这类自改工具的做法；这里把过程画成一个简单例子。",
+            "The first route changes agent code. Think of an agent as a model plus its tools and workflow. The LLM weights on the left stay fixed. The middle gains a patch check: if an edit cannot apply, return the error and retry. DGM, the Darwin Gödel Machine, reported this kind of tool improvement. This is a simplified illustration."
+          ]
+        },
+        {
+          "kind": "research",
+          "from": 3,
+          "to": 6,
+          "delay": 700,
+          "hold": 700,
+          "label": [
+            "改好的 Agent 参与下一轮",
+            "Reuse the modified agent"
+          ],
+          "end": [
+            "在别的编程任务上评估版本，版本库中的 v2 参与后续修改",
+            "Evaluate variants on other coding tasks; v2 from the archive helps make later variants"
+          ],
+          "say": [
+            "一个补丁成功还不够，要用别的编程任务评估整个 Agent。DGM 会保留一个版本库，从不同版本继续探索；图里只画了一条分支。关键是，改好的 Agent 也会参与后面的自我修改。底层模型没重训，系统的做事能力仍然可能改善。",
+            "One successful patch is not enough: evaluate the whole agent on other coding tasks. DGM keeps an archive and explores from different variants; this diagram shows one branch. A modified agent also participates in later self-modification. The system can improve even though its base model was not retrained."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "R9-training",
+    "beat": "R9",
+    "label": "从自己生成的解题过程学习",
+    "labelEn": "Learn from generated solutions",
+    "action": "先筛选解题过程，再播放训练与下一批任务",
+    "actionEn": "Filter solutions, then play training and the next batch",
+    "look": [
+      "训练改变 weights，得到的模型继续生成下一批解题过程",
+      "Fine-tuning changes weights; the resulting model generates another batch of solutions"
+    ],
+    "say": [
+      "第二条路线像做题后整理练习材料。STaR 从已有题目和标准答案开始，让模型写解题过程。第一题答对，留下；第二题答成 7，给它答案 10，再试着写出能得到 10 的过程。它生成的是解题过程，题目和判断答案的依据仍由外部提供。 积累很多这样的例子，再做 fine-tuning，微调：用选出的题目和解题过程训练模型，改变 weights。训练后的模型再生成下一批，继续筛选和训练。这比在一次聊天的 context 里记住一句提示多了一步。也要注意，答案碰巧正确不保证过程正确，模型有没有学好还得用新题检查。",
+      "The second route resembles collecting useful practice solutions. STaR starts with existing questions and known answers, and asks the model for solution steps. Keep the first correct answer. For the second, wrong answer of 7, give the answer 10 as a hint and try again. The model generates the solution steps; the questions and answer key come from outside. Collect many such examples, then fine-tune: train on the selected questions and solutions to change the weights. The resulting model generates the next batch for another round of selection and training. This goes beyond adding a hint to one conversation’s context. A matching answer does not guarantee sound reasoning, so evaluate learning on new questions."
+    ],
+    "transition": [
+      "第三条路线不改做题方式，而是改训练所用的计算程序。",
+      "The third route improves the computation used for training."
+    ],
+    "scene": {
+      "kind": "sequence",
+      "segments": [
+        {
+          "kind": "research",
+          "from": 0,
+          "to": 3,
+          "delay": 800,
+          "hold": 750,
+          "label": [
+            "做题、核对、重试",
+            "Solve, check and retry"
+          ],
+          "end": [
+            "正确答案被筛出；错误的 7 根据答案提示重试为 10",
+            "Matching answers are selected; the wrong 7 is retried with a hint and becomes 10"
+          ],
+          "say": [
+            "第二条路线像做题后整理练习材料。STaR 从已有题目和标准答案开始，让模型写解题过程。第一题答对，留下；第二题答成 7，给它答案 10，再试着写出能得到 10 的过程。它生成的是解题过程，题目和判断答案的依据仍由外部提供。",
+            "The second route resembles collecting useful practice solutions. STaR starts with existing questions and known answers, and asks the model for solution steps. Keep the first correct answer. For the second, wrong answer of 7, give the answer 10 as a hint and try again. The model generates the solution steps; the questions and answer key come from outside."
+          ]
+        },
+        {
+          "kind": "research",
+          "from": 3,
+          "to": 6,
+          "delay": 750,
+          "hold": 750,
+          "label": [
+            "用筛选结果训练模型",
+            "Train on the selected solutions"
+          ],
+          "end": [
+            "训练改变 weights，得到的模型继续生成下一批解题过程",
+            "Fine-tuning changes weights; the resulting model generates another batch of solutions"
+          ],
+          "say": [
+            "积累很多这样的例子，再做 fine-tuning，微调：用选出的题目和解题过程训练模型，改变 weights。训练后的模型再生成下一批，继续筛选和训练。这比在一次聊天的 context 里记住一句提示多了一步。也要注意，答案碰巧正确不保证过程正确，模型有没有学好还得用新题检查。",
+            "Collect many such examples, then fine-tune: train on the selected questions and solutions to change the weights. The resulting model generates the next batch for another round of selection and training. This goes beyond adding a hint to one conversation’s context. A matching answer does not guarantee sound reasoning, so evaluate learning on new questions."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "R5-example",
+    "beat": "R5",
+    "label": "改训练工具",
+    "labelEn": "Improve training tools",
+    "action": "检查 kernel 改动，再把它放进训练",
+    "actionEn": "Check the kernel change, then put it into training",
+    "look": [
+      "同一块 K 移入 Gemini 训练，显示已报告的效率收益",
+      "The same K enters Gemini training and the reported efficiency gains appear"
+    ],
+    "say": [
+      "训练 AI 时，有些小段计算会反复运行，这叫 kernel。可以把一次大计算分成小块，怎样分才更适合硬件，会影响效率。AlphaEvolve 用 Gemini 提出改法，再实际运行，检查答案是否正确、速度是否改善。和排序页一样，不能只听 AI 说它更好。 现在改好的 K 回到 Gemini 的训练里。DeepMind 报告，这类 kernel 平均加速 23%，整体训练时间约减少 1%。因为它反复运行，局部节省也有价值。但这里证明的是训练更省；是否因此得到更会研发的 AI，还要另外检验。",
+      "Training repeatedly runs small compute routines called kernels. A large computation can be divided into smaller pieces; how those pieces fit the hardware affects efficiency. AlphaEvolve uses Gemini to propose changes, then runs checks for correctness and speed. As with sorting, a claim of improvement is not enough. The improved K now goes into Gemini training. DeepMind reported an average 23% kernel speedup and about 1% less total training time. Repeated computation makes those savings useful. This establishes more efficient training; better AI research ability needs separate evidence."
+    ],
+    "transition": [
+      "三种做法改的地方不同，最后看递归发生在哪里。",
+      "The three approaches change different things. Now locate the recursive step."
+    ],
+    "scene": {
+      "kind": "sequence",
+      "segments": [
+        {
+          "kind": "research",
+          "from": 0,
+          "to": 2,
+          "delay": 850,
+          "hold": 700,
+          "label": [
+            "改训练中反复执行的计算",
+            "Improve a repeated training computation"
+          ],
+          "end": [
+            "Gemini 提议的 kernel 改动通过正确性与速度检查",
+            "Gemini’s proposed kernel change passes correctness and speed checks"
+          ],
+          "say": [
+            "训练 AI 时，有些小段计算会反复运行，这叫 kernel。可以把一次大计算分成小块，怎样分才更适合硬件，会影响效率。AlphaEvolve 用 Gemini 提出改法，再实际运行，检查答案是否正确、速度是否改善。和排序页一样，不能只听 AI 说它更好。",
+            "Training repeatedly runs small compute routines called kernels. A large computation can be divided into smaller pieces; how those pieces fit the hardware affects efficiency. AlphaEvolve uses Gemini to propose changes, then runs checks for correctness and speed. As with sorting, a claim of improvement is not enough."
+          ]
+        },
+        {
+          "kind": "research",
+          "from": 2,
+          "to": 3,
+          "delay": 700,
+          "hold": 800,
+          "label": [
+            "把改进用回 AI 训练",
+            "Use the improvement in AI training"
+          ],
+          "end": [
+            "同一块 K 移入 Gemini 训练，显示已报告的效率收益",
+            "The same K enters Gemini training and the reported efficiency gains appear"
+          ],
+          "say": [
+            "现在改好的 K 回到 Gemini 的训练里。DeepMind 报告，这类 kernel 平均加速 23%，整体训练时间约减少 1%。因为它反复运行，局部节省也有价值。但这里证明的是训练更省；是否因此得到更会研发的 AI，还要另外检验。",
+            "The improved K now goes into Gemini training. DeepMind reported an average 23% kernel speedup and about 1% less total training time. Repeated computation makes those savings useful. This establishes more efficient training; better AI research ability needs separate evidence."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "R6-next",
+    "beat": "R6",
+    "label": "三条路线与递归",
+    "labelEn": "Three routes and the recursive step",
+    "action": "对照改动位置，再播放条件性的接棒",
+    "actionEn": "Compare what changes, then play the conditional handoff",
+    "look": [
+      "条件性回路：v2 回到左侧做改进，右侧出现 v3 问号",
+      "Conditional loop: v2 takes over on the left; v3 appears with a question mark"
+    ],
+    "say": [
+      "把三种做法并排看：DGM 改工具和流程，STaR 通过训练改 weights，AlphaEvolve 改训练用的程序。这是帮助理解的分法，不是 RSI 只有这三种。它们的共同问题是：改进会不会反馈到下一轮，帮助系统做出后续改进？ 递归发生在这条回来的箭头：上一轮改好的系统，参与下一轮改进。这里的系统既可以是模型，也可以包含工具和流程。要检验它是否真的更会改进，得用新任务和相同预算比较。DGM 展示了有限编程 Agent 的反馈回路；这些例子都不能直接推出 AI 已经能无限自我升级。",
+      "Side by side: DGM changes tools and workflows, STaR trains weights, and AlphaEvolve improves training code. These are useful examples, not an exhaustive taxonomy of RSI. The shared question is whether an improvement feeds back and helps the system make later improvements. The return arrow is the recursive step: the improved system participates in the next improvement round. A system can include both a model and its tools and workflow. Compare on new tasks with the same budget to test whether improvement ability grew. DGM demonstrates a bounded coding-agent feedback loop; these examples do not establish unlimited self-improvement."
+    ],
+    "transition": [
+      "回到今天的三个问题：能否操作、能否判断、能否继续改进。",
+      "Return to our three questions: can it act, decide and keep improving?"
+    ],
+    "scene": {
+      "kind": "sequence",
+      "segments": [
+        {
+          "kind": "research",
+          "from": 0,
+          "to": 0,
+          "delay": 0,
+          "hold": 0,
+          "label": [
+            "先分清改了哪里",
+            "Identify what changed"
+          ],
+          "end": [
+            "三列分别是 Agent 代码、模型 weights、训练工具",
+            "Three columns compare agent code, model weights and training tools"
+          ],
+          "say": [
+            "把三种做法并排看：DGM 改工具和流程，STaR 通过训练改 weights，AlphaEvolve 改训练用的程序。这是帮助理解的分法，不是 RSI 只有这三种。它们的共同问题是：改进会不会反馈到下一轮，帮助系统做出后续改进？",
+            "Side by side: DGM changes tools and workflows, STaR trains weights, and AlphaEvolve improves training code. These are useful examples, not an exhaustive taxonomy of RSI. The shared question is whether an improvement feeds back and helps the system make later improvements."
+          ]
+        },
+        {
+          "kind": "research",
+          "from": 1,
+          "to": 5,
+          "delay": 800,
+          "hold": 800,
+          "label": [
+            "改进后的系统接着做改进",
+            "The improved system takes over"
+          ],
+          "end": [
+            "条件性回路：v2 回到左侧做改进，右侧出现 v3 问号",
+            "Conditional loop: v2 takes over on the left; v3 appears with a question mark"
+          ],
+          "say": [
+            "递归发生在这条回来的箭头：上一轮改好的系统，参与下一轮改进。这里的系统既可以是模型，也可以包含工具和流程。要检验它是否真的更会改进，得用新任务和相同预算比较。DGM 展示了有限编程 Agent 的反馈回路；这些例子都不能直接推出 AI 已经能无限自我升级。",
+            "The return arrow is the recursive step: the improved system participates in the next improvement round. A system can include both a model and its tools and workflow. Compare on new tasks with the same budget to test whether improvement ability grew. DGM demonstrates a bounded coding-agent feedback loop; these examples do not establish unlimited self-improvement."
+          ]
+        }
+      ]
+    }
+  }
+]

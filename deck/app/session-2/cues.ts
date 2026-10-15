@@ -25,8 +25,8 @@ function animate(scene: SceneSpec): { frames: GuidedFrame[]; delay: number } {
   switch (scene.kind) {
     case 'desktop': return { frames: steps.map(step => ({ desktop: { step, interrupted: !!scene.interrupted } })), delay: 750 };
     case 'blender': return { frames: steps.map(step => ({ blender: { step } })), delay: 1100 };
-    // Video completion is driven by the media ended event, rather than a guessed duration.
-    case 'film': return { frames: [{ blender: { step: 6, film: true } }], delay: 30000 };
+    // The media player reports completion at the configured source timestamp.
+    case 'film': return { frames: [{ blender: { step: 6, film: true, clip: scene.selection ?? 2 } }], delay: scene.delay ?? 30000 };
     case 'tokens': return { frames: steps.map(step => ({ tokens: (scene.tokens ?? []).slice(0, step) })), delay: 1100 };
     case 'decision': return { frames: steps.map(step => ({ selection: scene.selection ?? 0, decision: { step, mixed: !!scene.mixed, llmStep: scene.llmStep ?? 0, question: scene.question === 'reason' ? 'reason' : 'team', lane: 'jev' } })), delay: 800 };
     case 'llm': return { frames: steps.map(llmStep => ({ decision: { step: 0, mixed: false, llmStep, question: 'team', lane: 'llm' } })), delay: 450 };
@@ -67,7 +67,7 @@ export const cues: Cue[] = (plan as unknown as CueSpec[]).map(spec => {
     frames.push(...animation.frames);
     timeline.push(...animation.frames.map((_, index) => ({
       phase, media: segment.kind === 'film',
-      duration: segment.kind === 'film' ? 30000 : index === animation.frames.length - 1 ? segment.hold ?? (delay ? 900 : 0) : delay,
+      duration: segment.kind === 'film' ? delay : index === animation.frames.length - 1 ? segment.hold ?? (delay ? 900 : 0) : delay,
     })));
     phases.push({
       label: segment.label ?? [spec.label, spec.label], end: segment.end ?? [spec.look?.[0] ?? spec.label, spec.look?.[1] ?? spec.label],

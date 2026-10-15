@@ -1,0 +1,41 @@
+{
+  "generation_profile": "standard",
+  "rounds": 1,
+  "candidate_count": 3,
+  "candidates": [
+    {
+      "id": "motion-first",
+      "editorial_decision": "Make the same B travel from outcome to actor position; narrate each held result.",
+      "sample_zh": "B 先出现在右边，是这轮的结果；接着回到左边，成为下一轮动手改进的助手。",
+      "sample_en": "B appears on the right as this round’s result, then returns to the left to make the next improvement.",
+      "selected": true
+    },
+    {
+      "id": "question-first",
+      "editorial_decision": "Organize around what changed and who does the next round.",
+      "sample_zh": "这次谁变了？B 带着新工具。下一次谁来改？还是这个 B。",
+      "sample_en": "Who changed? B has the new tool. Who makes the next change? That same B.",
+      "selected": false,
+      "reason": "Questions compete with the visible movement and repeat the same point."
+    },
+    {
+      "id": "workshop-metaphor",
+      "editorial_decision": "Explain as a workshop passing better equipment to its next worker.",
+      "sample_zh": "先把工具改好，再让带着新工具的助手接着干。",
+      "sample_en": "Improve the tool, then let the assistant with that tool carry on.",
+      "selected": false,
+      "reason": "An additional workshop analogy could obscure that the assistant changes its own system."
+    }
+  ],
+  "assumptions": [
+    "English audience labels and bilingual narrator; known technical details remain in the reference."
+  ],
+  "required_style_review": "Motion-first uses concrete actors and short causal clauses. Full RSI name occurs only at opening in audience content.",
+  "negative_constraints_review": "No three-route taxonomy, main narration does not define weights/kernel/fine-tuning, no claimed measured animation gain.",
+  "overlap_review": {
+    "status": "pass",
+    "basis": "No external style samples were supplied; overlap consists of retained required names, claims and ordinary functional wording."
+  },
+  "selected_sha256": "43da79c3e1b61a0ce988e0477de293d32e3aff47ebe81bedaabcb0ebdca21619",
+  "semantic_audit": "Pending independent content-only review."
+}

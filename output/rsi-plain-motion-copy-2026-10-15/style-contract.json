@@ -1,0 +1,468 @@
+{
+  "schema_version": "1.0",
+  "task_context": {
+    "mode": "adapt",
+    "source_locale": "zh-CN",
+    "output_locale": "en-US",
+    "source_base_language": "zh",
+    "output_base_language": "en",
+    "channel": "Bilingual presentation narration and English audience metadata",
+    "audience": "Viewers without AI background",
+    "speaker_role": "Presenter explaining visible steps",
+    "risk": "normal",
+    "content_mode": "bounded",
+    "generation_profile": "standard"
+  },
+  "style_profiles": [],
+  "style_contract": {
+    "request_text": "Use simple movement and plain speech to explain why the RSI examples are relevant to self-improvement.",
+    "strength": 2,
+    "presets": [],
+    "axes": [
+      {
+        "axis_family": "diction",
+        "axis_id": "diction.concrete_action",
+        "target": "Name the actor, its own tool or solution sheets, and the visible movement.",
+        "intensity": 2,
+        "required": true,
+        "confidence": "high",
+        "sources": [
+          {
+            "kind": "user_explicit",
+            "id": "current_request",
+            "constraint_role": "target",
+            "evidence": "Simple movement, fewer complex terms, understandable to a nontechnical audience.",
+            "priority": 300
+          }
+        ],
+        "resolved_from": [
+          "current_request"
+        ],
+        "resolution_reason": "Tie the explanation to the pictured actor and its next action.",
+        "inherits_global_strength": true,
+        "observable_signals": [
+          "Assistant A/B",
+          "own tool",
+          "moves back",
+          "takes over"
+        ],
+        "must": [
+          "Assistant A/B",
+          "own tool",
+          "moves back",
+          "takes over"
+        ],
+        "may": [],
+        "forbid": [
+          "Abstract route taxonomy",
+          "Unexplained weights, kernel, fine-tuning in main narration"
+        ]
+      },
+      {
+        "axis_family": "discourse",
+        "axis_id": "discourse.one_held_result",
+        "target": "One causal point per held picture, with only the detail needed for that point.",
+        "intensity": 2,
+        "required": true,
+        "confidence": "high",
+        "sources": [
+          {
+            "kind": "user_explicit",
+            "id": "current_request",
+            "constraint_role": "target",
+            "evidence": "Simple movement, fewer complex terms, understandable to a nontechnical audience.",
+            "priority": 300
+          }
+        ],
+        "resolved_from": [
+          "current_request"
+        ],
+        "resolution_reason": "Tie the explanation to the pictured actor and its next action.",
+        "inherits_global_strength": true,
+        "observable_signals": [
+          "Narration refers to the object that just moved",
+          "Next actor explicitly named"
+        ],
+        "must": [
+          "Narration refers to the object that just moved",
+          "Next actor explicitly named"
+        ],
+        "may": [],
+        "forbid": [
+          "Several definitions inside one cue"
+        ]
+      },
+      {
+        "axis_family": "stance",
+        "axis_id": "stance.evidence_boundaries",
+        "target": "Keep teaching illustration and measured research distinct.",
+        "intensity": 2,
+        "required": true,
+        "confidence": "high",
+        "sources": [
+          {
+            "kind": "user_explicit",
+            "id": "current_request",
+            "constraint_role": "target",
+            "evidence": "Simple movement, fewer complex terms, understandable to a nontechnical audience.",
+            "priority": 300
+          }
+        ],
+        "resolved_from": [
+          "current_request"
+        ],
+        "resolution_reason": "Tie the explanation to the pictured actor and its next action.",
+        "inherits_global_strength": true,
+        "observable_signals": [
+          "conditional next change",
+          "reported 23% and about 1%",
+          "compact caveats in reference"
+        ],
+        "must": [
+          "conditional next change",
+          "reported 23% and about 1%",
+          "compact caveats in reference"
+        ],
+        "may": [],
+        "forbid": [
+          "Guaranteed C",
+          "Claiming three complete RSI routes"
+        ]
+      }
+    ],
+    "conflicts": [],
+    "assumptions": [
+      "English projection; Chinese and English presenter notes share one causal sequence. Technical qualifications remain in reference and demonstration notes."
+    ]
+  },
+  "references": {
+    "samples": [],
+    "holdout_ids": [],
+    "forbidden_content_transfer": []
+  },
+  "content_locks": {
+    "claim_policy": "source_only",
+    "allowed_new_claim_classes": [],
+    "lock_ledger": [
+      {
+        "lock_id": "rsi_term",
+        "category": "term",
+        "source_span": "Recursive Self-Improvement",
+        "canonical_value": "Recursive Self-Improvement",
+        "match_mode": "byte_exact",
+        "required": true,
+        "allowed_localizations": []
+      },
+      {
+        "lock_id": "dgm_name",
+        "category": "entity",
+        "source_span": "DGM",
+        "canonical_value": "DGM",
+        "match_mode": "byte_exact",
+        "required": true,
+        "allowed_localizations": []
+      },
+      {
+        "lock_id": "star_name",
+        "category": "entity",
+        "source_span": "STaR",
+        "canonical_value": "STaR",
+        "match_mode": "byte_exact",
+        "required": true,
+        "allowed_localizations": []
+      },
+      {
+        "lock_id": "alpha_name",
+        "category": "entity",
+        "source_span": "AlphaEvolve",
+        "canonical_value": "AlphaEvolve",
+        "match_mode": "byte_exact",
+        "required": true,
+        "allowed_localizations": []
+      },
+      {
+        "lock_id": "gemini_name",
+        "category": "entity",
+        "source_span": "Gemini",
+        "canonical_value": "Gemini",
+        "match_mode": "byte_exact",
+        "required": true,
+        "allowed_localizations": []
+      },
+      {
+        "lock_id": "routine_gain",
+        "category": "number",
+        "source_span": "23%",
+        "canonical_value": "23%",
+        "match_mode": "byte_exact",
+        "required": true,
+        "allowed_localizations": []
+      },
+      {
+        "lock_id": "training_gain",
+        "category": "number",
+        "source_span": "1%",
+        "canonical_value": "1%",
+        "match_mode": "byte_exact",
+        "required": true,
+        "allowed_localizations": []
+      }
+    ],
+    "claim_ledger": [
+      {
+        "claim_id": "recursive_step",
+        "source_span": "An improved system participates in later self-improvement; continuation and improvement are not guaranteed.",
+        "subject": "RSI",
+        "predicate": "asks whether",
+        "object": "the improved system can continue improving itself",
+        "polarity": "positive",
+        "modality": null,
+        "conditions": [],
+        "qualifiers": [
+          "No unlimited improvement claim"
+        ],
+        "exceptions": [],
+        "attribution": "Existing source/reference and parent-verified research",
+        "materiality": "material",
+        "required": true,
+        "allowed_transform": "translate"
+      },
+      {
+        "claim_id": "sorting_scope",
+        "source_span": "R4 changes an external sorting program, with six fixed tests and work counts, not the AI doing the work.",
+        "subject": "R4",
+        "predicate": "tests",
+        "object": "prewritten sorting programs",
+        "polarity": "positive",
+        "modality": null,
+        "conditions": [],
+        "qualifiers": [
+          "Work counts comparisons plus writes, not time",
+          "A correct baseline, B rejected, C retained after six tests with less work"
+        ],
+        "exceptions": [],
+        "attribution": "Existing source/reference and parent-verified research",
+        "materiality": "material",
+        "required": true,
+        "allowed_transform": "translate"
+      },
+      {
+        "claim_id": "dgm_self",
+        "source_span": "DGM changes its own agent code while foundation-model weights remain frozen.",
+        "subject": "DGM",
+        "predicate": "changes",
+        "object": "its own tools and workflow",
+        "polarity": "positive",
+        "modality": null,
+        "conditions": [],
+        "qualifiers": [
+          "Foundation model stays frozen"
+        ],
+        "exceptions": [],
+        "attribution": "Existing source/reference and parent-verified research",
+        "materiality": "material",
+        "required": true,
+        "allowed_transform": "translate"
+      },
+      {
+        "claim_id": "dgm_evaluation",
+        "source_span": "DGM evaluates coding variants and explores a branching archive; a retained variant can do later self-modification.",
+        "subject": "DGM",
+        "predicate": "reuses",
+        "object": "evaluated variants for later self-modification",
+        "polarity": "positive",
+        "modality": null,
+        "conditions": [],
+        "qualifiers": [
+          "Branching archive, not always latest or best only",
+          "Bounded coding evidence"
+        ],
+        "exceptions": [],
+        "attribution": "Existing source/reference and parent-verified research",
+        "materiality": "material",
+        "required": true,
+        "allowed_transform": "translate"
+      },
+      {
+        "claim_id": "dgm_teaching",
+        "source_span": "The pictured patch check, tasks, and A/B sequence are teaching examples, not measured DGM output.",
+        "subject": "R8",
+        "predicate": "illustrates",
+        "object": "one possible branch",
+        "polarity": "positive",
+        "modality": null,
+        "conditions": [],
+        "qualifiers": [
+          "No fake measurements",
+          "C or next change remains conditional"
+        ],
+        "exceptions": [],
+        "attribution": "Existing source/reference and parent-verified research",
+        "materiality": "material",
+        "required": true,
+        "allowed_transform": "translate"
+      },
+      {
+        "claim_id": "star_source",
+        "source_span": "STaR receives existing questions, known answers, and a few reasoning demonstrations, then generates solution steps.",
+        "subject": "STaR",
+        "predicate": "generates",
+        "object": "solutions for externally supplied questions",
+        "polarity": "positive",
+        "modality": null,
+        "conditions": [],
+        "qualifiers": [
+          "Questions and answer key come from outside"
+        ],
+        "exceptions": [],
+        "attribution": "Existing source/reference and parent-verified research",
+        "materiality": "material",
+        "required": true,
+        "allowed_transform": "translate"
+      },
+      {
+        "claim_id": "star_filter",
+        "source_span": "STaR filters by final-answer correctness; failed cases may retry with the correct answer as a hint.",
+        "subject": "STaR",
+        "predicate": "selects",
+        "object": "solutions with matching answers",
+        "polarity": "positive",
+        "modality": null,
+        "conditions": [],
+        "qualifiers": [
+          "A correct final answer does not guarantee sound reasoning"
+        ],
+        "exceptions": [],
+        "attribution": "Existing source/reference and parent-verified research",
+        "materiality": "material",
+        "required": true,
+        "allowed_transform": "translate"
+      },
+      {
+        "claim_id": "star_training",
+        "source_span": "Selected solutions train a model which generates the next solution batch; each original-paper round starts from the original pretrained checkpoint.",
+        "subject": "STaR",
+        "predicate": "uses",
+        "object": "newly trained models to generate later training data",
+        "polarity": "positive",
+        "modality": null,
+        "conditions": [],
+        "qualifiers": [
+          "Do not imply continued fine-tuning of the previous checkpoint",
+          "Animation does not train or measure a model"
+        ],
+        "exceptions": [],
+        "attribution": "Existing source/reference and parent-verified research",
+        "materiality": "material",
+        "required": true,
+        "allowed_transform": "translate"
+      },
+      {
+        "claim_id": "alpha_scope",
+        "source_span": "AlphaEvolve uses Gemini to improve a kernel-tiling heuristic for Gemini training, checked for correctness and speed.",
+        "subject": "AlphaEvolve",
+        "predicate": "improves",
+        "object": "a repeated computation used in Gemini training",
+        "polarity": "positive",
+        "modality": null,
+        "conditions": [],
+        "qualifiers": [
+          "Not a model-weight change or whole training objective"
+        ],
+        "exceptions": [],
+        "attribution": "Existing source/reference and parent-verified research",
+        "materiality": "material",
+        "required": true,
+        "allowed_transform": "translate"
+      },
+      {
+        "claim_id": "alpha_numbers",
+        "source_span": "DeepMind reported average 23% kernel speedup over an expert-designed heuristic and about 1% less total training time.",
+        "subject": "DeepMind",
+        "predicate": "reports",
+        "object": "23% routine speedup and approximately 1% total training time reduction",
+        "polarity": "positive",
+        "modality": null,
+        "conditions": [],
+        "qualifiers": [
+          "Different denominators",
+          "Reported, not measured by this deck"
+        ],
+        "exceptions": [],
+        "attribution": "Existing source/reference and parent-verified research",
+        "materiality": "material",
+        "required": true,
+        "allowed_transform": "translate"
+      },
+      {
+        "claim_id": "alpha_limit",
+        "source_span": "This AlphaEvolve result does not show the newly trained model returning to conduct a better next improvement round.",
+        "subject": "AlphaEvolve result",
+        "predicate": "does not establish",
+        "object": "better AI research ability or a completed recursive cycle",
+        "polarity": "negative",
+        "modality": null,
+        "conditions": [],
+        "qualifiers": [
+          "Training efficiency only"
+        ],
+        "exceptions": [],
+        "attribution": "Existing source/reference and parent-verified research",
+        "materiality": "material",
+        "required": true,
+        "allowed_transform": "translate"
+      },
+      {
+        "claim_id": "human_limits",
+        "source_span": "Humans still set objectives, tasks, evaluation and compute budgets; successive improvement needs further evidence.",
+        "subject": "People",
+        "predicate": "define",
+        "object": "research and evaluation boundaries",
+        "polarity": "positive",
+        "modality": null,
+        "conditions": [],
+        "qualifiers": [
+          "Animation is not an evaluation winner or general successor model"
+        ],
+        "exceptions": [],
+        "attribution": "Existing source/reference and parent-verified research",
+        "materiality": "material",
+        "required": true,
+        "allowed_transform": "translate"
+      }
+    ]
+  },
+  "locale_realization": {
+    "adapter": "en",
+    "locale": "en-US",
+    "signals": [
+      "Plain English clauses; Chinese authored from the same claims with natural spoken order."
+    ],
+    "forbidden_transfers": [
+      "Literal translations of English abstractions into Chinese."
+    ]
+  },
+  "evaluation": {
+    "claim_ledger_coverage_required": true,
+    "claim_ledger_coverage_artifact_ref": "coverage.json",
+    "claim_alignment_required": true,
+    "semantic_audit": "independent",
+    "hard_gates": [
+      "content",
+      "required_axes",
+      "negative_constraints",
+      "reference_overlap",
+      "semantic_audit"
+    ],
+    "style_checks": [
+      "One causal point per picture",
+      "Full RSI name only at opening"
+    ],
+    "fluency_checks": [
+      "Read aloud in both languages"
+    ],
+    "overlap_checks": [
+      "No external style samples supplied; required names and source facts are retained."
+    ]
+  }
+}

@@ -129,9 +129,9 @@ C4 依次保留定位结果、填好的表单和验证回执。R4 依次保留�
 
 ## 开讲前
 
-确认 Presenter 同步，试一次继续、回退和重播。Blender 影片约 30 秒，静音播放，结束后停住；若无法播放，显示案例静帧。它是创作成片，配合右侧流程讲解。
+确认 Presenter 同步，试一次继续、回退和重播。C6 共三幅画面：任务录像 5 秒、界面操作 12 秒、另一个项目的成片 6 秒。每段都等待点击播放，结束后自动停住，没有讲解倒计时。前两段使用 YouTube 原作者播放器，排练时确认可以访问；不可播放时明确提示并显示已核对的操作静帧，仍可继续下一幅。第三段房屋成片与前面的球体任务是两个独立案例。
 
-教学互动无需模型密钥或在线请求；排序程序在本地执行。来源与限制见[参考稿](reference.md)。整场时长以实际排练为准。
+教学互动无需模型密钥；Blender 操作录像需要访问 YouTube，其他教学动画和排序程序在本地执行。来源与限制见[参考稿](reference.md)。整场时长以实际排练为准。
 `;
 fs.writeFileSync(path.join(output, 'index.md'), index);
 console.log(`Generated index and three synchronized scripts: ${pages.length} page sections, ${viewCount} narrated visuals, ${cues.length} validated cue groups.`);

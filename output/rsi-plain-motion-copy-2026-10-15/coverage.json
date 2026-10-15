@@ -1,0 +1,19 @@
+{
+  "source": "source-cues.json plus existing RSI reference section and assigned verified facts",
+  "source_sha256": "024836e5a956cf4f9eb15a5e77860c84a5dbfb68d75c4a047d4b19503114e0f0",
+  "claim_ids": [
+    "recursive_step",
+    "sorting_scope",
+    "dgm_self",
+    "dgm_evaluation",
+    "dgm_teaching",
+    "star_source",
+    "star_filter",
+    "star_training",
+    "alpha_scope",
+    "alpha_numbers",
+    "alpha_limit",
+    "human_limits"
+  ],
+  "coverage": "All material facts are represented; technical detail may move to reference but may not disappear."
+}

@@ -164,13 +164,29 @@ The languages are paired by visual; choose one for delivery. Press play, wait fo
 
 [打开本页](/session-2#computer-use/C6)
 
-> 画面 / Visual 1 / 1 · 成片静帧与 bpy → render → Computer Use 流程
+> 画面 / Visual 1 / 3 · 任务：删掉立方体，添加球体并向上移动
 >
-> Source still and the bpy → render → Computer Use workflow
+> The task: remove the cube, add a sphere and raise it
 
-**中文｜** 这是 Thomas Ricouard 发布的 Blender 成片，展示的是成果，不是鼠标操作录像。右侧是制作流程：bpy 是 Blender 的 Python API，用它建立可编辑场景；render 把场景算成图像；Computer Use 再打开 Blender 检查。直接调用和界面操作在这里配合起来了。
+**中文｜** 先看任务：删掉默认立方体，添加一个 UV Sphere，也就是球体，再向上移动。目标很具体，完成后可以直接在 Blender 里检查。这是 Kakarot Labs 发布的 Astra 实测录像。
 
-**English｜** This is Thomas Ricouard’s published Blender render: the finished result, not a mouse-action recording. On the right, bpy is Blender’s Python API for building an editable scene. Rendering turns the scene into images, and Computer Use opens Blender to inspect it. Programmatic access and interface actions work together.
+**English｜** The task is concrete: remove the default cube, add a UV Sphere, and move it upward. We can check the result directly in Blender. This is an edited Astra demonstration published by Kakarot Labs.
+
+> 画面 / Visual 2 / 3 · Blender 中的球体已经升起，Z 坐标为 2；播放失败时保留该操作静帧
+>
+> The sphere is raised in Blender, with Z set to 2; the same source frame is held if playback fails
+
+**中文｜** 球体现在升起来了。录像里可以看到搜索菜单、添加球体，然后把右侧 Z 坐标从 0 改成 2。自然语言任务落实成了软件里的操作，最后检查的也是 Blender 中实际变化的结果。
+
+**English｜** The sphere is now raised. The recording shows a search menu, a sphere being added, and the Z position changing from 0 to 2. The natural-language task becomes interface actions, and the result can be checked inside Blender.
+
+> 画面 / Visual 3 / 3 · 另一个项目：房屋成片与 Python / bpy、Computer Use 的分工
+>
+> A separate project: an architecture render and the Python / bpy and Computer Use roles
+
+**中文｜** 最后换一个更复杂的项目：这是 Thomas Ricouard 发布的房屋成片。bpy 是 Blender 的 Python API，用来建立可编辑场景；Computer Use 用来打开软件检查。复杂工作里，这两种方式可以配合使用。
+
+**English｜** Now a separate, more complex project: Thomas Ricouard’s architecture render. Blender’s Python API, bpy, builds an editable scene; Computer Use opens the application to inspect it. The two approaches can work together.
 
 **转场｜** 操作之外，流程还要判断：一封邮件该交给谁？
 
@@ -342,9 +358,9 @@ The languages are paired by visual; choose one for delivery. Press play, wait fo
 >
 > RSI and its full name fill the opening page
 
-**中文｜** 研发 AI 要反复想方案、写实验、检查结果。人能做的尝试有限，所以希望 AI 也能承担这些工作。RSI，Recursive Self-Improvement，递归自我改进，进一步问：改进后的 AI 系统，能不能继续参与下一轮改进？先看怎样判断一次改动有没有用，再看三种不同做法。
+**中文｜** RSI 是 Recursive Self-Improvement，递归自我改进。设想一个 AI 助手先改好自己的工具，再让带着新工具的助手做下一次改进。我们要看的是：改好的那个，能不能接着改自己？先从一次容易看懂的改进开始。
 
-**English｜** Developing AI involves proposing ideas, running experiments and checking results. People have limited time for those trials, so we want AI to help. Recursive Self-Improvement asks a further question: can the improved AI system participate in the next improvement round? First see how we judge one change, then compare three approaches.
+**English｜** RSI means Recursive Self-Improvement. Imagine an AI assistant improving its own tools. The assistant with those new tools then works on the next improvement. Can the improved assistant keep improving itself? Start with one change we can easily check.
 
 **转场｜** 先从一个容易看懂的排序程序开始。
 
@@ -352,7 +368,7 @@ The languages are paired by visual; choose one for delivery. Press play, wait fo
 
 ---
 
-## 15 · R4｜How an improvement loop works
+## 15 · R4｜Try a change. Check the result.
 
 [打开本页](/session-2#rsi/R4)
 
@@ -376,113 +392,129 @@ The languages are paired by visual; choose one for delivery. Press play, wait fo
 >
 > C passes six tests with less work and replaces A
 
-**中文｜** 再试 C。它通过同一组六项测试，工作量也更少，才替换 A。这就是提出改法、测试、保留结果。眼下变好的是排序程序；如果改的是 AI 自己的工具、参数，或者训练程序，才开始接近我们今天要讲的几条路线。
+**中文｜** 再试 C。它通过同一组六项测试，工作量也更少，才替换 A。这次变好的是排序程序。下一页，把注意力转向做事的助手：如果它改的是自己的工具，又会怎样？
 
-**English｜** Try C next. It passes the same six tests with less work, so it replaces A. That is propose, test and retain. So far, a sorting program has improved. Now apply that idea to an AI system’s own tools, parameters or training code.
+**English｜** Try C next. It passes the same six tests with less work, so it replaces A. Here we improved a sorting program. Next, watch the assistant doing the work: what happens when it changes its own tools?
 
-**转场｜** 第一种做法：模型不变，改它做事的方法。
+**转场｜** 接下来，助手开始改自己的工具。
 
-**Transition｜** First: keep the model, change how the agent works.
+**Transition｜** Now the assistant changes its own tool.
 
 ---
 
-## 16 · R8｜How an agent improves its workflow
+## 16 · R8｜The improved assistant takes over
 
 [打开本页](/session-2#rsi/R8)
 
-> 画面 / Visual 1 / 2 · 工作流新增 Validate the patch，失败补丁修正后成功应用
+> 画面 / Visual 1 / 3 · 同一块 Check 移进 A 自己的 Edit → Use 工具
 >
-> Validate the patch is inserted; a failed patch is revised and applied
+> The same Check tile moves into A’s own Edit → Use tool
 
-**中文｜** 第一条路线改 Agent 的代码。Agent 可以理解成模型加上工具和做事流程。左边 LLM 的 weights 没变，变的是中间：编辑代码后先检查补丁能不能应用，有错就返回重试。DGM，也就是 Darwin Gödel Machine，报告过这类自改工具的做法；这里把过程画成一个简单例子。
+**中文｜** 看 A 自己的工具。原来改完就用，现在 A 在中间加了一步检查：先看看改动能不能用，再使用。DGM 研究中有这类改进；这里把它画成一个简单例子。
 
-**English｜** The first route changes agent code. Think of an agent as a model plus its tools and workflow. The LLM weights on the left stay fixed. The middle gains a patch check: if an edit cannot apply, return the error and retry. DGM, the Darwin Gödel Machine, reported this kind of tool improvement. This is a simplified illustration.
+**English｜** Look at A’s own tool. It used to go straight from editing to using the result. A adds a check in between: check that the edit can be applied before using it. DGM includes this kind of improvement; this is a simple illustration.
 
-> 画面 / Visual 2 / 2 · 在别的编程任务上评估版本，版本库中的 v2 参与后续修改
+> 画面 / Visual 2 / 3 · 新工具在其他任务上接受检查，带着它的助手 B 出现在右边
 >
-> Evaluate variants on other coding tasks; v2 from the archive helps make later variants
+> The new tool is tested on other tasks; assistant B appears on the right with that tool
 
-**中文｜** 一个补丁成功还不够，要用别的编程任务评估整个 Agent。DGM 会保留一个版本库，从不同版本继续探索；图里只画了一条分支。关键是，改好的 Agent 也会参与后面的自我修改。底层模型没重训，系统的做事能力仍然可能改善。
+**中文｜** 这套新工具还要放到其他编程任务里试一试。检查之后，留下带着新工具的 B。这里的测试只是示意；真实研究要评估整个助手做事的结果。
 
-**English｜** One successful patch is not enough: evaluate the whole agent on other coding tasks. DGM keeps an archive and explores from different variants; this diagram shows one branch. A modified agent also participates in later self-modification. The system can improve even though its base model was not retrained.
+**English｜** Try the new tool on other coding tasks. After checking it, keep B with the new tool. The tests here are only an illustration; the research evaluates how the whole assistant performs.
 
-**转场｜** 第二条路线直接改变模型的 weights。
+> 画面 / Visual 3 / 3 · B 从右边移到左边，带着新工具开始尝试下一次修改
+>
+> B moves from right to left and uses its new tool to begin another change
 
-**Transition｜** The second route changes the model’s weights.
+**中文｜** 注意 B 回到了左边。现在由 B 带着新工具，继续尝试改自己的工具。上一轮的成果，成了下一轮动手改进的助手。DGM 展示了这样的回路；下一次能否再改好，还要继续检查。
+
+**English｜** Notice B moving back to the left. B now uses its new tool to try another change to itself. The result of one round becomes the assistant doing the next round. DGM shows this kind of loop; whether the next change helps still needs checking.
+
+**转场｜** 另一个例子里，传到下一轮的是训练材料。
+
+**Transition｜** In the next example, training material carries the process forward.
 
 ---
 
-## 17 · R9｜How a model learns from its own solutions
+## 17 · R9｜The new model makes the next batch
 
 [打开本页](/session-2#rsi/R9)
 
-> 画面 / Visual 1 / 2 · 正确答案被筛出；错误的 7 根据答案提示重试为 10
+> 画面 / Visual 1 / 3 · A 写出的解题过程经过答案核对，选出的纸张留下
 >
-> Matching answers are selected; the wrong 7 is retried with a hint and becomes 10
+> A’s solution sheets are checked against known answers; selected sheets remain
 
-**中文｜** 第二条路线像做题后整理练习材料。STaR 从已有题目和标准答案开始，让模型写解题过程。第一题答对，留下；第二题答成 7，给它答案 10，再试着写出能得到 10 的过程。它生成的是解题过程，题目和判断答案的依据仍由外部提供。
+**中文｜** STaR 从已有题目和标准答案开始。A 写出解题过程，再核对最后的答案，留下答对的那几份。纸上是它写出的解题过程，题目和标准答案由外部提供。
 
-**English｜** The second route resembles collecting useful practice solutions. STaR starts with existing questions and known answers, and asks the model for solution steps. Keep the first correct answer. For the second, wrong answer of 7, give the answer 10 as a hint and try again. The model generates the solution steps; the questions and answer key come from outside.
+**English｜** STaR starts with supplied questions and known answers. A writes solution steps, then the final answers are checked. Keep the sheets whose answers match. The model writes the solutions; the questions and answer key come from outside.
 
-> 画面 / Visual 2 / 2 · 训练改变 weights，得到的模型继续生成下一批解题过程
+> 画面 / Visual 2 / 3 · 选中的解题过程移入训练，右边出现新模型 B
 >
-> Fine-tuning changes weights; the resulting model generates another batch of solutions
+> Selected solutions move into training; the new model B appears on the right
 
-**中文｜** 积累很多这样的例子，再做 fine-tuning，微调：用选出的题目和解题过程训练模型，改变 weights。训练后的模型再生成下一批，继续筛选和训练。这比在一次聊天的 context 里记住一句提示多了一步。也要注意，答案碰巧正确不保证过程正确，模型有没有学好还得用新题检查。
+**中文｜** 这些被选中的解题过程移进训练，成为练习材料。积累很多这样的材料，再用它们训练模型，得到 B。图里的几张纸代表一大批例子。
 
-**English｜** Collect many such examples, then fine-tune: train on the selected questions and solutions to change the weights. The resulting model generates the next batch for another round of selection and training. This goes beyond adding a hint to one conversation’s context. A matching answer does not guarantee sound reasoning, so evaluate learning on new questions.
+**English｜** The selected solutions move into training as practice material. Collect many such examples and use them to train a model, producing B. The few sheets here stand for a much larger batch.
 
-**转场｜** 第三条路线不改做题方式，而是改训练所用的计算程序。
+> 画面 / Visual 3 / 3 · B 移到左边，写出下一轮要筛选的解题过程
+>
+> B moves to the left and writes solutions for the next round of selection
 
-**Transition｜** The third route improves the computation used for training.
+**中文｜** B 回到了左边，开始写下一批解题过程。它既是上一轮训练的结果，又在制作下一轮的训练材料。这就是这个例子里回来的那一步。
+
+**English｜** B moves back to the left and writes the next batch of solutions. It is both the result of the last training round and the maker of material for the next one. That is what comes back into the next round.
+
+**转场｜** 再看一个只展示了部分过程的例子：AI 让训练更快。
+
+**Transition｜** Now an example that shows part of the process: AI makes training faster.
 
 ---
 
-## 18 · R5｜How AlphaEvolve improves AI training
+## 18 · R5｜AI helps make AI training faster
 
 [打开本页](/session-2#rsi/R5)
 
-> 画面 / Visual 1 / 2 · Gemini 提议的 kernel 改动通过正确性与速度检查
+> 画面 / Visual 1 / 2 · Gemini 提出的改动接受正确性与速度检查
 >
-> Gemini’s proposed kernel change passes correctness and speed checks
+> Gemini’s proposed change is checked for correctness and speed
 
-**中文｜** 训练 AI 时，有些小段计算会反复运行，这叫 kernel。可以把一次大计算分成小块，怎样分才更适合硬件，会影响效率。AlphaEvolve 用 Gemini 提出改法，再实际运行，检查答案是否正确、速度是否改善。和排序页一样，不能只听 AI 说它更好。
+**中文｜** 训练 AI 时，有些小计算会反复运行。AlphaEvolve 让 Gemini 试着改快其中一个，再检查结果有没有算对、是否真的更快。接下来，这块改好的计算会放回训练里。
 
-**English｜** Training repeatedly runs small compute routines called kernels. A large computation can be divided into smaller pieces; how those pieces fit the hardware affects efficiency. AlphaEvolve uses Gemini to propose changes, then runs checks for correctness and speed. As with sorting, a claim of improvement is not enough.
+**English｜** Training AI repeats some small computations many times. AlphaEvolve uses Gemini to try improving one, then checks whether it is correct and faster. The improved computation will go back into training.
 
-> 画面 / Visual 2 / 2 · 同一块 K 移入 Gemini 训练，显示已报告的效率收益
+> 画面 / Visual 2 / 2 · 同一块计算移入 Gemini 训练，显示已报告的效率收益
 >
-> The same K enters Gemini training and the reported efficiency gains appear
+> The same computation enters Gemini training and the reported gains appear
 
-**中文｜** 现在改好的 K 回到 Gemini 的训练里。DeepMind 报告，这类 kernel 平均加速 23%，整体训练时间约减少 1%。因为它反复运行，局部节省也有价值。但这里证明的是训练更省；是否因此得到更会研发的 AI，还要另外检验。
+**中文｜** 同一块计算回到了 Gemini 的训练中。DeepMind 报告，这段计算平均加速 23%，让整体训练时间约少 1%。这说明训练更快了；这个结果没有展示新模型回来做下一轮改进。
 
-**English｜** The improved K now goes into Gemini training. DeepMind reported an average 23% kernel speedup and about 1% less total training time. Repeated computation makes those savings useful. This establishes more efficient training; better AI research ability needs separate evidence.
+**English｜** The same computation goes into Gemini training. DeepMind reported an average 23% speedup for that routine and about 1% less total training time. Training became faster; this result does not show the new model returning to make the next improvement.
 
-**转场｜** 三种做法改的地方不同，最后看递归发生在哪里。
+**转场｜** 最后并排看清：哪些例子真的接上了下一轮？
 
-**Transition｜** The three approaches change different things. Now locate the recursive step.
+**Transition｜** Finally, compare which examples show something returning for the next round.
 
 ---
 
-## 19 · R6｜When does improvement become recursive?
+## 19 · R6｜Who comes back for the next round?
 
 [打开本页](/session-2#rsi/R6)
 
-> 画面 / Visual 1 / 2 · 三列分别是 Agent 代码、模型 weights、训练工具
+> 画面 / Visual 1 / 2 · DGM：新助手继续改自己；STaR：新模型做下一批材料；AlphaEvolve：训练更快，下一轮未展示
 >
-> Three columns compare agent code, model weights and training tools
+> DGM: improved helper works on itself again; STaR: new model makes the next practice set; AlphaEvolve: training is faster, next round not shown
 
-**中文｜** 把三种做法并排看：DGM 改工具和流程，STaR 通过训练改 weights，AlphaEvolve 改训练用的程序。这是帮助理解的分法，不是 RSI 只有这三种。它们的共同问题是：改进会不会反馈到下一轮，帮助系统做出后续改进？
+**中文｜** DGM 中，改好的助手继续改自己的工具。STaR 中，新模型制作下一轮的训练材料。AlphaEvolve 这个成果让训练更快，但没有展示新模型接棒。这三个例子走到了不同的地方。
 
-**English｜** Side by side: DGM changes tools and workflows, STaR trains weights, and AlphaEvolve improves training code. These are useful examples, not an exhaustive taxonomy of RSI. The shared question is whether an improvement feeds back and helps the system make later improvements.
+**English｜** In DGM, the improved assistant works on its own tools again. In STaR, the new model makes material for the next training round. This AlphaEvolve result makes training faster, but does not show the new model taking over. The examples show different parts of the process.
 
-> 画面 / Visual 2 / 2 · 条件性回路：v2 回到左侧做改进，右侧出现 v3 问号
+> 画面 / Visual 2 / 2 · B 回到左边成为改进者，右边的 C 仍带问号
 >
-> Conditional loop: v2 takes over on the left; v3 appears with a question mark
+> B returns to the left to make another improvement; C on the right still has a question mark
 
-**中文｜** 递归发生在这条回来的箭头：上一轮改好的系统，参与下一轮改进。这里的系统既可以是模型，也可以包含工具和流程。要检验它是否真的更会改进，得用新任务和相同预算比较。DGM 展示了有限编程 Agent 的反馈回路；这些例子都不能直接推出 AI 已经能无限自我升级。
+**中文｜** 看 B 的移动：它先出现在右边，是这轮的结果；接着回到左边，成为下一轮动手改进的助手。RSI 要看的，就是改好的自己能不能继续改自己。C 还带着问号，因为下一次是否进步，仍要测试。
 
-**English｜** The return arrow is the recursive step: the improved system participates in the next improvement round. A system can include both a model and its tools and workflow. Compare on new tasks with the same budget to test whether improvement ability grew. DGM demonstrates a bounded coding-agent feedback loop; these examples do not establish unlimited self-improvement.
+**English｜** Watch B move. First it appears on the right as this round’s result. Then it returns to the left to make the next improvement. RSI asks whether the improved system can keep improving itself. C still has a question mark because the next improvement must be tested.
 
 **转场｜** 回到今天的三个问题：能否操作、能否判断、能否继续改进。
 

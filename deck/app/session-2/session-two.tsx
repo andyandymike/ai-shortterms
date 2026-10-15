@@ -81,6 +81,7 @@ export default function SessionTwo() {
   const finish = useCallback(() => dispatch({ type: 'media-complete', revision: state.revision, frame: state.frame }), [dispatch, state.revision, state.frame]);
   const mediaProgress = useCallback((currentTime: number, duration: number, waiting?: boolean) => dispatch({ type:'media-progress', revision:state.revision, frame:state.frame, currentTime, duration, waiting }), [dispatch, state.revision, state.frame]);
   const mediaUnavailable = useCallback(() => dispatch({ type:'media-unavailable', revision:state.revision, frame:state.frame }), [dispatch, state.revision, state.frame]);
+  const mediaPlayback = useCallback((playing: boolean) => dispatch({ type:playing ? 'resume' : 'pause' }), [dispatch]);
   const back = useCallback(() => { if (state.phase > 0) enter(state.index, true, false, state.phase - 1); else if (state.index > 0) enter(state.index - 1, true); }, [enter, state.index, state.phase]);
 
   const proceed = useCallback(() => {
@@ -193,7 +194,7 @@ export default function SessionTwo() {
             <p className={s.eyebrow}><span>{beat.id}</span>{chapter.term}{sceneKind && <span className={s.sceneKind}>{sceneKind}</span>}</p>
             <h1>{beat.title}</h1>
           </div>
-          <GuidedProvider value={{ frame: cue.frames[state.frame], status: state.status, cueId: `${cue.id}/${state.revision}`, onComplete: finish, onMediaProgress: mediaProgress, onMediaUnavailable: mediaUnavailable }}><LabProvider><div className={s.scene}><ChapterScene id={beat.id} /></div></LabProvider></GuidedProvider>
+          <GuidedProvider value={{ frame: cue.frames[state.frame], status: state.status, cueId: `${cue.id}/${state.revision}`, onComplete: finish, onMediaProgress: mediaProgress, onMediaUnavailable: mediaUnavailable, onMediaPlayback: mediaPlayback }}><LabProvider><div className={s.scene}><ChapterScene id={beat.id} /></div></LabProvider></GuidedProvider>
         </>}
         <div className={s.storyControls}>
           <nav className={s.steps} aria-label={`${chapter.name} steps`}>

@@ -1,0 +1,189 @@
+{
+  "schema_version": 1,
+  "audit_kind": "independent",
+  "invocation": "/root/review_rsi_explanation",
+  "date": "2026-10-15",
+  "scope": "Content-only claim-ledger completeness and alignment of selected bilingual cues with demonstrationNotes and RSI reference notes. Style axes were ignored.",
+  "input_sha256": {
+    "output/rsi-plain-motion-copy-2026-10-15/source-cues.json": "b616eecf59cbd573819fc94b5fad9429ce1c3c27c7a89f66e72c13926f3e2bde",
+    "output/rsi-plain-motion-copy-2026-10-15/style-contract.json": "2fff8d1cb053ff3552e4829633a6e3f83535a037ccf3bfc2ce08afaeb1cb9f1f",
+    "output/rsi-plain-motion-copy-2026-10-15/selected-cues.json": "43da79c3e1b61a0ce988e0477de293d32e3aff47ebe81bedaabcb0ebdca21619",
+    "deck/app/session-2/content.ts": "712d4c0f2909778f2dcc6c96e57748d86ff1c9b49a459d497548f2dc516d1e4b",
+    "deck/public/notes/session-2/reference.md": "9294fd6e0019110c5508da9a701388050a79ace758e8ab07d6fe4054e1b6abe3"
+  },
+  "selected_output_sha256": "43da79c3e1b61a0ce988e0477de293d32e3aff47ebe81bedaabcb0ebdca21619",
+  "alignment_unit": "selected-cues.json plus RSI demonstrationNotes and chapter metadata in content.ts plus RSI section of reference.md",
+  "verdict": "pass",
+  "issues": [],
+  "claim_ledger_complete": true,
+  "content_aligned": true,
+  "checks": [
+    {
+      "claim_id": "recursive_step",
+      "status": "pass",
+      "evidence": [
+        "selected-cues.json:R0-term,R6-next",
+        "content.ts:18,22",
+        "reference.md:102,134,136"
+      ],
+      "finding": "Improved system returns as the next improver; C and later improvement remain conditional."
+    },
+    {
+      "claim_id": "sorting_scope",
+      "status": "pass",
+      "evidence": [
+        "selected-cues.json:R4-challenge,R4-keep",
+        "reference.md:106,108"
+      ],
+      "finding": "External prewritten sorting programs; comparisons plus writes, six fixed tests, rejected B and retained C remain scoped."
+    },
+    {
+      "claim_id": "dgm_self",
+      "status": "pass",
+      "evidence": [
+        "selected-cues.json:R8-agent",
+        "content.ts:19",
+        "reference.md:112"
+      ],
+      "finding": "A changes its own tool; frozen foundation-model weights are retained in supporting notes."
+    },
+    {
+      "claim_id": "dgm_evaluation",
+      "status": "pass",
+      "evidence": [
+        "selected-cues.json:R8-agent",
+        "content.ts:19",
+        "reference.md:114,116"
+      ],
+      "finding": "B is evaluated and can attempt later self-modification; branching archive and bounded coding evidence are preserved."
+    },
+    {
+      "claim_id": "dgm_teaching",
+      "status": "pass",
+      "evidence": [
+        "selected-cues.json:R8-agent",
+        "content.ts:19",
+        "reference.md:116"
+      ],
+      "finding": "Tool change, tests and A/B sequence are explicit teaching illustrations without measured results."
+    },
+    {
+      "claim_id": "star_source",
+      "status": "pass",
+      "evidence": [
+        "selected-cues.json:R9-training",
+        "content.ts:20",
+        "reference.md:120"
+      ],
+      "finding": "Model supplies solution steps; questions, answers and initial demonstrations come from outside."
+    },
+    {
+      "claim_id": "star_filter",
+      "status": "pass",
+      "evidence": [
+        "selected-cues.json:R9-training",
+        "content.ts:20",
+        "reference.md:120,124"
+      ],
+      "finding": "Filtering uses final-answer matches; answer-hinted retry and the lack of a reasoning guarantee remain in the supporting notes."
+    },
+    {
+      "claim_id": "star_training",
+      "status": "pass",
+      "evidence": [
+        "selected-cues.json:R9-training",
+        "content.ts:20",
+        "reference.md:122,124"
+      ],
+      "finding": "Trained B makes the next training-solution batch. Each original-paper training round restarts from the original checkpoint; no live training or measured gain is claimed."
+    },
+    {
+      "claim_id": "alpha_scope",
+      "status": "pass",
+      "evidence": [
+        "selected-cues.json:R5-example",
+        "content.ts:21",
+        "reference.md:128"
+      ],
+      "finding": "Gemini-proposed training computation improvement is checked for correctness and speed; precise tiling scope is retained."
+    },
+    {
+      "claim_id": "alpha_numbers",
+      "status": "pass",
+      "evidence": [
+        "selected-cues.json:R5-example",
+        "content.ts:21",
+        "reference.md:130"
+      ],
+      "finding": "Reported average 23 percent kernel/routine speedup and approximately 1 percent total training-time saving remain distinct; comparison baseline is retained in supporting notes."
+    },
+    {
+      "claim_id": "alpha_limit",
+      "status": "pass",
+      "evidence": [
+        "selected-cues.json:R5-example,R6-next",
+        "content.ts:21",
+        "reference.md:130,134"
+      ],
+      "finding": "No demonstrated trained-successor handoff or improved research ability is claimed."
+    },
+    {
+      "claim_id": "human_limits",
+      "status": "pass",
+      "evidence": [
+        "content.ts:22",
+        "reference.md:116,136"
+      ],
+      "finding": "Human-defined objectives, evaluation and compute budgets remain explicit; later improvement needs comparable independent evidence."
+    }
+  ],
+  "exact_locks": {
+    "status": "pass",
+    "checked": [
+      "Recursive Self-Improvement",
+      "DGM",
+      "STaR",
+      "AlphaEvolve",
+      "Gemini",
+      "23%",
+      "1%"
+    ]
+  },
+  "observations": [
+    "Some technical qualifiers are intentionally absent from the oral cue but retained in demonstrationNotes and reference.md; pass applies to the combined artifact, not to each oral cue in isolation.",
+    "DGM self-modification, STaR iterative training-data feedback and the incomplete AlphaEvolve successor loop are now distinguished; the text does not assign equal RSI evidence to all three.",
+    "Final wording-only changes were inspected: R9 says That is what comes back into the next round; R0 takeaway says The assistant improves itself, then takes over the next round. Neither changes the content verdict."
+  ],
+  "limitations": [
+    "No external research was re-verified in this audit.",
+    "No runtime, animation, rendered layout or generated-note synchronization acceptance is asserted."
+  ],
+  "verdict_payload": {
+    "verdict": "pass",
+    "claim_ledger_complete": true,
+    "content_aligned": true,
+    "required_claims_checked": 12,
+    "required_exact_locks_checked": 7,
+    "issues": []
+  },
+  "output_verdict_sha256": "511f8f3822a4476df1968353aa322ef6f3e992dd5b386576aa9bbf53a81d8e5b",
+  "verdict_hash_definition": "SHA-256 of UTF-8 bytes of verdict_payload serialized by ConvertTo-Json -Depth 10 -Compress, without BOM or trailing newline.",
+  "scoped_input_sha256": [
+    {
+      "path": "deck/app/session-2/content.ts",
+      "boundary": "demonstrationNotes.rsi: from line beginning two spaces rsi: [ through the first subsequent two-space ], line",
+      "sha256": "d8d8971b2e606f8f5eb2bdce5186706a6a0adf382e581708541832933360becd"
+    },
+    {
+      "path": "deck/app/session-2/content.ts",
+      "boundary": "RSI chapter: from line beginning two spaces { id:rsi (single-quoted value) up to but excluding the closing chapter",
+      "sha256": "4f0e6bb5efbd7bf92175c01f2880f55e4fb2e71dc09bf40e390bc277923b2e71"
+    },
+    {
+      "path": "deck/public/notes/session-2/reference.md",
+      "boundary": "RSI reference section: from ## RSI through the next level-2 heading or EOF, excluding the next heading",
+      "sha256": "2fa73e1a32baa15012d7359be4115e9c1a9e2da567b4f3192a13858956e872d7"
+    }
+  ],
+  "scope_hash_definition": "SHA-256 of UTF-8 extracted section text with CRLF normalized to LF; no BOM. Shared-file full hashes are snapshot information; scoped hashes bind the audited RSI text independently of unrelated chapters."
+}
