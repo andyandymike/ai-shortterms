@@ -90,7 +90,7 @@ export function RecursiveRoutesScene() {
       <div className={s.statement}><strong>What did each example show?</strong></div>
       <div className={s.comparison}>
         <div><span className={s.caseName}>DGM</span><div className={s.caseMotion} aria-hidden="true"><b>A</b><span>→</span><b className={s.filled}>B</b><span>↶</span></div><p>An improved helper<br /><strong>works on itself again.</strong></p></div>
-        <div><span className={s.caseName}>STaR</span><div className={s.caseMotion} aria-hidden="true"><b>B</b><span>→</span><span className={s.paperIcon}>✓</span></div><p>A new model<br /><strong>makes the next practice set.</strong></p></div>
+        <div><span className={s.caseName}>STaR</span><div className={s.caseMotion} aria-hidden="true"><b>B</b><span>→</span><span className={s.paperIcon}>✓</span></div><p>A new model<br /><strong>writes the next training solutions.</strong></p></div>
         <div><span className={s.caseName}>AlphaEvolve</span><div className={s.caseMotion} aria-hidden="true"><span className={s.clockIcon}>↗</span><span className={s.missing}>?</span></div><p>Training gets faster.<br /><strong>The next round is not shown.</strong></p></div>
       </div>
       <p className={s.point}>They show different parts of self-improvement.</p>

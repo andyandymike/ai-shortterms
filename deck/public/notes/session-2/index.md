@@ -36,7 +36,7 @@
 4. [C4 · How Computer Use works](/session-2#computer-use/C4)
 5. [C5 · How Computer Use recovers](/session-2#computer-use/C5)
 6. [C7 · How Computer Use is trained](/session-2#computer-use/C7)
-7. [C6 · Computer Use in Blender](/session-2#computer-use/C6)
+7. [C6 · How AI works in Blender](/session-2#computer-use/C6)
 8. [J0 · Jev](/session-2#jev/J0)
 9. [J1 · How to ask Jev a question](/session-2#jev/J1)
 10. [J2 · How decoding works](/session-2#jev/J2)
@@ -55,6 +55,6 @@ C4 依次保留定位结果、填好的表单和验证回执。R4 依次保留�
 
 ## 开讲前
 
-确认 Presenter 同步，试一次继续、回退和重播。C6 共三幅画面：任务录像 5 秒、界面操作 12 秒、另一个项目的成片 6 秒。每段都等待点击播放，结束后自动停住，没有讲解倒计时。前两段使用 YouTube 原作者播放器，排练时确认可以访问；不可播放时明确提示并显示已核对的操作静帧，仍可继续下一幅。第三段房屋成片与前面的球体任务是两个独立案例。
+确认 Presenter 同步，试一次继续、回退和重播。C6 只有一个讲解点：先介绍“参考图片做一棵树”的任务，点击一次播放；本地录像连续播放约 24 秒后自动停住，再讲界面与 API 路线的区别。任务提示始终可见，没有中途分段和讲解倒计时。此例通过 API 执行 Python，不能把后续视角检查说成 AI 的鼠标操作。
 
-教学互动无需模型密钥；Blender 操作录像需要访问 YouTube，其他教学动画和排序程序在本地执行。来源与限制见[参考稿](reference.md)。整场时长以实际排练为准。
+教学互动无需模型密钥；Blender 录像、教学动画和排序程序都在本地运行，不依赖 YouTube。来源链接仅供查阅，演示时不必打开。来源与限制见[参考稿](reference.md)。整场时长以实际排练为准。

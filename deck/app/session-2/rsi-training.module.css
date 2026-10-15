@@ -2,9 +2,9 @@
 .statement{font-size:clamp(23px,2.1vw,32px);font-weight:700;line-height:1.2;letter-spacing:-.025em}
 .canvasWrap{flex:1;min-height:0;display:flex;align-items:center}.canvas{display:block;width:100%;height:100%;max-height:460px;overflow:visible}.canvas text{fill:var(--ink);font-family:Arial,Helvetica,sans-serif}
 .canvas .heading{font-size:25px;font-weight:700;letter-spacing:-.025em}.canvas .detail{font-size:20px;fill:#5b6058}
-.helper>rect{fill:var(--paper);stroke:var(--green);stroke-width:3}.helper>circle{fill:var(--green)}.helper>path{stroke:var(--green);stroke-width:3;fill:none;stroke-linecap:round}.helper>text{font-size:28px;font-weight:700;fill:var(--green)}
-.original{transition:opacity .4s}.original[data-retired=true]{opacity:0}.returningHelper{opacity:0;transition:transform .7s ease-in-out,opacity .35s}.returningHelper[data-visible=true]{opacity:1}
-.returningHelper[data-returned=true]{animation:returnToWriting .7s ease-in-out both}
+.model>rect{fill:var(--paper);stroke:var(--green);stroke-width:3}.model>circle{fill:var(--green)}.model>path{stroke:var(--green);stroke-width:3;fill:none;stroke-linecap:round}.model>text{font-size:28px;font-weight:700;fill:var(--green)}
+.original{transition:opacity .4s}.original[data-retired=true]{opacity:0}.returningModel{opacity:0;transition:transform .7s ease-in-out,opacity .35s}.returningModel[data-visible=true]{opacity:1}
+.returningModel[data-returned=true]{animation:returnToWriting .7s ease-in-out both}
 @keyframes returnToWriting{0%{transform:translate(var(--from-x),var(--from-y))}25%{transform:translate(var(--turn-one-x),var(--turn-one-y))}75%{transform:translate(var(--turn-two-x),var(--turn-two-y))}100%{transform:translate(var(--to-x),var(--to-y))}}
 .sheet>path:first-child{fill:var(--paper);stroke:#65685e;stroke-width:2}.sheet>text{font-size:20px;font-weight:600}.sheet .answer{font-size:30px;font-weight:700}.sheet .lines{fill:none;stroke:#65685e;stroke-width:2}.sheet .mark{font-size:27px;font-weight:700}.sheet[data-checked=true]>path:first-child{fill:#dde5d6;stroke:var(--green)}.sheet[data-checked=true] .mark{fill:var(--green)}.sheet[data-wrong=true]>path:first-child{fill:#edd3c7;stroke:#9e351f}.sheet[data-wrong=true] .mark{fill:#9e351f}
 .paperMotion{opacity:0;transition:transform .7s ease-in-out,opacity .35s}.paperMotion[data-visible=true]{opacity:1}.paperMotion[data-used=true]{opacity:.2}.paperMotion[data-rejected=true]{opacity:.55}

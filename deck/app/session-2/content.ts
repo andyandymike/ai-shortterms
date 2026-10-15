@@ -5,7 +5,7 @@ export const demonstrationNotes: Record<string, string[]> = {
   'computer-use': [
     'C7 illustrates a generic reinforcement-learning principle: practice across tasks, inspect outcomes, and use feedback for parameter updates. OpenAI described CUA as using reinforcement learning. The diagram is not a disclosed CUA training algorithm or a live training run. At inference, new screenshots change context while the illustrated model weights remain fixed.',
     'The return desk stages model requests, tool actions, and screenshot feedback. It does not control an external application. Context includes the goal, the latest observation, and relevant history; it can become stale when the application changes.',
-    'C6 embeds two bounded excerpts (01:34–01:39 and 01:40–01:52) from Kakarot Labs’ edited Astra tutorial. The recording shows a Blender search menu, a sphere being added and its Z position changing. It is an author-published screen recording, not an independently audited or uncut action trace. Playback requires access to YouTube; if unavailable, verified source frames remain visible. A separate six-second architecture render by Thomas Ricouard closes the example; that project combines Python and Computer Use and is not the result of the sphere task.',
+    'C6 plays a local 00:00–00:30 excerpt from jonipwi / Blender MCP at 1.25×, as one continuous 24-second segment. The request is already submitted when the recording begins. A tree appears in Blender, followed by viewport inspection. The source README describes model-generated Python executed through an API bridge and add-on. This is an API workflow, not evidence of agent-driven GUI clicks; the recording does not establish who controls the later viewport inspection. Playback does not contact YouTube or a remote model. The source is credited without asserting an open media license.',
   ],
   jev: [
     'No live model is called. Probabilities, token chunks, training versions and evaluation outcomes are teaching illustrations. J3 uses equal values to compare output processes; its JSON is a simplified display, not an exact API response. The timing of every animation is chosen for presentation, not a latency measurement.',
@@ -29,8 +29,7 @@ export const demonstrationNotes: Record<string, string[]> = {
 const computerSources = [
   { label: 'OpenAI · CUA: vision and reinforcement learning', url: 'https://openai.com/index/computer-using-agent/' },
   { label: 'OpenAI · Computer use: the screenshot / action loop', url: 'https://developers.openai.com/api/docs/guides/tools-computer-use' },
-  { label: 'Thomas Ricouard / OpenAI · Architectural visualization with Astra · 4 Sep 2026', url: 'https://developers.openai.com/blog/architectural-visualization-with-astra' },
-  { label: 'Kakarot Labs · Astra operating Blender · 8 Sep 2026 · 01:34–01:52', url: 'https://www.youtube.com/watch?v=eM50HqZ4p7Y&t=94s' },
+  { label: 'jonipwi / Blender MCP · API bridge and original tree recording', url: 'https://github.com/jonipwi/blender-mcp' },
   { label: 'Blender · Python API', url: 'https://docs.blender.org/api/current/' },
 ];
 const jevSources = [
@@ -65,7 +64,7 @@ export const chapters: Chapter[] = [
     { id:'C4', label:'The loop', title:'How Computer Use works', subtitle:'Follow the cursor, the application, and the screenshot returning to context.', takeaway:'The agent repeats this loop until it can verify the goal.', next:'What if the screen changes?' },
     { id:'C5', label:'Recovery', title:'How Computer Use recovers', subtitle:'Insert a pop-up. Watch whether the old plan still works.', takeaway:'Check the result before deciding that the task is done.', next:'How does it learn to act?' },
     { id:'C7', label:'Training and use', title:'How Computer Use is trained', subtitle:'Training updates weights. Inference uses the learned model with new context.', takeaway:'Feedback from many practice tasks can shape later actions. A new screenshot alone does not retrain the model.', next:'Open the Blender case' },
-    { id:'C6', label:'Blender', title:'Computer Use in Blender', subtitle:'Watch a task become interface actions, then see a separate creative project.', takeaway:'Computer Use changes the application state; larger projects can combine interface actions with Python.', next:'From actions to decisions' },
+    { id:'C6', label:'Blender', title:'How AI works in Blender', subtitle:'One task, one local recording: create and inspect an editable tree.', takeaway:'This recording uses Python through an API. A Blender screen alone does not prove GUI-based Computer Use.', next:'From actions to decisions' },
   ] },
   { id:'jev', name:'Jev', term:'JEV / SYSTEM ONE MODEL', color:'red', sources:jevSources, beats:[
     { id:'J0', label:'Chapter opening', title:'Jev', subtitle:'A model for bounded decisions.', takeaway:'TypeSafe AI’s Jev answers questions with a defined answer shape.', next:'Choose a team for a customer message', term:{ name:'Jev', fullName:'System One model' } },
@@ -79,7 +78,7 @@ export const chapters: Chapter[] = [
     { id:'R0', label:'Chapter opening', title:'RSI', subtitle:'Can the improved assistant improve itself again?', takeaway:'The assistant improves itself, then takes over the next round.', next:'Start with one change we can check', term:{ name:'RSI', fullName:'Recursive Self-Improvement' } },
     { id:'R4', label:'One improvement', title:'Try a change. Check the result.', subtitle:'Keep A when B fails. Keep C when it passes with less work.', takeaway:'Here the sorting program improves. Next, the assistant changes its own tool.', next:'Watch the assistant change its own tool' },
     { id:'R8', label:'DGM · Own tools', title:'The improved assistant takes over', subtitle:'A changes its own tool. Test B. Let B try the next change.', takeaway:'B is the result of one round and the assistant doing the next.', next:'Now watch training material return' },
-    { id:'R9', label:'STaR · Practice material', title:'The new model makes the next batch', subtitle:'Write solutions. Keep selected ones. Train B. Let B write more.', takeaway:'The result of training helps make material for the next training round.', next:'What if AI makes training faster?' },
+    { id:'R9', label:'STaR · Practice material', title:'The new model makes the next batch', subtitle:'Model A writes solutions. Selected work trains the base model. Model B writes the next batch.', takeaway:'The result of training helps make material for the next training round.', next:'What if AI makes training faster?' },
     { id:'R5', label:'AlphaEvolve · Faster training', title:'AI helps make AI training faster', subtitle:'Improve a repeated computation, then put it back into training.', takeaway:'Training is faster. This result does not show the new model taking over.', next:'Compare what the examples show' },
     { id:'R6', label:'Taking over', title:'Who comes back for the next round?', subtitle:'Follow B from the result on the right to the assistant on the left.', takeaway:'The improved system becomes the one doing the next improvement.', next:'Bring the three questions together' },
   ] },

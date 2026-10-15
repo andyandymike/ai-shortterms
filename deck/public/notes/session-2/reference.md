@@ -24,17 +24,14 @@
 
 - [OpenAI：CUA 的视觉与强化学习](https://openai.com/index/computer-using-agent/)
 - [OpenAI：Computer use](https://developers.openai.com/api/docs/guides/tools-computer-use)
-- [Thomas Ricouard / OpenAI：Architectural visualization with Astra，2026-09-04](https://developers.openai.com/blog/architectural-visualization-with-astra)
-- [Kakarot Labs：How to Use ChatGPT Astra to Control Your PC & Blender，2026-09-08，01:34–01:52](https://www.youtube.com/watch?v=eM50HqZ4p7Y&t=94s)
+- [jonipwi / Blender MCP：原作者录像与 API bridge 说明](https://github.com/jonipwi/blender-mcp)
 - [Blender：Python API](https://docs.blender.org/api/current/)
 
 C1、C4、C5 的订单、鼠标、输入、弹窗、截图历史与回执是教学模拟，没有操纵真实业务软件。应用出现回执后，最新截图仍可能是提交前的表单；新截图返回后才完成验证。弹窗出现时，旧观察也会暂时失效。场景说明的是反馈关系，不是某个模型的真实动作日志。
 
-C6 保持一页，分三次手动播放并自动停住：Kakarot Labs 的任务片段 01:34–01:39（5 秒）；Blender 界面操作 01:40–01:52（12 秒）；Thomas Ricouard 房屋成片的前 6 秒。前两段通过原作者 YouTube 播放器嵌入，需能访问 YouTube；播放失败时明确显示不可用，并保留此前已核对的原录像静帧。
+C6 保持一页、一个讲解点。使用 jonipwi / Blender MCP 原作者录像的连续 00:00–00:30，以 1.25 倍速本地播放，约 24 秒后停在同一场景的树干选择画面。先介绍任务，点击一次播放；结束后画面无限停留，再讲路线区别。没有中途分段、拼接其他项目或 YouTube 请求。
 
-2026-10-15 在原视频核对了任务文字、搜索菜单、添加球体和 Z 坐标由 0 变为 2 的关键画面。默认立方体在操作片段开始时已经移除，不能把这段描述为完整拍到了删除动作。作者视频经过剪辑，不是独立审计的完整操作轨迹。任务和操作的讲解静帧来自原录像的 01:34、01:40、01:50，保留原截图，没有伪造界面。
-
-最后的 Atelier House 是另一个项目，不能让观众误以为球体任务生成了这栋房屋。其公开流程结合 bpy 建立可编辑场景、render 预览、Computer Use 打开 Blender 检查；此处六秒片段只展示成果。海报和片尾均从同一房屋影片提取。来源与散列见 `deck/public/media/session-2/PROVENANCE.md`。
+录像开始时请求已经提交；可见树模型出现在 Blender，再切换材质和视角查看。来源说明模型生成 Python，通过 API bridge 和插件交给 Blender 执行。因此这是 API 建模的例子，不能说 AI 逐项点击菜单，也不能将后半段视角操作归因给 agent。用此例分清“看到软件变化”和“证明 GUI Computer Use”的差别。旧球体截图和房屋成片只作历史素材保存，不再出现在当前 C6。原始文件、截段、倍速、帧图及署名见 `deck/public/media/session-2/PROVENANCE.md`。
 
 C7 比较训练与使用：第一段光标移到 Cancel 并点击，表单关闭、退货未创建，中间显示失败反馈；第二段积累多次练习并更新 weights；最后换到新布局，用固定 weights 重新定位。每段结束后停住，等待对应口播讲完。OpenAI 公开介绍 CUA 结合视觉能力与强化学习。这里展示通用训练原理，没有复现 CUA 的具体训练算法，也没有在网页里更新真实模型。图示 v1、v2 与小格子只是教学表现，不能当成实测能力提升。
 
@@ -119,7 +116,7 @@ DGM 官方报告包括 patch validation、文件查看、编辑工具和历史�
 
 STaR = Self-Taught Reasoner。已有问题、标准答案和少量带推理过程的示例由外部提供，模型写出解题过程，再按最终答案是否匹配进行筛选。原方法也会对答错的题给出正确答案提示，让模型重试解释；主画面省略这段细节，保留“写解题过程 → 核对答案 → 选中材料”的关系。模型生成的是解题过程，不是自行创造题目和评判标准。
 
-第二幅让选中的纸张移入训练，得到右边的新模型 B。第三幅让同一个 B 回到左边，生成下一批待筛选的解题过程。它既是上一轮训练的结果，又是下一轮材料的生产者。画面的几张纸代表一大批训练例子，没有网页内的真实训练或实测性能提升。
+图中统一称 Model A / Model B，指模型版本。第二幅让选中的纸张移入训练，由预先设定的训练程序更新基础模型，得到右边的新模型 B；不是模型自主启动或设计训练流程。第三幅让同一个 B 回到左边，生成下一批待筛选的解题过程。它既是上一轮训练的结果，又是下一轮材料的生产者。画面的几张纸代表一大批训练例子，没有网页内的真实训练或实测性能提升。
 
 原论文每轮 fine-tuning 从最初的预训练 checkpoint 重启，不能把示意理解成永远在上一轮 weights 上接着训练。答案匹配不保证推理过程正确，仍需用独立新题评估学习效果。此例展示迭代自训练，不证明模型自主改进了训练方法。这与一次聊天的 context 中增加提示也不是同一操作。
 

@@ -15,12 +15,12 @@ const serverLayout = () => false;
 const at = (point: number[]) => `translate(${point[0]} ${point[1]})`;
 const moveTo = (point: number[]) => ({ transform: `translate(${point[0]}px, ${point[1]}px)` });
 
-function Helper({ version }: { version: 'A' | 'B' }) {
-  return <g className={s.helper}>
+function Model({ version }: { version: 'A' | 'B' }) {
+  return <g className={s.model}>
     <rect x="-60" y="-49" width="120" height="98" rx="23" />
     <circle cx="-19" cy="-8" r="6" /><circle cx="19" cy="-8" r="6" />
     <path d="M-19 14Q0 27 19 14" />
-    <text y="85" textAnchor="middle">Helper {version}</text>
+    <text y="85" textAnchor="middle">Model {version}</text>
   </g>;
 }
 
@@ -48,7 +48,7 @@ export function SelfTrainingScene() {
   const goodPosition = training ? [train[0] - 21, train[1] - 8] : batch;
   const wrongPosition = compact ? [checked ? 295 : 270, checked ? 610 : 485] : [checked ? 755 : 650, checked ? 284 : 165];
   const nextPosition = nextBatch ? batch : compact ? [175, 290] : [300, 165];
-  const helperMotion = {
+  const modelMotion = {
     ...moveTo(returned ? producer : train),
     '--from-x': `${train[0]}px`, '--from-y': `${train[1]}px`,
     '--turn-one-x': `${compact ? 335 : train[0]}px`, '--turn-one-y': `${compact ? train[1] : 325}px`,
@@ -56,13 +56,13 @@ export function SelfTrainingScene() {
     '--to-x': `${producer[0]}px`, '--to-y': `${producer[1]}px`,
   } as CSSProperties;
   const points = [
-    'Start with questions and an answer key. Helper A writes the solution steps.',
-    'The helper writes solutions. Some answers are right; some are wrong.',
-    'Use the answer key to keep checked work. Leave the wrong answer out.',
-    'The same checked work now becomes material for training.',
-    'Training produces Helper B. What does B do next?',
-    'Helper B comes back to write the next practice set.',
-    'The new helper makes the next training material. The cycle can repeat.',
+    'Start with questions and an answer key. Model A writes the solution steps.',
+    'The model writes solutions. Some answers are right; some are wrong.',
+    'Keep solutions whose final answers match the answer key.',
+    'Train the base model on the selected solutions.',
+    'Training produces Model B. What does B do next?',
+    'Model B comes back to write the next solution steps.',
+    'The new model makes the next training material. The cycle can repeat.',
   ];
 
   return <div className={s.scene} data-method="self-training" data-step={step}>
@@ -70,12 +70,12 @@ export function SelfTrainingScene() {
     <div className={s.canvasWrap} data-horizontal-scroll>
       <svg className={s.canvas} viewBox={compact ? '0 0 400 1040' : '0 0 1160 420'} role="img" aria-label={points[step]}>
         <defs><marker id="star-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 10 5 0 10" fill="none" stroke="currentColor" strokeWidth="1.5" /></marker></defs>
-        <text className={s.heading} x={producer[0]} y="32" textAnchor="middle">{returned ? 'Make the next' : 'Write solutions'}</text>
-        <text className={s.heading} x={producer[0]} y="62" textAnchor="middle">{returned ? 'practice set' : ''}</text>
-        <text className={s.heading} x={compact ? 200 : 575} y={compact ? 372 : 32} textAnchor="middle">Keep checked work</text>
-        <text className={s.heading} x={train[0]} y={compact ? 704 : 32} textAnchor="middle">Train</text>
+        <text className={s.heading} x={producer[0]} y="32" textAnchor="middle">{returned ? 'Write the next' : 'Write solutions'}</text>
+        <text className={s.heading} x={producer[0]} y="62" textAnchor="middle">{returned ? 'solution steps' : ''}</text>
+        <text className={s.heading} x={compact ? 200 : 575} y={compact ? 372 : 32} textAnchor="middle">Check final answers</text>
+        <text className={s.heading} x={train[0]} y={compact ? 704 : 32} textAnchor="middle">Train the base model</text>
 
-        <g transform={at(producer)} className={s.original} data-retired={returned}><Helper version="A" /></g>
+        <g transform={at(producer)} className={s.original} data-retired={returned}><Model version="A" /></g>
         <text className={s.detail} x={producer[0]} y={compact ? 273 : 287} textAnchor="middle">Questions + answer key</text>
         <path className={s.link} data-active={step >= 1} d={compact ? 'M175 302V334' : 'M270 165H390'} markerEnd="url(#star-arrow)" />
 
@@ -90,10 +90,10 @@ export function SelfTrainingScene() {
         <g className={s.training} data-active={training} transform={at(train)}>
           <rect x="-125" y="-93" width="250" height="186" rx="12" />
           <path d="M-100-61H-73M73 61H100" />
-          <text y="130" textAnchor="middle">{returned ? 'Ready for the next round' : trained ? 'A new helper' : 'Learn from checked work'}</text>
+          <text y="130" textAnchor="middle">{returned ? 'Ready for the next round' : trained ? 'A new model' : 'Learn from selected solutions'}</text>
         </g>
         <g className={s.paperMotion} data-visible={step >= 1} data-used={trained} style={moveTo(goodPosition)}><Sheet checked={checked} /></g>
-        <g className={s.returningHelper} data-visible={trained} data-returned={returned} style={helperMotion}><Helper version="B" /></g>
+        <g className={s.returningModel} data-visible={trained} data-returned={returned} style={modelMotion}><Model version="B" /></g>
         <path className={s.returnPath} data-active={returned} d={compact ? 'M310 835H365V150H265' : 'M960 316V385H155V316'} markerEnd="url(#star-arrow)" />
         <text className={s.returnLabel} data-visible={returned} x={compact ? 200 : 555} y={compact ? 1012 : 363} textAnchor="middle">B makes the next training material</text>
         <g className={s.paperMotion} data-visible={nextBatch} style={moveTo(nextPosition)}><Sheet next /></g>

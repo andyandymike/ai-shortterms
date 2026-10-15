@@ -11,8 +11,8 @@
       "The opening map"
     ],
     "say": [
-      "今天讲三个概念：Computer Use 怎样操作软件，Jev 怎样给流程做判断，以及 RSI 中的改进怎样进入下一轮。前两章沿着退货流程展开。互动图是教学示意，不调用在线模型；Blender 部分会看一段真实成片。",
-      "Today we’ll follow three ideas: how Computer Use operates software, how Jev makes decisions for a workflow, and how improvement could repeat in RSI. A returns workflow connects the first two chapters. The interactive diagrams are teaching examples, not live model calls; the Blender section includes a real published render."
+      "今天讲三个概念：Computer Use 怎样操作软件，Jev 怎样给流程做判断，以及 RSI 中的改进怎样进入下一轮。前两章沿着退货流程展开。互动图是教学示意，不调用在线模型；Blender 部分会看一段本地操作录像，并分清界面与 API 两条路线。",
+      "Today we’ll follow three ideas: how Computer Use operates software, how Jev makes decisions for a workflow, and how improvement could repeat in RSI. A returns workflow connects the first two chapters. The interactive diagrams are teaching examples, not live model calls; the Blender section uses a local screen recording to distinguish interface control from the API route."
     ],
     "transition": [
       "先看 Computer Use。",
@@ -29,8 +29,8 @@
         "The opening map"
       ],
       "say": [
-        "今天讲三个概念：Computer Use 怎样操作软件，Jev 怎样给流程做判断，以及 RSI 中的改进怎样进入下一轮。前两章沿着退货流程展开。互动图是教学示意，不调用在线模型；Blender 部分会看一段真实成片。",
-        "Today we’ll follow three ideas: how Computer Use operates software, how Jev makes decisions for a workflow, and how improvement could repeat in RSI. A returns workflow connects the first two chapters. The interactive diagrams are teaching examples, not live model calls; the Blender section includes a real published render."
+        "今天讲三个概念：Computer Use 怎样操作软件，Jev 怎样给流程做判断，以及 RSI 中的改进怎样进入下一轮。前两章沿着退货流程展开。互动图是教学示意，不调用在线模型；Blender 部分会看一段本地操作录像，并分清界面与 API 两条路线。",
+        "Today we’ll follow three ideas: how Computer Use operates software, how Jev makes decisions for a workflow, and how improvement could repeat in RSI. A returns workflow connects the first two chapters. The interactive diagrams are teaching examples, not live model calls; the Blender section uses a local screen recording to distinguish interface control from the API route."
       ]
     }
   },
@@ -392,76 +392,37 @@
   {
     "id": "C6-film",
     "beat": "C6",
-    "label": "从任务到 Blender 操作",
-    "labelEn": "From a task to Blender actions",
-    "action": "分别播放任务、界面操作和另一个项目的成片，每段结束自动停住",
-    "actionEn": "Play the task, interface actions and a separate project excerpt; hold after each",
+    "label": "Blender 中的 API 路线",
+    "labelEn": "The API route in Blender",
+    "action": "先说任务，再点一次播放；约 24 秒后自动停住，再讲界面与 API 两条路线",
+    "actionEn": "Introduce the task, play once, then explain the interface and API routes after the 24-second clip holds",
     "look": [
-      "另一个项目：房屋成片与 Python / bpy、Computer Use 的分工",
-      "A separate project: an architecture render and the Python / bpy and Computer Use roles"
+      "树干被选中的 Blender 场景；字幕标明 Python / API 路线",
+      "The tree trunk selected in Blender; the caption identifies the Python / API route"
     ],
     "say": [
-      "最后换一个更复杂的项目：这是 Thomas Ricouard 发布的房屋成片。bpy 是 Blender 的 Python API，用来建立可编辑场景；Computer Use 用来打开软件检查。复杂工作里，这两种方式可以配合使用。",
-      "Now a separate, more complex project: Thomas Ricouard’s architecture render. Blender’s Python API, bpy, builds an editable scene; Computer Use opens the application to inspect it. The two approaches can work together."
+      "录像里的任务是：参考一张图片，在 Blender 里做一棵树。右侧已经提交了要求，随后左侧出现树模型，画面随后切换材质和视角，展示模型结果。这里走的是 API 路线：模型生成 Python，插件把代码交给 Blender 执行。前面讲的 Computer Use 则是看截图、通过工具点击界面。两条路线都能改变软件里的内容，但不能只看见 Blender 画面，就断定 AI 全程在用鼠标。",
+      "The task in this recording is to create a tree in Blender from a reference image. The request has already been sent on the right. A tree then appears on the left, and the recording shows its materials and different views. This example uses an API route: the model generates Python, and an add-on runs it in Blender. Computer Use, as explained earlier, reads screenshots and requests interface actions through tools. Both routes can change an application, but a Blender video alone does not prove that the AI clicked through every step."
     ],
     "transition": [
       "操作之外，流程还要判断：一封邮件该交给谁？",
       "A workflow also needs decisions: which team should receive an email?"
     ],
     "scene": {
-      "kind": "sequence",
-      "segments": [
-        {
-          "kind": "film",
-          "selection": 0,
-          "delay": 5000,
-          "label": [
-            "看任务",
-            "Read the task"
-          ],
-          "end": [
-            "任务：删掉立方体，添加球体并向上移动",
-            "The task: remove the cube, add a sphere and raise it"
-          ],
-          "say": [
-            "先看任务：删掉默认立方体，添加一个 UV Sphere，也就是球体，再向上移动。目标很具体，完成后可以直接在 Blender 里检查。这是 Kakarot Labs 发布的 Astra 实测录像。",
-            "The task is concrete: remove the default cube, add a UV Sphere, and move it upward. We can check the result directly in Blender. This is an edited Astra demonstration published by Kakarot Labs."
-          ]
-        },
-        {
-          "kind": "film",
-          "selection": 1,
-          "delay": 12000,
-          "label": [
-            "看界面操作",
-            "Watch the interface actions"
-          ],
-          "end": [
-            "Blender 中的球体已经升起，Z 坐标为 2；播放失败时保留该操作静帧",
-            "The sphere is raised in Blender, with Z set to 2; the same source frame is held if playback fails"
-          ],
-          "say": [
-            "球体现在升起来了。录像里可以看到搜索菜单、添加球体，然后把右侧 Z 坐标从 0 改成 2。自然语言任务落实成了软件里的操作，最后检查的也是 Blender 中实际变化的结果。",
-            "The sphere is now raised. The recording shows a search menu, a sphere being added, and the Z position changing from 0 to 2. The natural-language task becomes interface actions, and the result can be checked inside Blender."
-          ]
-        },
-        {
-          "kind": "film",
-          "selection": 2,
-          "delay": 6000,
-          "label": [
-            "看另一个项目的成果",
-            "See a separate project"
-          ],
-          "end": [
-            "另一个项目：房屋成片与 Python / bpy、Computer Use 的分工",
-            "A separate project: an architecture render and the Python / bpy and Computer Use roles"
-          ],
-          "say": [
-            "最后换一个更复杂的项目：这是 Thomas Ricouard 发布的房屋成片。bpy 是 Blender 的 Python API，用来建立可编辑场景；Computer Use 用来打开软件检查。复杂工作里，这两种方式可以配合使用。",
-            "Now a separate, more complex project: Thomas Ricouard’s architecture render. Blender’s Python API, bpy, builds an editable scene; Computer Use opens the application to inspect it. The two approaches can work together."
-          ]
-        }
+      "kind": "film",
+      "selection": 0,
+      "delay": 24000,
+      "label": [
+        "一段录像，一个任务",
+        "One recording, one task"
+      ],
+      "end": [
+        "树干被选中的 Blender 场景；字幕标明 Python / API 路线",
+        "The tree trunk selected in Blender; the caption identifies the Python / API route"
+      ],
+      "say": [
+        "录像里的任务是：参考一张图片，在 Blender 里做一棵树。右侧已经提交了要求，随后左侧出现树模型，画面随后切换材质和视角，展示模型结果。这里走的是 API 路线：模型生成 Python，插件把代码交给 Blender 执行。前面讲的 Computer Use 则是看截图、通过工具点击界面。两条路线都能改变软件里的内容，但不能只看见 Blender 画面，就断定 AI 全程在用鼠标。",
+        "The task in this recording is to create a tree in Blender from a reference image. The request has already been sent on the right. A tree then appears on the left, and the recording shows its materials and different views. This example uses an API route: the model generates Python, and an add-on runs it in Blender. Computer Use, as explained earlier, reads screenshots and requests interface actions through tools. Both routes can change an application, but a Blender video alone does not prove that the AI clicked through every step."
       ]
     }
   },
@@ -1091,8 +1052,8 @@
       "B moves to the left and writes solutions for the next round of selection"
     ],
     "say": [
-      "STaR 从已有题目和标准答案开始。A 写出解题过程，再核对最后的答案，留下答对的那几份。纸上是它写出的解题过程，题目和标准答案由外部提供。 这些被选中的解题过程移进训练，成为练习材料。积累很多这样的材料，再用它们训练模型，得到 B。图里的几张纸代表一大批例子。 B 回到了左边，开始写下一批解题过程。它既是上一轮训练的结果，又在制作下一轮的训练材料。这就是这个例子里回来的那一步。",
-      "STaR starts with supplied questions and known answers. A writes solution steps, then the final answers are checked. Keep the sheets whose answers match. The model writes the solutions; the questions and answer key come from outside. The selected solutions move into training as practice material. Collect many such examples and use them to train a model, producing B. The few sheets here stand for a much larger batch. B moves back to the left and writes the next batch of solutions. It is both the result of the last training round and the maker of material for the next one. That is what comes back into the next round."
+      "STaR 从已有题目和标准答案开始。模型 A 写出解题过程，再核对最后的答案，留下答对的那几份。纸上是它写出的解题过程，题目和标准答案由外部提供。 这些被选中的解题过程移进训练，成为练习材料。积累很多这样的材料，由训练程序用它们训练基础模型，得到新版本 B。图里的几张纸代表一大批例子。 模型 B 回到了左边，开始写下一批解题过程。它既是上一轮训练的结果，又在制作下一轮的训练材料。这就是这个例子里回来的那一步。",
+      "STaR starts with supplied questions and known answers. Model A writes solution steps, then the final answers are checked. Keep the sheets whose answers match. The model writes the solutions; the questions and answer key come from outside. The selected solutions move into training as practice material. A training program uses many such examples to train the base model, producing Model B. The few sheets here stand for a much larger batch. Model B moves back to the left and writes the next batch of solutions. It is both the result of the last training round and the maker of material for the next one. That is what comes back into the next round."
     ],
     "transition": [
       "再看一个只展示了部分过程的例子：AI 让训练更快。",
@@ -1116,8 +1077,8 @@
             "A’s solution sheets are checked against known answers; selected sheets remain"
           ],
           "say": [
-            "STaR 从已有题目和标准答案开始。A 写出解题过程，再核对最后的答案，留下答对的那几份。纸上是它写出的解题过程，题目和标准答案由外部提供。",
-            "STaR starts with supplied questions and known answers. A writes solution steps, then the final answers are checked. Keep the sheets whose answers match. The model writes the solutions; the questions and answer key come from outside."
+            "STaR 从已有题目和标准答案开始。模型 A 写出解题过程，再核对最后的答案，留下答对的那几份。纸上是它写出的解题过程，题目和标准答案由外部提供。",
+            "STaR starts with supplied questions and known answers. Model A writes solution steps, then the final answers are checked. Keep the sheets whose answers match. The model writes the solutions; the questions and answer key come from outside."
           ]
         },
         {
@@ -1135,8 +1096,8 @@
             "Selected solutions move into training; the new model B appears on the right"
           ],
           "say": [
-            "这些被选中的解题过程移进训练，成为练习材料。积累很多这样的材料，再用它们训练模型，得到 B。图里的几张纸代表一大批例子。",
-            "The selected solutions move into training as practice material. Collect many such examples and use them to train a model, producing B. The few sheets here stand for a much larger batch."
+            "这些被选中的解题过程移进训练，成为练习材料。积累很多这样的材料，由训练程序用它们训练基础模型，得到新版本 B。图里的几张纸代表一大批例子。",
+            "The selected solutions move into training as practice material. A training program uses many such examples to train the base model, producing Model B. The few sheets here stand for a much larger batch."
           ]
         },
         {
@@ -1154,8 +1115,8 @@
             "B moves to the left and writes solutions for the next round of selection"
           ],
           "say": [
-            "B 回到了左边，开始写下一批解题过程。它既是上一轮训练的结果，又在制作下一轮的训练材料。这就是这个例子里回来的那一步。",
-            "B moves back to the left and writes the next batch of solutions. It is both the result of the last training round and the maker of material for the next one. That is what comes back into the next round."
+            "模型 B 回到了左边，开始写下一批解题过程。它既是上一轮训练的结果，又在制作下一轮的训练材料。这就是这个例子里回来的那一步。",
+            "Model B moves back to the left and writes the next batch of solutions. It is both the result of the last training round and the maker of material for the next one. That is what comes back into the next round."
           ]
         }
       ]
@@ -1258,7 +1219,7 @@
           ],
           "end": [
             "DGM：新助手继续改自己；STaR：新模型做下一批材料；AlphaEvolve：训练更快，下一轮未展示",
-            "DGM: improved helper works on itself again; STaR: new model makes the next practice set; AlphaEvolve: training is faster, next round not shown"
+            "DGM: improved helper works on itself again; STaR: new model writes the next training solutions; AlphaEvolve: training is faster, next round not shown"
           ],
           "say": [
             "DGM 中，改好的助手继续改自己的工具。STaR 中，新模型制作下一轮的训练材料。AlphaEvolve 这个成果让训练更快，但没有展示新模型接棒。这三个例子走到了不同的地方。",

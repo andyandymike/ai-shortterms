@@ -10,7 +10,7 @@ Computer Use → Jev → RSI. **20 pages**, with visual numbers matching Present
 
 > Visual 1 / 1 · The opening map
 
-Today we’ll follow three ideas: how Computer Use operates software, how Jev makes decisions for a workflow, and how improvement could repeat in RSI. A returns workflow connects the first two chapters. The interactive diagrams are teaching examples, not live model calls; the Blender section includes a real published render.
+Today we’ll follow three ideas: how Computer Use operates software, how Jev makes decisions for a workflow, and how improvement could repeat in RSI. A returns workflow connects the first two chapters. The interactive diagrams are teaching examples, not live model calls; the Blender section uses a local screen recording to distinguish interface control from the API route.
 
 **Transition｜** Start with Computer Use.
 
@@ -100,21 +100,13 @@ Now we are in inference: using the trained model. The button moved, so the new s
 
 ---
 
-## 07 · C6｜Computer Use in Blender
+## 07 · C6｜How AI works in Blender
 
 [Open this page](/session-2#computer-use/C6)
 
-> Visual 1 / 3 · The task: remove the cube, add a sphere and raise it
+> Visual 1 / 1 · The tree trunk selected in Blender; the caption identifies the Python / API route
 
-The task is concrete: remove the default cube, add a UV Sphere, and move it upward. We can check the result directly in Blender. This is an edited Astra demonstration published by Kakarot Labs.
-
-> Visual 2 / 3 · The sphere is raised in Blender, with Z set to 2; the same source frame is held if playback fails
-
-The sphere is now raised. The recording shows a search menu, a sphere being added, and the Z position changing from 0 to 2. The natural-language task becomes interface actions, and the result can be checked inside Blender.
-
-> Visual 3 / 3 · A separate project: an architecture render and the Python / bpy and Computer Use roles
-
-Now a separate, more complex project: Thomas Ricouard’s architecture render. Blender’s Python API, bpy, builds an editable scene; Computer Use opens the application to inspect it. The two approaches can work together.
+The task in this recording is to create a tree in Blender from a reference image. The request has already been sent on the right. A tree then appears on the left, and the recording shows its materials and different views. This example uses an API route: the model generates Python, and an add-on runs it in Blender. Computer Use, as explained earlier, reads screenshots and requests interface actions through tools. Both routes can change an application, but a Blender video alone does not prove that the AI clicked through every step.
 
 **Transition｜** A workflow also needs decisions: which team should receive an email?
 
@@ -274,15 +266,15 @@ Notice B moving back to the left. B now uses its new tool to try another change 
 
 > Visual 1 / 3 · A’s solution sheets are checked against known answers; selected sheets remain
 
-STaR starts with supplied questions and known answers. A writes solution steps, then the final answers are checked. Keep the sheets whose answers match. The model writes the solutions; the questions and answer key come from outside.
+STaR starts with supplied questions and known answers. Model A writes solution steps, then the final answers are checked. Keep the sheets whose answers match. The model writes the solutions; the questions and answer key come from outside.
 
 > Visual 2 / 3 · Selected solutions move into training; the new model B appears on the right
 
-The selected solutions move into training as practice material. Collect many such examples and use them to train a model, producing B. The few sheets here stand for a much larger batch.
+The selected solutions move into training as practice material. A training program uses many such examples to train the base model, producing Model B. The few sheets here stand for a much larger batch.
 
 > Visual 3 / 3 · B moves to the left and writes solutions for the next round of selection
 
-B moves back to the left and writes the next batch of solutions. It is both the result of the last training round and the maker of material for the next one. That is what comes back into the next round.
+Model B moves back to the left and writes the next batch of solutions. It is both the result of the last training round and the maker of material for the next one. That is what comes back into the next round.
 
 **Transition｜** Now an example that shows part of the process: AI makes training faster.
 
@@ -308,7 +300,7 @@ The same computation goes into Gemini training. DeepMind reported an average 23%
 
 [Open this page](/session-2#rsi/R6)
 
-> Visual 1 / 2 · DGM: improved helper works on itself again; STaR: new model makes the next practice set; AlphaEvolve: training is faster, next round not shown
+> Visual 1 / 2 · DGM: improved helper works on itself again; STaR: new model writes the next training solutions; AlphaEvolve: training is faster, next round not shown
 
 In DGM, the improved assistant works on its own tools again. In STaR, the new model makes material for the next training round. This AlphaEvolve result makes training faster, but does not show the new model taking over. The examples show different parts of the process.
 
