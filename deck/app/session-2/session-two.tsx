@@ -45,7 +45,7 @@ export default function SessionTwo() {
   const nextPhase = nextIndex === state.index ? phase + 1 : 0;
   const nextCue = cues[nextIndex];
   const isFilm = !!cue.timeline[state.frame].media;
-  const primaryLabel = state.status === 'playing' ? isFilm ? 'Pause film' : 'Pause transition' : state.status === 'paused' ? isFilm ? 'Resume film' : 'Resume transition' : state.status === 'prepared' ? state.mediaUnavailable ? 'Show source still' : isFilm ? 'Play source film' : 'Play animation' : nextCue?.beat === cue.beat ? 'Next picture' : 'Next page';
+  const primaryLabel = state.status === 'playing' ? isFilm ? 'Pause film' : 'Pause transition' : state.status === 'paused' ? isFilm ? 'Resume film' : 'Resume transition' : state.status === 'prepared' ? state.mediaUnavailable ? 'Show source still' : isFilm ? 'Play source film' : 'Play animation' : nextCue?.beat === cue.beat ? isFilm ? 'Next video' : 'Next picture' : 'Next page';
   const picture = cues.slice(0, state.index).filter(item => item.beat === cue.beat).reduce((sum, item) => sum + item.phases.length, 0) + phase + 1;
   const pictures = cues.filter(item => item.beat === cue.beat).reduce((sum, item) => sum + item.phases.length, 0);
   const [sourcesOpen, setSourcesOpen] = useState(false);
@@ -83,6 +83,18 @@ export default function SessionTwo() {
   const mediaUnavailable = useCallback(() => dispatch({ type:'media-unavailable', revision:state.revision, frame:state.frame }), [dispatch, state.revision, state.frame]);
   const mediaPlayback = useCallback((playing: boolean) => dispatch({ type:playing ? 'resume' : 'pause' }), [dispatch]);
   const back = useCallback(() => { if (state.phase > 0) enter(state.index, true, false, state.phase - 1); else if (state.index > 0) enter(state.index - 1, true); }, [enter, state.index, state.phase]);
+  const selectMedia = useCallback((phase: number) => {
+    if (cue.beat !== 'C6' || !Number.isInteger(phase) || phase < 0 || phase >= cue.phases.length || phase === state.phase) return;
+    lastProceed.current = -Infinity;
+    enter(state.index, false, false, phase);
+  }, [cue, state.index, state.phase, enter]);
+  const exitMedia = useCallback(() => {
+    if (cue.beat !== 'C6') return;
+    const nextPage = cues.findIndex((item, index) => index > state.index && item.beat !== cue.beat);
+    if (nextPage < 0) return;
+    lastProceed.current = performance.now();
+    enter(nextPage);
+  }, [cue.beat, state.index, enter]);
 
   const proceed = useCallback(() => {
     // A double click is one intention, including when the next page is static.
@@ -112,6 +124,8 @@ export default function SessionTwo() {
       if (message.action === 'back') back();
       if (message.action === 'replay') restart();
       if (message.action === 'skip') dispatch({ type: 'skip' });
+      if (message.action === 'select-media' && message.phase !== undefined) selectMedia(message.phase);
+      if (message.action === 'exit-media') exitMedia();
     };
     const next = cues[nextIndex];
     const nextPicture = next?.phases[nextPhase];
@@ -126,11 +140,12 @@ export default function SessionTwo() {
       pages: chapters.flatMap(chapter => chapter.beats).length,
       part: picture, parts: pictures,
       duration, elapsed, waiting: mediaWaiting, unavailable:state.mediaUnavailable,
+      mediaSwitchable: cue.beat === 'C6',
       phase, phases: cues.filter(item => item.beat === cue.beat).flatMap(item => item.phases.map(part => part.label[0])), end: currentPicture.end[0],
       next: next && nextPicture ? { beatId: next.beat, title: nextBeat.term ? `${nextBeat.term.name}${nextBeat.term.fullName ? ` · ${nextBeat.term.fullName}` : ''}` : nextBeat.title, label: nextPicture.label[0], say: nextPicture.say[0], action: nextPicture.label[0], duration: nextPicture.duration, phases: [nextPicture.label[0]], end: nextPicture.end[0] } : null,
     };
     channel.current?.postMessage({ type: 'state', state: snapshot.current } satisfies PresenterMessage);
-  }, [state, cue, slideTitle, proceed, back, restart, dispatch, elapsed, duration, mediaWaiting, phase, currentPicture, nextIndex, nextPhase, picture, pictures]);
+  }, [state, cue, slideTitle, proceed, back, restart, dispatch, elapsed, duration, mediaWaiting, phase, currentPicture, nextIndex, nextPhase, picture, pictures, selectMedia, exitMedia]);
 
   useEffect(() => {
     if (!session) return;
@@ -194,7 +209,7 @@ export default function SessionTwo() {
             <p className={s.eyebrow}><span>{beat.id}</span>{chapter.term}{sceneKind && <span className={s.sceneKind}>{sceneKind}</span>}</p>
             <h1>{beat.title}</h1>
           </div>
-          <GuidedProvider value={{ frame: cue.frames[state.frame], status: state.status, cueId: `${cue.id}/${state.revision}`, onComplete: finish, onMediaProgress: mediaProgress, onMediaUnavailable: mediaUnavailable, onMediaPlayback: mediaPlayback }}><LabProvider><div className={s.scene}><ChapterScene id={beat.id} /></div></LabProvider></GuidedProvider>
+          <GuidedProvider value={{ frame: cue.frames[state.frame], status: state.status, cueId: `${cue.id}/${state.revision}`, onComplete: finish, onMediaProgress: mediaProgress, onMediaUnavailable: mediaUnavailable, onMediaPlayback: mediaPlayback, onMediaSelect: selectMedia, onMediaExit: exitMedia }}><LabProvider><div className={s.scene}><ChapterScene id={beat.id} /></div></LabProvider></GuidedProvider>
         </>}
         <div className={s.storyControls}>
           <nav className={s.steps} aria-label={`${chapter.name} steps`}>

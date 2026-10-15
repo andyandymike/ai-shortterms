@@ -1,8 +1,8 @@
 # 第二场双语排练稿｜Talk 02 bilingual rehearsal
 
-共 **20 页**，按同一幅画面配对中英文；实际演讲选一种语言。先点击播放，自动停住后再讲当前段落，讲完继续。引用块只提示画面，转场句放在每页最后。[操作说明与目录](index.md)。
+共 **20 页**，按同一幅画面配对中英文；实际演讲选一种语言。先点击播放，自动停住后再讲当前段落，讲完继续。C6 可随时切换视频或直接进入下一页，不必等播完。引用块只提示画面，转场句放在每页最后。[操作说明与目录](index.md)。
 
-The languages are paired by visual; choose one for delivery. Press play, wait for the automatic hold, speak the current paragraph, then continue. Blockquotes identify the picture. Transitions appear at the end of each page.
+The languages are paired by visual; choose one for delivery. Press play, wait for the automatic hold, speak the current paragraph, then continue. On C6, switch films or go to the next page at any time. Blockquotes identify the picture. Transitions appear at the end of each page.
 
 ## 01 · O1｜Talk 02 overview
 
@@ -164,13 +164,21 @@ The languages are paired by visual; choose one for delivery. Press play, wait fo
 
 [打开本页](/session-2#computer-use/C6)
 
-> 画面 / Visual 1 / 1 · 树干被选中的 Blender 场景；字幕标明 Python / API 路线
+> 画面 / Visual 1 / 2 · 树干被选中的 Blender 场景；标明 Python / API 路线
 >
-> The tree trunk selected in Blender; the caption identifies the Python / API route
+> The tree trunk selected in Blender; labeled as a Python / API workflow
 
-**中文｜** 录像里的任务是：参考一张图片，在 Blender 里做一棵树。右侧已经提交了要求，随后左侧出现树模型，画面随后切换材质和视角，展示模型结果。这里走的是 API 路线：模型生成 Python，插件把代码交给 Blender 执行。前面讲的 Computer Use 则是看截图、通过工具点击界面。两条路线都能改变软件里的内容，但不能只看见 Blender 画面，就断定 AI 全程在用鼠标。
+**中文｜** 任务是参考图片，在 Blender 里做一棵树。右侧提交要求后，左侧出现树模型，随后展示材质和不同视角。这里是模型生成 Python，插件通过 API 交给 Blender 执行。前面的 Computer Use 则是看截图、请求点击界面。两种方式都能操作软件；这段录像展示的是 API 路线。
 
-**English｜** The task in this recording is to create a tree in Blender from a reference image. The request has already been sent on the right. A tree then appears on the left, and the recording shows its materials and different views. This example uses an API route: the model generates Python, and an add-on runs it in Blender. Computer Use, as explained earlier, reads screenshots and requests interface actions through tools. Both routes can change an application, but a Blender video alone does not prove that the AI clicked through every step.
+**English｜** The task is to create a tree in Blender from a reference image. After the request on the right, the tree appears on the left, followed by its materials and different views. Here the model generates Python, and an add-on runs it through Blender’s API. Computer Use instead reads screenshots and requests interface actions. Both can operate software; this recording shows the API route.
+
+> 画面 / Visual 2 / 2 · 房屋镜头停在成片末尾；这是另一个项目的渲染结果
+>
+> The house camera tour held at its end; a rendered result from a separate project
+
+**中文｜** 再看一个更完整的成品。这是 Thomas Ricouard 的另一个房屋项目，与刚才的树不是同一次任务。作者用 bpy，也就是 Blender 的 Python API，搭建场景，再通过 Computer Use 打开软件检查。我们现在看到的是渲染好的镜头，不是操作录像。它说明 API 建模和界面检查可以配合，做出这样的结果。
+
+**English｜** Here is a more complete result: a separate house project by Thomas Ricouard, unrelated to the tree task. The author used bpy, Blender’s Python API, to build the scene and Computer Use to open Blender and inspect it. This film is the rendered camera tour, not an operation recording. It shows a result from a workflow combining API modeling with interface inspection.
 
 **转场｜** 操作之外，流程还要判断：一封邮件该交给谁？
 

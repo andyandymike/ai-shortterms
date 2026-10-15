@@ -25,13 +25,16 @@
 - [OpenAI：CUA 的视觉与强化学习](https://openai.com/index/computer-using-agent/)
 - [OpenAI：Computer use](https://developers.openai.com/api/docs/guides/tools-computer-use)
 - [jonipwi / Blender MCP：原作者录像与 API bridge 说明](https://github.com/jonipwi/blender-mcp)
+- [Thomas Ricouard / OpenAI：房屋项目与渲染成片](https://developers.openai.com/blog/architectural-visualization-with-astra)
 - [Blender：Python API](https://docs.blender.org/api/current/)
 
 C1、C4、C5 的订单、鼠标、输入、弹窗、截图历史与回执是教学模拟，没有操纵真实业务软件。应用出现回执后，最新截图仍可能是提交前的表单；新截图返回后才完成验证。弹窗出现时，旧观察也会暂时失效。场景说明的是反馈关系，不是某个模型的真实动作日志。
 
-C6 保持一页、一个讲解点。使用 jonipwi / Blender MCP 原作者录像的连续 00:00–00:30，以 1.25 倍速本地播放，约 24 秒后停在同一场景的树干选择画面。先介绍任务，点击一次播放；结束后画面无限停留，再讲路线区别。没有中途分段、拼接其他项目或 YouTube 请求。
+C6 保持一页，提供“操作录像”和“房屋成片”两个选择。观众页与 Presenter 都可随时切换视频或直接进入下一页，不必等播完。切换会停止当前视频、更新讲稿，新选的视频等待点击播放；自然播完则一直停住。两段视频均为本地文件，不依赖 YouTube。
 
-录像开始时请求已经提交；可见树模型出现在 Blender，再切换材质和视角查看。来源说明模型生成 Python，通过 API bridge 和插件交给 Blender 执行。因此这是 API 建模的例子，不能说 AI 逐项点击菜单，也不能将后半段视角操作归因给 agent。用此例分清“看到软件变化”和“证明 GUI Computer Use”的差别。旧球体截图和房屋成片只作历史素材保存，不再出现在当前 C6。原始文件、截段、倍速、帧图及署名见 `deck/public/media/session-2/PROVENANCE.md`。
+操作录像使用 jonipwi / Blender MCP 原作者录像的连续 00:00–00:30，以 1.25 倍速播放，约 24 秒后停在树干选择画面。录像开始时请求已经提交；随后可见树模型出现，再展示材质和不同视角。来源说明模型生成 Python，通过 API bridge 和插件交给 Blender 执行。这是 API 建模的例子，不能说 AI 逐项点击菜单，也不能将后半段视角操作归因给 agent。
+
+房屋成片恢复 Thomas Ricouard 的完整 30 秒镜头，原速播放，结束停在片尾。这是与树无关的另一个项目，展示渲染结果，不是操作录像。作者介绍的工作流结合 bpy（Blender 的 Python API）搭建场景与 Computer Use 打开软件检查；成片本身不能证明完整动作过程或全程自主完成。两种素材独立选择，不拼成一次任务。旧球体截图仅作历史素材保存。原始文件、截段、倍速、帧图及署名见 `deck/public/media/session-2/PROVENANCE.md`。
 
 C7 比较训练与使用：第一段光标移到 Cancel 并点击，表单关闭、退货未创建，中间显示失败反馈；第二段积累多次练习并更新 weights；最后换到新布局，用固定 weights 重新定位。每段结束后停住，等待对应口播讲完。OpenAI 公开介绍 CUA 结合视觉能力与强化学习。这里展示通用训练原理，没有复现 CUA 的具体训练算法，也没有在网页里更新真实模型。图示 v1、v2 与小格子只是教学表现，不能当成实测能力提升。
 

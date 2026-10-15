@@ -72,9 +72,9 @@ function ConnectedPresenter({ session }: { session: string }) {
     };
   }, [session]);
 
-  const send = useCallback((action: Command) => {
+  const send = useCallback((action: Command, phase?: number) => {
     if (!snapshot || connection !== 'connected' || !channel.current) return;
-    channel.current.postMessage({ type: 'command', action, cueId: snapshot.cueId, status: snapshot.status } satisfies PresenterMessage);
+    channel.current.postMessage({ type: 'command', action, phase, cueId: snapshot.cueId, status: snapshot.status } satisfies PresenterMessage);
   }, [snapshot, connection]);
 
   useEffect(() => {
@@ -105,7 +105,7 @@ function ConnectedPresenter({ session }: { session: string }) {
   const prepared = snapshot.status === 'prepared';
   const ended = !snapshot.next && snapshot.status === 'ready';
   const nextChangesPage = snapshot.next && snapshot.next.beatId !== snapshot.beatId;
-  const primary = playing ? '暂停播放' : paused ? '继续这次变化' : ended ? '演示结束' : prepared ? snapshot.unavailable ? '显示替代静帧' : snapshot.beatId === 'C6' ? '播放影片' : '播放动画' : nextChangesPage ? '下一页' : '下一画面';
+  const primary = playing ? '暂停播放' : paused ? '继续这次变化' : ended ? '演示结束' : prepared ? snapshot.unavailable ? '显示替代静帧' : snapshot.beatId === 'C6' ? '播放影片' : '播放动画' : nextChangesPage ? '下一页' : snapshot.mediaSwitchable ? '下一个视频' : '下一画面';
   const status = !connected ? '连接中断 · 正在重连' : snapshot.unavailable ? '视频不可用 · 已显示静帧' : playing ? snapshot.waiting ? '视频缓冲中' : '变化结束会自动停住' : paused ? '已手动暂停' : prepared ? '等待点击播放' : '画面已停住 · 讲完再继续';
   const accent = snapshot.beatId.startsWith('J') ? 'red' : snapshot.beatId.startsWith('R') ? 'green' : 'blue';
 
@@ -125,6 +125,10 @@ function ConnectedPresenter({ session }: { session: string }) {
       {!connected && <p className={styles.connectionWarning} role="alert">观众画面暂时没有响应，控制已停用。请确认观众窗口仍然打开；连接恢复后会自动同步。</p>}
 
       <section className={styles.playback} aria-label="当前讲解画面">
+        {snapshot.mediaSwitchable && <nav className={styles.mediaSwitcher} aria-label="选择 Blender 视频" onKeyDown={event => { if ([' ', 'Enter'].includes(event.key)) event.stopPropagation(); }}>
+          <div>{snapshot.phases.map((label, phase) => <button type="button" key={phase} disabled={!connected} aria-pressed={snapshot.phase === phase} onClick={() => send('select-media', phase)}>{label}</button>)}</div>
+          <button type="button" disabled={!connected} onClick={() => send('exit-media')}>直接下一页 →</button>
+        </nav>}
         <div className={styles.playbackHeading}><strong>{snapshot.unavailable ? '视频不可用，改用案例静帧' : prepared ? '点击播放后，本段结束会停住' : snapshot.status === 'ready' ? '这幅画面会一直保留' : snapshot.waiting ? '等待视频缓冲' : paused ? '暂停在变化途中' : '正在抵达讲解画面'}</strong><span>讲解不限时</span></div>
         <p><b>{snapshot.status === 'ready' ? '当前画面' : '将停在'}</b> {snapshot.end}</p>
         {!snapshot.unavailable && (playing || paused) && snapshot.duration > 0 && <progress aria-label="画面过渡进度" value={snapshot.elapsed} max={snapshot.duration} />}
@@ -157,7 +161,7 @@ function ConnectedPresenter({ session }: { session: string }) {
             <h3>演示到这里结束。</h3>
             <p className={styles.nextSpeech}>可以留在这张总结画面，进入交流。</p>
           </>}
-          {(playing || paused) && <p className={styles.playbackNote}>当前变化结束后自动停住；讲完再继续，才会进入这里。</p>}
+          {(playing || paused) && <p className={styles.playbackNote}>{snapshot.mediaSwitchable ? '随时选择另一段视频或直接下一页，不必等播放结束。切换后等待你点击播放。' : '当前变化结束后自动停住；讲完再继续，才会进入这里。'}</p>}
         </aside>
       </div>
 

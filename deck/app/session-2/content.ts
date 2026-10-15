@@ -5,7 +5,8 @@ export const demonstrationNotes: Record<string, string[]> = {
   'computer-use': [
     'C7 illustrates a generic reinforcement-learning principle: practice across tasks, inspect outcomes, and use feedback for parameter updates. OpenAI described CUA as using reinforcement learning. The diagram is not a disclosed CUA training algorithm or a live training run. At inference, new screenshots change context while the illustrated model weights remain fixed.',
     'The return desk stages model requests, tool actions, and screenshot feedback. It does not control an external application. Context includes the goal, the latest observation, and relevant history; it can become stale when the application changes.',
-    'C6 plays a local 00:00–00:30 excerpt from jonipwi / Blender MCP at 1.25×, as one continuous 24-second segment. The request is already submitted when the recording begins. A tree appears in Blender, followed by viewport inspection. The source README describes model-generated Python executed through an API bridge and add-on. This is an API workflow, not evidence of agent-driven GUI clicks; the recording does not establish who controls the later viewport inspection. Playback does not contact YouTube or a remote model. The source is credited without asserting an open media license.',
+    'C6 offers two local films, selectable at any time. The operation recording is a continuous 00:00–00:30 excerpt from jonipwi / Blender MCP, played at 1.25× (24 seconds). The request is already submitted when it begins. A tree appears, followed by viewport inspection. The source describes model-generated Python executed through an API bridge and add-on; the recording does not establish who controls the later inspection. This is an API workflow, not evidence of agent-driven GUI clicks.',
+    'The other C6 film is Thomas Ricouard’s 30-second house camera-tour render, a separate project. Its reported workflow combines bpy scene building with Computer Use inspection. The film shows the rendered result, not the agent’s actions. Switching stops the current film and prepares the selected film without autoplay; either film can be left before it ends. Both are packaged locally, without YouTube or live model calls, and credited without asserting an open media license.',
   ],
   jev: [
     'No live model is called. Probabilities, token chunks, training versions and evaluation outcomes are teaching illustrations. J3 uses equal values to compare output processes; its JSON is a simplified display, not an exact API response. The timing of every animation is chosen for presentation, not a latency measurement.',
@@ -30,6 +31,7 @@ const computerSources = [
   { label: 'OpenAI · CUA: vision and reinforcement learning', url: 'https://openai.com/index/computer-using-agent/' },
   { label: 'OpenAI · Computer use: the screenshot / action loop', url: 'https://developers.openai.com/api/docs/guides/tools-computer-use' },
   { label: 'jonipwi / Blender MCP · API bridge and original tree recording', url: 'https://github.com/jonipwi/blender-mcp' },
+  { label: 'Thomas Ricouard / OpenAI · Architectural visualization with Astra', url: 'https://developers.openai.com/blog/architectural-visualization-with-astra' },
   { label: 'Blender · Python API', url: 'https://docs.blender.org/api/current/' },
 ];
 const jevSources = [
@@ -64,7 +66,7 @@ export const chapters: Chapter[] = [
     { id:'C4', label:'The loop', title:'How Computer Use works', subtitle:'Follow the cursor, the application, and the screenshot returning to context.', takeaway:'The agent repeats this loop until it can verify the goal.', next:'What if the screen changes?' },
     { id:'C5', label:'Recovery', title:'How Computer Use recovers', subtitle:'Insert a pop-up. Watch whether the old plan still works.', takeaway:'Check the result before deciding that the task is done.', next:'How does it learn to act?' },
     { id:'C7', label:'Training and use', title:'How Computer Use is trained', subtitle:'Training updates weights. Inference uses the learned model with new context.', takeaway:'Feedback from many practice tasks can shape later actions. A new screenshot alone does not retrain the model.', next:'Open the Blender case' },
-    { id:'C6', label:'Blender', title:'How AI works in Blender', subtitle:'One task, one local recording: create and inspect an editable tree.', takeaway:'This recording uses Python through an API. A Blender screen alone does not prove GUI-based Computer Use.', next:'From actions to decisions' },
+    { id:'C6', label:'Blender', title:'How AI works in Blender', subtitle:'Choose an operation recording or a finished house render.', takeaway:'The tree shows API modeling; the separate house project combines bpy scene building with Computer Use inspection.', next:'From actions to decisions' },
   ] },
   { id:'jev', name:'Jev', term:'JEV / SYSTEM ONE MODEL', color:'red', sources:jevSources, beats:[
     { id:'J0', label:'Chapter opening', title:'Jev', subtitle:'A model for bounded decisions.', takeaway:'TypeSafe AI’s Jev answers questions with a defined answer shape.', next:'Choose a team for a customer message', term:{ name:'Jev', fullName:'System One model' } },

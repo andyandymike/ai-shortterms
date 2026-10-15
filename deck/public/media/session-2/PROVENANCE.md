@@ -1,4 +1,8 @@
-# Talk 02 / Current Blender recording
+# Talk 02 / Blender source media
+
+C6 keeps one page with two independently selectable local films: the tree operation recording and the finished house render. Audience and Presenter controls can switch films or leave the page at any time. Switching stops the old film and prepares the selected one without autoplay; notes follow the selection. Reaching either film’s end holds its matching final frame. The Site remains withdrawn; these changes are for the local presentation only.
+
+## Operation recording · tree API workflow
 
 Source: jonipwi, Blender MCP repository and Tutorial.mp4.
 Page: https://github.com/jonipwi/blender-mcp
@@ -11,9 +15,9 @@ C6 uses one continuous excerpt, 00:00–00:30, played at 1.25× (24 seconds), mu
 
 The recording starts after the tree request and reference image have been submitted. The visible tree creation uses an API bridge. The source README describes model-generated Python executed through a Blender add-on. Later viewport and material inspection is visible, but the recording does not establish who controls it. Do not describe this as a GUI-only agent run or autonomous verification. It distinguishes an API workflow from screenshot-and-action Computer Use.
 
-Credit: jonipwi / Blender MCP, shown beside the recording and in the source drawer. No explicit media license was located; this local educational presentation asserts neither ownership nor an open license. No source executable or add-on was installed. The older media below remain for provenance and are not displayed by current C6.
+Credit: jonipwi / Blender MCP, shown beside the recording and in the source drawer. No explicit media license was located; this local educational presentation asserts neither ownership nor an open license. No source executable or add-on was installed.
 
-## Archived Blender source media
+## Finished render · separate house project
 
 Source: Thomas Ricouard, “Architectural visualization with Astra”, OpenAI Developers, 2026-09-04.
 Page: https://developers.openai.com/blog/architectural-visualization-with-astra
@@ -24,7 +28,11 @@ Retrieved: 2026-09-24.
 | blender-house-tour.webm | https://cdn.openai.com/devhub/blog/architectural-visualization/atelier-house-tour-30s-1080p-ddb8f2c81368.webm | ddb8f2c81368de5a7c39311c4f1716783c4c93e52ada37ff9faa8aa16ba17520 |
 | blender-garden-house.webp | https://cdn.openai.com/devhub/blog/architectural-visualization/garden-house-exterior-822ca33fb418.webp | 822ca33fb418903f66b2840038627211f0fc423d449e591f0a9c3e83ac333c39 |
 
-These two files are unmodified copies of the published assets. The 30-second film is a Blender camera-tour render, not a screen recording of the agent's actions. An earlier C6 version played its first six seconds. These assets are retained but no longer displayed.
+These two files are unmodified copies of the published assets. C6 restores the complete 30-second film at 1×, muted, as the independently selectable finished render. It is a Blender camera tour from a separate project, not a continuation of the tree task or a screen recording of the agent’s actions. An earlier C6 version played only its first six seconds. The garden-house still is retained as historical material and is not displayed by current C6.
+
+`blender-house-start.webp` is the prepared frame at 00:00. `blender-house-end.webp` is extracted from the end of the local source film for the final hold. The older `blender-house-held.webp`, extracted at 00:06, is retained but is not the end frame of the restored full film. No cropping or added content is applied to these extracted frames.
+
+`blender-house-end.webp` SHA-256: `a9cd13903aa18256951f51aade5b78f858275dc21182cb92ca18dac62eb8b859`.
 
 The reported workflow combines Blender Python API modeling, rendered previews, and Computer Use inspection in Blender. These assets illustrate the case; they do not alone verify an action trace or a fully autonomous workflow.
 
@@ -35,9 +43,9 @@ Credit appears below the media and in the source drawer. The files remain attrib
 Source: Kakarot Labs, “How to Use ChatGPT Astra to Control Your PC & Blender (Full Tutorial)”, 2026-09-08.
 Original: https://www.youtube.com/watch?v=eM50HqZ4p7Y
 
-The retired C6 version used the original YouTube player for 01:34–01:39 (the task) and 01:40–01:52 (interface actions). No downloaded copy of the tutorial was distributed. The tutorial is edited by its author and is not an independently audited, uninterrupted action trace. The cube has already disappeared when that interface excerpt starts: the visible actions are the search menu, adding a sphere and changing its Z position. The house render is a separate project by a different creator. All three segments were removed from the presentation on 2026-10-15.
+The retired C6 version used the original YouTube player for 01:34–01:39 (the task) and 01:40–01:52 (interface actions). No downloaded copy of the tutorial was distributed. The tutorial is edited by its author and is not an independently audited, uninterrupted action trace. The cube has already disappeared when that interface excerpt starts: the visible actions are the search menu, adding a sphere and changing its Z position. Both YouTube segments remain retired. The separate house render was removed on 2026-10-15, then restored as its own selectable full film at the user’s request.
 
-The following screenshots were captured from the original video in a browser on 2026-10-15 and inspected at 01:34, 01:40 and 01:50. They are unmodified, including the original player controls and captions. They serve as prepared/held visuals and error fallbacks; they are not synthetic footage. The architecture stills are frames extracted at 00:00 and 00:06 from the existing local source film, without cropping or added content.
+The following screenshots were captured from the original video in a browser on 2026-10-15 and inspected at 01:34, 01:40 and 01:50. They are unmodified, including the original player controls and captions, and retained only as historical material. They are not synthetic footage. The listed architecture stills are frames extracted at 00:00 and 00:06 from the existing local source film, without cropping or added content.
 
 | Local file | Source position | SHA-256 |
 | --- | --- | --- |

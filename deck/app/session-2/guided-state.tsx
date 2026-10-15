@@ -21,6 +21,8 @@ export type GuidedState = {
   onMediaUnavailable: () => void;
   onMediaProgress: (currentTime: number, duration: number, waiting?: boolean) => void;
   onMediaPlayback: (playing: boolean) => void;
+  onMediaSelect?: (phase: number) => void;
+  onMediaExit?: () => void;
 };
 const Context = createContext<GuidedState | null>(null);
 export function GuidedProvider({ value, children }: { value: GuidedState; children: ReactNode }) {

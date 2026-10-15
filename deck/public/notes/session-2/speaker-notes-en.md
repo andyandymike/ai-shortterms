@@ -2,7 +2,7 @@
 
 Computer Use → Jev → RSI. **20 pages**, with visual numbers matching Presenter.
 
-**Play → automatic hold → speak this paragraph → continue.** Animations and the film wait for play; held visuals have no speaking countdown. Blockquotes identify the picture and are not spoken. Each page ends with a separate transition. [Controls and contents](index.md).
+**Play → automatic hold → speak this paragraph → continue.** Animations and films wait for play; held visuals have no speaking countdown. On C6, switch films or go straight to the next page at any time, without waiting for playback to finish. Blockquotes identify the picture and are not spoken. Each page ends with a separate transition. [Controls and contents](index.md).
 
 ## 01 · O1｜Talk 02 overview
 
@@ -104,9 +104,13 @@ Now we are in inference: using the trained model. The button moved, so the new s
 
 [Open this page](/session-2#computer-use/C6)
 
-> Visual 1 / 1 · The tree trunk selected in Blender; the caption identifies the Python / API route
+> Visual 1 / 2 · The tree trunk selected in Blender; labeled as a Python / API workflow
 
-The task in this recording is to create a tree in Blender from a reference image. The request has already been sent on the right. A tree then appears on the left, and the recording shows its materials and different views. This example uses an API route: the model generates Python, and an add-on runs it in Blender. Computer Use, as explained earlier, reads screenshots and requests interface actions through tools. Both routes can change an application, but a Blender video alone does not prove that the AI clicked through every step.
+The task is to create a tree in Blender from a reference image. After the request on the right, the tree appears on the left, followed by its materials and different views. Here the model generates Python, and an add-on runs it through Blender’s API. Computer Use instead reads screenshots and requests interface actions. Both can operate software; this recording shows the API route.
+
+> Visual 2 / 2 · The house camera tour held at its end; a rendered result from a separate project
+
+Here is a more complete result: a separate house project by Thomas Ricouard, unrelated to the tree task. The author used bpy, Blender’s Python API, to build the scene and Computer Use to open Blender and inspect it. This film is the rendered camera tour, not an operation recording. It shows a result from a workflow combining API modeling with interface inspection.
 
 **Transition｜** A workflow also needs decisions: which team should receive an email?
 

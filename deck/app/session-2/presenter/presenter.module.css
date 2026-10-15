@@ -30,6 +30,12 @@
 .playback progress::-webkit-progress-value { background:var(--accent); }
 .playback p { margin:12px 0 0; font-size:18px; line-height:1.4; }
 .playback p>b { font-size:16px; color:var(--accent); margin-right:10px; }
+.mediaSwitcher { display:flex; align-items:center; justify-content:space-between; gap:15px; margin:0 0 14px; padding-bottom:14px; border-bottom:1px solid var(--rule); }
+.mediaSwitcher>div { display:flex; gap:10px; }
+.mediaSwitcher button { padding:8px 12px; border:1px solid var(--rule); background:transparent; color:var(--ink); font-size:17px; font-weight:700; }
+.mediaSwitcher button[aria-pressed=true] { color:var(--paper); background:var(--accent); border-color:var(--accent); }
+.mediaSwitcher>button { border-color:transparent; }
+@media(max-width:760px) { .mediaSwitcher { flex-wrap:wrap; } .mediaSwitcher>button { margin-left:auto; } }
 .nextRange { font-size:18px; line-height:1.55; padding:14px 0; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); }
 @media(max-width:760px) { .playbackHeading { align-items:flex-start; flex-direction:column; gap:6px; } .playback { padding:13px 15px; } }
 .content { display:grid; grid-template-columns:minmax(0,1.55fr) minmax(290px,1fr); gap:clamp(30px,4vw,62px); flex:1; min-height:0; }

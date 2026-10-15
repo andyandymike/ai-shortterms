@@ -49,14 +49,14 @@ const intros = [
 
 Computer Use → Jev → RSI。共 **${pages.length} 页**，页内画面编号与 Presenter 一致。
 
-**播放 → 自动停住 → 讲当前段落 → 继续。**动画和影片都等待点击播放；停住后没有讲解倒计时。引用块是画面提示，不用念；转场句单独列在每页最后。[操作说明与目录](index.md)。
+**播放 → 自动停住 → 讲当前段落 → 继续。**动画和影片都等待点击播放；停住后没有讲解倒计时。C6 的两个视频可以随时切换或直接跳到下一页，不必等播完。引用块是画面提示，不用念；转场句单独列在每页最后。[操作说明与目录](index.md)。
 
 `,
   `# Talk 02 speaker notes | From Answers to Actions
 
 Computer Use → Jev → RSI. **${pages.length} pages**, with visual numbers matching Presenter.
 
-**Play → automatic hold → speak this paragraph → continue.** Animations and the film wait for play; held visuals have no speaking countdown. Blockquotes identify the picture and are not spoken. Each page ends with a separate transition. [Controls and contents](index.md).
+**Play → automatic hold → speak this paragraph → continue.** Animations and films wait for play; held visuals have no speaking countdown. On C6, switch films or go straight to the next page at any time, without waiting for playback to finish. Blockquotes identify the picture and are not spoken. Each page ends with a separate transition. [Controls and contents](index.md).
 
 `,
 ];
@@ -79,9 +79,9 @@ for (const lang of [0,1]) {
 }
 const bilingualIntro = `# 第二场双语排练稿｜Talk 02 bilingual rehearsal
 
-共 **${pages.length} 页**，按同一幅画面配对中英文；实际演讲选一种语言。先点击播放，自动停住后再讲当前段落，讲完继续。引用块只提示画面，转场句放在每页最后。[操作说明与目录](index.md)。
+共 **${pages.length} 页**，按同一幅画面配对中英文；实际演讲选一种语言。先点击播放，自动停住后再讲当前段落，讲完继续。C6 可随时切换视频或直接进入下一页，不必等播完。引用块只提示画面，转场句放在每页最后。[操作说明与目录](index.md)。
 
-The languages are paired by visual; choose one for delivery. Press play, wait for the automatic hold, speak the current paragraph, then continue. Blockquotes identify the picture. Transitions appear at the end of each page.
+The languages are paired by visual; choose one for delivery. Press play, wait for the automatic hold, speak the current paragraph, then continue. On C6, switch films or go to the next page at any time. Blockquotes identify the picture. Transitions appear at the end of each page.
 
 `;
 const bilingual = bilingualIntro + pages.map((page, index) => {
@@ -118,6 +118,8 @@ const index = `# 第二场｜From Answers to Actions
 | 上一步 / ← / Page Up | 回到上一幅画面，保留其结果 |
 | 重播 / R | 重放当前画面的变化 |
 | Presenter：直接到讲解画面 | 跳过变化，停在当前画面的结果 |
+| C6：操作录像 / 房屋成片 | 随时切换；停止旧视频，新视频等待播放，讲稿同步更新 |
+| C6：独立的下一页按钮 | 无论是否播放中，都直接进入下一页 |
 | 章节名 / 页内进度轨道 | 进入章节开场 / 指定页面；动画等待点击播放 |
 | Sources / S | 查看来源；Escape 关闭 |
 
@@ -129,7 +131,7 @@ C4 依次保留定位结果、填好的表单和验证回执。R4 依次保留�
 
 ## 开讲前
 
-确认 Presenter 同步，试一次继续、回退和重播。C6 只有一个讲解点：先介绍“参考图片做一棵树”的任务，点击一次播放；本地录像连续播放约 24 秒后自动停住，再讲界面与 API 路线的区别。任务提示始终可见，没有中途分段和讲解倒计时。此例通过 API 执行 Python，不能把后续视角检查说成 AI 的鼠标操作。
+确认 Presenter 同步，试一次继续、回退和重播。C6 保持一页，提供“操作录像”和“房屋成片”两个选择。树的 API 操作录像最多播放约 24 秒，另一个项目的房屋成片为 30 秒；随时可以暂停、切换视频或直接进入下一页，不必等播完。切换后先准备画面，再手动播放；讲稿随选择更新。树通过 API 执行 Python，房屋视频是渲染成品，两者都不能当作 AI 全程点击界面的录像。
 
 教学互动无需模型密钥；Blender 录像、教学动画和排序程序都在本地运行，不依赖 YouTube。来源链接仅供查阅，演示时不必打开。来源与限制见[参考稿](reference.md)。整场时长以实际排练为准。
 `;
