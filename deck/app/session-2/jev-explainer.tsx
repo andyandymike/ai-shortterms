@@ -51,18 +51,4 @@ export function JevTrainingScene() {
   </div>;
 }
 
-export function JevFitScene() {
-  const step = useGuided()?.frame.decision?.step ?? 0;
-  return <div className={s.fit} data-learning="jev-fit" data-step={step}>
-      <div className={s.sharedInput}><span className={s.label}>A DECISION FOR EVERY INCOMING TICKET</span><strong>“The shoes are too small. Please help me return them.”</strong></div>
-      <div className={s.workflow}>
-        <div className={s.ticketStack} aria-label="Incoming support tickets"><div /><div /><div><span>NEW TICKET</span><strong>Wrong size.<br />Wants a return.</strong></div></div>
-        <b className={s.arrow}>→</b>
-        <div className={s.workflowDecision}><span>JEV / DECIDE</span><strong>{step >= 5 ? 'returns' : 'Which team?'}</strong><p>{step >= 5 ? 'p = 0.94' : 'Evaluate the message'}</p></div>
-        <b className={s.arrow}>→</b>
-        <div className={s.destination} data-active={step >= 6}><span>CODE / ROUTE</span><strong>Returns queue</strong><p>{step >= 6 ? 'Ticket assigned ✓' : 'Await decision'}</p></div>
-      </div>
-      <div className={s.replyStep} data-visible={step >= 6}><span>NEED A WRITTEN REPLY?</span><strong>LLM → “We can help you return the shoes.”</strong></div>
-      <p className={s.fitConclusion}>Compare on your tickets: errors → latency → cost.</p>
-  </div>;
-}
+export { JevFitScene } from './jev-fit';

@@ -1,6 +1,6 @@
 # 第二场｜From Answers to Actions
 
-独立 Atlas 演示：**Computer Use → Jev → RSI**。共 **18 页**，每章从独立术语页开始。讲稿按页面和页内画面组织，与 Presenter 使用同一份口播。
+独立 Atlas 演示：**Computer Use → Jev → RSI**。共 **20 页**，每章从独立术语页开始。讲稿按页面和页内画面组织，与 Presenter 使用同一份口播。
 
 - [中文讲稿](speaker-notes-zh.md)
 - [English script](speaker-notes-en.md)
@@ -45,9 +45,11 @@
 13. [J8 · When to use Jev](/session-2#jev/J8)
 14. [R0 · RSI](/session-2#rsi/R0)
 15. [R4 · How an improvement loop works](/session-2#rsi/R4)
-16. [R5 · How AlphaEvolve improves AI training](/session-2#rsi/R5)
-17. [R6 · How improvement becomes recursive](/session-2#rsi/R6)
-18. [E1 · Comparing the three concepts](/session-2#closing/E1)
+16. [R8 · How an agent improves its workflow](/session-2#rsi/R8)
+17. [R9 · How a model learns from its own solutions](/session-2#rsi/R9)
+18. [R5 · How AlphaEvolve improves AI training](/session-2#rsi/R5)
+19. [R6 · When does improvement become recursive?](/session-2#rsi/R6)
+20. [E1 · Comparing the three concepts](/session-2#closing/E1)
 
 C4 依次保留定位结果、填好的表单和验证回执。R4 依次保留原程序 A、被拒绝的尝试 B、替换 A 的 C。每段口播只对应当时停住的结果。
 

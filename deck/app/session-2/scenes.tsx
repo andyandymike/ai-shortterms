@@ -5,7 +5,8 @@ import { DecodingLab, DecisionLab } from './jev-lab';
 import { ComputerLearningScene } from './learning-scenes';
 import { JevTrainingScene, JevFitScene } from './jev-explainer';
 import { JevQuestionsScene, JevOutputScene } from './jev-output';
-import { AlphaEvolveStory, RecursiveImprovementStory } from './rsi-story';
+import { AlphaEvolveStory } from './rsi-story';
+import { AgentImprovementScene, SelfTrainingScene, RecursiveRoutesScene } from './rsi-methods';
 import { SortingLab } from './rsi-lab';
 import { useGuided } from './guided-state';
 import s from './session-two.module.css';
@@ -99,7 +100,9 @@ function RsiScene({ id }: { id:string }) {
   if (id === 'R3') return <ResearchBottleneckScene />;
   if (id === 'R4') return <SortingLab id={id} />;
   if (id === 'R5') return <AlphaEvolveStory />;
-  if (id === 'R6') return <RecursiveImprovementStory />;
+  if (id === 'R6') return <RecursiveRoutesScene />;
+  if (id === 'R8') return <AgentImprovementScene />;
+  if (id === 'R9') return <SelfTrainingScene />;
   return null;
 }
 

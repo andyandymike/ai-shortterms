@@ -17,28 +17,41 @@ function Arrow({ active = false }: { active?: boolean }) { return <b className={
 export function ComputerLearningScene() {
   const step = useGuided()?.frame.learning ?? 0;
   const using = step >= 6;
-  const titles = ['Try an action.', 'The click ran. The task failed.', 'The result becomes feedback.', 'Practice across many tasks.', 'Feedback guides a weight update.', 'Keep the learned settings.', 'Use the trained model on a new screen.', 'New context. The same weights.'];
+  const trial = step < 3;
+  const failed = step === 2;
+  const titles = ['Try an action.', 'The model clicks Cancel.', 'The result becomes feedback.', 'Practice across many tasks.', 'Feedback guides a weight update.', 'Keep the learned settings.', 'Use the trained model on a new screen.', 'New context. The same weights.'];
   return <div className={s.lesson} data-learning="computer" data-step={step}>
     <div className={s.phase}><span>{using ? 'INFERENCE · USING THE MODEL' : 'TRAINING'}</span><strong>{titles[step]}</strong></div>
     <div className={s.teachingRow} data-using={using}>
       <section className={s.practice} aria-label={using ? 'New interface supplied as context' : 'Practice tasks and action result'}>
         <span className={s.label}>{using ? 'CONTEXT' : step >= 3 ? 'MANY PRACTICE TASKS' : 'GOAL · CREATE A RETURN'}</span>
-        {step >= 3 && !using ? <div className={s.taskStack}><div>Open an order <b>✓</b></div><div>Create a return <b>×</b></div><div>Save a receipt <b>✓</b></div></div> : <div className={s.miniScreen} data-new={using}>
-          <div className={s.windowBar}>ORDERS / {using ? 'NEW LAYOUT' : 'PRACTICE'}</div>
-          <strong>Order #1048</strong><div className={s.field} /><div className={s.screenButtons}><span>Cancel</span><b>Create return</b></div>
-          <span className={s.cursor} data-correct={using && step === 7}>↖</span>
-          {step >= 1 && !using && <em>No return created ×</em>}
+        {step >= 3 && !using ? <div className={s.taskStack}><div>Open an order <b>✓</b></div><div>Create a return <b>×</b></div><div>Save a receipt <b>✓</b></div></div> : <div className={s.miniScreen} data-new={using} data-trial={trial} data-outcome={failed}>
+          <div className={s.windowBar}>ORDERS / {using ? 'NEW LAYOUT' : failed ? 'ORDER DETAILS' : 'PRACTICE'}</div>
+          <strong>Order #1048</strong>
+          {failed ? <>
+            <div className={s.trialOutcome}><b aria-hidden="true">×</b><strong>No return created</strong></div>
+            <p className={s.lastAction}>Clicked <b>Cancel</b> · form closed</p>
+          </> : <>
+            <div className={s.field} />
+            <div className={s.screenButtons}>
+              <span className={trial ? s.cancelTarget : undefined} data-clicked={trial && step === 1}>Cancel
+                {trial && <svg className={s.trialPointer} data-trial-cursor data-clicked={step === 1} viewBox="0 0 30 40" aria-hidden="true"><path d="M2 2v29l8-7 7 13 7-4-7-13 11-2Z" /></svg>}
+              </span>
+              <b>Create return</b>
+            </div>
+            {using && <span className={s.cursor} data-correct={step === 7}>↖</span>}
+          </>}
           {step === 7 && <em data-success>Target found in the new screenshot</em>}
         </div>}
       </section>
       <Arrow active={step >= 2} />
       {using && <Weights updated fixed />}
       {using && <Arrow active={step === 7} />}
-      <section className={s.feedback} data-active={step >= 2}>
+      <section className={s.feedback} data-active={step >= 2} data-failed={failed}>
         <span className={s.label}>{using ? 'NEXT ACTION' : 'TASK FEEDBACK'}</span>
-        <strong>{using ? 'Find it here.' : step >= 2 ? 'Did it finish?' : 'Check the result.'}</strong>
-        <p>{using ? 'The screenshot changes where to click.' : 'Success and failure guide later practice.'}</p>
-        <span className={s.signal}>{using ? 'context changes' : step >= 4 ? 'training signal →' : 'checkable outcome'}</span>
+        <strong>{using ? 'Find it here.' : trial ? failed ? 'Failed ×' : 'Await result.' : 'Did it finish?'}</strong>
+        <p>{using ? 'The screenshot changes where to click.' : trial ? failed ? 'Use this outcome for training.' : 'Did the action complete the task?' : 'Success and failure guide later practice.'}</p>
+        <span className={s.signal}>{using ? 'context changes' : failed ? 'failure feedback' : trial ? 'waiting for outcome' : step >= 4 ? 'training signal →' : 'checkable outcome'}</span>
       </section>
       {!using && <Arrow active={step >= 4} />}
       {!using && <Weights updated={step >= 5} />}

@@ -1,6 +1,6 @@
 # Talk 02 speaker notes | From Answers to Actions
 
-Computer Use → Jev → RSI. **18 pages**, with visual numbers matching Presenter.
+Computer Use → Jev → RSI. **20 pages**, with visual numbers matching Presenter.
 
 **Play → automatic hold → speak this paragraph → continue.** Animations and the film wait for play; held visuals have no speaking countdown. Blockquotes identify the picture and are not spoken. Each page ends with a separate transition. [Controls and contents](index.md).
 
@@ -84,9 +84,9 @@ The agent dismissed the popup, checked the form, submitted again and verified th
 
 [Open this page](/session-2#computer-use/C7)
 
-> Visual 1 / 3 · The click failed to create a return; the outcome becomes training feedback
+> Visual 1 / 3 · Cancel closes the form; no return is created, so the task feedback is failure
 
-Start with one practice attempt: the click ran, but no return was created. Training feedback must reflect the task outcome, rather than a click alone.
+The model clicked Cancel, closing the form without creating a return. The middle panel records the outcome as a failure. Training feedback must reflect task completion, rather than a click alone.
 
 > Visual 2 / 3 · Training produces an updated model
 
@@ -144,9 +144,9 @@ Add “Does the customer want a return?” Noul gives the probability of yes, so
 
 [Open this page](/session-2#jev/J2)
 
-> Visual 1 / 1 · We has joined context; the next candidates are visible
+> Visual 1 / 1 · The sentence is complete; four steps show how context grew
 
-When an ordinary LLM writes text, it selects the next token step by step: decoding. A token can be a word, character or text fragment. We has been added to the context on the left; the next candidates are can and will. Each new token informs the next prediction, and repeating the process produces text.
+Decoding selects the next token from the current context, one step at a time. We is selected first and added to the context; then come can, help and the period. The finished sentence is on the left, and the history on the right shows how the context grew. A token can be a word, character or text fragment; the divisions here are illustrative.
 
 **Transition｜** Now compare the LLM and Jev on the same two questions.
 
@@ -192,9 +192,17 @@ The new email above was not used in training. With weights fixed, the model give
 
 [Open this page](/session-2#jev/J8)
 
-> Visual 1 / 1 · The ticket is assigned to returns; an LLM can write the reply
+> Visual 1 / 3 · returns 0.94; code assigns the ticket to the returns queue
 
-Back to the original return email: Jev makes the decision, code routes the ticket, and an LLM can write a reply. Frequent, focused decisions are a useful workload for comparing the two options: errors first, then latency and cost. For occasional classification or a complete reply in one call, the existing LLM with JSON may already suffice.
+Every incoming ticket needs a department. For this return request, Jev gives returns a probability of 0.94. Our example rule routes a ticket when the highest probability is at least 0.90. Jev supplies the judgment; code moves the ticket. We chose 0.90 for this illustration.
+
+> Visual 2 / 3 · A return and a billing issue send the ticket to human review
+
+This customer has two issues: a return and a duplicate charge. The example gives returns 0.61 and billing 0.35. Routing only by the highest label could overlook the other issue. The same rule now sends the ticket to a person. Probabilities can help decide when to automate and when to check, provided their reliability has been tested on real tickets.
+
+> Visual 3 / 3 · Benchmark Jev for repeated decisions; an LLM may suffice for occasional labels or replies
+
+Jev is worth testing when a small decision repeats, its answer space is defined, and latency or per-call cost matters. Ticket classification and priority scoring are examples. For occasional labels or complete replies, an existing LLM producing JSON or text may suffice. They can also work together: Jev decides, code routes, and an LLM writes. Compare errors and calibration first, then latency and cost, using the same new test tickets.
 
 **Transition｜** Now turn to development: can AI help improve the next AI?
 
@@ -204,11 +212,11 @@ Back to the original return email: Jev makes the decision, code routes the ticke
 
 [Open this page](/session-2#rsi/R0)
 
-> Visual 1 / 1 · RSI, Recursive Self-Improvement and the successor question fill a dedicated page.
+> Visual 1 / 1 · RSI and its full name fill the opening page
 
-RSI means Recursive Self-Improvement: AI helps develop a new AI that is better at research, and that new AI drives another round of improvement. Start with one small improvement loop.
+Developing AI involves proposing ideas, running experiments and checking results. People have limited time for those trials, so we want AI to help. Recursive Self-Improvement asks a further question: can the improved AI system participate in the next improvement round? First see how we judge one change, then compare three approaches.
 
-**Transition｜** Use a sorting program to see which changes deserve to stay.
+**Transition｜** Start with a sorting program we can inspect.
 
 ---
 
@@ -216,59 +224,87 @@ RSI means Recursive Self-Improvement: AI helps develop a new AI that is better a
 
 [Open this page](/session-2#rsi/R4)
 
-> Visual 1 / 3 · A works; keep it for now
+> Visual 1 / 3 · A sorts correctly and remains in use
 
-A is the original sorting program, and it works. We count comparisons and array writes, adding them to measure work in this example. We want the same correct result with less work. A, B and C are prewritten programs, and the animation follows their execution.
+A is our original sorting program, and its result is correct. We want it to do less work. Here work is the number of comparisons plus array writes, not elapsed seconds. The three candidates are prewritten, and the numbers follow their actual execution.
 
-> Visual 2 / 3 · B leaves the output out of order; keep using A
+> Visual 2 / 3 · B gives an incorrect result; keep A
 
-First, try B with just one pass. It uses less work, but the red numbers are still out of order. Reject B; IN USE on the right remains A.
+The first attempt, B, makes only one pass. It uses less work, but the red numbers are still out of order. A cheaper change must still be correct, so IN USE stays A.
 
-> Visual 3 / 3 · C passes the same suite with less work and replaces A
+> Visual 3 / 3 · C passes six tests with less work and replaces A
 
-After B fails, try C. It passes the same six checks with less total work, so it replaces A. This loop improved a sorting program, not the AI doing the research. By itself, it is not RSI.
+Try C next. It passes the same six tests with less work, so it replaces A. That is propose, test and retain. So far, a sorting program has improved. Now apply that idea to an AI system’s own tools, parameters or training code.
 
-**Transition｜** Google applies a similar loop to code used in AI training.
+**Transition｜** First: keep the model, change how the agent works.
 
 ---
 
-## 16 · R5｜How AlphaEvolve improves AI training
+## 16 · R8｜How an agent improves its workflow
+
+[Open this page](/session-2#rsi/R8)
+
+> Visual 1 / 2 · Validate the patch is inserted; a failed patch is revised and applied
+
+The first route changes agent code. Think of an agent as a model plus its tools and workflow. The LLM weights on the left stay fixed. The middle gains a patch check: if an edit cannot apply, return the error and retry. DGM, the Darwin Gödel Machine, reported this kind of tool improvement. This is a simplified illustration.
+
+> Visual 2 / 2 · Evaluate variants on other coding tasks; v2 from the archive helps make later variants
+
+One successful patch is not enough: evaluate the whole agent on other coding tasks. DGM keeps an archive and explores from different variants; this diagram shows one branch. A modified agent also participates in later self-modification. The system can improve even though its base model was not retrained.
+
+**Transition｜** The second route changes the model’s weights.
+
+---
+
+## 17 · R9｜How a model learns from its own solutions
+
+[Open this page](/session-2#rsi/R9)
+
+> Visual 1 / 2 · Matching answers are selected; the wrong 7 is retried with a hint and becomes 10
+
+The second route resembles collecting useful practice solutions. STaR starts with existing questions and known answers, and asks the model for solution steps. Keep the first correct answer. For the second, wrong answer of 7, give the answer 10 as a hint and try again. The model generates the solution steps; the questions and answer key come from outside.
+
+> Visual 2 / 2 · Fine-tuning changes weights; the resulting model generates another batch of solutions
+
+Collect many such examples, then fine-tune: train on the selected questions and solutions to change the weights. The resulting model generates the next batch for another round of selection and training. This goes beyond adding a hint to one conversation’s context. A matching answer does not guarantee sound reasoning, so evaluate learning on new questions.
+
+**Transition｜** The third route improves the computation used for training.
+
+---
+
+## 18 · R5｜How AlphaEvolve improves AI training
 
 [Open this page](/session-2#rsi/R5)
 
-> Visual 1 / 2 · The proposed kernel change passes the checks
+> Visual 1 / 2 · Gemini’s proposed kernel change passes correctness and speed checks
 
-Replace the sorting program with a kernel used in AI training: a small repeated computation, such as matrix multiplication. AlphaEvolve uses Gemini to propose changes, then evaluators check correctness and speed. K has now passed those checks.
+Training repeatedly runs small compute routines called kernels. A large computation can be divided into smaller pieces; how those pieces fit the hardware affects efficiency. AlphaEvolve uses Gemini to propose changes, then runs checks for correctness and speed. As with sorting, a claim of improvement is not enough.
 
-> Visual 2 / 2 · The improved K enters Gemini training; the reported savings appear
+> Visual 2 / 2 · The same K enters Gemini training and the reported efficiency gains appear
 
-The same K has entered Gemini training. DeepMind reported a 23% kernel speedup and about 1% less total training time. The link to RSI is that a tool improved with AI is used to train AI. This establishes a training-efficiency gain, not a better AI researcher.
+The improved K now goes into Gemini training. DeepMind reported an average 23% kernel speedup and about 1% less total training time. Repeated computation makes those savings useful. This establishes more efficient training; better AI research ability needs separate evidence.
 
-**Transition｜** The missing step is for the new AI to take over the next improvement round.
+**Transition｜** The three approaches change different things. Now locate the recursive step.
 
 ---
 
-## 17 · R6｜How improvement becomes recursive
+## 19 · R6｜When does improvement become recursive?
 
 [Open this page](/session-2#rsi/R6)
 
-> Visual 1 / 3 · v2 appears; better research ability remains unproven
+> Visual 1 / 2 · Three columns compare agent code, model weights and training tools
 
-The rest is hypothetical. Suppose saved compute funds more training and helps develop v2 on the right. That does not establish that v2 is better at research than v1, so it still has a question mark.
+Side by side: DGM changes tools and workflows, STaR trains weights, and AlphaEvolve improves training code. These are useful examples, not an exhaustive taxonomy of RSI. The shared question is whether an improvement feeds back and helps the system make later improvements.
 
-> Visual 2 / 3 · v1 and v2: new tasks, the same budget
+> Visual 2 / 2 · Conditional loop: v2 takes over on the left; v3 appears with a question mark
 
-Give v1 and v2 new kernel-optimization tasks with the same experiment budget. Compare their ability to find correct, useful improvements. This tests their ability to improve the next round; no winner is shown here.
+The return arrow is the recursive step: the improved system participates in the next improvement round. A system can include both a model and its tools and workflow. Compare on new tasks with the same budget to test whether improvement ability grew. DGM demonstrates a bounded coding-agent feedback loop; these examples do not establish unlimited self-improvement.
 
-> Visual 3 / 3 · v2 replaces v1 and proposes the next improvement; v3? appears on the right
-
-If evaluation shows that v2 is better at this work, it takes v1’s place on the left and helps develop v3. v3 must be evaluated again. The AI produced by one round becomes the improver in the next: that is the recursive step.
-
-**Transition｜** Return to the three concepts.
+**Transition｜** Return to our three questions: can it act, decide and keep improving?
 
 ---
 
-## 18 · E1｜Comparing the three concepts
+## 20 · E1｜Comparing the three concepts
 
 [Open this page](/session-2#closing/E1)
 

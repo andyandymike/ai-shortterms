@@ -1,6 +1,6 @@
 # 第二场双语排练稿｜Talk 02 bilingual rehearsal
 
-共 **18 页**，按同一幅画面配对中英文；实际演讲选一种语言。先点击播放，自动停住后再讲当前段落，讲完继续。引用块只提示画面，转场句放在每页最后。[操作说明与目录](index.md)。
+共 **20 页**，按同一幅画面配对中英文；实际演讲选一种语言。先点击播放，自动停住后再讲当前段落，讲完继续。引用块只提示画面，转场句放在每页最后。[操作说明与目录](index.md)。
 
 The languages are paired by visual; choose one for delivery. Press play, wait for the automatic hold, speak the current paragraph, then continue. Blockquotes identify the picture. Transitions appear at the end of each page.
 
@@ -130,13 +130,13 @@ The languages are paired by visual; choose one for delivery. Press play, wait fo
 
 [打开本页](/session-2#computer-use/C7)
 
-> 画面 / Visual 1 / 3 · 点击没有完成退货；任务结果成为训练反馈
+> 画面 / Visual 1 / 3 · 误点 Cancel 后表单关闭；退货未创建，反馈为失败
 >
-> The click failed to create a return; the outcome becomes training feedback
+> Cancel closes the form; no return is created, so the task feedback is failure
 
-**中文｜** 先看一次练习：点击执行了，却没有创建退货。训练反馈要看任务有没有完成，不能只看有没有点击。
+**中文｜** 模型点了 Cancel，表单被关掉，退货没有创建。中间把这个结果记为失败。训练反馈要看任务有没有完成，不能只看有没有点击。
 
-**English｜** Start with one practice attempt: the click ran, but no return was created. Training feedback must reflect the task outcome, rather than a click alone.
+**English｜** The model clicked Cancel, closing the form without creating a return. The middle panel records the outcome as a failure. Training feedback must reflect task completion, rather than a click alone.
 
 > 画面 / Visual 2 / 3 · 训练得到新模型
 >
@@ -226,13 +226,13 @@ The languages are paired by visual; choose one for delivery. Press play, wait fo
 
 [打开本页](/session-2#jev/J2)
 
-> 画面 / Visual 1 / 1 · We 已加入 context，下一轮候选已出现
+> 画面 / Visual 1 / 1 · 短句已完成，右侧保留四步 context 变化
 >
-> We has joined context; the next candidates are visible
+> The sentence is complete; four steps show how context grew
 
-**中文｜** 普通 LLM 写文字时，会逐步选出下一个 token，这个过程叫 decoding。Token 是词、字符或文字片段。这里已经选出 We，并把它加进左边的 context；右边接着预测 can 还是 will。新生成的内容参与下一步判断，重复这个过程就能写出一句话。
+**中文｜** Decoding 就是根据当前 context，一步步选出下一个 token。看刚才的过程：先选 We，把它加进 context，再预测 can，然后是 help 和句号。左边得到完整短句，右边保留每一步用了什么 context。Token 可以是词、字符或文字片段，这里的切分只是示意。
 
-**English｜** When an ordinary LLM writes text, it selects the next token step by step: decoding. A token can be a word, character or text fragment. We has been added to the context on the left; the next candidates are can and will. Each new token informs the next prediction, and repeating the process produces text.
+**English｜** Decoding selects the next token from the current context, one step at a time. We is selected first and added to the context; then come can, help and the period. The finished sentence is on the left, and the history on the right shows how the context grew. A token can be a word, character or text fragment; the divisions here are illustrative.
 
 **转场｜** 接着用同样两道题比较 LLM 和 Jev。
 
@@ -304,13 +304,29 @@ The languages are paired by visual; choose one for delivery. Press play, wait fo
 
 [打开本页](/session-2#jev/J8)
 
-> 画面 / Visual 1 / 1 · 邮件已分到退货队列，写回复仍可用 LLM
+> 画面 / Visual 1 / 3 · returns 0.94，代码把工单送到退货队列
 >
-> The ticket is assigned to returns; an LLM can write the reply
+> returns 0.94; code assigns the ticket to the returns queue
 
-**中文｜** 回到开头的退货邮件：Jev 给出判断，代码把工单送进退货队列，需要写回复时再用 LLM。高频、范围清楚的判断适合拿来比较两种方案；先比错误，再比延迟和成本。若只是偶尔分类，或一次就需要完整回复，现有的 LLM JSON 可能已经够用。
+**中文｜** 这里每来一封工单，都要判断交给哪个部门。Jev 对这封退货邮件给出 returns 0.94，代码按示例规则：最高概率至少 0.90，就自动分流。Jev 给出判断，真正移动工单的是代码；0.90 是我们设置的演示门槛。
 
-**English｜** Back to the original return email: Jev makes the decision, code routes the ticket, and an LLM can write a reply. Frequent, focused decisions are a useful workload for comparing the two options: errors first, then latency and cost. For occasional classification or a complete reply in one call, the existing LLM with JSON may already suffice.
+**English｜** Every incoming ticket needs a department. For this return request, Jev gives returns a probability of 0.94. Our example rule routes a ticket when the highest probability is at least 0.90. Jev supplies the judgment; code moves the ticket. We chose 0.90 for this illustration.
+
+> 画面 / Visual 2 / 3 · 退货与扣款两个问题，工单转人工确认
+>
+> A return and a billing issue send the ticket to human review
+
+**中文｜** 换一封邮件，客户既要退货，又说被重复扣款。现在 returns 是 0.61，billing 是 0.35。只拿最高的 returns 就直接分流，可能漏掉另一件事。按刚才的规则，代码把它交给人工确认。概率帮助我们决定何时自动处理、何时先检查；前提是用真实工单验证过这些概率是否可信。
+
+**English｜** This customer has two issues: a return and a duplicate charge. The example gives returns 0.61 and billing 0.35. Routing only by the highest label could overlook the other issue. The same rule now sends the ticket to a person. Probabilities can help decide when to automate and when to check, provided their reliability has been tested on real tickets.
+
+> 画面 / Visual 3 / 3 · 高频小判断值得比较 Jev；偶发分类或完整回复可保留 LLM
+>
+> Benchmark Jev for repeated decisions; an LLM may suffice for occasional labels or replies
+
+**中文｜** 当同一种小判断反复出现、答案范围清楚，而且延迟或调用成本开始影响流程时，就值得试 Jev。比如工单分类、优先级评分。若只是偶尔分类，或主要任务是写完整回复，现有 LLM 返回 JSON 或文字可能已经够用。也可以让 Jev 给判断、代码分流、LLM 写回复。最终拿同一批新工单，先比错误和 calibration，再比延迟和成本。
+
+**English｜** Jev is worth testing when a small decision repeats, its answer space is defined, and latency or per-call cost matters. Ticket classification and priority scoring are examples. For occasional labels or complete replies, an existing LLM producing JSON or text may suffice. They can also work together: Jev decides, code routes, and an LLM writes. Compare errors and calibration first, then latency and cost, using the same new test tickets.
 
 **转场｜** 接下来把视角转向研发：AI 能否帮助改进下一代 AI？
 
@@ -322,17 +338,17 @@ The languages are paired by visual; choose one for delivery. Press play, wait fo
 
 [打开本页](/session-2#rsi/R0)
 
-> 画面 / Visual 1 / 1 · RSI、Recursive Self-Improvement 和下一代 AI 的问题独占一页。
+> 画面 / Visual 1 / 1 · RSI 与英文全称独占开场页
 >
-> RSI, Recursive Self-Improvement and the successor question fill a dedicated page.
+> RSI and its full name fill the opening page
 
-**中文｜** RSI 是 Recursive Self-Improvement，递归自我改进。关键在于：AI 帮助开发出更会做研发的新 AI，再由新 AI 推动下一轮改进。先从一次最小的改进看起。
+**中文｜** 研发 AI 要反复想方案、写实验、检查结果。人能做的尝试有限，所以希望 AI 也能承担这些工作。RSI，Recursive Self-Improvement，递归自我改进，进一步问：改进后的 AI 系统，能不能继续参与下一轮改进？先看怎样判断一次改动有没有用，再看三种不同做法。
 
-**English｜** RSI means Recursive Self-Improvement: AI helps develop a new AI that is better at research, and that new AI drives another round of improvement. Start with one small improvement loop.
+**English｜** Developing AI involves proposing ideas, running experiments and checking results. People have limited time for those trials, so we want AI to help. Recursive Self-Improvement asks a further question: can the improved AI system participate in the next improvement round? First see how we judge one change, then compare three approaches.
 
-**转场｜** 用排序程序看看，什么改动值得留下。
+**转场｜** 先从一个容易看懂的排序程序开始。
 
-**Transition｜** Use a sorting program to see which changes deserve to stay.
+**Transition｜** Start with a sorting program we can inspect.
 
 ---
 
@@ -340,97 +356,141 @@ The languages are paired by visual; choose one for delivery. Press play, wait fo
 
 [打开本页](/session-2#rsi/R4)
 
-> 画面 / Visual 1 / 3 · A 能做对，先保留 A
+> 画面 / Visual 1 / 3 · A 排对了，右侧仍使用 A
 >
-> A works; keep it for now
+> A sorts correctly and remains in use
 
-**中文｜** A 是原来使用的排序程序，它能排对。下面记录比较和写入的次数，把它们相加作为本例的工作量。我们想找一个同样做对、工作量更少的办法。A、B、C 是预写的程序，动画来自它们的实际运行。
+**中文｜** A 是原来使用的排序程序，结果正确。现在想让它少做些工作。这里把比较和写入次数加起来当作工作量，不是运行秒数。三个候选是预先写好的，数字移动来自实际执行。
 
-**English｜** A is the original sorting program, and it works. We count comparisons and array writes, adding them to measure work in this example. We want the same correct result with less work. A, B and C are prewritten programs, and the animation follows their execution.
+**English｜** A is our original sorting program, and its result is correct. We want it to do less work. Here work is the number of comparisons plus array writes, not elapsed seconds. The three candidates are prewritten, and the numbers follow their actual execution.
 
-> 画面 / Visual 2 / 3 · B 顺序不对，继续使用 A
+> 画面 / Visual 2 / 3 · B 的结果有误，继续使用 A
 >
-> B leaves the output out of order; keep using A
+> B gives an incorrect result; keep A
 
-**中文｜** 第一次尝试 B，只排一遍。操作确实少了，但红色数字的顺序还不对，所以拒绝 B。右边 IN USE 仍然是 A。
+**中文｜** 第一次尝试 B，只走一遍，工作确实少了，但红色数字还没排对。改得快没有用，先得正确，所以右边 IN USE 仍然是 A。
 
-**English｜** First, try B with just one pass. It uses less work, but the red numbers are still out of order. Reject B; IN USE on the right remains A.
+**English｜** The first attempt, B, makes only one pass. It uses less work, but the red numbers are still out of order. A cheaper change must still be correct, so IN USE stays A.
 
-> 画面 / Visual 3 / 3 · C 通过同一组测试，且操作更少；A 被 C 替换
+> 画面 / Visual 3 / 3 · C 通过六项测试，以更少工作替换 A
 >
-> C passes the same suite with less work and replaces A
+> C passes six tests with less work and replaces A
 
-**中文｜** B 失败后再试 C。C 通过同样的六项检查，总工作量也更少，才替换 A。这个循环改进了排序程序，还没有改进做研发的 AI，所以本身不等于 RSI。
+**中文｜** 再试 C。它通过同一组六项测试，工作量也更少，才替换 A。这就是提出改法、测试、保留结果。眼下变好的是排序程序；如果改的是 AI 自己的工具、参数，或者训练程序，才开始接近我们今天要讲的几条路线。
 
-**English｜** After B fails, try C. It passes the same six checks with less total work, so it replaces A. This loop improved a sorting program, not the AI doing the research. By itself, it is not RSI.
+**English｜** Try C next. It passes the same six tests with less work, so it replaces A. That is propose, test and retain. So far, a sorting program has improved. Now apply that idea to an AI system’s own tools, parameters or training code.
 
-**转场｜** Google 把类似的循环，用到了训练 AI 的程序上。
+**转场｜** 第一种做法：模型不变，改它做事的方法。
 
-**Transition｜** Google applies a similar loop to code used in AI training.
+**Transition｜** First: keep the model, change how the agent works.
 
 ---
 
-## 16 · R5｜How AlphaEvolve improves AI training
+## 16 · R8｜How an agent improves its workflow
+
+[打开本页](/session-2#rsi/R8)
+
+> 画面 / Visual 1 / 2 · 工作流新增 Validate the patch，失败补丁修正后成功应用
+>
+> Validate the patch is inserted; a failed patch is revised and applied
+
+**中文｜** 第一条路线改 Agent 的代码。Agent 可以理解成模型加上工具和做事流程。左边 LLM 的 weights 没变，变的是中间：编辑代码后先检查补丁能不能应用，有错就返回重试。DGM，也就是 Darwin Gödel Machine，报告过这类自改工具的做法；这里把过程画成一个简单例子。
+
+**English｜** The first route changes agent code. Think of an agent as a model plus its tools and workflow. The LLM weights on the left stay fixed. The middle gains a patch check: if an edit cannot apply, return the error and retry. DGM, the Darwin Gödel Machine, reported this kind of tool improvement. This is a simplified illustration.
+
+> 画面 / Visual 2 / 2 · 在别的编程任务上评估版本，版本库中的 v2 参与后续修改
+>
+> Evaluate variants on other coding tasks; v2 from the archive helps make later variants
+
+**中文｜** 一个补丁成功还不够，要用别的编程任务评估整个 Agent。DGM 会保留一个版本库，从不同版本继续探索；图里只画了一条分支。关键是，改好的 Agent 也会参与后面的自我修改。底层模型没重训，系统的做事能力仍然可能改善。
+
+**English｜** One successful patch is not enough: evaluate the whole agent on other coding tasks. DGM keeps an archive and explores from different variants; this diagram shows one branch. A modified agent also participates in later self-modification. The system can improve even though its base model was not retrained.
+
+**转场｜** 第二条路线直接改变模型的 weights。
+
+**Transition｜** The second route changes the model’s weights.
+
+---
+
+## 17 · R9｜How a model learns from its own solutions
+
+[打开本页](/session-2#rsi/R9)
+
+> 画面 / Visual 1 / 2 · 正确答案被筛出；错误的 7 根据答案提示重试为 10
+>
+> Matching answers are selected; the wrong 7 is retried with a hint and becomes 10
+
+**中文｜** 第二条路线像做题后整理练习材料。STaR 从已有题目和标准答案开始，让模型写解题过程。第一题答对，留下；第二题答成 7，给它答案 10，再试着写出能得到 10 的过程。它生成的是解题过程，题目和判断答案的依据仍由外部提供。
+
+**English｜** The second route resembles collecting useful practice solutions. STaR starts with existing questions and known answers, and asks the model for solution steps. Keep the first correct answer. For the second, wrong answer of 7, give the answer 10 as a hint and try again. The model generates the solution steps; the questions and answer key come from outside.
+
+> 画面 / Visual 2 / 2 · 训练改变 weights，得到的模型继续生成下一批解题过程
+>
+> Fine-tuning changes weights; the resulting model generates another batch of solutions
+
+**中文｜** 积累很多这样的例子，再做 fine-tuning，微调：用选出的题目和解题过程训练模型，改变 weights。训练后的模型再生成下一批，继续筛选和训练。这比在一次聊天的 context 里记住一句提示多了一步。也要注意，答案碰巧正确不保证过程正确，模型有没有学好还得用新题检查。
+
+**English｜** Collect many such examples, then fine-tune: train on the selected questions and solutions to change the weights. The resulting model generates the next batch for another round of selection and training. This goes beyond adding a hint to one conversation’s context. A matching answer does not guarantee sound reasoning, so evaluate learning on new questions.
+
+**转场｜** 第三条路线不改做题方式，而是改训练所用的计算程序。
+
+**Transition｜** The third route improves the computation used for training.
+
+---
+
+## 18 · R5｜How AlphaEvolve improves AI training
 
 [打开本页](/session-2#rsi/R5)
 
-> 画面 / Visual 1 / 2 · Gemini 提出的 kernel 改法通过检查
+> 画面 / Visual 1 / 2 · Gemini 提议的 kernel 改动通过正确性与速度检查
 >
-> The proposed kernel change passes the checks
+> Gemini’s proposed kernel change passes correctness and speed checks
 
-**中文｜** 把排序程序换成训练 AI 用的 kernel，也就是反复执行的小段计算程序，比如矩阵乘法。AlphaEvolve 用 Gemini 提出改法，再由评估器检查结果和速度。现在 K 已经通过检查。
+**中文｜** 训练 AI 时，有些小段计算会反复运行，这叫 kernel。可以把一次大计算分成小块，怎样分才更适合硬件，会影响效率。AlphaEvolve 用 Gemini 提出改法，再实际运行，检查答案是否正确、速度是否改善。和排序页一样，不能只听 AI 说它更好。
 
-**English｜** Replace the sorting program with a kernel used in AI training: a small repeated computation, such as matrix multiplication. AlphaEvolve uses Gemini to propose changes, then evaluators check correctness and speed. K has now passed those checks.
+**English｜** Training repeatedly runs small compute routines called kernels. A large computation can be divided into smaller pieces; how those pieces fit the hardware affects efficiency. AlphaEvolve uses Gemini to propose changes, then runs checks for correctness and speed. As with sorting, a claim of improvement is not enough.
 
-> 画面 / Visual 2 / 2 · 改好的 K 进入 Gemini 训练；提效数字出现
+> 画面 / Visual 2 / 2 · 同一块 K 移入 Gemini 训练，显示已报告的效率收益
 >
-> The improved K enters Gemini training; the reported savings appear
+> The same K enters Gemini training and the reported efficiency gains appear
 
-**中文｜** 同一块 K 已经进入 Gemini 的训练流程。DeepMind 报告，这个 kernel 提速 23%，整体训练时间减少约 1%。它和 RSI 的联系在于：AI 改好的工具，又用来训练 AI。但目前证明的是训练提效，还不是更会研发的新 AI。
+**中文｜** 现在改好的 K 回到 Gemini 的训练里。DeepMind 报告，这类 kernel 平均加速 23%，整体训练时间约减少 1%。因为它反复运行，局部节省也有价值。但这里证明的是训练更省；是否因此得到更会研发的 AI，还要另外检验。
 
-**English｜** The same K has entered Gemini training. DeepMind reported a 23% kernel speedup and about 1% less total training time. The link to RSI is that a tool improved with AI is used to train AI. This establishes a training-efficiency gain, not a better AI researcher.
+**English｜** The improved K now goes into Gemini training. DeepMind reported an average 23% kernel speedup and about 1% less total training time. Repeated computation makes those savings useful. This establishes more efficient training; better AI research ability needs separate evidence.
 
-**转场｜** 还缺的一步，是让新 AI 接手下一轮改进。
+**转场｜** 三种做法改的地方不同，最后看递归发生在哪里。
 
-**Transition｜** The missing step is for the new AI to take over the next improvement round.
+**Transition｜** The three approaches change different things. Now locate the recursive step.
 
 ---
 
-## 17 · R6｜How improvement becomes recursive
+## 19 · R6｜When does improvement become recursive?
 
 [打开本页](/session-2#rsi/R6)
 
-> 画面 / Visual 1 / 3 · v2 出现，但是否更会做研发仍未知
+> 画面 / Visual 1 / 2 · 三列分别是 Agent 代码、模型 weights、训练工具
 >
-> v2 appears; better research ability remains unproven
+> Three columns compare agent code, model weights and training tools
 
-**中文｜** 从这里开始是假设。假如把省下的算力用于更多训练，帮助开发出了右边的 v2，它也不一定比 v1 更会做研发，所以还带着问号。
+**中文｜** 把三种做法并排看：DGM 改工具和流程，STaR 通过训练改 weights，AlphaEvolve 改训练用的程序。这是帮助理解的分法，不是 RSI 只有这三种。它们的共同问题是：改进会不会反馈到下一轮，帮助系统做出后续改进？
 
-**English｜** The rest is hypothetical. Suppose saved compute funds more training and helps develop v2 on the right. That does not establish that v2 is better at research than v1, so it still has a question mark.
+**English｜** Side by side: DGM changes tools and workflows, STaR trains weights, and AlphaEvolve improves training code. These are useful examples, not an exhaustive taxonomy of RSI. The shared question is whether an improvement feeds back and helps the system make later improvements.
 
-> 画面 / Visual 2 / 3 · v1 和 v2：新任务，相同预算
+> 画面 / Visual 2 / 2 · 条件性回路：v2 回到左侧做改进，右侧出现 v3 问号
 >
-> v1 and v2: new tasks, the same budget
+> Conditional loop: v2 takes over on the left; v3 appears with a question mark
 
-**中文｜** 给 v1 和 v2 新的 kernel 优化任务，用相同的尝试预算，比较谁能找到正确、有用的改法。这是在检验下一轮的改进能力，图里还没有胜负。
+**中文｜** 递归发生在这条回来的箭头：上一轮改好的系统，参与下一轮改进。这里的系统既可以是模型，也可以包含工具和流程。要检验它是否真的更会改进，得用新任务和相同预算比较。DGM 展示了有限编程 Agent 的反馈回路；这些例子都不能直接推出 AI 已经能无限自我升级。
 
-**English｜** Give v1 and v2 new kernel-optimization tasks with the same experiment budget. Compare their ability to find correct, useful improvements. This tests their ability to improve the next round; no winner is shown here.
+**English｜** The return arrow is the recursive step: the improved system participates in the next improvement round. A system can include both a model and its tools and workflow. Compare on new tasks with the same budget to test whether improvement ability grew. DGM demonstrates a bounded coding-agent feedback loop; these examples do not establish unlimited self-improvement.
 
-> 画面 / Visual 3 / 3 · v2 接替 v1，提出下一项改进；右侧出现 v3？
->
-> v2 replaces v1 and proposes the next improvement; v3? appears on the right
+**转场｜** 回到今天的三个问题：能否操作、能否判断、能否继续改进。
 
-**中文｜** 假设 v2 通过检验，确实更擅长这项工作，它就接过左边 v1 的位置，继续帮助开发 v3。v3 还要重新检验。上一轮得到的新 AI，成为下一轮的改进者，这一步才让改进递归下去。
-
-**English｜** If evaluation shows that v2 is better at this work, it takes v1’s place on the left and helps develop v3. v3 must be evaluated again. The AI produced by one round becomes the improver in the next: that is the recursive step.
-
-**转场｜** 回到今天的三个概念。
-
-**Transition｜** Return to the three concepts.
+**Transition｜** Return to our three questions: can it act, decide and keep improving?
 
 ---
 
-## 18 · E1｜Comparing the three concepts
+## 20 · E1｜Comparing the three concepts
 
 [打开本页](/session-2#closing/E1)
 

@@ -38,7 +38,7 @@ export default function SessionTwo() {
   const step = chapter.beats.findIndex(item => item.id === cue.beat);
   const beat = chapter.beats[step];
   const slideTitle = beat.term ? `${beat.term.name}${beat.term.fullName ? ` · ${beat.term.fullName}` : ''}` : beat.title;
-  const sceneKind = cue.beat === 'R4' ? 'Code experiment' : cue.beat === 'R5' ? 'Reported example' : cue.beat === 'R6' ? 'Hypothetical extension' : ['O1','E1','C6'].includes(cue.beat) ? '' : 'Teaching demo';
+  const sceneKind = cue.beat === 'R4' ? 'Code experiment' : cue.beat === 'R5' ? 'Reported example' : cue.beat === 'R6' ? 'Concept comparison' : ['R8','R9'].includes(cue.beat) ? 'Research method · illustrated' : ['O1','E1','C6'].includes(cue.beat) ? '' : 'Teaching demo';
   const phase = state.phase;
   const currentPicture = cue.phases[phase];
   const nextIndex = phase + 1 < cue.phases.length ? state.index : state.index + 1;

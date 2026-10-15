@@ -17,5 +17,20 @@
 .teachingRow[data-using=true]{grid-template-columns:1.2fr 36px .65fr 36px 1fr}
 .miniScreen[data-new=true] .cursor{left:calc(100% - 55px)}.miniScreen[data-new=true] .cursor[data-correct=true]{left:60px}
 .trainingWeights{display:grid;grid-template-columns:repeat(8,1fr);gap:5px;margin-top:14px}.trainingWeights>i{height:22px;background:var(--ink);transition:opacity .6s,background .6s,transform .6s}.trainingWeights[data-updated=true]>i{background:var(--accent);transform:scale(.8)}
+.miniScreen[data-trial=true]{height:260px;min-height:260px}
+.cancelTarget{position:relative;padding:12px 14px;border:1px solid var(--rule);transition:background .15s .65s,color .15s .65s,border-color .15s .65s}
+.cancelTarget[data-clicked=true]{background:var(--red);border-color:var(--red);color:var(--paper)}
+.trialPointer{position:absolute;left:50%;top:50%;width:34px;height:44px;z-index:2;pointer-events:none;transform:translate(160px,-70px);transition:transform .65s ease}
+.trialPointer path{fill:var(--ink);stroke:var(--paper);stroke-width:2;stroke-linejoin:round}
+.trialPointer[data-clicked=true]{transform:translate(0,0)}
+.cancelTarget[data-clicked=true]::after{content:'';position:absolute;left:50%;top:50%;width:54px;height:54px;border:3px solid var(--red);border-radius:50%;pointer-events:none;animation:trialClick .35s .65s both}
+.trialOutcome{display:flex;align-items:center;gap:17px;color:var(--red);animation:trialResult .45s both}
+.trialOutcome>b{font-size:66px;line-height:1;font-weight:600}.trialOutcome>strong{font-size:clamp(22px,2.1vw,30px);line-height:1.2;letter-spacing:-.03em}
+.lastAction{font-size:17px;line-height:1.3;margin:0}.lastAction>b{color:var(--red)}
+.feedback[data-failed=true]{animation:trialFeedback .5s both}.feedback[data-failed=true]>strong{color:var(--red)}.feedback[data-failed=true]>.signal{color:var(--red);border-color:var(--red)}
+@keyframes trialClick{0%{opacity:0;transform:translate(-50%,-50%) scale(.25)}30%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) scale(1.4)}}
+@keyframes trialResult{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes trialFeedback{from{opacity:.2;transform:translateX(-22px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.trialPointer,.cancelTarget{transition:none}.trialOutcome,.feedback[data-failed=true],.cancelTarget[data-clicked=true]::after{animation:none}}
 .buildSteps{gap:4px;margin-top:14px}.buildSteps>span{padding:8px 7px;line-height:1.1}.buildSteps>b{line-height:1.1}
 @media(max-width:760px){.teachingRow[data-using=true]{grid-template-columns:1fr}}
